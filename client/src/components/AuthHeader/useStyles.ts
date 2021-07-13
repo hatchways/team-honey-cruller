@@ -51,6 +51,11 @@ const useStyles = makeStyles((theme) => ({
       margin: '20px 51px 0 51px',
     },
   },
+  createContestBtn: {
+    borderRadius: 0,
+    border: '1px solid white',
+    color: 'white',
+  },
 }));
 
 export default useStyles;
