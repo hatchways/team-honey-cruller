@@ -45,7 +45,7 @@ export default function Register(): JSX.Element {
           </Grid>
       <Grid item xs={12} sm={7} elevation={6} component={Paper} square className={classes.loginContainer}>
         <Box className={classes.authWrapper}>
-          <Box width="100%" maxWidth={450} p={3} alignSelf="center">
+          <Box width="100%" maxWidth={450} p={3} alignSelf="center" >
             <Grid container>
               <Grid item xs>
                 <Typography align="center" className={classes.welcome} component="h1" variant="h5">

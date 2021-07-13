@@ -14,7 +14,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
 
   return (
     <Box p={1} className={classes.authHeader}>
-      <Typography color="secondary" className={classes.tattooArt}>TATTOO ART</Typography>
+      <Typography color="secondary" className={classes.tattooArt}>tattoo art</Typography>
       <Link to={linkTo}>
         <Button className={classes.loginButton} size="large">
           {btnText}
