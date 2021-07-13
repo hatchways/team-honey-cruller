@@ -10,9 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     margin: 0,
-    borderWidth: 0.5,
-    borderColor: 'rgba(0, 0, 0, .1)',
-    borderStyle: 'solid',
+    border: '0.5 solid rgba(0, 0, 0, .1)',
   },
   label: {
     fontSize: '1em',

@@ -40,7 +40,7 @@ export default function Login(): JSX.Element {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={12}>
-          <AuthHeader linkTo="/signup" btnText="SIGN UP" />
+          <AuthHeader linkTo="/signup" btnText="sign up" />
       </Grid>
       <Grid item xs={12} sm={8} md={7} elevation={6} component={Paper} square className={classes.loginContainer} >
         <Box className={classes.authWrapper}>
@@ -48,7 +48,7 @@ export default function Login(): JSX.Element {
             <Grid container>
               <Grid item xs>
                 <Typography align="center" className={classes.welcome} component="h1" variant="h5">
-                  Sign In
+                  sign in
                 </Typography>
               </Grid>
             </Grid>

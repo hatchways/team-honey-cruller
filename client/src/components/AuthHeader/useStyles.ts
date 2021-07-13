@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   authHeader: {
-    // alignSelf: 'flex-end',
     justifyContent: 'space-between',
     alignItems: 'center',
     display: 'flex',
@@ -39,18 +38,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '2em',
     marginLeft: 20,
     letterSpacing: '.4em',
+    textTransform: 'uppercase',
   },
   loginButton: {
     color: 'white',
-    borderColor: 'white',
-    borderWidth: '1px',
-    borderStyle: 'solid',
+    border: '1px solid white',
     marginRight: 20,
+    borderRadius: 0,
+    width: '10rem',
+    textTransform: 'uppercase',
     [theme.breakpoints.down('sm')]: {
       margin: '20px 51px 0 51px',
     },
-    borderRadius: 0,
-    width: '10rem',
   },
 }));
 

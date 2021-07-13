@@ -18,8 +18,7 @@ const useStyles = makeStyles(() => ({
     paddingTop: 23,
   },
   loginContainer: {
-    maxHeight: '75vh',
-    marginTop: '5vh',
+    margin: '5vh 0',
   },
   welcome: {
     fontSize: '3em',
