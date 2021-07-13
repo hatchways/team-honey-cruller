@@ -46,47 +46,48 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
     >
       {({ handleSubmit, handleChange, values, touched, errors, isSubmitting }) => (
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
-          <TextField
-            id="email"
-            label={<Typography className={classes.label}>E-mail address</Typography>}
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              classes: { input: classes.inputs },
-            }}
-            name="email"
-            autoComplete="email"
-            autoFocus
-            helperText={touched.email ? errors.email : ''}
-            error={touched.email && Boolean(errors.email)}
-            value={values.email}
-            onChange={handleChange}
-          />
-          <TextField
-            id="password"
-            label={<Typography className={classes.label}>Password</Typography>}
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              classes: { input: classes.inputs },
-              endAdornment: <Typography className={classes.forgot}>Forgot?</Typography>,
-            }}
-            type="password"
-            autoComplete="current-password"
-            helperText={touched.password ? errors.password : ''}
-            error={touched.password && Boolean(errors.password)}
-            value={values.password}
-            onChange={handleChange}
-          />
+          <Box mt={3} mb={3}>
+            <Typography className={classes.label}>E-mail</Typography>
+            <TextField
+              id="email"            
+              placeholder="Enter e-mail address"
+              fullWidth
+              margin="normal"
+              className={classes.textField}
+              InputProps={{
+                classes: { input: classes.inputs },
+              }}
+              name="email"
+              autoComplete="email"
+              autoFocus
+              helperText={touched.email ? errors.email : ''}
+              error={touched.email && Boolean(errors.email)}
+              value={values.email}
+              onChange={handleChange}
+            />
+          </Box>
+          <Box mt={3} mb={3}>
+            <Typography className={classes.label}>Password</Typography>
+            <TextField
+              id="password"
+              placeholder="Enter password"
+              fullWidth
+              margin="normal"
+              className={classes.textField}
+              InputProps={{
+                classes: { input: classes.inputs },
+              }}
+              type="password"
+              autoComplete="current-password"
+              helperText={touched.password ? errors.password : ''}
+              error={touched.password && Boolean(errors.password)}
+              value={values.password}
+              onChange={handleChange}
+            />
+          </Box>
           <Box textAlign="center">
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
-              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Login'}
+              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'SIGN IN'}
             </Button>
           </Box>
           <div style={{ height: 95 }} />

@@ -2,11 +2,16 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   authHeader: {
-    alignSelf: 'flex-end',
-    justifyContent: 'flex-end',
+    // alignSelf: 'flex-end',
+    justifyContent: 'space-between',
     alignItems: 'center',
     display: 'flex',
     flexWrap: 'wrap',
+    backgroundColor: 'black',
+    padding: '2.5rem',
+    [theme.breakpoints.down('xs')]: {
+      justifyContent: 'center',
+    },
   },
   accAside: {
     fontSize: 14,
@@ -29,6 +34,23 @@ const useStyles = makeStyles((theme) => ({
     color: '#3a8dff',
     boxShadow: 'none',
     marginRight: 35,
+  },
+  tattooArt: {
+    fontSize: '2em',
+    marginLeft: 20,
+    letterSpacing: '.4em',
+  },
+  loginButton: {
+    color: 'white',
+    borderColor: 'white',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    marginRight: 20,
+    [theme.breakpoints.down('sm')]: {
+      margin: '20px 51px 0 51px',
+    },
+    borderRadius: 0,
+    width: '10rem',
   },
 }));
 
