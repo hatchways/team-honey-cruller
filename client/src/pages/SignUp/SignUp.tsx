@@ -40,14 +40,16 @@ export default function Register(): JSX.Element {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={12} sm={8} md={7} elevation={6} component={Paper} square>
+      <Grid item xs={12}>
+          <AuthHeader linkTo="/login" btnText="SIGN IN" />
+          </Grid>
+      <Grid item xs={12} sm={8} md={7} elevation={6} component={Paper} square className={classes.loginContainer}>
         <Box className={classes.authWrapper}>
-          <AuthHeader linkTo="/login" asideText="Already have an account?" btnText="Login" />
           <Box width="100%" maxWidth={450} p={3} alignSelf="center">
-            <Grid container>
+            <Grid container justify="center" >
               <Grid item xs>
                 <Typography className={classes.welcome} component="h1" variant="h5">
-                  Create an account
+                  Sign up
                 </Typography>
               </Grid>
             </Grid>

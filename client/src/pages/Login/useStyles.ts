@@ -6,6 +6,18 @@ const useStyles = makeStyles(() => ({
     '& .MuiInput-underline:before': {
       borderBottom: '1.2px solid rgba(0, 0, 0, 0.2)',
     },
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  navbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    backgroundColor: 'black',
+    color: 'white',
+  },
+  loginContainer: {
+    maxHeight: '75vh',
+    marginTop: '5vh',
   },
   authWrapper: {
     display: 'flex',
