@@ -1,4 +1,5 @@
 export interface User {
+  _id: string;
   email: string;
   username: string;
   profilePic: string;
@@ -11,8 +12,10 @@ export interface User {
 interface Contest {
   title: string;
   description: string;
-  price: number;
-  endDate: string;
+  prizeAmount: number;
+  deadlineDate: string;
+  dateCreated: string;
+  userId: string;
   submissions: Submission[];
 }
 

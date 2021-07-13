@@ -1,6 +1,7 @@
 import { User } from '../interface/User';
 
 const mockLoggedInUser: User = {
+  _id: 'abc123456',
   email: 'stanley@gmail.com',
   username: 'stanleythemanly',
   profilePic: '',
@@ -10,8 +11,10 @@ const mockLoggedInUser: User = {
     {
       title: 'My retirement tattoo',
       description: 'I am retiring and would like to celebrate with a cool tattoo',
-      price: 200,
-      endDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
+      prizeAmount: 200,
+      dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
+      userId: '123456789',
+      deadlineDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
       submissions: [
         {
           images: [],
@@ -40,6 +43,7 @@ const mockLoggedInUser: User = {
 };
 
 const mockOtherUser1: User = {
+  _id: 'abc123457',
   email: 'dwight@gmail.com',
   username: 'dwightk',
   profilePic: '',
@@ -49,8 +53,10 @@ const mockOtherUser1: User = {
     {
       title: 'my new favorite tattoo',
       description: 'I am looking for a cool island tattoo to warm my icy heart.',
-      price: 200,
-      endDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
+      prizeAmount: 200,
+      dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
+      userId: '123456780',
+      deadlineDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
       submissions: [
         {
           images: [],
@@ -80,6 +86,7 @@ const mockOtherUser1: User = {
 };
 
 const mockOtherUser2: User = {
+  _id: 'abc123458',
   email: 'oscar@gmail.com',
   username: 'oscar',
   profilePic: '',
@@ -89,8 +96,10 @@ const mockOtherUser2: User = {
     {
       title: 'Grouchy tattoo',
       description: 'I need a tattoo to show people how grouchy I am',
-      price: 250,
-      endDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
+      prizeAmount: 250,
+      dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
+      userId: '123456788',
+      deadlineDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
       submissions: [
         {
           images: [],
@@ -119,6 +128,7 @@ const mockOtherUser2: User = {
 };
 
 const mockOtherUser3: User = {
+  _id: 'abc123459',
   email: 'kevin@gmail.com',
   username: 'malonescones',
   profilePic: '',
@@ -128,8 +138,10 @@ const mockOtherUser3: User = {
     {
       title: 'my new favorite tattoo',
       description: 'I am looking for a tattoo that expresses how hungry I am',
-      price: 300,
-      endDate: 'Mon Sep 02 2021 00:00:00 GMT+0200',
+      prizeAmount: 300,
+      dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
+      userId: '123456787',
+      deadlineDate: 'Mon Sep 02 2021 00:00:00 GMT+0200',
       submissions: [
         {
           images: [],
