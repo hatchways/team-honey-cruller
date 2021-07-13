@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     margin: 0,
+    borderWidth: 0.5,
+    borderColor: 'rgba(0, 0, 0, .1)',
+    borderStyle: 'solid',
   },
   label: {
     fontSize: '1em',
@@ -20,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '.4rem 0',
     height: '2rem',
     padding: '5px',
+    borderRadius: 0,
   },
   forgot: {
     paddingRight: 10,
@@ -30,11 +34,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     width: 160,
     height: 56,
-    borderRadius: theme.shape.borderRadius,
     marginTop: 49,
     fontSize: 16,
-    backgroundColor: '#3a8dff',
+    backgroundColor: '#000',
     fontWeight: 'bold',
+    borderRadius: 0,
+    color: 'white',
   },
 }));
 

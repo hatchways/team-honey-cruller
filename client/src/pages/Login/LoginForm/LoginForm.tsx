@@ -50,7 +50,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             <Typography className={classes.label}>E-mail</Typography>
             <TextField
               id="email"            
-              variant="outlined"
+              placeholder="Enter e-mail address"
               fullWidth
               margin="normal"
               className={classes.textField}
@@ -70,7 +70,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
             <Typography className={classes.label}>Password</Typography>
             <TextField
               id="password"
-              variant="outlined"
+              placeholder="Enter password"
               fullWidth
               margin="normal"
               className={classes.textField}
@@ -87,7 +87,7 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
           </Box>
           <Box textAlign="center">
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
-              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Login'}
+              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'SIGN IN'}
             </Button>
           </Box>
           <div style={{ height: 95 }} />

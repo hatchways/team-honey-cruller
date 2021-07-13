@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   authHeader: {
-    alignSelf: 'flex-end',
+    // alignSelf: 'flex-end',
     justifyContent: 'space-between',
     alignItems: 'center',
     display: 'flex',

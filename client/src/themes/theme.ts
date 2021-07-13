@@ -10,7 +10,8 @@ export const theme = createMuiTheme({
     },
   },
   palette: {
-    primary: { main: '#3A8DFF' },
+    common: { black: '#000', white: '#fff' },
+    primary: { main: '#000' },
     secondary: { main: '#DCDCDC' },
   },
   shape: {
