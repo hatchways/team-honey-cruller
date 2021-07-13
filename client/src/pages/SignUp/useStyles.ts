@@ -22,10 +22,10 @@ const useStyles = makeStyles(() => ({
     marginTop: '5vh',
   },
   welcome: {
-    fontSize: 26,
+    fontSize: '3em',
     paddingBottom: 20,
     color: '#000000',
-    fontWeight: 700,
+    fontWeight: 900,
     fontFamily: "'Open Sans'",
   },
 }));

@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   tattooArt: {
     fontSize: '2em',
     marginLeft: 20,
-    letterSpacing: '.3em',
+    letterSpacing: '.4em',
   },
   loginButton: {
     color: 'white',
