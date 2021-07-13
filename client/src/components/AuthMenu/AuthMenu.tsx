@@ -1,9 +1,11 @@
 import { useState, MouseEvent } from 'react';
+import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { useAuth } from '../../context/useAuthContext';
+import Typography from '@material-ui/core/Typography';
 
 const AuthMenu = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -24,8 +26,9 @@ const AuthMenu = (): JSX.Element => {
   };
 
   return (
-    <div>
-      <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
+    <Box display="flex" alignItems="center" onClick={handleClick}>
+      <Typography color="secondary">Account</Typography>
+      <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true">
         <MoreHorizIcon />
       </IconButton>
       <Menu
@@ -42,7 +45,7 @@ const AuthMenu = (): JSX.Element => {
       >
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
-    </div>
+    </Box>
   );
 };
 

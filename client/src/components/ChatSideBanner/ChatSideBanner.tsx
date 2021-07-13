@@ -33,7 +33,6 @@ const ChatSideBanner = ({ loggedInUser }: Props): JSX.Element => {
         <Typography className={classes.userText} variant="h5">
           {loggedInUser.username}
         </Typography>
-        <AuthMenu />
       </Box>
       <Box>
         <Typography className={classes.chatTitle} variant="h5">

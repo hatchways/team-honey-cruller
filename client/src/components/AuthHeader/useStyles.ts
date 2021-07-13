@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 0,
     border: '1px solid white',
     color: 'white',
+    width: '10vw',
   },
 }));
 

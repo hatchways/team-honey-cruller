@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import useStyles from './useStyles';
 import Typography from '@material-ui/core/Typography';
 import { useAuth } from '../../context/useAuthContext';
+import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
+import AuthMenu from '../AuthMenu/AuthMenu';
 
 interface Props {
   linkTo: string;
@@ -18,11 +20,17 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
     <Box p={1} className={classes.authHeader}>
       <Typography color="secondary" className={classes.tattooArt}>tattoo art</Typography>
       {loggedInUser ? (
-        <Box justifyContent="space-around">
-          <Typography color="secondary">Discover</Typography>
-          <Typography color="secondary">Messages</Typography>
-          <Typography color="secondary">Notifications</Typography>
-          <Button className={classes.createContestBtn}>create contest</Button>
+        <Box display="flex" justifyContent="space-around" alignItems="center" minWidth="50vw">
+          <Typography color="secondary" display="inline">Discover</Typography>
+          <Typography color="secondary" display="inline">Messages</Typography>
+          <Typography color="secondary" display="inline">Notifications</Typography>
+          <Link to={linkTo}>
+            <Button className={classes.createContestBtn} size="large">{btnText}</Button>
+          </Link>
+          <Box display="flex" alignItems="center">
+            <AvatarDisplay user={loggedInUser} loggedIn={true} />
+            <AuthMenu />
+          </Box>
         </Box>
       )
       :  (
