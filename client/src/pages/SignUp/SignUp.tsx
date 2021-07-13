@@ -43,7 +43,7 @@ export default function Register(): JSX.Element {
       <Grid item xs={12}>
           <AuthHeader linkTo="/login" btnText="SIGN IN" />
           </Grid>
-      <Grid item xs={12} sm={8} md={7} elevation={6} component={Paper} square className={classes.loginContainer}>
+      <Grid item xs={12} sm={7} elevation={6} component={Paper} square className={classes.loginContainer}>
         <Box className={classes.authWrapper}>
           <Box width="100%" maxWidth={450} p={3} alignSelf="center">
             <Grid container>

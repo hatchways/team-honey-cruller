@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     backgroundColor: 'black',
     padding: '2.5rem',
+    [theme.breakpoints.down('xs')]: {
+      justifyContent: 'center',
+    },
   },
   accAside: {
     fontSize: 14,
@@ -43,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: '1px',
     borderStyle: 'solid',
     marginRight: 20,
+    [theme.breakpoints.down('sm')]: {
+      margin: '20px 51px 0 51px',
+    },
     borderRadius: 0,
     width: '10rem',
   },
