@@ -9,20 +9,19 @@ const contestSchema = new Schema({
         type: String,
         required: true,
     },
-    prize_amount: {
+    prizeAmount: {
         type: Number,
         required: true
     },
-    deadline_date: {
+    deadlineDate: {
         type: Date,
         required: true,
     },
-    date_created: {
+    dateCreated: {
         type: Date,
-        required: true,
         default: Date.now
     },
-    user_id: {
+    userId: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }
