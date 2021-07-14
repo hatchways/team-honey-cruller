@@ -9,8 +9,8 @@ interface Props {
 }
 
 const PrivateRoute:React.FC<Props> = (props:Props) => {
-  const authUser = useAuth();
-  return authUser.loggedInUser ? (
+  const { loggedInUser } = useAuth();
+  return loggedInUser ? (
     <Route exact={props.exact} path={props.path} component={props.component} />
   ) : (
     <Redirect to="/login" />
