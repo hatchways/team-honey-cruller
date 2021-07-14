@@ -6,6 +6,7 @@ import { FormikHelpers } from 'formik';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import register from '../../helpers/APICalls/register';
+import login from '../../helpers/APICalls/login';
 import SignUpForm from './SignUpForm/SignUpForm';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import { useAuth } from '../../context/useAuthContext';
@@ -38,11 +39,10 @@ export default function Register(): JSX.Element {
   };
 
   const handleDemoSubmit = (
-    { username, email, password }: { email: string; password: string; username: string },
+    { email, password }: { email: string; password: string },
   ) => {
-    register(username, email, password).then((data) => {
+    login(email, password).then((data) => {
       if (data.error) {
-        console.error({ error: data.error.message });
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
         updateLoginContext(data.success);
@@ -52,7 +52,7 @@ export default function Register(): JSX.Element {
         updateSnackBarMessage('An unexpected error occurred. Please try again');
       }
     });
-  };
+  }; 
 
   return (
     <Grid container component="main" className={classes.root}>
