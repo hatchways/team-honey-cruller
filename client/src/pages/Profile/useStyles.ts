@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     profileImg: {
-        height: 'auto', 
+        height: 'auto',
         width: theme.spacing(25),
         marginBottom: '16px',
         marginTop: '64px'
@@ -23,7 +23,21 @@ const useStyles = makeStyles((theme) => ({
         border: '1px solid #DCDCDC',
         width: '120px',
         height: '50px'
-    }
+    },
+
+    container: {
+        width: '75%',
+        margin: '0 auto'
+    },
+
+    toolbar: {
+        border: 0
+    },
+
+    tabs: {
+        color: '#000000',
+        textColorPrimary: '#000000',
+    },
 
 
 }))
