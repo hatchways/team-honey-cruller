@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 20,
     letterSpacing: -0.29,
     fontWeight: 'bold',
-    marginRight: 14,
+    margin: '0 14px',
   },
   statusText: {
     fontSize: 12,
@@ -33,9 +33,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#D0DAE9',
   },
   online: {
-    background: '#1CED84',
+    backgroundColor: '#1CED84',
   },
-  offline: {},
+  offline: {
+    backgroundColor: '#D0DAE9',
+  },
   ellipsis: {
     color: '#95A7C4',
     marginRight: 24,

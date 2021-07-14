@@ -1,10 +1,8 @@
 import { useState, SyntheticEvent, ChangeEvent } from 'react';
 import FormControl from "@material-ui/core/FormControl";
-import FilledInput from "@material-ui/core/FilledInput";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import Icon from "@material-ui/core/Icon";
+import Input from "@material-ui/core/Input";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import useStyles from './useStyles';
 import { Message } from '../../interface/User';
 
@@ -30,25 +28,23 @@ const MessageInput = (): JSX.Element => {
  }
 
 	return (
-		<FormControl className={classes.root} onSubmit={handleSubmit} fullWidth hiddenLabel>
-					<FilledInput
-						classes={{ root: classes.input }}
-						disableUnderline
-						placeholder='Type something...'
-						value={message.text}
-						name='text'
-						onChange={handleChange}
-						endAdornment={
-							<InputAdornment position='end'>
-								<Icon className={classes.icon}>
-									<EmojiEmotionsOutlinedIcon />
-								</Icon>
-								<Icon className={classes.icon}>
-									<FileCopyIcon />
-								</Icon>
-							</InputAdornment>
-						} />
-				</FormControl>
+      <FormControl onSubmit={handleSubmit} fullWidth hiddenLabel>
+        <Grid container alignContent="center" className={classes.inputContainer}>
+          <Grid item xs={10}>
+            <Input
+              placeholder='Type something...'
+              value={message.text}
+              className={classes.input}
+              name='text'
+              disableUnderline={true}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <Button className={classes.sendBtn} size="large">Send</Button>
+          </Grid>
+        </Grid>
+      </FormControl>
 	);
 }
 

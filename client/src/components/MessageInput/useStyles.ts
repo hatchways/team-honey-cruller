@@ -7,16 +7,23 @@ const useStyles = makeStyles((theme) => ({
     bottom: 5,
     width: '100%',
   },
+  inputContainer: {
+    height: '10vh',
+    borderTop: '1px solid rgba(0,0,0,0.2)',
+  },
   input: {
-    height: 70,
     backgroundColor: '#F4F6FA',
     borderRadius: 8,
+    width: '100%',
+    padding: '15px 0',
   },
-  icon: {
-    opacity: 0.2,
-    cursor: 'pointer',
-    marginLeft: 10,
-    marginRight: 10,
+  sendBtn: {
+    borderRadius: 0,
+    backgroundColor: '#000',
+    border: '1px solid white',
+    color: 'white',
+    width: '100%',
+    height: '100%',
   },
 }));
 

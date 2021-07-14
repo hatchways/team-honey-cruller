@@ -10,7 +10,7 @@ export default function Dashboard(): JSX.Element {
 
   return (
     <Paper className={classes.root}>
-      <MessageHeader online={false} username="other user" />
+      <MessageHeader online={false} username="other user" profilePic="https://drive.google.com/file/d/1RVTa7n2HPZstnko2-MW0FgmSSMdTk5My/view?usp=sharing"/>
       <Box className={classes.chatContainer}>
         <Messages
           conversation={[{
@@ -20,7 +20,7 @@ export default function Dashboard(): JSX.Element {
             recipientId: "",
             recipientName: "",
             recipientPic: "",
-            text: "",
+            text: "Hello World!",
             createdAt: "",
           }]}
           userId=""
