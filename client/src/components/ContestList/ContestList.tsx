@@ -18,15 +18,24 @@ export default function ContestList(): JSX.Element {
         <List className={classes.list}>
             <ListItem>
                 <Avatar className={classes.avatar} alt="Test Contest Image" variant="square" src={LionTatoo} />
-            </ListItem>
             <Grid className={classes.grid} container >
-                
-            <Typography className={classes.typography}>Contest Title Here</Typography>
-            <Typography>Description goes here</Typography>
+                <ListItemText
+                primary={
+                    <>
+                    <Typography className={classes.typography}>Lion tatoo concept in minimal style</Typography>
+                    </>
+                }
+                secondary={
+                    <>
+            <Typography>Looking for cool simplicity ideas of a lion.</Typography>
             <Container className={classes.container}>
                 <Button className={classes.button}>$150</Button>
             </Container>
+            </>
+                }
+                />
             </Grid>
+            </ListItem>
         </List>
         </>
     )

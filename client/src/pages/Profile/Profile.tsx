@@ -35,9 +35,9 @@ export default function Profile(): JSX.Element {
     })
 
     interface TabPanelProps {
-        children: React.ReactNode;
         direction?: string;
         value: number;
+        children: React.ReactNode;
         index: number;
     }
 
@@ -50,9 +50,8 @@ export default function Profile(): JSX.Element {
         return (
             <div
                 role="tabpanel"
-                hidden={value !== props.index}
                 id={`${props.index}`}
-                {...props.direction}>
+                >
                 {value === props.index && (
                     <Container >
                         <Typography>{props.children}</Typography>

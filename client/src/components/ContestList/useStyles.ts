@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '32px',
         justifyContent: 'flex-start',
         flexDirection: 'column',
-        alignItems: 'flex-start'
     },
     typography: {
         fontWeight: 'bold',
@@ -22,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         height: 'auto', 
-        width: 'fit-content',
         marginTop: '32px',
         color: '#3A8DFF'
     },
@@ -30,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         backgroundColor: 'black',
         color: 'white',
-        padding: '8px 16px'
+        padding: '8px 16px',
+        marginLeft: '-20px'
     }
 
 }));
