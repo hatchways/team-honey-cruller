@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(() => ({
   root: {
     borderRadius: 8,
+    borderTop: 'rgba(0, 0, 0, .1)',
+    borderBottom: 'rgba(0, 0, 0, .1)',
     height: 80,
     boxShadow: '0 2px 10px 0 rgba(88,133,196,0.05)',
     marginBottom: 10,

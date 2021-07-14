@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { Box, Badge, Avatar, Typography } from "@material-ui/core";
+import Box from '@material-ui/core/Box';
+import Badge from '@material-ui/core/Badge';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import ConvoContent from '../ConvoContent/ConvoContent';
 import { useAuth } from '../../context/useAuthContext';
