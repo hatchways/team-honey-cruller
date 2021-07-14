@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
     [theme.breakpoints.down('xs')]: {
-      marginRight: 0,
+      margin: 0,
     },
   },
   linkContainer: {
