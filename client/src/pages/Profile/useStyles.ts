@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
         height: '100%'
     },
 
-    profileImg: {
+    avatar: {
         height: 'auto',
         width: theme.spacing(25),
         marginBottom: '16px',
