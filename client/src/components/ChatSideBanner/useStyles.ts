@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     [theme.breakpoints.up('md')]: {
       padding: '2rem 2rem',
-      width: '300px',
+      width: '400px',
     },
   },
   userPanel: {

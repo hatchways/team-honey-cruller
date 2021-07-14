@@ -6,7 +6,7 @@ import useStyles from './useStyles';
 import { User } from '../../interface/User';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import Search from '../Search/Search';
-import AuthMenu from '../AuthMenu/AuthMenu';
+import ConvoCard from '../ConvoCard/ConvoCard';
 
 interface Props {
   loggedInUser: User;
@@ -40,6 +40,7 @@ const ChatSideBanner = ({ loggedInUser }: Props): JSX.Element => {
         </Typography>
         <Search search={search} handleChange={handleChange} />
       </Box>
+      <ConvoCard />
     </Grid>
   );
 };

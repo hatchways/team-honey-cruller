@@ -28,10 +28,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   linkContainer: {
-    [theme.breakpoints.down('md')]: {
+    justifyContent: 'space-between',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
       marginLeft: 49,
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       marginLeft: 0,
     },
   },
