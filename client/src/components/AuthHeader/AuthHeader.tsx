@@ -20,10 +20,10 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
     <Box p={1} className={classes.authHeader}>
       <Typography color="secondary" className={classes.tattooArt}>tattoo art</Typography>
       {loggedInUser ? (
-        <Box display="flex" justifyContent="space-around" alignItems="center" minWidth="50vw">
-          <Typography color="secondary" display="inline">Discover</Typography>
-          <Typography color="secondary" display="inline">Messages</Typography>
-          <Typography color="secondary" display="inline">Notifications</Typography>
+        <Box display="flex" justifyContent="space-around" alignItems="center" minWidth="50vw" flexWrap="wrap" className={classes.linkContainer}>
+          <Typography className={classes.navLink} color="secondary" display="inline">Discover</Typography>
+          <Typography className={classes.navLink} color="secondary" display="inline">Messages</Typography>
+          <Typography className={classes.navLink} color="secondary" display="inline">Notifications</Typography>
           <Link to={linkTo}>
             <Button className={classes.createContestBtn} size="large">{btnText}</Button>
           </Link>

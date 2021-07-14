@@ -8,37 +8,38 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     backgroundColor: 'black',
     padding: '2.5rem',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       justifyContent: 'center',
     },
-  },
-  accAside: {
-    fontSize: 14,
-    color: '#b0b0b0',
-    fontWeight: 400,
-    textAlign: 'center',
-    marginRight: 35,
-    whiteSpace: 'nowrap',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '1rem 0',
-  },
-  link: { textDecoration: 'none' },
-  accBtn: {
-    width: 170,
-    height: 54,
-    borderRadius: theme.shape.borderRadius,
-    filter: 'drop-shadow(0px 2px 6px rgba(74,106,149,0.2))',
-    backgroundColor: '#ffffff',
-    color: '#3a8dff',
-    boxShadow: 'none',
-    marginRight: 35,
   },
   tattooArt: {
     fontSize: '2em',
     marginLeft: 20,
     letterSpacing: '.4em',
     textTransform: 'uppercase',
+    [theme.breakpoints.down('sm')]: {
+      margin: '0 25 0 24',
+      display: 'flex',
+      justifyContent: 'center',
+      width: '100%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginRight: 0,
+    },
+  },
+  linkContainer: {
+    [theme.breakpoints.down('md')]: {
+      marginLeft: 49,
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+    },
+  },
+  navLink: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+    padding: 5,
   },
   loginButton: {
     color: 'white',
@@ -55,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 0,
     border: '1px solid white',
     color: 'white',
-    width: '10vw',
+    width: '10rem',
   },
 }));
 
