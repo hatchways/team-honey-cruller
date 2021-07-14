@@ -15,9 +15,9 @@ function App(): JSX.Element {
   return (
     <MuiThemeProvider theme={theme}>
       <BrowserRouter>
-        {/* <SnackBarProvider>
+        <SnackBarProvider>
           <AuthProvider>
-            <SocketProvider> */}
+            <SocketProvider>
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
@@ -29,9 +29,9 @@ function App(): JSX.Element {
                   <Redirect to="/login" />
                 </Route>
               </Switch>
-            {/* </SocketProvider>
+            </SocketProvider>
           </AuthProvider>
-        </SnackBarProvider> */}
+        </SnackBarProvider>
       </BrowserRouter>
     </MuiThemeProvider>
   );
