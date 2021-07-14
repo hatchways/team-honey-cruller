@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { useAuth } from '../../context/useAuthContext';
 import useStyles from './useStyles'
 import Grid from "@material-ui/core/Grid";
@@ -13,9 +12,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Toolbar from '@material-ui/core/Toolbar';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import Paper from '@material-ui/core/Paper';
-import TabPanel from '@material-ui/lab/TabPanel';
-
-
+import ContestList from '../../components/ContestList/ContestList'
+import AuthHeader from '../../components/AuthHeader/AuthHeader';
+import ProfilePic from '../../Images/profilePic.png';
 
 
 
@@ -35,38 +34,60 @@ export default function Profile(): JSX.Element {
         }
     })
 
-    interface Props {
-        direction?: string, 
-        value: number,
-        index: number,
+    interface TabPanelProps {
+        children: React.ReactNode;
+        direction?: string;
+        value: number;
+        index: number;
     }
 
     const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {
         setValue(valueChange);
     }
 
-    
+    const Panel = function (props: TabPanelProps) {
+
+        return (
+            <div
+                role="tabpanel"
+                hidden={value !== props.index}
+                id={`${props.index}`}
+                {...props.direction}>
+                {value === props.index && (
+                    <Container >
+                        <Typography>{props.children}</Typography>
+                    </Container>
+                )}
+            </div>
+        );
+    }
+
+
 
     // if(loggedInUser){
     return (
         <>
+            <AuthHeader linkTo="/signup" btnText="sign up" />
             <Grid className={classes.grid} container alignItems="center" direction="column">
-                <Avatar alt="Profile Image" src={`https://robohash.org/image.png`} className={classes.avatar}></Avatar>
-                <Typography className={classes.user}> Username here</Typography>
+                <Avatar alt="Profile Image" src={ProfilePic} className={classes.avatar}></Avatar>
+                <Typography className={classes.user}>Kenneth Stewart</Typography>
                 <Button className={classes.button}>Edit Profile</Button>
                 <Container className={classes.container}>
                     <Toolbar className={classes.toolbar}>
                         <ThemeProvider theme={newTheme}>
-                            <Tabs className={classes.tabs} value={value} onChange={handleChange} textColor="primary">
+                            <Tabs className={classes.tabs} value={value} onChange={handleChange} textColor="primary" variant="fullWidth">
                                 <Tab label="IN PROGRESS" />
                                 <Tab label="COMPLETED" />
                             </Tabs>
                         </ThemeProvider>
                     </Toolbar>
                     <Paper square elevation={3}>
-                        {/* <TabPanel>
-
-                        </TabPanel> */}
+                        <Panel value={value} index={0}>
+                            <ContestList />
+                        </Panel>
+                        <Panel value={value} index={1}>
+                            <ContestList />
+                        </Panel>
                     </Paper>
                 </Container>
             </Grid>

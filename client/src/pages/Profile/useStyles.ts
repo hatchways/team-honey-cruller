@@ -7,8 +7,8 @@ const useStyles = makeStyles((theme) => ({
     },
 
     avatar: {
-        height: 'auto',
-        width: theme.spacing(25),
+        height: '125px',
+        width: theme.spacing(17),
         marginBottom: '16px',
         marginTop: '64px'
     },
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     button: {
-        color: 'black',
+        color: '#000000',
         margin: '32px',
         border: '1px solid #DCDCDC',
         width: '120px',
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
     container: {
         width: '75%',
-        margin: '0 auto'
+        marginTop: '32px'
     },
 
     toolbar: {
@@ -37,7 +37,9 @@ const useStyles = makeStyles((theme) => ({
     tabs: {
         color: '#000000',
         textColorPrimary: '#000000',
-    },
+        width: '100%',
+        fontWeight: 'bold'
+    }
 
 
 }))
