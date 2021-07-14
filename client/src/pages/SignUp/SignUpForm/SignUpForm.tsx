@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
@@ -7,8 +6,6 @@ import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
-import {mockLoggedInUser} from '../../../mocks/mockUser';
-import { AuthContext } from '../../../context/useAuthContext';
 
 interface Props {
   handleSubmit: (
@@ -30,11 +27,22 @@ interface Props {
       username: string;
     }>,
   ) => void;
+
+  handleDemoSubmit: (
+    {
+      username,
+      email,
+      password,
+    }: {
+      email: string;
+      password: string;
+      username: string;
+    },
+  ) => void;
 }
 
-const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
+  const SignUpForm = ({ handleSubmit, handleDemoSubmit }: Props): JSX.Element => {
   const classes = useStyles();
-  const {updateLoginContext} = useContext(AuthContext)
 
   return (
     <Formik
@@ -117,11 +125,7 @@ const SignUpForm = ({ handleSubmit }: Props): JSX.Element => {
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'SIGN IN'}
             </Button>
-            <Button onClick={() => updateLoginContext({
-                user: mockLoggedInUser, 
-                message: `${mockLoggedInUser.username} is now logged in`,
-                token: "123456789abc"
-            })} size="large" variant="contained" color="primary" className={classes.submit}>
+            <Button onClick={() => handleDemoSubmit({email: "stanley@gmail.com", username: "stanleythemanly", password: "123456"})} size="large" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'DEMO'}
             </Button>
           </Box>

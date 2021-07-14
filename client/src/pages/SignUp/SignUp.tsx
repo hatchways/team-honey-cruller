@@ -37,6 +37,23 @@ export default function Register(): JSX.Element {
     });
   };
 
+  const handleDemoSubmit = (
+    { username, email, password }: { email: string; password: string; username: string },
+  ) => {
+    register(username, email, password).then((data) => {
+      if (data.error) {
+        console.error({ error: data.error.message });
+        updateSnackBarMessage(data.error.message);
+      } else if (data.success) {
+        updateLoginContext(data.success);
+      } else {
+        // should not get here from backend but this catch is for an unknown issue
+        console.error({ data });
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
+    });
+  };
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -53,7 +70,7 @@ export default function Register(): JSX.Element {
                 </Typography>
               </Grid>
             </Grid>
-            <SignUpForm handleSubmit={handleSubmit} />
+            <SignUpForm handleSubmit={handleSubmit} handleDemoSubmit={handleDemoSubmit}/>
           </Box>
           <Box p={1} alignSelf="center" />
         </Box>
