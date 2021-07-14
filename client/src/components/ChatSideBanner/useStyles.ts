@@ -6,12 +6,10 @@ const useStyles = makeStyles((theme) => ({
   chatSideBanner: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
+    height: '80vh',
     padding: '1rem 1rem',
-    width: drawerWidth,
     [theme.breakpoints.up('md')]: {
       padding: '2rem 2rem',
-      width: '300px',
     },
   },
   userPanel: {
@@ -19,10 +17,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     marginBottom: '2rem',
   },
-  userText: {
-    fontWeight: 700,
-    paddingLeft: '1rem',
-    fontSize: 16,
+  heading: {
+    fontWeight: 900,
   },
   chatTitle: {
     fontWeight: 700,

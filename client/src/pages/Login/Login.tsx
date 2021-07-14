@@ -29,8 +29,23 @@ export default function Login(): JSX.Element {
       } else {
         // should not get here from backend but this catch is for an unknown issue
         console.error({ data });
-
         setSubmitting(false);
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
+    });
+  };
+
+  const handleDemoSubmit = (
+    { email, password }: { email: string; password: string },
+  ) => {
+    login(email, password).then((data) => {
+      if (data.error) {
+        updateSnackBarMessage(data.error.message);
+      } else if (data.success) {
+        updateLoginContext(data.success);
+      } else {
+        // should not get here from backend but this catch is for an unknown issue
+        console.error({ data });
         updateSnackBarMessage('An unexpected error occurred. Please try again');
       }
     });
@@ -52,7 +67,7 @@ export default function Login(): JSX.Element {
                 </Typography>
               </Grid>
             </Grid>
-            <LoginForm handleSubmit={handleSubmit} />
+            <LoginForm handleSubmit={handleSubmit} handleDemoSubmit={handleDemoSubmit} />
           </Box>
           <Box p={1} alignSelf="center" />
         </Box>
