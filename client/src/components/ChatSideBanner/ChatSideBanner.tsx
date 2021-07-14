@@ -4,21 +4,18 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { User } from '../../interface/User';
-import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import Search from '../Search/Search';
 import ConvoCard from '../ConvoCard/ConvoCard';
 
 interface Props {
-  loggedInUser: User;
   handleDrawerToggle?: () => void;
 }
 
-const ChatSideBanner = ({ loggedInUser }: Props): JSX.Element => {
+const ChatSideBanner = (): JSX.Element => {
   const [search, setSearch] = useState<string>('test');
   const [newChatUser, setNewChatUser] = useState<User | null>(null);
   const classes = useStyles();
 
-  // React.FormEvent<FormControl & FormControlProps>)
   const handleChange = (e: ChangeEvent<HTMLInputElement>, newInputValue: string) => {
     setSearch(newInputValue);
     if (newChatUser) {
@@ -32,9 +29,6 @@ const ChatSideBanner = ({ loggedInUser }: Props): JSX.Element => {
         <Typography variant="h5" className={classes.heading}>Inbox Messages</Typography>
       </Box>
       <Box>
-        <Typography className={classes.chatTitle} variant="h5">
-          Users
-        </Typography>
         <Search search={search} handleChange={handleChange} />
       </Box>
       <ConvoCard />
