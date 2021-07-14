@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexGrow: 8,
     flexDirection: 'column',
-    minHeight: '100vh',
+    minHeight: '80vh',
   },
   chatContainer: {
     display: 'flex',
@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     flexGrow: 1,
     justifyContent: 'space-between',
-    overflowY: 'scroll',
     maxHeight: '80vh',
     '&::-webkit-scrollbar': {
       display: 'none',

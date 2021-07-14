@@ -40,7 +40,7 @@ export default function Dashboard(): JSX.Element {
         <ChatSideBanner loggedInUser={loggedInUser} />
       </Grid>
       <Grid item xs={12} sm={6} md={8}>
-        <Paper elevation={6}>
+        <Paper elevation={3} className={classes.chat}>
           <ActiveChat />
         </Paper>
       </Grid>

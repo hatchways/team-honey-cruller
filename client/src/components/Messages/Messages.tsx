@@ -13,11 +13,11 @@ const Messages = ({ conversation, userId }: Props): JSX.Element => {
   const classes = useStyles();
 	const messagesEnd = useRef<HTMLInputElement>(null);
 
-	useEffect(() => {
-    if(messagesEnd.current) {
-      messagesEnd.current.scrollIntoView();
-    }
-	});
+	// useEffect(() => {
+  //   if(messagesEnd.current) {
+  //     messagesEnd.current.scrollIntoView();
+  //   }
+	// });
 
 	return (
 		<Box className={classes.root}>
