@@ -26,18 +26,20 @@ interface Submission {
   artistId: string;
 }
 
-interface Conversation {
+export interface Conversation {
   room: string;
   messages: Message[];
 }
 
-interface Message {
+export interface Message {
   senderId: string;
   senderName: string;
   senderPic: string;
   recipientId: string;
   recipientName: string;
   recipientPic: string;
+  text: string;
+  createdAt: string;
 }
 
 export interface SearchUsersApiData {
