@@ -22,7 +22,6 @@ const MessageInput = (): JSX.Element => {
  const classes = useStyles();
 
  const handleSubmit = (e: SyntheticEvent<HTMLInputElement>) => {
-
    //post new message
  }
 
@@ -48,7 +47,7 @@ const MessageInput = (): JSX.Element => {
 									<FileCopyIcon />
 								</Icon>
 							</InputAdornment>
-						}></FilledInput>
+						} />
 				</FormControl>
 	);
 }

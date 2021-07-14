@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   chatSideBanner: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
+    height: '80vh',
     padding: '1rem 1rem',
     [theme.breakpoints.up('md')]: {
       padding: '2rem 2rem',

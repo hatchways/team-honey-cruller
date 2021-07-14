@@ -2,15 +2,12 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    justifySelf: 'flex-end',
     marginTop: 15,
     position: 'sticky',
-    alignSelf: 'flex-end',
-    bottom: 1,
+    bottom: 5,
     width: '100%',
   },
   input: {
-    minWidth: '73vw',
     height: 70,
     backgroundColor: '#F4F6FA',
     borderRadius: 8,
