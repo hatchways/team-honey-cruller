@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   inputContainer: {
     height: '10vh',
     borderTop: '1px solid rgba(0,0,0,0.2)',
+    padding: '0 30px',
   },
   input: {
     backgroundColor: '#F4F6FA',

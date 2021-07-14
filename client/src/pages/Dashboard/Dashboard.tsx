@@ -44,8 +44,8 @@ export default function Dashboard(): JSX.Element {
           <ChatDrawer />
         </Hidden>
       </Grid>
-      <Grid item xs={12} sm={6} md={8}>
-        <Paper elevation={3} className={classes.chat}>
+      <Grid item xs={12} sm={6} md={8} className={classes.chatWrapper}>
+        <Paper elevation={3}>
           <ActiveChat />
         </Paper>
       </Grid>

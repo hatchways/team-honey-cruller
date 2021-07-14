@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
       width: '300px',
     },
   },
-  chat: {
-    minHeight: '80vh',
+  chatWrapper: {
+    flex: 1,
   },
 }));
 

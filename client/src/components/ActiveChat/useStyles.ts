@@ -5,18 +5,23 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexGrow: 8,
     flexDirection: 'column',
-    minHeight: '80vh',
   },
   chatContainer: {
     display: 'flex',
-    marginLeft: 41,
-    marginRight: 41,
     flexDirection: 'column',
-    flexGrow: 1,
     justifyContent: 'space-between',
-    maxHeight: '80vh',
     '&::-webkit-scrollbar': {
       display: 'none',
+    },
+    height: '65vh',
+    [theme.breakpoints.down('md')]: {
+      height: '65vh',
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: '60vh',
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: '48vh',
     },
   },
 }));
