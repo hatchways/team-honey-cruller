@@ -24,30 +24,26 @@ export default function ContestList({ userContests }: Props): JSX.Element {
 
                 <List className={classes.list}>
                     {/* map through given data and alter the return inside of the map */}
-                    {userContests.map(contest => {
-                        return (
-                            <ListItem key={contest.userId}>
+                    {userContests.map(contest => (
+                        <>
+                            {console.log(contest)}
+                            <ListItem key={contest.title}>
                                 <Avatar className={classes.avatar} alt="Test Contest Image" variant="square" src={LionTatoo} />
-                                <Grid className={classes.grid} container >
+                                <Grid className={classes.grid} container>
                                     <ListItemText
-                                        primary={
-                                            <>
-                                                <Typography className={classes.typography}>{contest.title}</Typography>
-                                            </>
-                                        }
-                                        secondary={
-                                            <>
-                                                <Typography>{contest.description}</Typography>
-                                                <Container className={classes.container}>
-                                                    <Button className={classes.button}>{contest.prizeAmount}</Button>
-                                                </Container>
-                                            </>
-                                        }
-                                    />
+                                        primary={<>
+                                            <Typography className={classes.typography}>{contest.title}</Typography>
+                                        </>}
+                                        secondary={<>
+                                            <Typography>{contest.description}</Typography>
+                                            <Container className={classes.container}>
+                                                <Button className={classes.button}>{contest.prizeAmount}</Button>
+                                            </Container>
+                                        </>} />
                                 </Grid>
                             </ListItem>
-                        )
-                    })}
+                        </>
+                    ))}
                 </List>
 
             ) : (<Typography> None Available </Typography>)}

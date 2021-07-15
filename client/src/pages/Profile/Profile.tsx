@@ -46,10 +46,13 @@ export default function Profile(): JSX.Element {
 
     useEffect(() => {
         async function getUserContests() {
-            const userContests = await getContestByUser();
-
-            if (userContests.contests) {
-                setContests(userContests.contests);
+            try {
+                const userContests = await getContestByUser();
+                if (userContests.contests) {
+                    setContests(userContests.contests);
+                }
+            } catch (err) {
+                console.log(err)
             }
         }
 

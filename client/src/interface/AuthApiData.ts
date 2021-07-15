@@ -13,7 +13,7 @@ export interface AuthApiData {
   contests?: [Contest]
 }
 
-export interface AuthApiId {
+export interface ContestById {
   contest?: Contest;
   error?: { message: string };
   success?: AuthApiDataSuccess;

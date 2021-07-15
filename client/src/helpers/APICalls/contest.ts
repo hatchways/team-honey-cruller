@@ -1,5 +1,5 @@
 import { FetchOptions } from '../../interface/FetchOptions';
-import { AuthApiData, AuthApiId } from '../../interface/AuthApiData';
+import { AuthApiData, ContestById } from '../../interface/AuthApiData';
 
 export const getAllContests = async (): Promise<AuthApiData> => {
     const fetchData: FetchOptions = {
@@ -34,5 +34,5 @@ export const getContestById = async (): Promise<AuthApiData> => {
 
     return await fetch('/contest', fetchData)
     .then(data => data.json())
-    .catch(err => ({ error: { message: 'Could not find Contest'}}))
+    .catch(err => ({ error: { message: 'Could not find Contest.'}}))
 }
