@@ -24,7 +24,18 @@ const contestSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    images: [
+        {
+            type: String
+        }
+    ],
+    submissions: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Submission'
+        }
+    ]
 });
 
 
