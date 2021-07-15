@@ -62,7 +62,7 @@ export default function Profile(): JSX.Element {
             const filter = contests.filter(contest => new Date() < new Date(contest.deadlineDate))
 
             return filter
-        } 
+        }
 
         return contests
 
@@ -72,7 +72,6 @@ export default function Profile(): JSX.Element {
     //create a function to figure out if a contest is no longer active 
     const isComplete = () => {
         if (contests) {
-
             const filter = contests.filter(contest => new Date() > new Date(contest.deadlineDate))
 
             return filter
@@ -104,11 +103,10 @@ export default function Profile(): JSX.Element {
 
     return loggedInUser ? (
         <>
-        
             <AuthHeader linkTo="/signup" btnText="sign up" />
             <Grid className={classes.grid} container alignItems="center" direction="column">
                 <Avatar alt="Profile Image" src={ProfilePic} className={classes.avatar}></Avatar>
-                <Typography className={classes.user}>Kenneth Stewart</Typography>
+                <Typography className={classes.user}>{loggedInUser.username}</Typography>
                 <Button className={classes.button}>Edit Profile</Button>
                 <Container className={classes.container}>
                     <Toolbar className={classes.toolbar}>

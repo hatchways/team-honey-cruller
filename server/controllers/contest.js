@@ -4,12 +4,12 @@ const asyncHandler = require("express-async-handler");
 exports.createContest = asyncHandler(async (req, res) => {
     console.log(req.user)
     try {
-        const contest = await Contest.create({ 
-        title: req.body.title,
-        description: req.body.description,
-        prizeAmount: req.body.prizeAmount,
-        deadlineDate: req.body.deadlineDate,
-        userId: req.user.id
+        const contest = await Contest.create({
+            title: req.body.title,
+            description: req.body.description,
+            prizeAmount: req.body.prizeAmount,
+            deadlineDate: req.body.deadlineDate,
+            userId: req.user.id
         });
         res.status(201).json(contest);
     } catch (err) {
@@ -21,7 +21,7 @@ exports.updateContest = asyncHandler(async (req, res) => {
     try {
         const update = await Contest.findOneAndUpdate({
             _id: req.params.id
-        }, req.body , {
+        }, req.body, {
             new: true
         });
 
