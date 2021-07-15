@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
       margin: '0 25 0 24',
       display: 'flex',
       justifyContent: 'center',
+      textAlign: 'center',
       width: '100%',
     },
     [theme.breakpoints.down('xs')]: {
