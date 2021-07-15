@@ -51,7 +51,7 @@ export default function Profile(): JSX.Element {
             <div
                 role="tabpanel"
                 id={`${props.index}`}
-                >
+            >
                 {value === props.index && (
                     <Container >
                         <Typography>{props.children}</Typography>
@@ -62,8 +62,6 @@ export default function Profile(): JSX.Element {
     }
 
 
-
-    // if(loggedInUser){
     return (
         <>
             <AuthHeader linkTo="/signup" btnText="sign up" />
@@ -92,7 +90,5 @@ export default function Profile(): JSX.Element {
             </Grid>
         </>
     )
-    // } else {
-    //     return <CircularProgress />;
-    // }
+   
 }

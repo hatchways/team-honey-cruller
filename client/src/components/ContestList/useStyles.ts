@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '22px'
     },
     container: {
-        height: 'auto', 
+        height: 'auto',
         marginTop: '32px',
         color: '#3A8DFF'
     },
