@@ -1,9 +1,12 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(() => {
+const useStyles = makeStyles(() => ({
   root: {
 
+  },
+  header: {
+    fontWeight: 'bold',
   }
-});
+}));
 
 export default useStyles;
