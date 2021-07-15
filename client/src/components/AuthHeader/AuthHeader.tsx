@@ -21,7 +21,9 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
       <Typography color="secondary" className={classes.tattooArt}>tattoo art</Typography>
       {loggedInUser ? (
         <Box display="flex" justifyContent="space-between" alignItems="center" minWidth="55vw" flexWrap="wrap" className={classes.linkContainer}>
-          <Typography className={classes.navLink} color="secondary" display="inline">Discover</Typography>
+          <Link to="/submitdesign/99">
+            <Typography className={classes.navLink} color="secondary" display="inline">Discover</Typography>
+          </Link>
           <Typography className={classes.navLink} color="secondary" display="inline">Messages</Typography>
           <Typography className={classes.navLink} color="secondary" display="inline">Notifications</Typography>
           <Link to={linkTo}>
