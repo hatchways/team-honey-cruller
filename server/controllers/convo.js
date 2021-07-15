@@ -13,7 +13,8 @@ module.exports = {
           foreignField: '_id',
           as: 'recipientObj',
         },
-      }, ])
+      },
+     ])
       .match({
         recipients: {
           $all: [{
@@ -27,7 +28,7 @@ module.exports = {
         'recipientObj.password': 0,
         'recipientObj.__v': 0,
       })
-      .exec((err, conversations) => {
+      .exec(async (err, conversations) => {
         if (err) {
           console.log(err);
           res.setHeader('Content-Type', 'application/json');
@@ -36,7 +37,8 @@ module.exports = {
           }));
           res.sendStatus(500);
         } else {
-          res.send(conversations);
+          const populated = await Conversation.populate(conversations, {path: "recipients", select: '-__v -password -register_date'})
+          res.send(populated);
         }
       });
   }),

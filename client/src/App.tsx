@@ -8,7 +8,6 @@ import Profile from './pages/Profile/Profile';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
-
 import './App.css';
 
 function App(): JSX.Element {
