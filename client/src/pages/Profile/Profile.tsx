@@ -15,12 +15,14 @@ import Paper from '@material-ui/core/Paper';
 import ContestList from '../../components/ContestList/ContestList'
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import ProfilePic from '../../Images/profilePic.png';
+import { Contest } from '../../interface/User';
 
 
 
 export default function Profile(): JSX.Element {
     const classes = useStyles();
     const [value, setValue] = useState(0);
+    const [contests, setContests] = useState<[Contest]>()
     const { loggedInUser } = useAuth();
 
     const newTheme = createMuiTheme({
@@ -78,7 +80,7 @@ export default function Profile(): JSX.Element {
                             </Tabs>
                         </ThemeProvider>
                     </Toolbar>
-                    <Paper square elevation={3}>
+                    <Paper square elevation={2}>
                         <Panel value={value} index={0}>
                             <ContestList />
                         </Panel>
@@ -90,5 +92,4 @@ export default function Profile(): JSX.Element {
             </Grid>
         </>
     )
-   
 }
