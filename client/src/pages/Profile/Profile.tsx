@@ -56,9 +56,20 @@ export default function Profile(): JSX.Element {
         getUserContests();
     }, []);
 
-        // create function to figure out if a contest is still active
+    // create function to figure out if a contest is still active
+    const isActiveContest = () => {
+        const filter = contests.filter(contest => new Date() < new Date(contest.deadlineDate))
 
-        //create a function to figure out if a contest is no longer active 
+        return filter
+    }
+
+
+    //create a function to figure out if a contest is no longer active 
+    const isCompleteContest = () => {
+        const filter = contests.filter(contest => new Date() > new Date(contest.deadlineDate))
+
+        return filter
+    }
 
     const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {
         setValue(valueChange);
@@ -81,7 +92,7 @@ export default function Profile(): JSX.Element {
     }
 
 
-    return (
+    return loggedInUser ? (
         <>
             <AuthHeader linkTo="/signup" btnText="sign up" />
             <Grid className={classes.grid} container alignItems="center" direction="column">
@@ -100,14 +111,14 @@ export default function Profile(): JSX.Element {
                     </Toolbar>
                     <Paper square elevation={2}>
                         <Panel value={value} index={0}>
-                            <ContestList data={contests} />
+                            <ContestList userContests={isActive()} />
                         </Panel>
                         <Panel value={value} index={1}>
-                            <ContestList data={contests}/>
+                            <ContestList userContests={isComplete()} />
                         </Panel>
                     </Paper>
                 </Container>
             </Grid>
         </>
-    )
+    ) : ( <CircularProgress />)
 }

@@ -11,20 +11,20 @@ import { Contest } from '../../interface/User';
 import LionTatoo from "../../Images/lionTatoo.png";
 
 interface Props {
-    data: Contest[];
+    userContests: Contest[];
 }
 
-export default function ContestList({ data }: Props): JSX.Element {
+export default function ContestList({ userContests }: Props): JSX.Element {
     const classes = useStyles();
 
     return (
         <>
             {/* Write ternary operator checking to see if any data has been recieved, otherwise return default message */}
-            {data.length > 0 ? (
+            {userContests.length > 0 ? (
 
                 <List className={classes.list}>
                     {/* map through given data and alter the return inside of the map */}
-                    {data.map(contest => {
+                    {userContests.map(contest => {
                         return (
                             <ListItem>
                                 <Avatar className={classes.avatar} alt="Test Contest Image" variant="square" src={LionTatoo} />
