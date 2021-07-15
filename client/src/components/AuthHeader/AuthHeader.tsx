@@ -14,35 +14,50 @@ interface Props {
 
 const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
   const classes = useStyles();
-    const { loggedInUser } = useAuth();
+  const { loggedInUser } = useAuth();
 
   return (
     <Box p={1} className={classes.authHeader}>
-      <Typography color="secondary" className={classes.tattooArt}>tattoo art</Typography>
+      <Typography color="secondary" className={classes.tattooArt}>
+        tattoo art
+      </Typography>
       {loggedInUser ? (
-        <Box display="flex" justifyContent="space-between" alignItems="center" minWidth="55vw" flexWrap="wrap" className={classes.linkContainer}>
-          <Link to="/submitdesign/99">
-            <Typography className={classes.navLink} color="secondary" display="inline">Discover</Typography>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          minWidth="55vw"
+          flexWrap="wrap"
+          className={classes.linkContainer}
+        >
+          <Link to="/submit-design/99">
+            <Typography className={classes.navLink} color="secondary" display="inline">
+              Discover
+            </Typography>
           </Link>
-          <Typography className={classes.navLink} color="secondary" display="inline">Messages</Typography>
-          <Typography className={classes.navLink} color="secondary" display="inline">Notifications</Typography>
+          <Typography className={classes.navLink} color="secondary" display="inline">
+            Messages
+          </Typography>
+          <Typography className={classes.navLink} color="secondary" display="inline">
+            Notifications
+          </Typography>
           <Link to={linkTo}>
-            <Button className={classes.createContestBtn} size="large">{btnText}</Button>
+            <Button className={classes.createContestBtn} size="large">
+              {btnText}
+            </Button>
           </Link>
           <Box display="flex" alignItems="center">
             <AvatarDisplay user={loggedInUser} loggedIn={true} />
             <AuthMenu />
           </Box>
         </Box>
-      )
-      :  (
-      <Link to={linkTo}>
-        <Button className={classes.loginButton} size="large">
-          {btnText}
-        </Button>
-      </Link>
-      )
-      }
+      ) : (
+        <Link to={linkTo}>
+          <Button className={classes.loginButton} size="large">
+            {btnText}
+          </Button>
+        </Link>
+      )}
     </Box>
   );
 };

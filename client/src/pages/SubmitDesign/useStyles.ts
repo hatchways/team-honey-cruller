@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  container: {},
   paperContainer: {
     height: '65vh',
     display: 'flex',

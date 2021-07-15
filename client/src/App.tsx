@@ -21,7 +21,7 @@ function App(): JSX.Element {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <Route exact path="/submitdesign/:id" component={SubmitDesign} />
+                <Route exact path="/submit-design/:id" component={SubmitDesign} />
                 <Route exact path="/dashboard">
                   <Dashboard />
                 </Route>
