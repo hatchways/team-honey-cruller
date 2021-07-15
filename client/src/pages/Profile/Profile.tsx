@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/useAuthContext';
 import useStyles from './useStyles'
 import Grid from "@material-ui/core/Grid";
@@ -16,6 +16,7 @@ import ContestList from '../../components/ContestList/ContestList'
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import ProfilePic from '../../Images/profilePic.png';
 import { Contest } from '../../interface/User';
+import { getContestByUser } from '../../helpers/APICalls/contest';
 
 
 
@@ -42,6 +43,22 @@ export default function Profile(): JSX.Element {
         children: React.ReactNode;
         index: number;
     }
+
+    useEffect(() => {
+        async function getUserContests() {
+            const userContests = await getContestByUser();
+
+            if (userContests) {
+                setContests(userContests.contests);
+            }
+        }
+
+        getUserContests();
+    }, []);
+
+        // create function to figure out if a contest is still active
+
+        //create a function to figure out if a contest is no longer active 
 
     const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {
         setValue(valueChange);
@@ -77,6 +94,7 @@ export default function Profile(): JSX.Element {
                             <Tabs className={classes.tabs} value={value} onChange={handleChange} textColor="primary" variant="fullWidth">
                                 <Tab label="IN PROGRESS" />
                                 <Tab label="COMPLETED" />
+                                <Tab label="SUBMISSIONS" />
                             </Tabs>
                         </ThemeProvider>
                     </Toolbar>

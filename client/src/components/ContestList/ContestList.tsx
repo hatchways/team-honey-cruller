@@ -6,16 +6,21 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import useStyles from './useStyles'
+import useStyles from './useStyles';
+import { Contest } from '../../interface/User';
 import LionTatoo from "../../Images/lionTatoo.png";
 
+interface Props {
+    data: Contest[];
+}
 
-export default function ContestList(): JSX.Element {
+export default function ContestList({ data }: Props): JSX.Element {
     const classes = useStyles();
 
     return (
         <>
             <List className={classes.list}>
+                {/* map through given data and alter the return inside of the map */}
                 <ListItem>
                     <Avatar className={classes.avatar} alt="Test Contest Image" variant="square" src={LionTatoo} />
                     <Grid className={classes.grid} container >
