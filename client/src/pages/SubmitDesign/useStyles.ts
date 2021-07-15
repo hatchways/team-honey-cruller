@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '2rem',
     textAlign: 'center',
   },
+  mutedText: {
+    color: 'rgba(0, 0, 0, .5)',
+  },
   bottomLine: {
     marginBottom: '2rem',
   },

@@ -25,8 +25,8 @@ export default function SubmitDesign(): JSX.Element {
             <Typography variant="h5" className={classes.chooseFile}>
               Click to choose a file
             </Typography>
-            <Typography>High resolution images</Typography>
-            <Typography className={classes.bottomLine}>PNG, JPG, GIF</Typography>
+            <Typography className={classes.mutedText}>High resolution images</Typography>
+            <Typography className={`${classes.bottomLine} ${classes.mutedText}`}>PNG, JPG, GIF</Typography>
           </Paper>
           <Button className={classes.uploadBtn}>submit</Button>
         </Grid>
