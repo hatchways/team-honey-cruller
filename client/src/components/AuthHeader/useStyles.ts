@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'center',
     },
+    flex: 1,
   },
   tattooArt: {
     fontSize: '2em',
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
       margin: '0 25 0 24',
       display: 'flex',
       justifyContent: 'center',
+      textAlign: 'center',
       width: '100%',
     },
     [theme.breakpoints.down('xs')]: {
