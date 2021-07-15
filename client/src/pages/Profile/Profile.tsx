@@ -100,10 +100,10 @@ export default function Profile(): JSX.Element {
                     </Toolbar>
                     <Paper square elevation={2}>
                         <Panel value={value} index={0}>
-                            <ContestList />
+                            <ContestList data={contests} />
                         </Panel>
                         <Panel value={value} index={1}>
-                            <ContestList />
+                            <ContestList data={contests}/>
                         </Panel>
                     </Paper>
                 </Container>
