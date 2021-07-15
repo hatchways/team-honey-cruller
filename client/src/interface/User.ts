@@ -15,7 +15,6 @@ export interface Contest {
   prizeAmount: number;
   deadlineDate: string;
   dateCreated: string;
-  images: string[];
   userId: string;
   submissions: Submission[];
 }

@@ -23,7 +23,7 @@ import { getContestByUser } from '../../helpers/APICalls/contest';
 export default function Profile(): JSX.Element {
     const classes = useStyles();
     const [value, setValue] = useState(0);
-    const [contests, setContests] = useState<[Contest]>()
+    const [contests, setContests] = useState<Contest[]>([]);
     const { loggedInUser } = useAuth();
 
     const newTheme = createMuiTheme({
@@ -48,7 +48,7 @@ export default function Profile(): JSX.Element {
         async function getUserContests() {
             const userContests = await getContestByUser();
 
-            if (userContests) {
+            if (userContests.contests) {
                 setContests(userContests.contests);
             }
         }
@@ -57,18 +57,28 @@ export default function Profile(): JSX.Element {
     }, []);
 
     // create function to figure out if a contest is still active
-    const isActiveContest = () => {
-        const filter = contests.filter(contest => new Date() < new Date(contest.deadlineDate))
+    const isActive = () => {
+        if (contests) {
+            const filter = contests.filter(contest => new Date() < new Date(contest.deadlineDate))
 
-        return filter
+            return filter
+        } 
+
+        return contests
+
     }
 
 
     //create a function to figure out if a contest is no longer active 
-    const isCompleteContest = () => {
-        const filter = contests.filter(contest => new Date() > new Date(contest.deadlineDate))
+    const isComplete = () => {
+        if (contests) {
 
-        return filter
+            const filter = contests.filter(contest => new Date() > new Date(contest.deadlineDate))
+
+            return filter
+        }
+
+        return contests;
     }
 
     const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {
@@ -94,6 +104,7 @@ export default function Profile(): JSX.Element {
 
     return loggedInUser ? (
         <>
+        
             <AuthHeader linkTo="/signup" btnText="sign up" />
             <Grid className={classes.grid} container alignItems="center" direction="column">
                 <Avatar alt="Profile Image" src={ProfilePic} className={classes.avatar}></Avatar>
@@ -105,7 +116,6 @@ export default function Profile(): JSX.Element {
                             <Tabs className={classes.tabs} value={value} onChange={handleChange} textColor="primary" variant="fullWidth">
                                 <Tab label="IN PROGRESS" />
                                 <Tab label="COMPLETED" />
-                                <Tab label="SUBMISSIONS" />
                             </Tabs>
                         </ThemeProvider>
                     </Toolbar>
@@ -120,5 +130,5 @@ export default function Profile(): JSX.Element {
                 </Container>
             </Grid>
         </>
-    ) : ( <CircularProgress />)
+    ) : (<CircularProgress />)
 }

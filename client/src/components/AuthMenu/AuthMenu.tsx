@@ -1,6 +1,7 @@
 import { useState, MouseEvent } from 'react';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
+import { Link } from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -48,6 +49,9 @@ const AuthMenu = (): JSX.Element => {
         getContentAnchorEl={null}
       >
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      <Link to='/profile'>
+        <MenuItem>Profile</MenuItem>
+      </Link>
       </Menu>
     </Box>
   );
