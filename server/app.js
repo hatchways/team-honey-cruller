@@ -18,7 +18,7 @@ const { json, urlencoded } = express;
 connectDB();
 const app = express();
 const server = http.createServer(app);
-
+const cache = {};
 const io = socketio(server, {
   cors: {
     origin: "*",
@@ -26,7 +26,7 @@ const io = socketio(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("connected");
+  console.log("connected", socket);
 });
 
 if (process.env.NODE_ENV === "development") {
@@ -38,7 +38,8 @@ app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
 app.use((req, res, next) => {
-  req.io = io;
+  req.io = { io, cache };
+  
   next();
 });
 

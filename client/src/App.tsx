@@ -32,7 +32,7 @@ function App(): JSX.Element {
                 </Route>
               </Switch>
             </SocketProvider>
-          </AuthProvider>
+           </AuthProvider>
         </SnackBarProvider>
       </BrowserRouter>
     </MuiThemeProvider>

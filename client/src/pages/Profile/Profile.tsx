@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/useAuthContext';
 import useStyles from './useStyles'
 import Grid from "@material-ui/core/Grid";
@@ -15,12 +15,15 @@ import Paper from '@material-ui/core/Paper';
 import ContestList from '../../components/ContestList/ContestList'
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import ProfilePic from '../../Images/profilePic.png';
+import { Contest } from '../../interface/User';
+import { getContestByUser } from '../../helpers/APICalls/contest';
 
 
 
 export default function Profile(): JSX.Element {
     const classes = useStyles();
     const [value, setValue] = useState(0);
+    const [contests, setContests] = useState<Contest[]>([]);
     const { loggedInUser } = useAuth();
 
     const newTheme = createMuiTheme({
@@ -39,6 +42,45 @@ export default function Profile(): JSX.Element {
         value: number;
         children: React.ReactNode;
         index: number;
+    }
+
+    useEffect(() => {
+        async function getUserContests() {
+            try {
+                const userContests = await getContestByUser();
+                if (userContests.contests) {
+                    setContests(userContests.contests);
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        getUserContests();
+    }, []);
+
+    // create function to figure out if a contest is still active
+    const isActive = () => {
+        if (contests) {
+            const filter = contests.filter(contest => new Date() < new Date(contest.deadlineDate))
+
+            return filter
+        }
+
+        return contests
+
+    }
+
+
+    //create a function to figure out if a contest is no longer active 
+    const isComplete = () => {
+        if (contests) {
+            const filter = contests.filter(contest => new Date() > new Date(contest.deadlineDate))
+
+            return filter
+        }
+
+        return contests;
     }
 
     const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {
@@ -62,12 +104,12 @@ export default function Profile(): JSX.Element {
     }
 
 
-    return (
+    return loggedInUser ? (
         <>
             <AuthHeader linkTo="/signup" btnText="sign up" />
             <Grid className={classes.grid} container alignItems="center" direction="column">
                 <Avatar alt="Profile Image" src={ProfilePic} className={classes.avatar}></Avatar>
-                <Typography className={classes.user}>Kenneth Stewart</Typography>
+                <Typography className={classes.user}>{loggedInUser.username}</Typography>
                 <Button className={classes.button}>Edit Profile</Button>
                 <Container className={classes.container}>
                     <Toolbar className={classes.toolbar}>
@@ -78,17 +120,16 @@ export default function Profile(): JSX.Element {
                             </Tabs>
                         </ThemeProvider>
                     </Toolbar>
-                    <Paper square elevation={3}>
+                    <Paper square elevation={2}>
                         <Panel value={value} index={0}>
-                            <ContestList />
+                            <ContestList userContests={isActive()} />
                         </Panel>
                         <Panel value={value} index={1}>
-                            <ContestList />
+                            <ContestList userContests={isComplete()} />
                         </Panel>
                     </Paper>
                 </Container>
             </Grid>
         </>
-    )
-   
+    ) : (<CircularProgress />)
 }
