@@ -52,7 +52,7 @@ export default function Profile(): JSX.Element {
                     setContests(userContests.contests);
                 }
             } catch (err) {
-                console.log(err)
+                new Error("Could Not Get Contests")
             }
         }
 
