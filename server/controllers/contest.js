@@ -25,7 +25,7 @@ exports.updateContest = asyncHandler(async (req, res) => {
             new: true
         });
 
-        res.status(200).json(update)
+        res.status(200).json(update);
     } catch (err) {
         res.status(500).json(err);
     }
