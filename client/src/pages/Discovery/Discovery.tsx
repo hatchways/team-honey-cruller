@@ -28,19 +28,18 @@ export default function Discovery(): JSX.Element {
 
     useEffect(() => {
         async function getAll() {
-            try {
-                const allContests = await getAllContests();
-                if (allContests) {
-                    // setContests(allContests)
-                }
-            } catch (err) {
+            const allContests = await getAllContests();
+            if (allContests.contests) {
+                setContests(allContests.contests)
+            } else {
                 console.log("No Contests Found")
                 new Error("Could Not Get Contests")
-            };
+            }
         };
-
         getAll()
     }, []);
+
+
 
     const columns: Column[] = [
         { id: 'Contest Title', label: 'Contest Title', minWidth: 50 },
@@ -59,7 +58,7 @@ export default function Discovery(): JSX.Element {
         },
         {
             id: 'More Info',
-            label: 'More Info',
+            label: 'Contest Page',
             minWidth: 50,
             align: 'right',
         },
@@ -78,12 +77,11 @@ export default function Discovery(): JSX.Element {
         <>
             <AuthHeader linkTo="/createcontest" btnText="create contest" />
             <Grid container justify="center" className={classes.grid}>
-                <Container>
+                <Container className={classes.tableContainer}>
                     <Grid item>
-                        <Typography className={classes.typography}>All Contests</Typography>
+                        <Typography className={classes.typography}>All Open Contests</Typography>
                     </Grid>
                 </Container>
-
                 <Paper className={classes.paper}>
                     <TableContainer className={classes.tableContainer}>
                         <Table stickyHeader aria-label="sticky table">
@@ -109,7 +107,25 @@ export default function Discovery(): JSX.Element {
                             <TableBody>
                                 {contests.map(contest => {
                                     return (
-                                        console.log(contest)
+                                        <>
+                                            <TableRow hover role="checkbox" className={classes.tableHead} tabIndex={-1} key={contest.title}>
+                                                <TableCell className={classes.tableRow}>
+                                                    {contest.title}
+                                                </TableCell>
+                                                <TableCell className={classes.tableRow}>
+                                                    {contest.description}
+                                                </TableCell>
+                                                <TableCell className={classes.tableRow}>
+                                                    {contest.prizeAmount}
+                                                </TableCell>
+                                                <TableCell className={classes.tableRow}>
+                                                    {contest.deadlineDate}
+                                                </TableCell>
+                                                <TableCell className={classes.tableRow}>
+                                                    <Button className={classes.button}>More Info</Button>
+                                                </TableCell>
+                                            </TableRow>
+                                        </>
                                     )
                                 })}
                             </TableBody>
