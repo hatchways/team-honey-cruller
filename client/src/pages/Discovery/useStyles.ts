@@ -25,7 +25,8 @@ const useStyles = makeStyles(() => ({
     },
     tableRow: {
         padding: '25px 0px 25px 0px',
-        textAlign: 'center'
+        textAlign: 'center',
+        minWidth: 50
     },
     button: {
         fontWeight: 'bold',

@@ -39,31 +39,6 @@ export default function Discovery(): JSX.Element {
         getAll()
     }, []);
 
-
-
-    const columns: Column[] = [
-        { id: 'Contest Title', label: 'Contest Title', minWidth: 50 },
-        { id: 'Contest Description', label: 'Contest Description', minWidth: 50 },
-        {
-            id: 'Prize Amount',
-            label: 'Prize Amount',
-            minWidth: 50,
-            align: 'right',
-        },
-        {
-            id: 'Deadline Date',
-            label: 'Deadline Date',
-            minWidth: 50,
-            align: 'right',
-        },
-        {
-            id: 'More Info',
-            label: 'Contest Page',
-            minWidth: 50,
-            align: 'right',
-        },
-    ];
-
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -75,7 +50,7 @@ export default function Discovery(): JSX.Element {
 
     return (
         <>
-            <AuthHeader linkTo="/createcontest" btnText="create contest" />
+            <AuthHeader linkTo="/create-contest" btnText="create contest" />
             <Grid container justify="center" className={classes.grid}>
                 <Container className={classes.tableContainer}>
                     <Grid item>
@@ -87,20 +62,20 @@ export default function Discovery(): JSX.Element {
                         <Table stickyHeader aria-label="sticky table">
                             <TableHead>
                                 <TableRow className={classes.tableHead}>
-                                    <TableCell className={classes.tableRow} key={columns[0].id} align={columns[0].align} style={{ minWidth: columns[0].minWidth }}>
-                                        {columns[0].label}
+                                    <TableCell className={classes.tableRow} key='Contest Title'>
+                                        Contest Title
                                     </TableCell>
-                                    <TableCell className={classes.tableRow} key={columns[1].id} align={columns[1].align} style={{ minWidth: columns[1].minWidth }}>
-                                        {columns[1].label}
+                                    <TableCell className={classes.tableRow} key='Contest Description'>
+                                        Contest Description
                                     </TableCell>
-                                    <TableCell className={classes.tableRow} key={columns[2].id} align={columns[2].align} style={{ minWidth: columns[2].minWidth }}>
-                                        {columns[2].label}
+                                    <TableCell className={classes.tableRow} key="Prize Amount">
+                                        Prize Amount
                                     </TableCell>
-                                    <TableCell className={classes.tableRow} key={columns[3].id} align={columns[3].align} style={{ minWidth: columns[3].minWidth }}>
-                                        {columns[3].label}
+                                    <TableCell className={classes.tableRow} key='Deadline Date'>
+                                        Deadline Date
                                     </TableCell>
-                                    <TableCell className={classes.tableRow} key={columns[4].id} align={columns[4].align} style={{ minWidth: columns[4].minWidth }}>
-                                        {columns[4].label}
+                                    <TableCell className={classes.tableRow} key='Contest Page'>
+                                        Contest Page
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
