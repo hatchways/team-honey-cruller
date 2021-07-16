@@ -5,10 +5,10 @@ const protect = require('../middleware/auth')
 const { createMessage, getAllConvos, getOneConvo } = require("../controllers/convo")
 
 router.route("/")
-  .get(getAllConvos)
-  .post(createMessage)
+.get(protect, getAllConvos)
+.post(protect, createMessage)
 
 router.route("/:friendId")
-  .get(getOneConvo)
+  .get(protect, getOneConvo)
 
 module.exports = router;
