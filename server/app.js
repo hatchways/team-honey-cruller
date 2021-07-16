@@ -27,7 +27,10 @@ const io = socketio(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("connected", socket);
+  console.log("connected");
+  var cookies = socket.handshake.headers.cookie;
+  console.log(cookies)
+
 });
 
 if (process.env.NODE_ENV === "development") {
@@ -40,7 +43,7 @@ app.use(express.static(join(__dirname, "public")));
 
 app.use((req, res, next) => {
   req.io = { io, cache };
-  
+  console.log(io)
   next();
 });
 
