@@ -43,8 +43,8 @@ module.exports = {
       });
   }),
   getOneConvo: asyncHandler(async (req, res) => {
-    let user1 = mongoose.Types.ObjectId("60efa11241aa990dec93324e");
-    let user2 = mongoose.Types.ObjectId("60efa13a41aa990dec93324f");
+    let user1 = mongoose.Types.ObjectId(req.user.id);
+    let user2 = mongoose.Types.ObjectId(req.params.friendId);
     Message.aggregate([{
           $lookup: {
             from: 'user',

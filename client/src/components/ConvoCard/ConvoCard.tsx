@@ -16,6 +16,7 @@ const ConvoCard = ({ convo }: Props): JSX.Element => {
   const [online, setOnline] = useState<boolean>(false);
   const classes = useStyles();
   const { loggedInUser } = useAuth();
+  const [otherUser] = convo.recipients.filter((person) => loggedInUser && person._id !== loggedInUser._id);
 
   const selectConversation = () => {
     //set conversation state
@@ -30,14 +31,15 @@ const ConvoCard = ({ convo }: Props): JSX.Element => {
         overlap="circle"
       >
         <Avatar
-          alt={loggedInUser ? loggedInUser.username : 'username'}
-          src={`https://robohash.org/${loggedInUser && loggedInUser.email}.png`}
+          alt={otherUser.username}
+          src={`https://robohash.org/${otherUser.email}.png`}
           className={classes.profilePic}
         ></Avatar>
       </Badge>
-      <ConvoContent />
+      <ConvoContent username={otherUser.username} lastMessage={convo.lastMessage} />
       <Box>
-        <Typography className={classes.date}>date</Typography>
+        {/* PROBABLY WANT TO FORMAT THIS DATE SOMEHOW BEFORE THIS STEP */}
+        <Typography className={classes.date}>{convo.date.slice(0, 10)}</Typography>
       </Box>
     </Box>
   );

@@ -6,6 +6,7 @@ const ConversationSchema = new Schema({
     lastMessage: {
         type: String,
     },
+    date: Date
 });
 
 module.exports = Conversation = mongoose.model('Conversation', ConversationSchema);

@@ -35,6 +35,7 @@ interface Recipient {
 export interface Convo {
   _id: string;
   lastMessage: string;
+  date: string;
   recipients: Recipient[];
 }
 

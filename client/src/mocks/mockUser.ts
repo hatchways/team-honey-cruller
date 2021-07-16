@@ -28,6 +28,7 @@ const mockLoggedInUser: User = {
   conversations: [
     {
       _id: '54',
+      date: '',
       lastMessage: 'Hey bud',
       recipients: [
         {
@@ -74,6 +75,7 @@ const mockOtherUser1: User = {
   conversations: [
     {
       _id: '54',
+      date: '',
       lastMessage: 'Hey bud',
       recipients: [
         {
@@ -119,6 +121,7 @@ const mockOtherUser2: User = {
   conversations: [
     {
       _id: '57',
+      date: '',
       lastMessage: 'How are you',
       recipients: [
         {
@@ -164,6 +167,7 @@ const mockOtherUser3: User = {
   conversations: [
     {
       _id: '57',
+      date: '',
       lastMessage: 'How are you',
       recipients: [
         {
