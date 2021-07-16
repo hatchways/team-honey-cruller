@@ -13,7 +13,6 @@ export default function CreateContestForm():JSX.Element {
   const [description, setDescription] = useState<string>('');
   const [prize, setPrize] = useState<string>('');
   const [date, setDate] = useState<Date | null>(new Date());
-  const [time, setTime] = useState<Date | null>(new Date());
   const [zone, setZone] = useState<string | null>('PDT');
   const [images, setImages] = useState([]);
   const classes = useStyles();
@@ -95,8 +94,8 @@ export default function CreateContestForm():JSX.Element {
                     margin="normal"
                     variant="inline"
                     inputVariant="outlined"
-                    value={time}
-                    onChange={newTime => setTime(newTime)}
+                    value={date}
+                    onChange={newDate => setDate(newDate)}
                     keyboardIcon={<AlarmIcon />}/>
                   </Grid>
                 </MuiPickersUtilsProvider>
