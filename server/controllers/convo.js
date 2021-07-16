@@ -43,8 +43,8 @@ module.exports = {
       });
   }),
   getOneConvo: asyncHandler(async (req, res) => {
-    let user1 = mongoose.Types.ObjectId("60efa11241aa990dec93324e");
-    let user2 = mongoose.Types.ObjectId("60efa13a41aa990dec93324f");
+    let user1 = mongoose.Types.ObjectId(req.user.id);
+    let user2 = mongoose.Types.ObjectId(req.params.friendId);
     Message.aggregate([{
           $lookup: {
             from: 'user',
@@ -117,8 +117,7 @@ module.exports = {
         },
       }, {
         recipients: [req.body.from, req.body.to],
-        lastMessage: req.body.body,
-        date: Date.now(),
+        lastMessage: req.body.message,
       }, {
         upsert: true,
         new: true,
@@ -134,7 +133,7 @@ module.exports = {
           res.sendStatus(500);
         } else {
           if (!conversation._id) {
-            let newConversation = new Conversation({recipients: [req.body.from, req.body.to], lastMessage: req.body.body})
+            let newConversation = new Conversation({recipients: [req.body.from, req.body.to], lastMessage: req.body.message})
             const { _id } = await newConversation.save()
             conversation._id = _id;
           }
@@ -142,10 +141,10 @@ module.exports = {
             conversation: conversation._id,
             to: req.body.to,
             from: req.body.from,
-            body: req.body.body,
+            message: req.body.message,
           });
 
-          // req.io.sockets.emit('messages', req.body.body);
+          // req.io.sockets.emit('messages', req.body.message);
 
           message.save(err => {
             if (err) {
