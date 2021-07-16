@@ -46,16 +46,13 @@ export default function Profile(): JSX.Element {
 
     useEffect(() => {
         async function getUserContests() {
-            try {
-                const userContests = await getContestByUser();
-                if (userContests.contests) {
-                    setContests(userContests.contests);
-                }
-            } catch (err) {
-                console.log(err)
+            const userContests = await getContestByUser();
+            if (userContests.contests) {
+                setContests(userContests.contests);
+            } else {
+                new Error("Could Not Get Contests")
             }
         }
-
         getUserContests();
     }, []);
 
@@ -106,7 +103,7 @@ export default function Profile(): JSX.Element {
 
     return loggedInUser ? (
         <>
-            <AuthHeader linkTo="/signup" btnText="sign up" />
+            <AuthHeader linkTo="/createcontest" btnText="create contest" />
             <Grid className={classes.grid} container alignItems="center" direction="column">
                 <Avatar alt="Profile Image" src={ProfilePic} className={classes.avatar}></Avatar>
                 <Typography className={classes.user}>{loggedInUser.username}</Typography>
