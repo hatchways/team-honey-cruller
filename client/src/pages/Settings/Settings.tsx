@@ -44,21 +44,28 @@ export default function Settings(): JSX.Element {
   };
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Tabs
       orientation='vertical'
-      variant='fullWidth'
       indicatorColor='primary'
       textColor='primary'
       value={value}
+      TabIndicatorProps={{
+        style: {
+          height: 20,
+          marginTop: 15,
+        }
+      }}
+      classes={{
+        indicator: classes.indicator,
+      }}
       onChange={handleChange}
-      classes={{indicator: classes.indicator}}
       className={classes.tabs}>
-        <Tab label='Profile' {...tabProps(0)} className={classes.tab} />
-        <Tab label='Personal Information' {...tabProps(1)} className={classes.tab} />
-        <Tab label='Payment Details' {...tabProps(2)} className={classes.tab} />
-        <Tab label='Notification' {...tabProps(3)} className={classes.tab} />
-        <Tab label='Password' {...tabProps(4)} className={classes.tab} />
+        <Tab label='Profile' {...tabProps(0)} className={classes.label} />
+        <Tab label='Personal Information' {...tabProps(1)} className={classes.label} />
+        <Tab label='Payment Details' {...tabProps(2)} className={classes.label} />
+        <Tab label='Notification' {...tabProps(3)} className={classes.label} />
+        <Tab label='Password' {...tabProps(4)} className={classes.label} />
       </Tabs>
       <TabPanel value={value} index={0}>
         Profile
@@ -75,6 +82,6 @@ export default function Settings(): JSX.Element {
       <TabPanel value={value} index={4}>
         Password
       </TabPanel>
-    </div>
+    </Box>
   );
 };

@@ -9,18 +9,22 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   tabs: {
     backgroundColor: theme.palette.background.paper,
-    width: '20%',
-    marginLeft: 15,
+    width: '40vh',
+    overflow: 'hidden',
     borderRight: `1px solid ${theme.palette.divider}`,
     boxShadow: '3px 0 5px -2px #DDDDDD',
     paddingTop: 20,
+    "& .MuiTab-wrapper": {
+      flexDirection: "row",
+      justifyContent: "flex-start"
+    },
   },
-  tab: {
+  label: {
     fontSize: '14px',
+    left: '20%',
   },
   indicator: {
-    left: 0,
-    height: '1px',
+    left: '10%',
     transform: 'rotate(90deg)',
   },
 }));
