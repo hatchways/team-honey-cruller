@@ -1,7 +1,6 @@
 export interface Column {
-    id: 'Contest Title' | 'Contest Description' | 'Prize Amount' | 'Deadline Date';
+    id: 'Contest Title' | 'Contest Description' | 'Prize Amount' | 'Deadline Date' | 'More Info';
     label: string;
-    minWidth: number;
+    minWidth?: number;
     align?: 'right';
-    format?: (value: number) => string;
 }

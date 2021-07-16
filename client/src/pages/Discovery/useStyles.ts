@@ -14,10 +14,16 @@ const useStyles = makeStyles(() => ({
         textAlign: 'center'
     },
     paper: {
-        width: '100%'
+        width: '50%'
     },
     tableContainer: {
-        maxWidth: '440px'
+        
+    },
+    tableHead: {
+        width: '100%'
+    },
+    tableRow: {
+        padding: '25px'
     }
 }))
 

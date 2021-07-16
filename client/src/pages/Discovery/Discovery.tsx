@@ -30,10 +30,8 @@ export default function Discovery(): JSX.Element {
         async function getAll() {
             try {
                 const allContests = await getAllContests();
-
-                if (allContests.contests) {
-                    console.log(allContests.contests)
-                    setContests(allContests.contests)
+                if (allContests) {
+                    // setContests(allContests)
                 }
             } catch (err) {
                 console.log("No Contests Found")
@@ -44,6 +42,29 @@ export default function Discovery(): JSX.Element {
         getAll()
     }, []);
 
+    const columns: Column[] = [
+        { id: 'Contest Title', label: 'Contest Title', minWidth: 50 },
+        { id: 'Contest Description', label: 'Contest Description', minWidth: 50 },
+        {
+            id: 'Prize Amount',
+            label: 'Prize Amount',
+            minWidth: 50,
+            align: 'right',
+        },
+        {
+            id: 'Deadline Date',
+            label: 'Deadline Date',
+            minWidth: 50,
+            align: 'right',
+        },
+        {
+            id: 'More Info',
+            label: 'More Info',
+            minWidth: 50,
+            align: 'right',
+        },
+    ];
+
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -53,7 +74,7 @@ export default function Discovery(): JSX.Element {
         setPage(0);
     };
 
-    return loggedInUser ? (
+    return (
         <>
             <AuthHeader linkTo="/createcontest" btnText="create contest" />
             <Grid container justify="center" className={classes.grid}>
@@ -62,14 +83,42 @@ export default function Discovery(): JSX.Element {
                         <Typography className={classes.typography}>All Contests</Typography>
                     </Grid>
                 </Container>
-            <Paper className={classes.paper}>
-                <TableContainer classname={classes.tableContainer}>
-                    
-                </TableContainer>
-            </Paper>
 
+                <Paper className={classes.paper}>
+                    <TableContainer className={classes.tableContainer}>
+                        <Table stickyHeader aria-label="sticky table">
+                            <TableHead>
+                                <TableRow className={classes.tableHead}>
+                                    <TableCell className={classes.tableRow} key={columns[0].id} align={columns[0].align} style={{ minWidth: columns[0].minWidth }}>
+                                        {columns[0].label}
+                                    </TableCell>
+                                    <TableCell className={classes.tableRow} key={columns[1].id} align={columns[1].align} style={{ minWidth: columns[1].minWidth }}>
+                                        {columns[1].label}
+                                    </TableCell>
+                                    <TableCell className={classes.tableRow} key={columns[2].id} align={columns[2].align} style={{ minWidth: columns[2].minWidth }}>
+                                        {columns[2].label}
+                                    </TableCell>
+                                    <TableCell className={classes.tableRow} key={columns[3].id} align={columns[3].align} style={{ minWidth: columns[3].minWidth }}>
+                                        {columns[3].label}
+                                    </TableCell>
+                                    <TableCell className={classes.tableRow} key={columns[4].id} align={columns[4].align} style={{ minWidth: columns[4].minWidth }}>
+                                        {columns[4].label}
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {contests.map(contest => {
+                                    return (
+                                        console.log(contest)
+                                    )
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Paper>
             </Grid>
         </>
-    ) : (<CircularProgress />)
+    )
 
 }
+
