@@ -15,7 +15,7 @@ exports.createSubmission = asyncHandler(async (req, res) => {
         body.storeUrl
       );
       await previousSubmission.save();
-      res.status(201).json(previousSubmission);
+      res.status(200).json(previousSubmission);
     } else {
       const submission = await Submission.create({
         contest: req.params.id,
