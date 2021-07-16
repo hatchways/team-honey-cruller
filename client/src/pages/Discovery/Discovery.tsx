@@ -83,7 +83,7 @@ export default function Discovery(): JSX.Element {
                     </Grid>
                 </Container>
                 <Paper className={classes.paper}>
-                    <TableContainer className={classes.tableContainer}>
+                    <TableContainer>
                         <Table stickyHeader aria-label="sticky table">
                             <TableHead>
                                 <TableRow className={classes.tableHead}>
