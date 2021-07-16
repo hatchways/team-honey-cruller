@@ -9,7 +9,7 @@ export interface User {
   conversations: Conversation[];
 }
 
-interface Contest {
+export interface Contest {
   title: string;
   description: string;
   prizeAmount: number;

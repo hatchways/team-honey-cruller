@@ -13,13 +13,14 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const contestRouter = require("./routes/contest");
 const convoRouter = require("./routes/convo");
+const uploadRouter = require("./routes/upload");
 
 const { json, urlencoded } = express;
 
 connectDB();
 const app = express();
 const server = http.createServer(app);
-
+const cache = {};
 const io = socketio(server, {
   cors: {
     origin: "*",
@@ -27,7 +28,7 @@ const io = socketio(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("connected");
+  console.log("connected", socket);
 });
 
 if (process.env.NODE_ENV === "development") {
@@ -39,7 +40,8 @@ app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
 app.use((req, res, next) => {
-  req.io = io;
+  req.io = { io, cache };
+  
   next();
 });
 
@@ -47,6 +49,7 @@ app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/contest", contestRouter);
 app.use("/conversation", convoRouter);
+app.use("/upload", uploadRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
