@@ -43,8 +43,8 @@ module.exports = {
       });
   }),
   getOneConvo: asyncHandler(async (req, res) => {
-    let user1 = mongoose.Types.ObjectId(req.user.id);
-    let user2 = mongoose.Types.ObjectId(req.params.friendId);
+    let user1 = mongoose.Types.ObjectId("60efa11241aa990dec93324e");
+    let user2 = mongoose.Types.ObjectId("60efa13a41aa990dec93324f");
     Message.aggregate([{
           $lookup: {
             from: 'user',
@@ -80,10 +80,9 @@ module.exports = {
         ],
       })
       .project({
-        'toObj.password': 0,
-        'toObj.__v': 0,
-        'fromObj.password': 0,
-        'fromObj.__v': 0,
+        'toObj': 0,
+        'fromObj': 0,
+        "__v": 0
       })
       .exec((err, messages) => {
         if (err) {
