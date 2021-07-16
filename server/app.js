@@ -28,7 +28,7 @@ const io = socketio(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("connected", socket);
+  // console.log("connected", socket);
 });
 
 if (process.env.NODE_ENV === "development") {
@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/contest", contestRouter);
-app.use("/conversation", convoRouter);
+app.use("/api/conversation", convoRouter);
 app.use("/upload", uploadRouter);
 
 if (process.env.NODE_ENV === "production") {

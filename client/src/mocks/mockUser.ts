@@ -27,17 +27,18 @@ const mockLoggedInUser: User = {
   ],
   conversations: [
     {
-      room: '',
-      messages: [
+      _id: '54',
+      lastMessage: 'Hey bud',
+      recipients: [
         {
-          senderId: '',
-          senderName: '',
-          senderPic: '',
-          recipientId: '',
-          recipientName: '',
-          recipientPic: '',
-          text: '',
-          createdAt: '',
+          _id: 'abc123457',
+          username: 'dwightk',
+          email: 'dwight@gmail.com',
+        },
+        {
+          _id: 'abc123456',
+          username: 'stanleythemanly',
+          email: 'stanley@gmail.com',
         },
       ],
     },
@@ -72,17 +73,18 @@ const mockOtherUser1: User = {
   ],
   conversations: [
     {
-      room: '',
-      messages: [
+      _id: '54',
+      lastMessage: 'Hey bud',
+      recipients: [
         {
-          senderId: '',
-          senderName: '',
-          senderPic: '',
-          recipientId: '',
-          recipientName: '',
-          recipientPic: '',
-          text: '',
-          createdAt: '',
+          _id: 'abc123457',
+          username: 'dwightk',
+          email: 'dwight@gmail.com',
+        },
+        {
+          _id: 'abc123456',
+          username: 'stanleythemanly',
+          email: 'stanley@gmail.com',
         },
       ],
     },
@@ -116,17 +118,18 @@ const mockOtherUser2: User = {
   ],
   conversations: [
     {
-      room: '',
-      messages: [
+      _id: '57',
+      lastMessage: 'How are you',
+      recipients: [
         {
-          senderId: '',
-          senderName: '',
-          senderPic: '',
-          recipientId: '',
-          recipientName: '',
-          recipientPic: '',
-          text: '',
-          createdAt: '',
+          _id: 'abc123458',
+          username: 'oscar',
+          email: 'oscar@gmail.com',
+        },
+        {
+          _id: 'abc123459',
+          username: 'malonescones',
+          email: 'kevin@gmail.com',
         },
       ],
     },
@@ -160,17 +163,18 @@ const mockOtherUser3: User = {
   ],
   conversations: [
     {
-      room: '',
-      messages: [
+      _id: '57',
+      lastMessage: 'How are you',
+      recipients: [
         {
-          senderId: '',
-          senderName: '',
-          senderPic: '',
-          recipientId: '',
-          recipientName: '',
-          recipientPic: '',
-          text: '',
-          createdAt: '',
+          _id: 'abc123458',
+          username: 'oscar',
+          email: 'kevin@gmail.com',
+        },
+        {
+          _id: 'abc123459',
+          username: 'malonescones',
+          email: 'stanley@gmail.com',
         },
       ],
     },

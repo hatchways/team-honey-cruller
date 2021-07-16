@@ -1,5 +1,6 @@
-import Box from "@material-ui/core/Box";
-import Paper from "@material-ui/core/Paper";
+import { useState } from 'react';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 import useStyles from './useStyles';
 import MessageHeader from '../MessageHeader/MessageHeader';
 import MessageInput from '../MessageInput/MessageInput';
@@ -10,19 +11,21 @@ export default function Dashboard(): JSX.Element {
 
   return (
     <Paper className={classes.root}>
-      <MessageHeader online={false} username="other user" profilePic=""/>
+      <MessageHeader online={false} username="other user" profilePic="" />
       <Box className={classes.chatContainer}>
         <Messages
-          conversation={[{
-            senderId: "",
-            senderName: "",
-            senderPic: "",
-            recipientId: "",
-            recipientName: "",
-            recipientPic: "",
-            text: "Hello World!",
-            createdAt: "",
-          }]}
+          conversation={[
+            {
+              senderId: '',
+              senderName: '',
+              senderPic: '',
+              recipientId: '',
+              recipientName: '',
+              recipientPic: '',
+              text: 'Hello World!',
+              lastMessage: '',
+            },
+          ]}
           userId=""
         />
         <MessageInput />

@@ -5,7 +5,7 @@ const Conversation = require('../models/Convo');
 
 module.exports = {
   getAllConvos: asyncHandler(async (req, res) => {
-    let from = mongoose.Types.ObjectId(req.user.id);
+    let from = mongoose.Types.ObjectId("60efa11241aa990dec93324e");
     Conversation.aggregate([{
         $lookup: {
           from: 'user',
@@ -25,8 +25,8 @@ module.exports = {
         }
       })
       .project({
-        'recipientObj.password': 0,
-        'recipientObj.__v': 0,
+        '__v': 0,
+        'recipientObj': 0,
       })
       .exec(async (err, conversations) => {
         if (err) {

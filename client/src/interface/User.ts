@@ -6,7 +6,7 @@ export interface User {
   artist: boolean;
   artwork: string[];
   contests: Contest[];
-  conversations: Conversation[];
+  conversations: Convo[];
 }
 
 export interface Contest {
@@ -26,9 +26,16 @@ interface Submission {
   artistId: string;
 }
 
-export interface Conversation {
-  room: string;
-  messages: Message[];
+interface Recipient {
+  _id: string;
+  username: string;
+  email: string;
+}
+
+export interface Convo {
+  _id: string;
+  lastMessage: string;
+  recipients: Recipient[];
 }
 
 export interface Message {
@@ -39,7 +46,7 @@ export interface Message {
   recipientName: string;
   recipientPic: string;
   text: string;
-  createdAt: string;
+  lastMessage: string;
 }
 
 export interface SearchUsersApiData {

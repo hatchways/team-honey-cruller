@@ -5,8 +5,8 @@ const protect = require('../middleware/auth')
 const { createMessage, getAllConvos, getOneConvo } = require("../controllers/convo")
 
 router.route("/")
-.get(getAllConvos)
-.post(createMessage)
+  .get(getAllConvos)
+  .post(createMessage)
 
 router.route("/:friendId")
   .get(getOneConvo)
