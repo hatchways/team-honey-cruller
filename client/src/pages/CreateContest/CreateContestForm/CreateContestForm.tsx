@@ -6,6 +6,8 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import AlarmIcon from '@material-ui/icons/Alarm';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import DateFnsUtils from '@date-io/date-fns';
+import axios from 'axios';
+import $ from 'jquery';
 import useStyles from './useStyles';
 
 export default function CreateContestForm():JSX.Element {
@@ -14,15 +16,28 @@ export default function CreateContestForm():JSX.Element {
   const [prize, setPrize] = useState<string>('');
   const [date, setDate] = useState<Date | null>(new Date());
   const [zone, setZone] = useState<string | null>('PDT');
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<Array<string>>([]);
+  const [selectedImages, setSelectedImages] = useState<Array<string>>([]);
   const classes = useStyles();
 
   useEffect(() => {
-    fetch('https://dog.ceo/api/breeds/image/random/20')
-      .then((res) => res.json())
-      .then((result) => setImages(result.message))
+    axios('https://dog.ceo/api/breeds/image/random/20')
+      .then((res) => setImages(res.data.message))
       .catch((err) => console.error(err));
   }, []);
+
+  const handleImages = (event: React.MouseEvent<HTMLElement>) => {
+    const elementImage = (event.target as HTMLImageElement).src;
+    const element = event.target;
+    if (!$(element).hasClass(classes.checked)) {
+      $(element).addClass(classes.checked);
+      setSelectedImages(prev => [...prev, elementImage]);
+    } else {
+      $(element).removeClass(classes.checked);
+      const newImages = selectedImages.filter((image) => image !== elementImage);
+      setSelectedImages(newImages);
+    }
+  };
 
   return (
     <Box>
@@ -122,7 +137,7 @@ export default function CreateContestForm():JSX.Element {
             <ImageList rowHeight={160} cols={4} className={classes.images}>
               {images.map((image: string) => (
                 <ImageListItem key={image}>
-                  <img src={image} className={classes.img}/>
+                  <img id={image} src={image} className={classes.img} onClick={handleImages}/>
                 </ImageListItem>
               ))}
             </ImageList>

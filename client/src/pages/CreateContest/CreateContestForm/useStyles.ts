@@ -49,6 +49,10 @@ const useStyles = makeStyles((theme) => ({
   img: {
     width: 150,
     height: 150,
+    cursor: 'pointer',
+  },
+  checked: {
+    filter: 'brightness(50%)',
   },
 }));
 
