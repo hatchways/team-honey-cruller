@@ -1,5 +1,5 @@
 export interface User {
-  _id: string;
+  id: string;
   email: string;
   username: string;
   profilePic: string;
@@ -7,6 +7,7 @@ export interface User {
   artwork: string[];
   contests: Contest[];
   conversations: Convo[];
+  activeConvo: Message[];
 }
 
 export interface Contest {
@@ -35,11 +36,13 @@ interface Recipient {
 export interface Convo {
   _id: string;
   lastMessage: string;
-  date: string;
+  createdAt: string;
+  updatedAt: string;
   recipients: Recipient[];
 }
 
 export interface Message {
+  _id: string;
   senderId: string;
   senderName: string;
   senderPic: string;
@@ -47,7 +50,7 @@ export interface Message {
   recipientName: string;
   recipientPic: string;
   text: string;
-  lastMessage: string;
+  createdAt: string;
 }
 
 export interface SearchUsersApiData {

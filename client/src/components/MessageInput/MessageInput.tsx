@@ -8,6 +8,7 @@ import { Message } from '../../interface/User';
 
 const MessageInput = (): JSX.Element => {
   const [message, setMessage] = useState<Message>({
+    _id: '',
     senderId: '',
     senderName: '',
     senderPic: '',
@@ -15,7 +16,7 @@ const MessageInput = (): JSX.Element => {
     recipientName: '',
     recipientPic: '',
     text: '',
-    lastMessage: '',
+    createdAt: '',
   });
   const classes = useStyles();
 

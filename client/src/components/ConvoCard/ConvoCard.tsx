@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import ConvoContent from '../ConvoContent/ConvoContent';
 import { useAuth } from '../../context/useAuthContext';
+import { useConvoContext } from '../../context/conversationContext';
 import { Convo } from '../../interface/User';
 
 interface Props {
@@ -15,15 +16,12 @@ interface Props {
 const ConvoCard = ({ convo }: Props): JSX.Element => {
   const [online, setOnline] = useState<boolean>(false);
   const classes = useStyles();
+  const { setFriendId } = useConvoContext();
   const { loggedInUser } = useAuth();
-  const [otherUser] = convo.recipients.filter((person) => loggedInUser && person._id !== loggedInUser._id);
-
-  const selectConversation = () => {
-    //set conversation state
-  };
+  const [otherUser] = convo.recipients.filter((person) => loggedInUser && person._id !== loggedInUser.id);
 
   return (
-    <Box className={classes.root} onClick={selectConversation}>
+    <Box className={classes.root} onClick={() => setFriendId(otherUser._id)}>
       <Badge
         classes={{ badge: `${classes.badge} ${online && classes.online}` }}
         variant="dot"
@@ -39,7 +37,7 @@ const ConvoCard = ({ convo }: Props): JSX.Element => {
       <ConvoContent username={otherUser.username} lastMessage={convo.lastMessage} />
       <Box>
         {/* PROBABLY WANT TO FORMAT THIS DATE SOMEHOW BEFORE THIS STEP */}
-        <Typography className={classes.date}>{convo.date.slice(0, 10)}</Typography>
+        <Typography className={classes.date}>{convo.updatedAt.slice(0, 10)}</Typography>
       </Box>
     </Box>
   );

@@ -32,8 +32,8 @@ io.on("connection", (socket) => {
 });
 
 if (process.env.NODE_ENV === "development") {
-  app.use(logger("dev"));
 }
+app.use(logger("dev"));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());

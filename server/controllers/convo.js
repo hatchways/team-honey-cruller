@@ -5,7 +5,7 @@ const Conversation = require('../models/Convo');
 
 module.exports = {
   getAllConvos: asyncHandler(async (req, res) => {
-    let from = mongoose.Types.ObjectId("60efa11241aa990dec93324e");
+    let from = mongoose.Types.ObjectId(req.user.id);
     Conversation.aggregate([{
         $lookup: {
           from: 'user',
@@ -13,8 +13,7 @@ module.exports = {
           foreignField: '_id',
           as: 'recipientObj',
         },
-      },
-     ])
+      }, ])
       .match({
         recipients: {
           $all: [{
@@ -37,7 +36,10 @@ module.exports = {
           }));
           res.sendStatus(500);
         } else {
-          const populated = await Conversation.populate(conversations, {path: "recipients", select: '-__v -password -register_date'})
+          const populated = await Conversation.populate(conversations, {
+            path: "recipients",
+            select: '-__v -password -register_date'
+          })
           res.send(populated);
         }
       });
@@ -60,7 +62,7 @@ module.exports = {
             foreignField: '_id',
             as: 'fromObj',
           },
-        },
+        }
       ])
       .match({
         $or: [{
@@ -82,9 +84,10 @@ module.exports = {
       .project({
         'toObj': 0,
         'fromObj': 0,
-        "__v": 0
+        "__v": 0,
+        "updatedAt": 0
       })
-      .exec((err, messages) => {
+      .exec(async (err, messages) => {
         if (err) {
           console.log(err);
           res.setHeader('Content-Type', 'application/json');
@@ -93,7 +96,24 @@ module.exports = {
           }));
           res.sendStatus(500);
         } else {
-          res.send(messages);
+          const populated = await Message.populate(messages, {
+            path: 'from to',
+            select: '-__v -password -register_date'
+          })
+          // DOING THIS MAP TEMPORARILY TO PASS CORRECT DATA STRUCTURE TO THE FRONT END.
+          // ONCE WE GET PROFILE PICS, WE CAN SHAPE THIS DATA COMING FROM THE DB
+          const structured = populated.map(message => ({
+            _id: message._id,
+            senderId: message.from._id,
+            senderName: message.from.username,
+            senderPic: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+            recipientId: message.to._id,
+            recipientName: message.to.username,
+            recipientPic: "https://images.unsplash.com/photo-1613145997970-db84a7975fbb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjN8fHByb2ZpbGUlMjBwaWN0dXJlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+            text: message.message,
+            createdAt: message.createdAt
+          }))
+          res.send(structured);
         }
       });
   }),
@@ -133,8 +153,13 @@ module.exports = {
           res.sendStatus(500);
         } else {
           if (!conversation._id) {
-            let newConversation = new Conversation({recipients: [req.body.from, req.body.to], lastMessage: req.body.message})
-            const { _id } = await newConversation.save()
+            let newConversation = new Conversation({
+              recipients: [req.body.from, req.body.to],
+              lastMessage: req.body.message
+            })
+            const {
+              _id
+            } = await newConversation.save()
             conversation._id = _id;
           }
           let message = new Message({

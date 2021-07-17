@@ -1,15 +1,6 @@
 import { FetchOptions } from '../../interface/FetchOptions';
 import { AuthApiData } from '../../interface/AuthApiData';
-import { Convo } from '../../interface/User';
-
-interface Message {
-  _id: string;
-  conversation: string;
-  to: string;
-  from: string;
-  body: string;
-  createdAt: string;
-}
+import { Convo, Message } from '../../interface/User';
 
 export const getAllConvos = async (): Promise<Convo[]> => {
   const fetchData: FetchOptions = {
@@ -23,7 +14,7 @@ export const getAllConvos = async (): Promise<Convo[]> => {
     .catch((err) => ({ error: { message: 'Can not connect to server' } }));
 };
 
-export const getOneConvo = async (friendId: string): Promise<Convo> => {
+export const getOneConvo = async (friendId: string): Promise<Message[]> => {
   const fetchData: FetchOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },

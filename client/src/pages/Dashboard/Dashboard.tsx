@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -12,6 +12,8 @@ import ChatSideBanner from '../../components/ChatSideBanner/ChatSideBanner';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import ActiveChat from '../../components/ActiveChat/ActiveChat';
 import ChatDrawer from '../../components/ChatDrawer/ChatDrawer';
+import { getOneConvo } from '../../helpers/APICalls/conversations';
+import { ConversationProvider } from '../../context/conversationContext';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -31,7 +33,7 @@ export default function Dashboard(): JSX.Element {
   }
 
   return (
-    <>
+    <ConversationProvider>
       {/* CURRENTLY NO ROUTE FOR "/CREATECONTEST" THIS MAY NEED TO CHANGE */}
       <AuthHeader btnText="create contest" linkTo="/createcontest" />
       <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
@@ -50,6 +52,6 @@ export default function Dashboard(): JSX.Element {
           </Paper>
         </Grid>
       </Grid>
-    </>
+    </ConversationProvider>
   );
 }
