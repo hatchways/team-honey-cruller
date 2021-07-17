@@ -6,11 +6,12 @@ import SubmitDesign from './pages/SubmitDesign/SubmitDesign';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './pages/Profile/Profile';
+import Discovery from './pages/Discovery/Discovery';
+import CreateContest from './pages/CreateContest/CreateContest';
 import Settings from './pages/Settings/Settings'
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
-
 import './App.css';
 
 function App(): JSX.Element {
@@ -25,6 +26,8 @@ function App(): JSX.Element {
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/submit-design/:id" component={SubmitDesign} />
                 <Route exact path="/profile" component={Profile} />
+                <Route exact path="/discovery" component={Discovery} />
+                <Route exact path="/create-contest" component={CreateContest} />
                 <Route exact path="/settings" component={Settings} />
                 <Route exact path="/dashboard">
                   <Dashboard />
@@ -34,7 +37,7 @@ function App(): JSX.Element {
                 </Route>
               </Switch>
             </SocketProvider>
-           </AuthProvider>
+          </AuthProvider>
         </SnackBarProvider>
       </BrowserRouter>
     </MuiThemeProvider>
