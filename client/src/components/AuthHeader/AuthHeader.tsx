@@ -30,7 +30,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
           flexWrap="wrap"
           className={classes.linkContainer}
         >
-          <Link to="/submit-design/99">
+          <Link to="/discovery">
             <Typography className={classes.navLink} color="secondary" display="inline">
               Discover
             </Typography>

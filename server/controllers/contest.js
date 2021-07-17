@@ -45,7 +45,9 @@ exports.getAllContests = asyncHandler(async (req, res) => {
     try {
         const allContests = await Contest.find({})
 
-        res.status(200).json(allContests)
+        res.status(200).json({
+            contests: allContests
+        })
     } catch (err) {
         res.status(500).json(err);
     }
