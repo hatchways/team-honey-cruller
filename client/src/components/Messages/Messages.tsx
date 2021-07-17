@@ -33,8 +33,8 @@ const Messages = ({ convo }: Props): JSX.Element => {
               key={item._id}
               text={item.text}
               time={time}
-              otherUsername={item.recipientName}
-              otherPhoto={item.recipientPic}
+              otherUsername={item.senderName}
+              otherPhoto={item.senderPic}
             />
           );
         })}

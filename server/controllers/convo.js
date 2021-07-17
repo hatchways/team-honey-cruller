@@ -45,6 +45,7 @@ module.exports = {
       });
   }),
   getOneConvo: asyncHandler(async (req, res) => {
+    // LOOK INTO $MERGE TO STRUCTURE DATA TO MATCH FRONT END. NOT CRUCIAL, BUT NICE IF WE HAVE TIME
     let user1 = mongoose.Types.ObjectId(req.user.id);
     let user2 = mongoose.Types.ObjectId(req.params.friendId);
     Message.aggregate([{
@@ -106,10 +107,10 @@ module.exports = {
             _id: message._id,
             senderId: message.from._id,
             senderName: message.from.username,
-            senderPic: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+            senderPic: "",
             recipientId: message.to._id,
             recipientName: message.to.username,
-            recipientPic: "https://images.unsplash.com/photo-1613145997970-db84a7975fbb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjN8fHByb2ZpbGUlMjBwaWN0dXJlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+            recipientPic: "",
             text: message.message,
             createdAt: message.createdAt
           }))
@@ -120,7 +121,9 @@ module.exports = {
   createMessage: asyncHandler(async (req, res) => {
     let from = mongoose.Types.ObjectId(req.body.from);
     let to = mongoose.Types.ObjectId(req.body.to);
-
+    if (req.body.from === req.body.to) {
+      throw new Error("can't send message to yourself")
+    }
     Conversation.findOneAndUpdate({
         recipients: {
           $all: [{

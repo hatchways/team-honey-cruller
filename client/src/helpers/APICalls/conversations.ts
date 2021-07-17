@@ -2,6 +2,12 @@ import { FetchOptions } from '../../interface/FetchOptions';
 import { AuthApiData } from '../../interface/AuthApiData';
 import { Convo, Message } from '../../interface/User';
 
+interface NewMessage {
+  to: string;
+  from: string;
+  message: string;
+}
+
 export const getAllConvos = async (): Promise<Convo[]> => {
   const fetchData: FetchOptions = {
     method: 'GET',
@@ -26,9 +32,9 @@ export const getOneConvo = async (friendId: string): Promise<Message[]> => {
     .catch((err) => ({ error: { message: 'Can not connect to server' } }));
 };
 
-export const sendMessage = async (message: Message): Promise<AuthApiData> => {
+export const sendMessage = async (message: NewMessage): Promise<Message> => {
   const fetchData: FetchOptions = {
-    method: 'GET',
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
     body: JSON.stringify(message),

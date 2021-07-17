@@ -13,7 +13,6 @@ interface Props {
 const ConvoContent = ({ username, lastMessage }: Props): JSX.Element => {
   const classes = useStyles();
   const [unread, setUnread] = useState<number>(0);
-  const { loggedInUser } = useAuth();
 
   return (
     <Box className={classes.root} onClick={() => setUnread(0)}>

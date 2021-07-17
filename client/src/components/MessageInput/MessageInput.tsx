@@ -1,53 +1,51 @@
-import { useState, SyntheticEvent, ChangeEvent } from 'react';
+import { useState, FormEvent, ChangeEvent, useRef } from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import useStyles from './useStyles';
-import { Message } from '../../interface/User';
+import { sendMessage } from '../../helpers/APICalls/conversations';
+import { useAuth } from '../../context/useAuthContext';
 
-const MessageInput = (): JSX.Element => {
-  const [message, setMessage] = useState<Message>({
-    _id: '',
-    senderId: '',
-    senderName: '',
-    senderPic: '',
-    recipientId: '',
-    recipientName: '',
-    recipientPic: '',
-    text: '',
-    createdAt: '',
-  });
+interface Props {
+  otherUserId: string;
+}
+
+const MessageInput = ({ otherUserId }: Props): JSX.Element => {
   const classes = useStyles();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { loggedInUser } = useAuth();
 
-  const handleSubmit = (e: SyntheticEvent<HTMLInputElement>) => {
-    //post new message
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    //handle input change
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (loggedInUser && inputRef.current) {
+      sendMessage({ to: otherUserId, from: loggedInUser.id, message: inputRef.current.value });
+    }
   };
 
   return (
-    <FormControl onSubmit={handleSubmit} fullWidth hiddenLabel>
-      <Grid container alignContent="center" className={classes.inputContainer}>
-        <Grid item xs={10}>
-          <Input
-            placeholder="Type something..."
-            value={message.text}
-            className={classes.input}
-            name="text"
-            disableUnderline={true}
-            onChange={handleChange}
-          />
+    <form onSubmit={handleSubmit}>
+      <FormControl fullWidth hiddenLabel>
+        <Grid container alignContent="center" className={classes.inputContainer}>
+          <Grid item xs={10}>
+            <Input
+              placeholder="Type something..."
+              className={classes.input}
+              name="text"
+              inputProps={{
+                ref: inputRef,
+              }}
+              disableUnderline={true}
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <Button type="submit" className={classes.sendBtn} size="large">
+              Send
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={2}>
-          <Button className={classes.sendBtn} size="large">
-            Send
-          </Button>
-        </Grid>
-      </Grid>
-    </FormControl>
+      </FormControl>
+    </form>
   );
 };
 
