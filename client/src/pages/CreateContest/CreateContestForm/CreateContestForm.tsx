@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Button, TextField, Box, Typography, MenuItem, Grid, InputAdornment } from '@material-ui/core';
-import { ImageList, ImageListItem } from '@material-ui/core';
+import { ImageList, ImageListItem, ImageListItemBar } from '@material-ui/core';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import AlarmIcon from '@material-ui/icons/Alarm';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import DateFnsUtils from '@date-io/date-fns';
 import axios from 'axios';
 import $ from 'jquery';
@@ -133,11 +134,15 @@ export default function CreateContestForm():JSX.Element {
         </Box>
         <Box mt={3} mb={3} className={classes.box}>
           <Typography className={classes.label}>Which designs do you like?</Typography>
+          <Typography className={classes.sub} component='p'>
+            Let`&apos`s start by helping your designers understand which styles your prefer.
+          </Typography>
           <Box mt={3} mb={3} className={classes.imageList}>
             <ImageList rowHeight={160} cols={4} className={classes.images}>
-              {images.map((image: string) => (
-                <ImageListItem key={image}>
-                  <img id={image} src={image} className={classes.img} onClick={handleImages}/>
+              {images.map((image: string, id: number) => (
+                <ImageListItem key={id}>
+                  <img id={`${id}`} src={image} className={classes.img} onClick={handleImages}/>
+                  {$(`#${`${id}`}`).hasClass(classes.checked) && <CheckCircleOutlineIcon className={classes.icon}/>}
                 </ImageListItem>
               ))}
             </ImageList>

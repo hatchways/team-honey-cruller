@@ -54,6 +54,20 @@ const useStyles = makeStyles((theme) => ({
   checked: {
     filter: 'brightness(50%)',
   },
+  sub: {
+    marginTop: 10,
+    color: '#AAAAAA'
+  },
+  icon: {
+    display: 'block',
+    position: 'relative',
+    width: '50%',
+    height: '50%',
+    color: '#FFFFFF',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    bottom: 115,
+  }
 }));
 
 export default useStyles;
