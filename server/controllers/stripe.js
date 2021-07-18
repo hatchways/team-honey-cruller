@@ -70,11 +70,10 @@ exports.createPaymentMethod = asyncHandler(async (req, res) => {
 exports.createCheckoutSession = asyncHandler(async (req, res) => {
     try {
         const checkoutSession = await stripe.checkout.sessions.create({
-            mode: 'subscription',
+            mode: 'payment',
             payment_method_types: ['card'],
             line_items: [{
                 price: req.body.priceId,
-                // For metered billing, do not pass quantity
                 quantity: 1,
             }, ],
             success_url: 'https://example.com/success.html?session_id={CHECKOUT_SESSION_ID}',
