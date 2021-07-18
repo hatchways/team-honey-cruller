@@ -4,7 +4,6 @@ import { Convo, Message } from '../../interface/User';
 
 interface NewMessage {
   to: string;
-  from: string;
   message: string;
 }
 
