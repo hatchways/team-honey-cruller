@@ -42,7 +42,9 @@ exports.deleteCustomer = asyncHandler(async (req, res) => {
 
 exports.setUpIntents = asyncHandler(async (req, res) => {
     try {
-        const setUpIntents = await stripe.setupIntents.create({});
+        const setUpIntents = await stripe.setupIntents.create({
+            customer: req.body.id
+        });
 
         res.status(200).json({
             clientSecret: setUpIntents.client_secret
@@ -59,6 +61,7 @@ exports.createPaymentMethod = asyncHandler(async (req, res) => {
             // req.body.card should be an object with number, expMonth, expYear, and cvc inside.
             card: req.body.card
         })
+        res.status(200).json(createPayment)
     } catch (err) {
         res.status(500).json(err);
     }
