@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -7,21 +7,15 @@ import { User } from '../../interface/User';
 import Search from '../Search/Search';
 import ConvoCard from '../ConvoCard/ConvoCard';
 import { Convo } from '../../interface/User';
-import { getAllConvos } from '../../helpers/APICalls/conversations';
 
-const ChatSideBanner = (): JSX.Element => {
+interface Props {
+  convos: Convo[];
+}
+
+const ChatSideBanner = ({ convos }: Props): JSX.Element => {
   const [search, setSearch] = useState<string>('test');
-  const [convos, setConvos] = useState<Convo[]>([]);
   const [newChatUser, setNewChatUser] = useState<User | null>(null);
   const classes = useStyles();
-
-  useEffect(() => {
-    getAllConvos().then((data: Convo[]) => {
-      if (data) {
-        setConvos(data);
-      }
-    });
-  }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, newInputValue: string) => {
     setSearch(newInputValue);

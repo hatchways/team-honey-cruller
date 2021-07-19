@@ -5,9 +5,12 @@ import ChatSideBanner from '../ChatSideBanner/ChatSideBanner';
 import useStyles from './useStyles';
 import { Convo } from '../../interface/User';
 
-const ChatDrawer = (): JSX.Element => {
+interface Props {
+  convos: Convo[];
+}
+
+const ChatDrawer = ({ convos }: Props): JSX.Element => {
   const [expanded, setExpanded] = useState<boolean>(false);
-  const [convos, setConvos] = useState<Convo>();
   const classes = useStyles();
 
   return (
@@ -23,7 +26,7 @@ const ChatDrawer = (): JSX.Element => {
           All Conversations
         </Button>
         <Drawer anchor={'left'} open={expanded} onClose={(): void => setExpanded(!expanded)}>
-          <ChatSideBanner />
+          <ChatSideBanner convos={convos} />
         </Drawer>
       </Fragment>
     </div>
