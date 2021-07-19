@@ -8,7 +8,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import DateFnsUtils from '@date-io/date-fns';
 import useStyles from './useStyles';
 
-export default function CreateContestForm():JSX.Element {
+export default function CreateContestForm(): JSX.Element {
   const [design, setDesign] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [prize, setPrize] = useState<string>('');
@@ -30,48 +30,48 @@ export default function CreateContestForm():JSX.Element {
         <Box mt={3} mb={3} className={classes.box}>
           <Typography className={classes.label}>What do you need designed?</Typography>
           <TextField
-          id="design"
-          margin="normal"
-          variant="outlined"
-          placeholder="Write a descriptive contest title"
-          className={classes.textField}
-          value={design}
-          onChange={newDesign => setDesign(newDesign.target.value)}>
-          </TextField>
+            id="design"
+            margin="normal"
+            variant="outlined"
+            placeholder="Write a descriptive contest title"
+            className={classes.textField}
+            value={design}
+            onChange={(newDesign) => setDesign(newDesign.target.value)}
+          ></TextField>
         </Box>
         <Box mt={3} mb={3} className={classes.box}>
           <Typography className={classes.label}>Description</Typography>
           <TextField
-          id="description"
-          margin="normal"
-          variant="outlined"
-          placeholder="Details about what type of tattoo you want"
-          rows={6}
-          multiline
-          className={classes.textField}
-          value={description}
-          onChange={newDesc => setDescription(newDesc.target.value)}>
-          </TextField>
+            id="description"
+            margin="normal"
+            variant="outlined"
+            placeholder="Details about what type of tattoo you want"
+            rows={6}
+            multiline
+            className={classes.textField}
+            value={description}
+            onChange={(newDesc) => setDescription(newDesc.target.value)}
+          ></TextField>
         </Box>
         <Box mt={3} mb={3} className={classes.box}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <Typography className={classes.label}>Prize amount</Typography>
               <TextField
-              id="prize"
-              margin="normal"
-              variant="outlined"
-              placeholder="100.00"
-              value={prize}
-              onChange={newPrize => setPrize(newPrize.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AttachMoneyIcon />
-                  </InputAdornment>
-                )
-              }}>
-              </TextField>
+                id="prize"
+                margin="normal"
+                variant="outlined"
+                placeholder="100.00"
+                value={prize}
+                onChange={(newPrize) => setPrize(newPrize.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AttachMoneyIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              ></TextField>
             </Grid>
             <Grid item xs={8}>
               <Typography className={classes.label}>Deadline</Typography>
@@ -79,34 +79,37 @@ export default function CreateContestForm():JSX.Element {
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <Grid item xs={5}>
                     <KeyboardDatePicker
-                    id="date"
-                    margin="normal"
-                    variant="inline"
-                    inputVariant="outlined"
-                    format="d MMM yyyy"
-                    value={date}
-                    onChange={newDate => setDate(newDate)}
-                    keyboardIcon={<DateRangeIcon />}/>
+                      id="date"
+                      margin="normal"
+                      variant="inline"
+                      inputVariant="outlined"
+                      format="d MMM yyyy"
+                      value={date}
+                      onChange={(newDate) => setDate(newDate)}
+                      keyboardIcon={<DateRangeIcon />}
+                    />
                   </Grid>
                   <Grid item xs={5}>
                     <KeyboardTimePicker
-                    id="time"
-                    margin="normal"
-                    variant="inline"
-                    inputVariant="outlined"
-                    value={date}
-                    onChange={newDate => setDate(newDate)}
-                    keyboardIcon={<AlarmIcon />}/>
+                      id="time"
+                      margin="normal"
+                      variant="inline"
+                      inputVariant="outlined"
+                      value={date}
+                      onChange={(newDate) => setDate(newDate)}
+                      keyboardIcon={<AlarmIcon />}
+                    />
                   </Grid>
                 </MuiPickersUtilsProvider>
                 <Grid item xs={2}>
                   <TextField
-                  id="zone"
-                  margin="normal"
-                  variant="outlined"
-                  select
-                  value={zone}
-                  onChange={newZone => setZone(newZone.target.value)}>
+                    id="zone"
+                    margin="normal"
+                    variant="outlined"
+                    select
+                    value={zone}
+                    onChange={(newZone) => setZone(newZone.target.value)}
+                  >
                     <MenuItem value="PDT">PDT</MenuItem>
                     <MenuItem value="CDT">CDT</MenuItem>
                     <MenuItem value="EDT">EDT</MenuItem>
@@ -122,23 +125,18 @@ export default function CreateContestForm():JSX.Element {
             <ImageList rowHeight={160} cols={4} className={classes.images}>
               {images.map((image: string) => (
                 <ImageListItem key={image}>
-                  <img src={image} className={classes.img}/>
+                  <img src={image} className={classes.img} />
                 </ImageListItem>
               ))}
             </ImageList>
           </Box>
         </Box>
         <Box mt={3} mb={3}>
-          <Button
-          type="submit"
-          size="large"
-          variant="contained"
-          color="primary"
-          className={classes.submit}>
+          <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
             Create Contest
           </Button>
         </Box>
       </form>
     </Box>
   );
-};
+}

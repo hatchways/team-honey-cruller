@@ -49,7 +49,7 @@ app.use((req, res, next) => {
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/contest", contestRouter);
-app.use("/conversation", convoRouter);
+app.use("/api/conversation", convoRouter);
 app.use("/upload", uploadRouter);
 app.use("/stripe", stripeRouter);
 
