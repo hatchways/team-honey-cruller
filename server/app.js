@@ -14,6 +14,7 @@ const userRouter = require("./routes/user");
 const contestRouter = require("./routes/contest");
 const convoRouter = require("./routes/convo");
 const uploadRouter = require("./routes/upload");
+const stripeRouter = require("./routes/stripe");
 
 const { json, urlencoded } = express;
 
@@ -50,6 +51,7 @@ app.use("/users", userRouter);
 app.use("/contest", contestRouter);
 app.use("/api/conversation", convoRouter);
 app.use("/upload", uploadRouter);
+app.use("/stripe", stripeRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
