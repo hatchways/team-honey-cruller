@@ -102,15 +102,15 @@ module.exports = {
             select: '-__v -password -register_date'
           })
           // DOING THIS MAP TEMPORARILY TO PASS CORRECT DATA STRUCTURE TO THE FRONT END.
-          // ONCE WE GET PROFILE PICS, WE CAN SHAPE THIS DATA COMING FROM THE DB
+          // WOULD LIKE TO HOPEFULLY STRUCTURE DATA IN REQUEST TO AVOID THIS
           const structured = populated.map(message => ({
             _id: message._id,
             senderId: message.from._id,
             senderName: message.from.username,
-            senderPic: "",
+            senderPic: message.from.profilePic,
             recipientId: message.to._id,
             recipientName: message.to.username,
-            recipientPic: "",
+            recipientPic: message.to.profilePic,
             text: message.message,
             createdAt: message.createdAt
           }))
@@ -119,7 +119,7 @@ module.exports = {
       });
   }),
   createMessage: asyncHandler(async (req, res) => {
-    let from = mongoose.Types.ObjectId(req.body.from);
+    let from = mongoose.Types.ObjectId(req.user.id);
     let to = mongoose.Types.ObjectId(req.body.to);
     if (req.body.from === req.body.to) {
       throw new Error("can't send message to yourself")
@@ -139,7 +139,7 @@ module.exports = {
           ],
         },
       }, {
-        recipients: [req.body.from, req.body.to],
+        recipients: [from, req.body.to],
         lastMessage: req.body.message,
       }, {
         upsert: true,
@@ -168,7 +168,7 @@ module.exports = {
           let message = new Message({
             conversation: conversation._id,
             to: req.body.to,
-            from: req.body.from,
+            from: from,
             message: req.body.message,
           });
 

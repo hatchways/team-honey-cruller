@@ -19,7 +19,7 @@ const MessageInput = ({ otherUserId }: Props): JSX.Element => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loggedInUser && inputRef.current) {
-      sendMessage({ to: otherUserId, from: loggedInUser.id, message: inputRef.current.value });
+      sendMessage({ to: otherUserId, message: inputRef.current.value });
     }
   };
 
