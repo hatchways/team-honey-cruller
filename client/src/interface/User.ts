@@ -31,6 +31,7 @@ interface Recipient {
   _id: string;
   username: string;
   email: string;
+  profilePic: string;
 }
 
 export interface Convo {

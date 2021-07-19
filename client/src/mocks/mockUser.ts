@@ -36,11 +36,13 @@ const mockLoggedInUser: User = {
         {
           _id: 'abc123457',
           username: 'dwightk',
+          profilePic: '',
           email: 'dwight@gmail.com',
         },
         {
           _id: 'abc123456',
           username: 'stanleythemanly',
+          profilePic: '',
           email: 'stanley@gmail.com',
         },
       ],
@@ -85,11 +87,13 @@ const mockOtherUser1: User = {
         {
           _id: 'abc123457',
           username: 'dwightk',
+          profilePic: '',
           email: 'dwight@gmail.com',
         },
         {
           _id: 'abc123456',
           username: 'stanleythemanly',
+          profilePic: '',
           email: 'stanley@gmail.com',
         },
       ],
@@ -133,11 +137,13 @@ const mockOtherUser2: User = {
         {
           _id: 'abc123458',
           username: 'oscar',
+          profilePic: '',
           email: 'oscar@gmail.com',
         },
         {
           _id: 'abc123459',
           username: 'malonescones',
+          profilePic: '',
           email: 'kevin@gmail.com',
         },
       ],
@@ -181,11 +187,13 @@ const mockOtherUser3: User = {
         {
           _id: 'abc123458',
           username: 'oscar',
+          profilePic: '',
           email: 'kevin@gmail.com',
         },
         {
           _id: 'abc123459',
           username: 'malonescones',
+          profilePic: '',
           email: 'stanley@gmail.com',
         },
       ],

@@ -28,11 +28,7 @@ const ConvoCard = ({ convo }: Props): JSX.Element => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         overlap="circle"
       >
-        <Avatar
-          alt={otherUser.username}
-          src={`https://robohash.org/${otherUser.email}.png`}
-          className={classes.profilePic}
-        ></Avatar>
+        <Avatar alt={otherUser.username} src={otherUser.profilePic} className={classes.profilePic}></Avatar>
       </Badge>
       <ConvoContent username={otherUser.username} lastMessage={convo.lastMessage} />
       <Box>
