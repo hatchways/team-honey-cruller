@@ -18,6 +18,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import TablePagination from '@material-ui/core/TablePagination';
 import SortIcon from '@material-ui/icons/Sort';
+import { Animated } from "react-animated-css";
 import useStyles from './useStyles';
 
 export default function Discovery(): JSX.Element {
@@ -77,6 +78,7 @@ export default function Discovery(): JSX.Element {
                     </Grid>
                 </Container>
                 <Paper className={classes.paper}>
+                <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
                     <TableContainer>
                         <Table stickyHeader aria-label="sticky table">
                             <TableHead>
@@ -112,7 +114,7 @@ export default function Discovery(): JSX.Element {
                                                     {contest.description}
                                                 </TableCell>
                                                 <TableCell className={classes.tableRow}>
-                                                    {contest.prizeAmount}
+                                                    ${contest.prizeAmount}
                                                 </TableCell>
                                                 <TableCell className={classes.tableRow}>
                                                     {contest.deadlineDate}
@@ -127,6 +129,7 @@ export default function Discovery(): JSX.Element {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                    </Animated>
                 </Paper>
             </Grid>
         </>
