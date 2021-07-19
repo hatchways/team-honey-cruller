@@ -13,8 +13,7 @@ module.exports = {
           foreignField: '_id',
           as: 'recipientObj',
         },
-      },
-     ])
+      }, ])
       .match({
         recipients: {
           $all: [{
@@ -25,8 +24,8 @@ module.exports = {
         }
       })
       .project({
-        'recipientObj.password': 0,
-        'recipientObj.__v': 0,
+        '__v': 0,
+        'recipientObj': 0,
       })
       .exec(async (err, conversations) => {
         if (err) {
@@ -37,12 +36,16 @@ module.exports = {
           }));
           res.sendStatus(500);
         } else {
-          const populated = await Conversation.populate(conversations, {path: "recipients", select: '-__v -password -register_date'})
+          const populated = await Conversation.populate(conversations, {
+            path: "recipients",
+            select: '-__v -password -register_date'
+          })
           res.send(populated);
         }
       });
   }),
   getOneConvo: asyncHandler(async (req, res) => {
+    // LOOK INTO $MERGE TO STRUCTURE DATA TO MATCH FRONT END. NOT CRUCIAL, BUT NICE IF WE HAVE TIME
     let user1 = mongoose.Types.ObjectId(req.user.id);
     let user2 = mongoose.Types.ObjectId(req.params.friendId);
     Message.aggregate([{
@@ -60,7 +63,7 @@ module.exports = {
             foreignField: '_id',
             as: 'fromObj',
           },
-        },
+        }
       ])
       .match({
         $or: [{
@@ -82,9 +85,10 @@ module.exports = {
       .project({
         'toObj': 0,
         'fromObj': 0,
-        "__v": 0
+        "__v": 0,
+        "updatedAt": 0
       })
-      .exec((err, messages) => {
+      .exec(async (err, messages) => {
         if (err) {
           console.log(err);
           res.setHeader('Content-Type', 'application/json');
@@ -93,14 +97,33 @@ module.exports = {
           }));
           res.sendStatus(500);
         } else {
-          res.send(messages);
+          const populated = await Message.populate(messages, {
+            path: 'from to',
+            select: '-__v -password -register_date'
+          })
+          // DOING THIS MAP TEMPORARILY TO PASS CORRECT DATA STRUCTURE TO THE FRONT END.
+          // WOULD LIKE TO HOPEFULLY STRUCTURE DATA IN REQUEST TO AVOID THIS
+          const structured = populated.map(message => ({
+            _id: message._id,
+            senderId: message.from._id,
+            senderName: message.from.username,
+            senderPic: message.from.profilePic,
+            recipientId: message.to._id,
+            recipientName: message.to.username,
+            recipientPic: message.to.profilePic,
+            text: message.message,
+            createdAt: message.createdAt
+          }))
+          res.send(structured);
         }
       });
   }),
   createMessage: asyncHandler(async (req, res) => {
-    let from = mongoose.Types.ObjectId(req.body.from);
+    let from = mongoose.Types.ObjectId(req.user.id);
     let to = mongoose.Types.ObjectId(req.body.to);
-
+    if (req.body.from === req.body.to) {
+      throw new Error("can't send message to yourself")
+    }
     Conversation.findOneAndUpdate({
         recipients: {
           $all: [{
@@ -116,7 +139,7 @@ module.exports = {
           ],
         },
       }, {
-        recipients: [req.body.from, req.body.to],
+        recipients: [from, req.body.to],
         lastMessage: req.body.message,
       }, {
         upsert: true,
@@ -133,14 +156,19 @@ module.exports = {
           res.sendStatus(500);
         } else {
           if (!conversation._id) {
-            let newConversation = new Conversation({recipients: [req.body.from, req.body.to], lastMessage: req.body.message})
-            const { _id } = await newConversation.save()
+            let newConversation = new Conversation({
+              recipients: [req.body.from, req.body.to],
+              lastMessage: req.body.message
+            })
+            const {
+              _id
+            } = await newConversation.save()
             conversation._id = _id;
           }
           let message = new Message({
             conversation: conversation._id,
             to: req.body.to,
-            from: req.body.from,
+            from: from,
             message: req.body.message,
           });
 
