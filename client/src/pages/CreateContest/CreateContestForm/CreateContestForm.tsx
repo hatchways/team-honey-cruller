@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button, TextField, Box, Typography, MenuItem, Grid, InputAdornment } from '@material-ui/core';
-// import { ImageList, ImageListItem } from '@material-ui/core';
+import { ImageList, ImageListItem } from '@material-ui/core';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import AlarmIcon from '@material-ui/icons/Alarm';
@@ -122,13 +122,13 @@ export default function CreateContestForm(): JSX.Element {
         <Box mt={3} mb={3} className={classes.box}>
           <Typography className={classes.label}>Which designs do you like?</Typography>
           <Box mt={3} mb={3} className={classes.imageList}>
-            {/* <ImageList rowHeight={160} cols={4} className={classes.images}>
+            <ImageList rowHeight={160} cols={4} className={classes.images}>
               {images.map((image: string) => (
                 <ImageListItem key={image}>
-                  <img src={image} className={classes.img}/>
+                  <img src={image} className={classes.img} />
                 </ImageListItem>
               ))}
-            </ImageList> */}
+            </ImageList>
           </Box>
         </Box>
         <Box mt={3} mb={3}>
