@@ -17,10 +17,13 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import TablePagination from '@material-ui/core/TablePagination';
+import SortIcon from '@material-ui/icons/Sort';
+import { Animated } from "react-animated-css";
 import useStyles from './useStyles';
 
 export default function Discovery(): JSX.Element {
     const [contests, setContests] = useState<Contest[]>([]);
+    const [sortType, setSortType] = useState<keyof Contest>('deadlineDate')
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const { loggedInUser } = useAuth();
@@ -48,6 +51,22 @@ export default function Discovery(): JSX.Element {
         setPage(0);
     };
 
+    const sortByHeader = (sortParam: Contest[] = contests) => {
+        if (contests) {
+            const sort = [...sortParam].sort((a: Contest, b: Contest) => { console.log(a,b)
+                if (a[sortType] > b[sortType]) {
+                    return 1;
+                } else if (a[sortType] < b[sortType]) {
+                    return -1
+                } else {
+                    return 0
+                }
+            })
+
+            setContests(sort)
+        }
+    };
+
     return (
         <>
             <AuthHeader linkTo="/create-contest" btnText="create contest" />
@@ -58,6 +77,7 @@ export default function Discovery(): JSX.Element {
                     </Grid>
                 </Container>
                 <Paper className={classes.paper}>
+                <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
                     <TableContainer>
                         <Table stickyHeader aria-label="sticky table">
                             <TableHead>
@@ -72,7 +92,9 @@ export default function Discovery(): JSX.Element {
                                         Prize Amount
                                     </TableCell>
                                     <TableCell className={classes.tableRow} key='Deadline Date'>
+                                        <div onClick={() => sortByHeader()}>
                                         Deadline Date
+                                        </div>
                                     </TableCell>
                                     <TableCell className={classes.tableRow} key='Contest Page'>
                                         Contest Page
@@ -91,7 +113,7 @@ export default function Discovery(): JSX.Element {
                                                     {contest.description}
                                                 </TableCell>
                                                 <TableCell className={classes.tableRow}>
-                                                    {contest.prizeAmount}
+                                                    ${contest.prizeAmount}
                                                 </TableCell>
                                                 <TableCell className={classes.tableRow}>
                                                     {contest.deadlineDate}
@@ -106,10 +128,10 @@ export default function Discovery(): JSX.Element {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                    </Animated>
                 </Paper>
             </Grid>
         </>
     )
 
 }
-
