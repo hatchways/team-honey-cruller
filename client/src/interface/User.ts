@@ -46,3 +46,7 @@ export interface SearchUsersApiData {
   users?: User[];
   error?: { message: string };
 }
+
+export interface Customer {
+  id: string;
+}
