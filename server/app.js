@@ -12,7 +12,9 @@ const logger = require("morgan");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const contestRouter = require("./routes/contest");
+const convoRouter = require("./routes/convo");
 const uploadRouter = require("./routes/upload");
+const stripeRouter = require("./routes/stripe");
 
 const { json, urlencoded } = express;
 
@@ -27,7 +29,7 @@ const io = socketio(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("connected", socket);
+  console.log("connected");
 });
 
 if (process.env.NODE_ENV === "development") {
@@ -47,7 +49,9 @@ app.use((req, res, next) => {
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/contest", contestRouter);
+app.use("/api/conversation", convoRouter);
 app.use("/upload", uploadRouter);
+app.use("/stripe", stripeRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

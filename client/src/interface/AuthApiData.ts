@@ -1,4 +1,4 @@
-import { User, Contest } from './User';
+import { User, Contest, Customer } from './User';
 
 
 export interface AuthApiDataSuccess {
@@ -11,6 +11,12 @@ export interface AuthApiData {
   error?: { message: string };
   success?: AuthApiDataSuccess;
   contests?: [Contest]
+}
+
+export interface AuthApiCustomerData {
+  error?: { message: string };
+  success?: { message: string };
+  customer?: Customer;
 }
 
 export interface ContestById {

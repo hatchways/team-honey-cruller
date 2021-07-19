@@ -41,3 +41,13 @@ exports.getContestByUser = asyncHandler(async (req, res, next) => {
     res.status(404).json(err);
   }
 });
+
+exports.updateProfile = asyncHandler(async (req, res, next) => {
+  try {
+    // EXPECTING REQ.BODY TO HAVE ONLY FIELDS WE WANT TO UPDATE WHICH MATCH THE MODEL
+    const newUserData = await User.findByIdAndUpdate(req.user.id, { $set: {...req.body} }, { new: true })
+    res.status(200).json(newUserData)
+  } catch (err) {
+    res.status(404).json(err);
+  }
+})
