@@ -50,7 +50,7 @@ exports.upload = asyncHandler(async (req, res) => {
         res.json("Error: No File Selected");
       } else {
         let fileArray = req.files,
-          fileLocation;
+        fileLocation;
         const galleryImgLocationArray = [];
         for (let i = 0; i < fileArray.length; i++) {
           fileLocation = fileArray[i].location;
@@ -63,3 +63,26 @@ exports.upload = asyncHandler(async (req, res) => {
     }
   });
 });
+
+exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
+  uploadsContestGallery(req, res, (error) => {
+    if (error) {
+      res.json({ error: error });
+    } else {
+      if (req.files === undefined) {
+        res.json("Error: No File Selected");
+      } else {
+        let fileArray = req.files,
+          fileLocation;
+        const galleryImgLocationArray = [];
+        for (let i = 0; i < fileArray.length; i++) {
+          fileLocation = fileArray[i].location;
+          galleryImgLocationArray.push(fileLocation);
+        }
+        console.log({
+          locationArray: galleryImgLocationArray,
+        });
+      }
+    }
+  });
+})
