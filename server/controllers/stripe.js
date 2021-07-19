@@ -9,7 +9,7 @@ exports.createCustomer = asyncHandler(async (req, res) => {
         });
 
 
-        res.status(200).json({
+        res.status(201).json({
             customer: customer
         });
 
@@ -46,7 +46,7 @@ exports.setUpIntents = asyncHandler(async (req, res) => {
             customer: req.body.id
         });
 
-        res.status(200).json({
+        res.status(201).json({
             clientSecret: setUpIntents.client_secret
         });
     } catch (err) {
@@ -61,7 +61,7 @@ exports.createPaymentMethod = asyncHandler(async (req, res) => {
             // req.body.card should be an object with number, expMonth, expYear, and cvc inside.
             card: req.body.card
         })
-        res.status(200).json(createPayment)
+        res.status(201).json(createPayment)
     } catch (err) {
         res.status(500).json(err);
     }
@@ -80,7 +80,7 @@ exports.createCheckoutSession = asyncHandler(async (req, res) => {
             cancel_url: 'https://example.com/canceled.html'
         })
 
-        res.status(200).json({
+        res.status(201).json({
             CheckoutSession: checkoutSession
         })
     } catch (err) {
@@ -96,7 +96,7 @@ exports.chargeCard = asyncHandler(async (req, res) => {
             currency: 'usd'
         });
 
-        res.status(200).json({
+        res.status(201).json({
             chargeCard: chargeCard
         });
     } catch (err) {
