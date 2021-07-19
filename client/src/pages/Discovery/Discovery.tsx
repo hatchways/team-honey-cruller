@@ -52,7 +52,6 @@ export default function Discovery(): JSX.Element {
     };
 
     const sortByHeader = (sortParam: Contest[] = contests) => {
-        console.log("sorting....")
         if (contests) {
             const sort = [...sortParam].sort((a: Contest, b: Contest) => { console.log(a,b)
                 if (a[sortType] > b[sortType]) {
