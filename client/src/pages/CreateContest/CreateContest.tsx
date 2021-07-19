@@ -8,6 +8,26 @@ import useStyles from './useStyles';
 export default function CreateContest():JSX.Element {
   const classes = useStyles();
 
+  const handleSubmit = (
+    {
+      title,
+      description,
+      prizeAmount,
+      deadlineDate,
+      zone,
+      images
+    }: {
+      title: string;
+      description: string;
+      prizeAmount: number;
+      deadlineDate: Date;
+      zone: string;
+      images: Array<string>;
+    }
+  ) => {
+    console.log(title, description, prizeAmount, deadlineDate, zone, images);
+  };
+
   return (
     <Grid container direction="column" spacing={0}>
       <Box mt={4} mb={4}>
@@ -17,7 +37,7 @@ export default function CreateContest():JSX.Element {
       </Box>
       <Grid container justify="center">
         <Grid item xs={12} md={10} elevation={6} component={Paper}>
-            <CreateContestForm />
+            <CreateContestForm handleSubmit={handleSubmit}/>
         </Grid>
       </Grid>
     </Grid>
