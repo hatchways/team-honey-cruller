@@ -19,7 +19,7 @@ export interface Contest {
   submissions: Submission[];
 }
 
-interface Submission {
+export interface Submission {
   images: string[];
   description: string;
   artistName: string;

@@ -59,7 +59,7 @@ export default function Profile(): JSX.Element {
         getUserContests();
     }, []);
 
-    // create function to figure out if a contest is still active
+
     const isActive = () => {
         if (contests) {
             const filter = contests.filter(contest => new Date() < new Date(contest.deadlineDate))
@@ -71,8 +71,6 @@ export default function Profile(): JSX.Element {
 
     }
 
-
-    //create a function to figure out if a contest is no longer active 
     const isComplete = () => {
         if (contests) {
             const filter = contests.filter(contest => new Date() > new Date(contest.deadlineDate))
