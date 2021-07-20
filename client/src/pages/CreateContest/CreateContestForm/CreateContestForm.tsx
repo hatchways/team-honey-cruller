@@ -26,7 +26,7 @@ export default function CreateContestForm(): JSX.Element {
 
   return (
     <Box>
-      <form className={classes.form}>
+      {/* <form className={classes.form}>
         <Box mt={3} mb={3} className={classes.box}>
           <Typography className={classes.label}>What do you need designed?</Typography>
           <TextField
@@ -136,7 +136,7 @@ export default function CreateContestForm(): JSX.Element {
             Create Contest
           </Button>
         </Box>
-      </form>
+      </form> */}
     </Box>
   );
 }

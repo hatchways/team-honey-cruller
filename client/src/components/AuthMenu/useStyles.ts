@@ -6,6 +6,10 @@ const useStyles = makeStyles((theme) => ({
       cursor: 'pointer',
     },
   },
+  link: {
+    textDecoration: 'none', 
+    color: 'black'
+  }
 }));
 
 export default useStyles;
