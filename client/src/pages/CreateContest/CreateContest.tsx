@@ -3,6 +3,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import { Moment } from 'moment';
+import axios from 'axios';
 import useStyles from './useStyles';
 
 export default function CreateContest():JSX.Element {
@@ -14,18 +16,26 @@ export default function CreateContest():JSX.Element {
       description,
       prizeAmount,
       deadlineDate,
-      zone,
       images
     }: {
       title: string;
       description: string;
       prizeAmount: number;
-      deadlineDate: Date;
-      zone: string;
+      deadlineDate: Moment;
       images: Array<string>;
     }
   ) => {
-    console.log(title, description, prizeAmount, deadlineDate, zone, images);
+    const contest = {
+      title: title,
+      description: description,
+      prizeAmount: prizeAmount,
+      deadlineDate: deadlineDate.format('MMMM Do YYYY, h:mm A z'),
+      images: images,
+    };
+
+    axios.post('/contest', contest)
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err));
   };
 
   return (

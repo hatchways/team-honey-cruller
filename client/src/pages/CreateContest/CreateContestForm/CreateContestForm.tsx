@@ -9,7 +9,8 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import MomentUtils from '@date-io/moment';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
+import 'moment-timezone';
 import axios from 'axios';
 import $ from 'jquery';
 import useStyles from './useStyles';
@@ -21,20 +22,19 @@ interface Props {
       description,
       prizeAmount,
       deadlineDate,
-      zone,
       images,
     }: {
       title: string;
       description: string;
       prizeAmount: number;
-      deadlineDate: Date;
-      zone: string;
+      deadlineDate: Moment;
       images: Array<string>;
     }
   ) => void;
 };
 
 export default function CreateContestForm({ handleSubmit }: Props): JSX.Element {
+  const [zone, setZone] = useState<string>("PDT");
   const [dogImages, setDogImages] = useState<Array<string>>([]);
   const [images, setImages] = useState<Array<string>>([]);
   const classes = useStyles();
@@ -64,26 +64,32 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
       title: '',
       description: '',
       prizeAmount: 0,
-      deadlineDate: new Date(),
-      zone: 'PDT',
+      deadlineDate: moment(),
       images: [],
     }}
     validationSchema={Yup.object().shape({
       title: Yup.string()
-        .required('Required'),
+        .required('This field is required'),
       description: Yup.string()
-        .required('Required'),
+        .required('This field is required'),
       prizeAmount: Yup.number()
         .integer()
-        .required('Required'),
+        .positive()
+        .required('This field is required'),
       deadlineDate: Yup.date()
-        .required('Required'),
-      zone: Yup.string()
-        .required('Required'),
+        .required('This field is required'),
       images: Yup.array()
     })}
-    onSubmit={values => {
-      console.log(values);
+    onSubmit={contest => {
+      let newDate = moment();
+      if (zone === 'PDT') {
+        newDate = contest.deadlineDate.tz("America/Los_Angeles", true);
+      } else if (zone === 'CDT') {
+        newDate = contest.deadlineDate.tz("America/Chicago", true);
+      } else {
+        newDate = contest.deadlineDate.tz("America/New_York", true);
+      }
+      handleSubmit({ ...contest, deadlineDate: newDate, images: images });
     }}>
       {({ handleSubmit, handleChange, setFieldValue, values, touched, errors, isSubmitting }) => (
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
@@ -128,9 +134,10 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
                 name="prizeAmount"
                 margin="normal"
                 variant="outlined"
+                placeholder="100.00"
                 helperText={touched.prizeAmount ? errors.prizeAmount : ''}
                 error={touched.prizeAmount && Boolean(errors.prizeAmount)}
-                value={values.prizeAmount}
+                value={values.prizeAmount ? values.prizeAmount : ''}
                 onChange={handleChange}
                 InputProps={{
                   startAdornment: (
@@ -153,8 +160,6 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
                       variant="inline"
                       inputVariant="outlined"
                       format="MMMM Do YYYY"
-                      helperText={touched.deadlineDate ? errors.deadlineDate : ''}
-                      error={touched.deadlineDate && Boolean(errors.deadlineDate)}
                       value={values.deadlineDate}
                       onChange={value => setFieldValue("deadlineDate", value)}
                       keyboardIcon={<DateRangeIcon />}/>
@@ -167,8 +172,6 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
                       variant="inline"
                       inputVariant="outlined"
                       format="LT"
-                      helperText={touched.deadlineDate ? errors.deadlineDate : ''}
-                      error={touched.deadlineDate && Boolean(errors.deadlineDate)}
                       value={values.deadlineDate}
                       onChange={value => setFieldValue("deadlineDate", value)}
                       keyboardIcon={<AlarmIcon />}/>
@@ -181,10 +184,8 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
                     margin="normal"
                     variant="outlined"
                     select
-                    helperText={touched.zone ? errors.zone : ''}
-                    error={touched.zone && Boolean(errors.zone)}
-                    value={values.zone}
-                    onChange={handleChange}>
+                    value={zone}
+                    onChange={value => setZone(value.target.value)}>
                       <MenuItem value="PDT">PDT</MenuItem>
                       <MenuItem value="CDT">CDT</MenuItem>
                       <MenuItem value="EDT">EDT</MenuItem>
