@@ -66,7 +66,7 @@ exports.upload = asyncHandler(async (req, res) => {
   });
 });
 
-const AWSProfilePic = multer({
+const AWSPic = multer({
   storage: multerS3({
     s3: s3,
     bucket: process.env.S3_BUCKET,
@@ -86,7 +86,7 @@ const AWSProfilePic = multer({
 }).single("image")
 
 exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
-  AWSProfilePic(req, res, async (error) => {
+  AWSPic(req, res, async (error) => {
     if (error) {
       res.json({
         error: error
@@ -102,6 +102,26 @@ exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
             }
           }, { new: true })
           res.json(profilePic);
+        } catch (err) {
+          res.status(500).json(err);
+        }
+      }
+    }
+  })
+})
+
+exports.uploadSubmissionPic = asyncHandler(async (req, res, next) => {
+  AWSPic(req, res, async (error) => {
+    if (error) {
+      res.json({
+        error: error
+      });
+    } else {
+      if (req.file === undefined) {
+        console.log("Error: No File Selected");
+      } else {
+        try {
+          res.json(req.file.location)
         } catch (err) {
           res.status(500).json(err);
         }

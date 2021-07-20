@@ -20,11 +20,12 @@ export interface Contest {
   submissions: Submission[];
 }
 
-interface Submission {
+export interface Submission {
+  contest: string;
   images: string[];
-  description: string;
   artistName: string;
   artistId: string;
+  active: boolean;
 }
 
 interface Recipient {

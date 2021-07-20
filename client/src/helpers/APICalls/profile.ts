@@ -1,7 +1,6 @@
 import { FetchOptions } from '../../interface/FetchOptions';
 
 const updateProfile = async (file: FormData): Promise<string> => {
-  console.log(file);
   const fetchOptions: FetchOptions = {
     method: 'POST',
     credentials: 'include',

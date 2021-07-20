@@ -10,12 +10,15 @@ const submissionSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Contest",
     },
-    user: {
+    artistId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    active: Boolean,
-    storeUrl: [String],
+    active: {
+      type: Boolean,
+      default: true
+    },
+    images: [String],
   },
   schemaOptions
 );
