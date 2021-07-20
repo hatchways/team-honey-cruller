@@ -45,17 +45,21 @@ const io = socketio(server, {
 
 io.on("connection", (socket) => {
   const token = cookie.parse(socket.handshake.headers.cookie).token
-  const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
-  socket.tokenId = verifyToken.id;
-  console.log(`connected by ID of ${socket.tokenId}`);
+  if (token) {
+    const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
+    socket.tokenId = verifyToken.id;
+    console.log(`connected by ID of ${socket.tokenId}`);
 
-  socket.on('joinChat', (something) => {
-    console.log("inside joinChat", something)
+  } else {
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+    });
+  }
+  
+  socket.on('joinChat', (res) => {
+    console.log("inside joinChat")
   })
 
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
 
 });
 
