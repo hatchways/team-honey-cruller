@@ -17,16 +17,30 @@ formGrid: {
 paper: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: '1.25px solid black',
-    height: '320px'
+    height: '800px',
+    width: '800px'
+},
+container: {
+    
 },
 typography: {
     fontWeight: 'bold',
-    fontSize: '16px'
+    fontSize: '16px',
+    padding: '20px 0',
 },
-
+cardNum: {
+    width: '300px'
+},
+cardExpiry: {
+    width: '150px',
+    
+},
+cardCvc: {
+    width: '150px'
+},
+button:{
+    
+}
 }));
 
 export default useStyles;

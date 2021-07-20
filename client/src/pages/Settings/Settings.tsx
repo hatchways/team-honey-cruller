@@ -81,6 +81,7 @@ export default function Settings(): JSX.Element {
           Personal Information
         </TabPanel>
         <TabPanel value={value} index={2}>
+          <Typography className={classes.paymentDetails}>Payment Details</Typography>
           <Elements stripe={stripeKey}>
             <Payment />
           </Elements>
