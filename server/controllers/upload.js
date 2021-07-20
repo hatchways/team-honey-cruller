@@ -30,9 +30,9 @@ const uploadsContestGallery = multer({
       cb(
         null,
         path.basename(file.originalname, path.extname(file.originalname)) +
-          "-" +
-          Date.now() +
-          path.extname(file.originalname)
+        "-" +
+        Date.now() +
+        path.extname(file.originalname)
       );
     },
   }),
@@ -44,13 +44,15 @@ const uploadsContestGallery = multer({
 exports.upload = asyncHandler(async (req, res) => {
   uploadsContestGallery(req, res, (error) => {
     if (error) {
-      res.json({ error: error });
+      res.json({
+        error: error
+      });
     } else {
       if (req.files === undefined) {
         res.json("Error: No File Selected");
       } else {
         let fileArray = req.files,
-        fileLocation;
+          fileLocation;
         const galleryImgLocationArray = [];
         for (let i = 0; i < fileArray.length; i++) {
           fileLocation = fileArray[i].location;
@@ -64,25 +66,46 @@ exports.upload = asyncHandler(async (req, res) => {
   });
 });
 
+const AWSProfilePic = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.S3_BUCKET,
+    key: function (req, file, cb) {
+      cb(
+        null,
+        path.basename(file.originalname, path.extname(file.originalname)) +
+        "-" +
+        Date.now() +
+        path.extname(file.originalname)
+      );
+    },
+  }),
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  },
+}).single("image")
+
 exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
-  uploadsContestGallery(req, res, (error) => {
+  AWSProfilePic(req, res, async (error) => {
     if (error) {
-      res.json({ error: error });
+      res.json({
+        error: error
+      });
     } else {
-      if (req.files === undefined) {
-        res.json("Error: No File Selected");
+      if (req.file === undefined) {
+        console.log("Error: No File Selected");
       } else {
-        let fileArray = req.files,
-          fileLocation;
-        const galleryImgLocationArray = [];
-        for (let i = 0; i < fileArray.length; i++) {
-          fileLocation = fileArray[i].location;
-          galleryImgLocationArray.push(fileLocation);
+        try {
+          const { profilePic } = await User.findByIdAndUpdate(req.user.id, {
+            $set: {
+              profilePic: req.file.location
+            }
+          }, { new: true })
+          res.json(profilePic);
+        } catch (err) {
+          res.status(500).json(err);
         }
-        console.log({
-          locationArray: galleryImgLocationArray,
-        });
       }
     }
-  });
+  })
 })

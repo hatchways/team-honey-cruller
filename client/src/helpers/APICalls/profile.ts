@@ -1,11 +1,11 @@
 import { FetchOptions } from '../../interface/FetchOptions';
-import { User } from '../../interface/User';
 
-const updateProfile = async (file: File): Promise<User> => {
+const updateProfile = async (file: FormData): Promise<string> => {
+  console.log(file);
   const fetchOptions: FetchOptions = {
     method: 'POST',
     credentials: 'include',
-    body: JSON.stringify(file),
+    body: file,
   };
   return await fetch(`/upload/profile`, fetchOptions)
     .then((res) => res.json())
