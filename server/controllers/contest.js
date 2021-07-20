@@ -9,7 +9,8 @@ exports.createContest = asyncHandler(async (req, res) => {
             description: req.body.description,
             prizeAmount: req.body.prizeAmount,
             deadlineDate: req.body.deadlineDate,
-            userId: req.user.id
+            userId: req.user.id,
+            images: req.body.images
         });
         res.status(201).json(contest);
     } catch (err) {
