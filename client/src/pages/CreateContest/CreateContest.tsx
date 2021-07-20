@@ -29,7 +29,7 @@ export default function CreateContest():JSX.Element {
       title: title,
       description: description,
       prizeAmount: prizeAmount,
-      deadlineDate: deadlineDate.format('MMMM Do YYYY, h:mm A z'),
+      deadlineDate: deadlineDate.toDate(),
       images: images,
     };
 
