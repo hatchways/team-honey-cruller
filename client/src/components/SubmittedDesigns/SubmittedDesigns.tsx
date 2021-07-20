@@ -1,8 +1,10 @@
-import useStyles from './useStyles';
+import Box from '@material-ui/core/Box';
 
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
 import ImageListItemBar from '@material-ui/core/ImageListItemBar';
+
+
 
 {
   /* these images are temporary, will be deleted, After getting images as props from Contest.tsx file*/
@@ -40,9 +42,8 @@ const tempImages = [
 ];
 
 const SubmittedDesigns = ({ images, artist }: Props): JSX.Element => {
-  const classes = useStyles();
   return (
-    <div style={{ textAlign: 'center' }}>
+    <Box textAlign="center">
       <ImageList cols={4} gap={10} style={{ marginTop: '40px', marginBottom: '20px' }}>
         {tempImages.map((item) => (
           <ImageListItem key={item.src}>
@@ -56,7 +57,7 @@ const SubmittedDesigns = ({ images, artist }: Props): JSX.Element => {
           </ImageListItem>
         ))}
       </ImageList>
-    </div>
+    </Box>
   );
 };
 

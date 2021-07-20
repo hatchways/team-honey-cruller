@@ -20,7 +20,7 @@ import { Submission } from '../../interface/User';
 import { getContestById } from '../../helpers/APICalls/contest';
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -61,9 +61,11 @@ const GlobalCss = withStyles({
 })(() => null);
 
 export default function Contest(): JSX.Element {
+  const { id } = useParams() as { id: string };
   const classes = useStyles();
   const [value, setValue] = useState(0);
   //const [contestSubmissions, setContestSubmissions] = useState<Submission[]>([]);
+  //currently leaving as any, need to change it after getting individual contest from api
   const [contestSubmissions, setContestSubmissions] = useState<any>([]);
   const { loggedInUser } = useAuth();
 
@@ -88,7 +90,7 @@ export default function Contest(): JSX.Element {
   useEffect(() => {
     async function getContestAllSubmissions() {
       try {
-        const contestAllSubmissions = await getContestById();
+        const contestAllSubmissions = await getContestById(id);
         if (contestAllSubmissions) {
           setContestSubmissions(contestAllSubmissions);
         }
@@ -97,7 +99,7 @@ export default function Contest(): JSX.Element {
       }
     }
     getContestAllSubmissions();
-  }, []);
+  }, [id]);
 
   const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {
     setValue(valueChange);
@@ -121,13 +123,13 @@ export default function Contest(): JSX.Element {
     <>
       <CssBaseline />
       <GlobalCss />
-      <AuthHeader linkTo="/signup" btnText="sign up" />
+      <AuthHeader linkTo={`/submit-design/${id}`} btnText="SUBMIT DESIGN" />
       <Container className={classes.container}>
         <Grid className={classes.grid} container style={{ marginBottom: '35px' }}>
-          {/* has to back to contests list, no route for that yet, so using dashboard for testing*/}
           <Grid item>
             <Typography>
-              <Link to="/dashboard" className={classes.greyText}>
+              {/* should be redirected to all the contests page*/}
+              <Link to="/discovery" className={classes.greyText}>
                 <ArrowBackIosIcon className={classes.backIcon} />
                 Back to contests list
               </Link>
@@ -154,9 +156,9 @@ export default function Contest(): JSX.Element {
             </Grid>
           </Grid>
           <Grid item xs={2}>
-            <Link to={`/submit-design/${contestSubmissions.id}`} style={{ textDecoration: 'none' }}>
+            <Link to={`/submit-design/${id}`} style={{ textDecoration: 'none' }}>
               <Button variant="outlined" size="large" className={classes.button}>
-                SUBMIT DESIGN
+                submit design
               </Button>
             </Link>
           </Grid>
