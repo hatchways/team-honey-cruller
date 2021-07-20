@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: '35px',
     fontWeight: 'bold',
     textAlign: 'center',
-    padding: '20px 0 30px 0'
+    padding: '20px 0 30px 0',
+    marginLeft: '58px'
   }
 }));
 

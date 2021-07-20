@@ -5,13 +5,14 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import Payment from '../../components/Payment/Payment';
 import useStyles from "./useStyles";
+import env from "react-dotenv";
 
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
 }
-const stripeKey = loadStripe(process.env.STRIPE_API_KEY|| '');
+const stripeKey = loadStripe('pk_test_51JEJJrK3QVx74yV9vYujCrOpA8KwLKEE7uKSjHmUO0GGxUYSa5uxMlgaCZAbflwU9U0Npb2k4a86JEJBGmuBOfbw00CU3LpL8W' || '');
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;

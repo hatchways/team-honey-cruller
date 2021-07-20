@@ -17,11 +17,11 @@ formGrid: {
 paper: {
     display: 'flex',
     flexDirection: 'column',
-    height: '800px',
-    width: '800px'
+    height: '400px',
+    width: '500px'
 },
 container: {
-    
+    justifyContent: 'space-between',
 },
 typography: {
     fontWeight: 'bold',
@@ -29,18 +29,24 @@ typography: {
     padding: '20px 0',
 },
 cardNum: {
-    width: '300px'
+    width: '300px',
+    marginBottom: '20px'
 },
 cardExpiry: {
     width: '150px',
-    
+    marginRight: '20px'
 },
 cardCvc: {
-    width: '150px'
+    width: '130px'
 },
-button:{
-    
-}
-}));
+button: {
+    color: '#000000',
+    margin: '40px 20px',
+    border: '1px solid #000000',
+    width: '15rem',
+    height: '6rem',
+    fontSize: '15px'
+},
+}))
 
 export default useStyles;

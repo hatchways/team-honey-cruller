@@ -1,7 +1,7 @@
 import { FetchOptions } from '../../interface/FetchOptions';
 import { AuthApiCustomerData } from '../../interface/AuthApiData';
 
-const createStripeUser = async (email: string, name: string): Promise<AuthApiCustomerData> => {
+export const createStripeUser = async (email: string, name: string): Promise<AuthApiCustomerData> => {
     const fetchOptions: FetchOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -15,7 +15,7 @@ const createStripeUser = async (email: string, name: string): Promise<AuthApiCus
     }));
 };
 
-const retrieveStripeUser = async (id: string): Promise<AuthApiCustomerData> => {
+export const retrieveStripeUser = async (id: string): Promise<AuthApiCustomerData> => {
     const fetchOptions: FetchOptions = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -28,7 +28,7 @@ const retrieveStripeUser = async (id: string): Promise<AuthApiCustomerData> => {
     }));
 };
 
-const setUpIntents = async (id: string): Promise<AuthApiCustomerData> => {
+export const setUpIntents = async (id: string): Promise<AuthApiCustomerData> => {
     const fetchOptions: FetchOptions = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -42,7 +42,7 @@ const setUpIntents = async (id: string): Promise<AuthApiCustomerData> => {
     }));
 };
 
-const createPaymentMethod = async (type: string, card: object): Promise<AuthApiCustomerData> => {
+export const createPaymentMethod = async (type: string, card: Record<string, unknown>): Promise<AuthApiCustomerData> => {
     const fetchOptions: FetchOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -56,7 +56,7 @@ const createPaymentMethod = async (type: string, card: object): Promise<AuthApiC
     }));
 };
 
-const createPaymentSession = async (priceId: string): Promise<AuthApiCustomerData> => {
+export const createPaymentSession = async (priceId: string): Promise<AuthApiCustomerData> => {
     const fetchOptions: FetchOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -70,7 +70,7 @@ const createPaymentSession = async (priceId: string): Promise<AuthApiCustomerDat
     }));
 };
 
-const createCharge = async (customerId: string): Promise<AuthApiCustomerData> => {
+export const createCharge = async (customerId: string): Promise<AuthApiCustomerData> => {
     const fetchOptions: FetchOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

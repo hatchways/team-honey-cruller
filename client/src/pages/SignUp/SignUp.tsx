@@ -9,6 +9,7 @@ import register from '../../helpers/APICalls/register';
 import login from '../../helpers/APICalls/login';
 import SignUpForm from './SignUpForm/SignUpForm';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
+import { createStripeUser } from '../../helpers/APICalls/stripe'
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
@@ -22,12 +23,14 @@ export default function Register(): JSX.Element {
     { setSubmitting }: FormikHelpers<{ email: string; password: string; username: string }>,
   ) => {
     register(username, email, password).then((data) => {
+      console.log(data)
       if (data.error) {
         console.error({ error: data.error.message });
         setSubmitting(false);
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
         updateLoginContext(data.success);
+        createStripeUser(data.success.user.email, data.success.user.username)
       } else {
         // should not get here from backend but this catch is for an unknown issue
         console.error({ data });
