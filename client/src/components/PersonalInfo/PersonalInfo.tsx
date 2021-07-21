@@ -1,6 +1,7 @@
 import { Box, Typography, Grid, Paper } from '@material-ui/core';
 import { classicNameResolver } from 'typescript';
 import PersonalInfoForm from './PersonalnfoForm/PersonalInfoForm';
+import { PersonalInfoProps } from '../../interface/PersonalInfo';
 import useStyles from './useStyles';
 
 export default function PersonalInfo(): JSX.Element {
@@ -15,16 +16,7 @@ export default function PersonalInfo(): JSX.Element {
     birthday,
     gender,
     about,
-  }: {
-    firstName: string;
-    middleInit: string;
-    lastName: string;
-    email: string;
-    phone: number;
-    birthday: Date;
-    gender: string;
-    about: string;
-  }) => {
+  }: PersonalInfoProps) => {
     const info = {
       firstName: firstName,
       middleInit: middleInit,

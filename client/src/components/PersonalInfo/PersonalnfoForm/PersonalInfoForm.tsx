@@ -1,6 +1,7 @@
 import { Box, Typography, Grid, TextField, Select, MenuItem, Button } from '@material-ui/core';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { PersonalInfoProps } from '../../../interface/PersonalInfo';
 import useStyles from './useStyles';
 
 interface Props {
@@ -13,16 +14,7 @@ interface Props {
     birthday,
     gender,
     about,
-  }: {
-    firstName: string;
-    middleInit: string;
-    lastName: string;
-    email: string;
-    phone: number;
-    birthday: Date;
-    gender: string;
-    about: string;
-  }) => void;
+  }: PersonalInfoProps) => void;
 };
 
 export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
@@ -47,9 +39,7 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
     <Formik
     initialValues={INITIAL_VALUES}
     validationSchema={VALIDATION_SCHEMA}
-    onSubmit={values => {
-      console.log(values);
-    }}>
+    onSubmit={handleSubmit}>
       {({ handleSubmit, handleChange, values, errors, touched }) => (
         <form onSubmit={handleSubmit} noValidate>
           <Box mt={3} mb={3}>
@@ -161,6 +151,7 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                   fullWidth
                   variant="outlined"
                   value={values.gender}
+                  className={classes.select}
                   onChange={handleChange}>
                     <MenuItem value="Male">Male</MenuItem>
                     <MenuItem value="Female">Female</MenuItem>
