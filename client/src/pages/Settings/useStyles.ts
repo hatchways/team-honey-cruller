@@ -4,7 +4,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexGrow: 1,
-    height: '100vh',
     overflow: 'hidden',
   },
   tabs: {

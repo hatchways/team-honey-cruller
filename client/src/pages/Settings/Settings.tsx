@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Box, Typography, Tabs, Tab } from '@material-ui/core';
+import PersonalInfo from '../../components/PersonalInfo/PersonalInfo';
 import useStyles from "./useStyles";
 
 interface TabPanelProps {
@@ -71,7 +72,7 @@ export default function Settings(): JSX.Element {
         Profile
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Personal Information
+        <PersonalInfo />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Payment Details
