@@ -94,6 +94,7 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
       {({ handleSubmit, handleChange, setFieldValue, values, touched, errors, isSubmitting }) => (
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <Box mt={3} mb={3} className={classes.box}>
+            {console.log(dogImages)}
             <Typography className={classes.label}>What do you need designed?</Typography>
             <TextField
             id="title"
@@ -203,7 +204,7 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
             <Box mt={3} mb={3} className={classes.imageList}>
               <ImageList rowHeight={160} cols={4} className={classes.images}>
                 {dogImages.map((image: string, id: number) => (
-                  <ImageListItem key={id}>
+                  <ImageListItem key={image}>
                     <img id={`${id}`} src={image} className={classes.img} onClick={handleImages}/>
                     {$(`#${`${id}`}`).hasClass(classes.checked) && <CheckCircleOutlineIcon className={classes.icon}/>}
                   </ImageListItem>
