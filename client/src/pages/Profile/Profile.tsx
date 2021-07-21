@@ -41,7 +41,7 @@ export default function Profile(): JSX.Element {
     index: number;
   }
 
-  useEffect(() => {
+useEffect(() => {
     async function getUserContests() {
       const userContests = await getContestByUser();
       if (userContests.contests) {

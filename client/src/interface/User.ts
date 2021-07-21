@@ -11,6 +11,8 @@ export interface User {
 }
 
 export interface Contest {
+  //also need an id 
+  _id: number,
   title: string;
   description: string;
   prizeAmount: number;
@@ -20,7 +22,7 @@ export interface Contest {
   submissions: Submission[];
 }
 
-interface Submission {
+export interface Submission {
   images: string[];
   description: string;
   artistName: string;
