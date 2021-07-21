@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import useStyles from './useStyles';
-import { useAuth } from '../../context/useAuthContext';
 import Chip from '@material-ui/core/Chip';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';

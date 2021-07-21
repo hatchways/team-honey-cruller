@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +14,7 @@ import { uploadSubmissionPic, createSubmission } from '../../helpers/APICalls/su
 
 export default function SubmitDesign(): JSX.Element {
   const [allPics, setAllPics] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const classes = useStyles();
   const location = useLocation();
   const contestId = location.pathname.slice(15);
@@ -44,9 +46,11 @@ export default function SubmitDesign(): JSX.Element {
       <Grid container alignItems="center" justify="center">
         <Grid container xs={6} className={classes.paperContainer}>
           <Box>
-            {allPics.map((pic) => (
-              <img key={pic} src={pic} alt={`${pic}tattoo`} className={classes.previewPic} />
-            ))}
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              allPics.map((pic) => <img key={pic} src={pic} alt={`${pic}tattoo`} className={classes.previewPic} />)
+            )}
           </Box>
           <label htmlFor="file" className={classes.fileInputLabel}>
             <input
