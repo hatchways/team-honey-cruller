@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
     fontWeight: 'bold',
     letterSpacing: -0.2,
   },
-  previewText: {
+  lastMessage: {
     fontSize: 12,
     color: '#9CADC8',
     letterSpacing: -0.17,

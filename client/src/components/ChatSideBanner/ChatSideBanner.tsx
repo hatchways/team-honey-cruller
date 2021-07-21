@@ -6,12 +6,13 @@ import useStyles from './useStyles';
 import { User } from '../../interface/User';
 import Search from '../Search/Search';
 import ConvoCard from '../ConvoCard/ConvoCard';
+import { Convo } from '../../interface/User';
 
 interface Props {
-  handleDrawerToggle?: () => void;
+  convos: Convo[];
 }
 
-const ChatSideBanner = (): JSX.Element => {
+const ChatSideBanner = ({ convos }: Props): JSX.Element => {
   const [search, setSearch] = useState<string>('test');
   const [newChatUser, setNewChatUser] = useState<User | null>(null);
   const classes = useStyles();
@@ -26,12 +27,14 @@ const ChatSideBanner = (): JSX.Element => {
   return (
     <Grid className={classes.chatSideBanner}>
       <Box className={classes.userPanel}>
-        <Typography variant="h5" className={classes.heading}>Inbox Messages</Typography>
+        <Typography variant="h5" className={classes.heading}>
+          Inbox Messages
+        </Typography>
       </Box>
       <Box>
         <Search search={search} handleChange={handleChange} />
       </Box>
-      <ConvoCard />
+      {convos && convos.map((convo) => <ConvoCard key={convo._id} convo={convo} />)}
     </Grid>
   );
 };

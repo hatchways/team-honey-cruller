@@ -1,15 +1,18 @@
 export interface User {
-  _id: string;
+  id: string;
   email: string;
   username: string;
   profilePic: string;
   artist: boolean;
   artwork: string[];
   contests: Contest[];
-  conversations: Conversation[];
+  conversations: Convo[];
+  activeConvo: Message[];
 }
 
 export interface Contest {
+  //also need an id 
+  _id: number,
   title: string;
   description: string;
   prizeAmount: number;
@@ -19,19 +22,30 @@ export interface Contest {
   submissions: Submission[];
 }
 
-interface Submission {
+export interface Submission {
   images: string[];
   description: string;
   artistName: string;
   artistId: string;
 }
 
-export interface Conversation {
-  room: string;
-  messages: Message[];
+interface Recipient {
+  _id: string;
+  username: string;
+  email: string;
+  profilePic: string;
+}
+
+export interface Convo {
+  _id: string;
+  lastMessage: string;
+  createdAt: string;
+  updatedAt: string;
+  recipients: Recipient[];
 }
 
 export interface Message {
+  _id: string;
   senderId: string;
   senderName: string;
   senderPic: string;
@@ -45,4 +59,8 @@ export interface Message {
 export interface SearchUsersApiData {
   users?: User[];
   error?: { message: string };
+}
+
+export interface Customer {
+  id: string;
 }

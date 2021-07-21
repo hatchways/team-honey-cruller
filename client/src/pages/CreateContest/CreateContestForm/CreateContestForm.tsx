@@ -220,4 +220,4 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
       )}
     </Formik>
   );
-};
+}

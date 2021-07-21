@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema({
   register_date: {
     type: Date,
     default: Date.now
-  }
+  },
+  profilePic: String
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
