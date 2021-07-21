@@ -3,8 +3,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { Moment } from 'moment';
-import axios from 'axios';
+import { Contest } from '../../interface/Contest';
+import { addContest } from '../../helpers/APICalls/contest';
 import useStyles from './useStyles';
 
 export default function CreateContest():JSX.Element {
@@ -17,25 +17,17 @@ export default function CreateContest():JSX.Element {
       prizeAmount,
       deadlineDate,
       images
-    }: {
-      title: string;
-      description: string;
-      prizeAmount: number;
-      deadlineDate: Moment;
-      images: Array<string>;
-    }
+    }: Contest
   ) => {
     const contest = {
       title: title,
       description: description,
       prizeAmount: prizeAmount,
-      deadlineDate: deadlineDate.toDate(),
+      deadlineDate: deadlineDate,
       images: images,
     };
 
-    axios.post('/contest', contest)
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err));
+    addContest(contest);
   };
 
   return (

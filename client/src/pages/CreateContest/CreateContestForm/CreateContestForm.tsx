@@ -6,10 +6,11 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import AlarmIcon from '@material-ui/icons/Alarm';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import { Contest } from '../../../interface/Contest';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import MomentUtils from '@date-io/moment';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import 'moment-timezone';
 import axios from 'axios';
 import $ from 'jquery';
@@ -23,13 +24,7 @@ interface Props {
       prizeAmount,
       deadlineDate,
       images,
-    }: {
-      title: string;
-      description: string;
-      prizeAmount: number;
-      deadlineDate: Moment;
-      images: Array<string>;
-    }
+    }: Contest
   ) => void;
 };
 
@@ -64,7 +59,7 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
       title: '',
       description: '',
       prizeAmount: 0,
-      deadlineDate: moment(),
+      deadlineDate: new Date(),
       images: [],
     }}
     validationSchema={Yup.object().shape({
@@ -81,20 +76,19 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
       images: Yup.array()
     })}
     onSubmit={contest => {
-      let newDate = moment();
-      if (zone === 'PDT') {
-        newDate = contest.deadlineDate.tz("America/Los_Angeles", true);
-      } else if (zone === 'CDT') {
-        newDate = contest.deadlineDate.tz("America/Chicago", true);
-      } else {
-        newDate = contest.deadlineDate.tz("America/New_York", true);
-      }
-      handleSubmit({ ...contest, deadlineDate: newDate, images: images });
+      // let newDate = moment();
+      // if (zone === 'PDT') {
+      //   newDate = contest.deadlineDate.tz("America/Los_Angeles", true);
+      // } else if (zone === 'CDT') {
+      //   newDate = contest.deadlineDate.tz("America/Chicago", true);
+      // } else {
+      //   newDate = contest.deadlineDate.tz("America/New_York", true);
+      // }
+      handleSubmit({ ...contest, images: images });
     }}>
       {({ handleSubmit, handleChange, setFieldValue, values, touched, errors, isSubmitting }) => (
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <Box mt={3} mb={3} className={classes.box}>
-            {console.log(dogImages)}
             <Typography className={classes.label}>What do you need designed?</Typography>
             <TextField
             id="title"
