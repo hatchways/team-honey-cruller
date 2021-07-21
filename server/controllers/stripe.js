@@ -8,7 +8,6 @@ exports.createCustomer = asyncHandler(async (req, res) => {
             name: req.body.name
         });
 
-
         res.status(201).json({
             customer: customer
         });
@@ -103,3 +102,28 @@ exports.chargeCard = asyncHandler(async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+exports.createToken = asyncHandler(async (req, res) => {
+    const object = {}
+    object.card = { 
+        number: req.body.number, 
+        exp_month: req.body.exp_month, 
+        exp_year: req.body.exp_year, 
+        cvc: req.body.cvc
+    }
+    try {
+        const token = await stripe.tokens.create(object)
+        const tokenId = await token.id
+        const customerCard = await stripe.customers.createSource(
+            req.body.stripeId, 
+            { source: tokenId }
+        )
+
+        res.status(201).json({
+            customer: customerCard
+        });
+
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
