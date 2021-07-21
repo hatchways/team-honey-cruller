@@ -18,6 +18,7 @@ export const createSubmission = async (images: string[], contestId: string): Pro
   const fetchOptions: FetchOptions = {
     method: 'POST',
     credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(images),
   };
   return await fetch(`/contest/${contestId}/submission`, fetchOptions)

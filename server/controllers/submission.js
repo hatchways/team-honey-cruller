@@ -1,9 +1,8 @@
 const Submission = require("../models/Submission");
 const asyncHandler = require("express-async-handler");
+const Contest = require("../models/Contest");
 
 exports.createSubmission = asyncHandler(async (req, res) => {
-  const body = req.body;
-  console.log(req.body)
   try {
     //checking if the user for the contest, has already submitted
     const previousSubmission = await Submission.findOne({
@@ -13,7 +12,7 @@ exports.createSubmission = asyncHandler(async (req, res) => {
 
     if (previousSubmission) {
       previousSubmission.images = previousSubmission.images.concat(
-        body
+        req.body
       );
       await previousSubmission.save();
       res.status(200).json(previousSubmission);
@@ -21,8 +20,9 @@ exports.createSubmission = asyncHandler(async (req, res) => {
       const submission = await Submission.create({
         contest: req.params.id,
         artistId: req.user.id,
-        images: body,
+        images: req.body,
       })
+      await Contest.findByIdAndUpdate(req.params.id, { $push: { submissions: submission.id }})
       const withArtist = await User.populate(submission, {path: "artistId", select: 'username'})
       res.status(201).json(withArtist);
     }
