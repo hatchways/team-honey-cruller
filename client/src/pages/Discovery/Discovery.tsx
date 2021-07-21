@@ -123,7 +123,6 @@ export default function Discovery(): JSX.Element {
                                                 </TableCell>
                                                 <TableCell className={classes.tableRow}>
                                                     {/* Is this the link to go for a particular contest. If yes, then we can pass contest */}
-                                                    {console.log(contest._id)}
                                                     <Link to={`/contest/${contest._id}`}><Button className={classes.button}>More Info</Button></Link>
                                                 </TableCell>
                                             </TableRow>
