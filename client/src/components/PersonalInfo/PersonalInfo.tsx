@@ -46,7 +46,7 @@ export default function PersonalInfo(): JSX.Element {
         </Typography>
       </Box>
       <Grid container justify="center">
-        <Grid item xs={12} md={10} elevation={6} component={Paper}>
+        <Grid item xs={12} md={10}>
             <PersonalInfoForm handleSubmit={handleSubmit}/>
         </Grid>
       </Grid>

@@ -50,11 +50,11 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
     onSubmit={values => {
       console.log(values);
     }}>
-      {({ handleSubmit, handleChange, setFieldValue, values, errors, touched }) => (
-        <form onSubmit={handleSubmit} className={classes.form} noValidate>
+      {({ handleSubmit, handleChange, values, errors, touched }) => (
+        <form onSubmit={handleSubmit} noValidate>
           <Box mt={3} mb={3}>
             <Grid container xs={12} spacing={2}>
-              <Grid item xs={5}>
+              <Grid item xs={12} sm={5}>
                 <Box>
                   <Typography>First Name</Typography>
                   <TextField
@@ -64,14 +64,13 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                     margin="normal"
                     variant="outlined"
                     placeholder="John"
-                    className={classes.textField}
                     helperText={touched.firstName ? errors.firstName : ''}
                     error={touched.firstName && Boolean(errors.firstName)}
                     value={values.firstName}
                     onChange={handleChange}/>
                 </Box>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={12} sm={2}>
                 <Box>
                   <Typography>MI</Typography>
                   <TextField
@@ -81,14 +80,13 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                   margin="normal"
                   variant="outlined"
                   placeholder="T"
-                  className={classes.textField}
                   helperText={touched.middleInit ? errors.middleInit : ''}
                   error={touched.middleInit && Boolean(errors.middleInit)}
                   value={values.middleInit}
                   onChange={handleChange}/>
                 </Box>
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={12} sm={5}>
                 <Box>
                   <Typography>Last Name</Typography>
                   <TextField
@@ -98,7 +96,6 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                   margin="normal"
                   variant="outlined"
                   placeholder="Doe"
-                  className={classes.textField}
                   helperText={touched.lastName ? errors.lastName : ''}
                   error={touched.lastName && Boolean(errors.lastName)}
                   value={values.lastName}
@@ -117,7 +114,6 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                   margin="normal"
                   variant="outlined"
                   placeholder="johndoe@gmail.com"
-                  className={classes.textField}
                   helperText={touched.email ? errors.email : ''}
                   error={touched.email && Boolean(errors.email)}
                   value={values.email}
@@ -134,7 +130,6 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                   margin="normal"
                   variant="outlined"
                   placeholder={"(123) 456-7890"}
-                  className={classes.textField}
                   helperText={touched.phone ? errors.phone : ''}
                   error={touched.phone && Boolean(errors.phone)}
                   value={values.phone ? values.phone : ''}
@@ -142,7 +137,7 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                 </Box>
               </Grid>
             </Grid>
-            <Grid container xs={12} spacing={4}>
+            <Grid container xs={12} spacing={2}>
               <Grid item xs={6}>
                 <Box>
                   <Typography>Birthday</Typography>
@@ -165,7 +160,6 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                   name="gender"
                   fullWidth
                   variant="outlined"
-                  className={classes.select}
                   value={values.gender}
                   onChange={handleChange}>
                     <MenuItem value="Male">Male</MenuItem>
@@ -173,27 +167,28 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                   </Select>
                 </Box>
               </Grid>
+              <Grid item xs={12} sm={12}>
+                <Typography>About me</Typography>
+                <TextField
+                id="about"
+                name="about"
+                fullWidth
+                multiline
+                margin="normal"
+                variant="outlined"
+                placeholder="Something about you..."
+                rows={5}
+                helperText={touched.about ? errors.about : ''}
+                error={touched.about && Boolean(errors.about)}
+                value={values.about ? values.about : ''}
+                onChange={handleChange}/>
+              </Grid>
             </Grid>
-            <Box>
-              <Typography>About me</Typography>
-              <TextField
-              id="about"
-              name="about"
-              fullWidth
-              multiline
-              margin="normal"
-              variant="outlined"
-              placeholder="Something about you..."
-              rows={5}
-              className={classes.textField}
-              helperText={touched.about ? errors.about : ''}
-              error={touched.about && Boolean(errors.about)}
-              value={values.about ? values.about : ''}
-              onChange={handleChange}/>
+            <Box textAlign="center">
+              <Button className={classes.submit} variant="contained" color="primary">
+                Save
+              </Button>
             </Box>
-            <Button className={classes.submit} variant="contained" color="primary" size="small">
-              Save
-            </Button>
           </Box>
         </form>
       )}
