@@ -58,7 +58,7 @@ export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.El
           <Box mt={3} mb={3}>
             <Typography className={classes.label}>E-mail</Typography>
             <TextField
-              id="email"            
+              id="email"
               placeholder="Enter e-mail address"
               fullWidth
               margin="normal"

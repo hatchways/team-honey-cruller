@@ -8,6 +8,9 @@ const connectDB = require("./db");
 const { join } = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const redis = require("redis");
+const cookie = require("cookie");
+const jwt = require("jsonwebtoken");
 
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
@@ -15,6 +18,7 @@ const contestRouter = require("./routes/contest");
 const convoRouter = require("./routes/convo");
 const uploadRouter = require("./routes/upload");
 const stripeRouter = require("./routes/stripe");
+const notificationRouter = require("./routes/notification");
 
 const { json, urlencoded } = express;
 
@@ -29,20 +33,40 @@ const io = socketio(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("connected");
+  const token = cookie.parse(socket.handshake.headers.cookie).token;
+  if (token) {
+    const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
+    socket.tokenId = verifyToken.id;
+    console.log(`connected by ID of ${socket.tokenId}`);
+  } else {
+    socket.on("disconnect", () => {
+      console.log("user disconnected");
+    });
+  }
+
+  socket.on("joinChat", (res) => {
+    console.log("inside joinChat");
+  });
 });
 
 if (process.env.NODE_ENV === "development") {
 }
 app.use(logger("dev"));
 app.use(json());
-app.use(urlencoded({ extended: false }));
+app.use(
+  urlencoded({
+    extended: false,
+  })
+);
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
 app.use((req, res, next) => {
-  req.io = { io, cache };
-  
+  req.io = {
+    io,
+    cache,
+  };
+
   next();
 });
 
@@ -52,6 +76,7 @@ app.use("/contest", contestRouter);
 app.use("/api/conversation", convoRouter);
 app.use("/upload", uploadRouter);
 app.use("/stripe", stripeRouter);
+app.use("/notification", notificationRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
@@ -75,4 +100,7 @@ process.on("unhandledRejection", (err, promise) => {
   server.close(() => process.exit(1));
 });
 
-module.exports = { app, server };
+module.exports = {
+  app,
+  server,
+};
