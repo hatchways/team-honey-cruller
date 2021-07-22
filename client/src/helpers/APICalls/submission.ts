@@ -12,3 +12,15 @@ export const getContestSubmissions = async (contestId: string): Promise<Submissi
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Could not find Contest.' } }));
 };
+
+export const getUserSubmissions = async (): Promise<Submission[]> => {
+  const fetchData: FetchOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  };
+
+  return await fetch(`/submission`, fetchData)
+    .then((data) => data.json())
+    .catch((err) => ({ error: { message: 'Could not find Contest.' } }));
+};

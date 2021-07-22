@@ -31,16 +31,15 @@ exports.createSubmission = asyncHandler(async (req, res) => {
   }
 });
 
-// exports.getSubmissionsByContest = asyncHandler(async (req, res) => {
-//   try {
-//     const submissions = await Submission.find({
-//       contest: req.params.id
-//     }).select('-createdAt -updatedAt -__v')
-//     res.json(submissions)
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// })
+exports.getSubmissionsByUser = asyncHandler(async (req, res) => {
+  try {
+    const submissions = await Submission.find({artistId: req.user.id})
+    console.log(submissions)
+    res.send(submissions)
+  } catch(err) {
+    res.status(500).json(err);
+  }
+})
 
 exports.getSubmissionByContest = asyncHandler(async (req, res) => {
   // EXPECTING THE ID OF THE CONTEST IN PARAMS
