@@ -26,13 +26,23 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
     lastName: '',
     email: '',
     phone: 0,
-    birthday: new Date(),
+    birthday: '',
     gender: '',
     about: '',
   };
 
   const VALIDATION_SCHEMA = Yup.object().shape({
-
+    firstName: Yup.string(),
+    middleInit: Yup.string()
+      .max(1, 'Middle initial is too long'),
+    lastName: Yup.string(),
+    email: Yup.string()
+      .email('Invalid email'),
+    phone: Yup.string()
+      .matches(/^[0-9]{10}$/, 'Invalid phone number'),
+    birthday: Yup.string(),
+    gender: Yup.string(),
+    about: Yup.string(),
   });
 
   return (
@@ -43,7 +53,7 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
       {({ handleSubmit, handleChange, values, errors, touched }) => (
         <form onSubmit={handleSubmit} noValidate>
           <Box mt={3} mb={3}>
-            <Grid container xs={12} spacing={2}>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={5}>
                 <Box>
                   <Typography>First Name</Typography>
@@ -93,7 +103,7 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                 </Box>
               </Grid>
             </Grid>
-            <Grid container xs={12} spacing={2}>
+            <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Box>
                   <Typography>Email</Typography>
@@ -115,11 +125,11 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                   <Typography>Phone Number</Typography>
                   <TextField
                   id="phone"
-                  name="email"
+                  name="phone"
                   fullWidth
                   margin="normal"
                   variant="outlined"
-                  placeholder={"(123) 456-7890"}
+                  placeholder="(123) 456-7890"
                   helperText={touched.phone ? errors.phone : ''}
                   error={touched.phone && Boolean(errors.phone)}
                   value={values.phone ? values.phone : ''}
@@ -127,7 +137,7 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                 </Box>
               </Grid>
             </Grid>
-            <Grid container xs={12} spacing={2}>
+            <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Box>
                   <Typography>Birthday</Typography>
@@ -175,8 +185,12 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                 onChange={handleChange}/>
               </Grid>
             </Grid>
-            <Box textAlign="center">
-              <Button className={classes.submit} variant="contained" color="primary">
+            <Box>
+              <Button
+              className={classes.submit}
+              type="submit"
+              variant="contained"
+              color="primary">
                 Save
               </Button>
             </Box>
