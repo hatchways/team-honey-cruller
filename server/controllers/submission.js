@@ -1,14 +1,17 @@
 const Submission = require("../models/Submission");
 const Contest = require("../models/Contest");
 const asyncHandler = require("express-async-handler");
+const mongoose = require("mongoose");
 
 exports.createSubmission = asyncHandler(async (req, res) => {
+  const artistId = mongoose.Types.ObjectId(req.user.id)
+  const contestId = mongoose.Types.ObjectId(req.params.id)
   const body = req.body;
   try {
     //checking if the user for the contest, has already submitted
     const previousSubmission = await Submission.findOne({
-      contest: req.params.id,
-      user: req.user.id,
+      contest: contestId,
+      user: artistId,
     });
 
     if (previousSubmission) {
@@ -32,9 +35,9 @@ exports.createSubmission = asyncHandler(async (req, res) => {
 });
 
 exports.getSubmissionsByUser = asyncHandler(async (req, res) => {
+  const artistId = mongoose.Types.ObjectId(req.user.id)
   try {
-    const submissions = await Submission.find({artistId: req.user.id})
-    console.log(submissions)
+    const submissions = await Submission.find({ artistId })
     res.send(submissions)
   } catch(err) {
     res.status(500).json(err);
@@ -42,16 +45,18 @@ exports.getSubmissionsByUser = asyncHandler(async (req, res) => {
 })
 
 exports.getSubmissionByContest = asyncHandler(async (req, res) => {
+  const artistId = mongoose.Types.ObjectId(req.user.id)
+  const contestId = mongoose.Types.ObjectId(req.params.id)
   // EXPECTING THE ID OF THE CONTEST IN PARAMS
   Contest.findOne({
-    userId: req.user.id,
-    _id: req.params.id
+    userId: artistId,
+    _id: contestId
   }).select('submissions').populate({
     path: 'submissions',
     select: '-createdAt -updatedAt -__v',
     populate: {
       path: 'artistId',
-      model: 'user',
+      model: 'User',
       select: 'username profilePic'
     }
   }).exec(async (err, { submissions }) => {
