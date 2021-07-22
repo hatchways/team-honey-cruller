@@ -8,8 +8,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   tabs: {
     backgroundColor: theme.palette.background.paper,
-    width: '40vh',
-    overflow: 'hidden',
+    minWidth: '200px',
+    width: '20vw',
+    height: 'auto',
     borderRight: `1px solid ${theme.palette.divider}`,
     boxShadow: '3px 0 5px -2px #DDDDDD',
     paddingTop: 20,
