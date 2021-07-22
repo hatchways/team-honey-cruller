@@ -21,6 +21,9 @@ import SortIcon from '@material-ui/icons/Sort';
 import { Animated } from "react-animated-css";
 import useStyles from './useStyles';
 
+//might have to delete later
+import { Link } from 'react-router-dom';
+
 export default function Discovery(): JSX.Element {
     const [contests, setContests] = useState<Contest[]>([]);
     const [sortType, setSortType] = useState<keyof Contest>('deadlineDate')
@@ -119,7 +122,8 @@ export default function Discovery(): JSX.Element {
                                                     {contest.deadlineDate}
                                                 </TableCell>
                                                 <TableCell className={classes.tableRow}>
-                                                    <Button className={classes.button}>More Info</Button>
+                                                    {/* Is this the link to go for a particular contest. If yes, then we can pass contest */}
+                                                    <Link to={`/contest/${contest._id}`}><Button className={classes.button}>More Info</Button></Link>
                                                 </TableCell>
                                             </TableRow>
                                         </>
