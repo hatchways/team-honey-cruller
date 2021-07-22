@@ -4,7 +4,7 @@ export interface PersonalInfoProps {
   lastName: string;
   email: string;
   phone: number;
-  birthday: string;
+  dateOfBirth: string;
   gender: string;
   about: string;
 };

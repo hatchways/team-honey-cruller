@@ -13,7 +13,7 @@ export default function PersonalInfo(): JSX.Element {
     lastName,
     email,
     phone,
-    birthday,
+    dateOfBirth,
     gender,
     about,
   }: PersonalInfoProps) => {
@@ -23,11 +23,12 @@ export default function PersonalInfo(): JSX.Element {
       lastName: lastName,
       email: email,
       phone: phone,
-      birthday: birthday,
+      dateOfBirth: dateOfBirth,
       gender: gender,
       about: about,
     }
-    postPersonalInfo(info);
+    postPersonalInfo(info)
+      .then(res => console.log(res));
   }
 
   return (

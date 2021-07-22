@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const PersonalInfoSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'user',
   },
   firstName: {
     type: String,
@@ -20,7 +20,7 @@ const PersonalInfoSchema = new Schema({
   phone: {
     type: Number,
   },
-  birthday: {
+  dateOfBirth: {
     type: Date,
   },
   gender: {

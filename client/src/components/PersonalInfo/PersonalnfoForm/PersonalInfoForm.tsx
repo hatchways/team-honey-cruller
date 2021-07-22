@@ -11,7 +11,7 @@ interface Props {
     lastName,
     email,
     phone,
-    birthday,
+    dateOfBirth,
     gender,
     about,
   }: PersonalInfoProps) => void;
@@ -26,7 +26,7 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
     lastName: '',
     email: '',
     phone: 0,
-    birthday: '',
+    dateOfBirth: '',
     gender: '',
     about: '',
   };
@@ -39,8 +39,8 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
     email: Yup.string()
       .email('Invalid email'),
     phone: Yup.string()
-      .matches(/^[0-9]{10}$/, 'Invalid phone number'),
-    birthday: Yup.string(),
+      .matches(/^([0-9]{10}|0)$/, 'Invalid phone number'),
+    dateOfBirth: Yup.string(),
     gender: Yup.string(),
     about: Yup.string(),
   });
@@ -140,15 +140,15 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Box>
-                  <Typography>Birthday</Typography>
+                  <Typography>Date of Birth</Typography>
                   <TextField
-                  id="birthday"
-                  name="birthday"
+                  id="dateOfBirth"
+                  name="dateOfBirth"
                   type="date"
                   fullWidth
                   margin="normal"
                   variant="outlined"
-                  value={values.birthday}
+                  value={values.dateOfBirth}
                   onChange={handleChange}/>
                 </Box>
               </Grid>
