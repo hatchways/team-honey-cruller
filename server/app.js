@@ -21,6 +21,7 @@ const jwt = require("jsonwebtoken");
 
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
+const submissionRouter = require("./routes/submission");
 const contestRouter = require("./routes/contest");
 const convoRouter = require("./routes/convo");
 const uploadRouter = require("./routes/upload");
@@ -86,6 +87,7 @@ app.use((req, res, next) => {
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/contest", contestRouter);
+app.use("/submission", submissionRouter);
 app.use("/api/conversation", convoRouter);
 app.use("/upload", uploadRouter);
 app.use("/stripe", stripeRouter);

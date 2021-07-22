@@ -1,4 +1,5 @@
 const Submission = require("../models/Submission");
+const Contest = require("../models/Contest");
 const asyncHandler = require("express-async-handler");
 
 exports.createSubmission = asyncHandler(async (req, res) => {
@@ -29,3 +30,40 @@ exports.createSubmission = asyncHandler(async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// exports.getSubmissionsByContest = asyncHandler(async (req, res) => {
+//   try {
+//     const submissions = await Submission.find({
+//       contest: req.params.id
+//     }).select('-createdAt -updatedAt -__v')
+//     res.json(submissions)
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// })
+
+exports.getSubmissionByContest = asyncHandler(async (req, res) => {
+  // EXPECTING THE ID OF THE CONTEST IN PARAMS
+  Contest.findOne({
+    userId: req.user.id,
+    _id: req.params.id
+  }).select('submissions').populate({
+    path: 'submissions',
+    select: '-createdAt -updatedAt -__v',
+    populate: {
+      path: 'artistId',
+      model: 'user',
+      select: 'username profilePic'
+    }
+  }).exec(async (err, { submissions }) => {
+    if (err) {
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({
+        message: 'Failure'
+      }));
+      res.sendStatus(500);
+    } else {
+      res.status(200).send(submissions)
+    }
+  })
+})
