@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement, } from '@stripe/react-stripe-js';
-import { Customer } from '../../interface/User';
 import { addCardToCustomer } from '../../helpers/APICalls/stripe'
 import { useAuth } from '../../context/useAuthContext';
+import { useSnackBar } from '../../context/useSnackbarContext';
 import useStyles from './useStyles'
 
 export default function Payment(): JSX.Element {
@@ -15,10 +15,7 @@ export default function Payment(): JSX.Element {
     const elements = useElements();
     const classes = useStyles();
     const { loggedInUser } = useAuth();
-    const [message, setMessage] = useState('')
-    console.log(loggedInUser);
-    console.log(stripe);
-    console.log(elements);
+    const { updateSnackBarMessage } = useSnackBar();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -42,10 +39,11 @@ export default function Payment(): JSX.Element {
                     if(result.paymentMethod){
                         const cardId = result.paymentMethod.id;
                         const stripeId = loggedInUser.stripeId;
-                        console.log(cardId, stripeId)
+                        updateSnackBarMessage("Card has been added to your account.");
                         addCardToCustomer(cardId, stripeId);
+                    } else {
+                        updateSnackBarMessage("Card could not be added");
                     }
-                    console.log("added card to user")
                 })
         }
     };
