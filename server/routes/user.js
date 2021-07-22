@@ -4,7 +4,6 @@ const protect = require("../middleware/auth");
 const { searchUsers, getContestByUser, updateProfile } = require("../controllers/user");
 
 router.route("/").get(protect, searchUsers);
-router.route("/profile").put(protect, updateProfile)
 router.route("/contests").get(protect, getContestByUser);
 
 module.exports = router;

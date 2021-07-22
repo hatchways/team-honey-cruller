@@ -5,15 +5,15 @@ const Schema = mongoose.Schema;
 const MessageSchema = new Schema({
   conversation: {
     type: Schema.Types.ObjectId,
-    ref: 'conversations',
+    ref: 'Conversation',
   },
   to: {
     type: Schema.Types.ObjectId,
-    ref: 'user',
+    ref: 'User',
   },
   from: {
     type: Schema.Types.ObjectId,
-    ref: 'user',
+    ref: 'User',
   },
   message: {
     type: String,
@@ -23,4 +23,4 @@ const MessageSchema = new Schema({
   timestamps: true
 });
 
-module.exports = Message = mongoose.model('messages', MessageSchema);
+module.exports = Message = mongoose.model('Messages', MessageSchema);
