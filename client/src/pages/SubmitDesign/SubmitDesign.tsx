@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -16,6 +16,8 @@ export default function SubmitDesign(): JSX.Element {
   const classes = useStyles();
   const location = useLocation();
   const contestId = location.pathname.slice(15);
+  const params = useParams();
+  console.log(params);
 
   const submitNewPic = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
