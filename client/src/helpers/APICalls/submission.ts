@@ -27,3 +27,27 @@ export const createSubmission = async (images: string[], contestId: string): Pro
       error: { message: 'Unable to connect to server. Please try again' },
     }));
 };
+
+export const getContestSubmissions = async (contestId: string): Promise<Submission[]> => {
+  const fetchData: FetchOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  };
+
+  return await fetch(`/submission/${contestId}`, fetchData)
+    .then((data) => data.json())
+    .catch((err) => ({ error: { message: 'Could not find Contest.' } }));
+};
+
+export const getUserSubmissions = async (): Promise<Submission[]> => {
+  const fetchData: FetchOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  };
+
+  return await fetch(`/submission`, fetchData)
+    .then((data) => data.json())
+    .catch((err) => ({ error: { message: 'Could not find Contest.' } }));
+};
