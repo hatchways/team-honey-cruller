@@ -85,11 +85,11 @@ export const createCharge = async (customerId: string): Promise<AuthApiCustomerD
     }));
 };
 
-export const addCardToCustomer = async (card: any,  stripeId: string): Promise<AuthApiCustomerData> => {
+export const addCardToCustomer = async (cardId: string,  stripeId: string): Promise<AuthApiCustomerData> => {
     const fetchOptions: FetchOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({card, stripeId}),
+        body: JSON.stringify({cardId, stripeId}),
         credentials: 'include',
     };
     return await fetch(`/stripe/stripeToken`, fetchOptions)

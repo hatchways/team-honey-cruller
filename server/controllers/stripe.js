@@ -103,29 +103,20 @@ exports.chargeCard = asyncHandler(async (req, res) => {
     }
 });
 
-exports.createToken = asyncHandler(async (req, res) => {
-    const object = {}
-    object.card = req.body.card
-    // { 
-        // number: req.body.number, 
-        // exp_month: req.body.exp_month, 
-        // exp_year: req.body.exp_year, 
-        // cvc: req.body.cvc
-    //     card: req.body.card
-    // }
+exports.attachPaymentMethod = asyncHandler(async (req, res) => {
     try {
-        const token = await stripe.tokens.create(object)
-        const tokenId = await token.id
-        const customerCard = await stripe.customers.createSource(
-            req.body.stripeId, 
-            { source: tokenId }
+        const customerCard = await stripe.paymentMethods.attach(
+            req.body.cardId, {
+                customer: req.body.stripeId
+            }
         )
 
-        res.status(201).json({
+        res.status(200).json({
             customer: customerCard
         });
 
     } catch (err) {
+        console.log(err)
         res.status(500).json(err);
     }
 })

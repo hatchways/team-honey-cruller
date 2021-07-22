@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js';
+import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement, } from '@stripe/react-stripe-js';
 import { Customer } from '../../interface/User';
 import { addCardToCustomer } from '../../helpers/APICalls/stripe'
 import { useAuth } from '../../context/useAuthContext';
@@ -21,7 +21,6 @@ export default function Payment(): JSX.Element {
     console.log(elements);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        // Block native form submission.
         event.preventDefault();
 
         if (!stripe || !elements) {
@@ -29,19 +28,26 @@ export default function Payment(): JSX.Element {
         }
 
         const cardElement = elements.getElement(CardNumberElement);
-        console.log(cardElement)
-        // Use your card Element with other Stripe.js APIs
-        if(loggedInUser){
-            const addCard = await addCardToCustomer(cardElement,loggedInUser.stripeId);
-            console.log(addCard)
-            setMessage('Credit Card has been added to your account.')
-        }
 
-        // if (error) {
-        //     console.log('[error]', error);
-        // } else {
-        //     console.log('[PaymentMethod]', paymentMethod);
-        // }
+        if (loggedInUser && cardElement) {
+            stripe
+                .createPaymentMethod({
+                    type: 'card',
+                    card: cardElement,
+                    billing_details: {
+                        name: loggedInUser.username,
+                    },
+                })
+                .then(function (result) {
+                    if(result.paymentMethod){
+                        const cardId = result.paymentMethod.id;
+                        const stripeId = loggedInUser.stripeId;
+                        console.log(cardId, stripeId)
+                        addCardToCustomer(cardId, stripeId);
+                    }
+                    console.log("added card to user")
+                })
+        }
     };
 
     return (
