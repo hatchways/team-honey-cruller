@@ -39,8 +39,8 @@ export default function Payment(): JSX.Element {
                     if(result.paymentMethod){
                         const cardId = result.paymentMethod.id;
                         const stripeId = loggedInUser.stripeId;
-                        updateSnackBarMessage("Card has been added to your account.");
                         addCardToCustomer(cardId, stripeId);
+                        updateSnackBarMessage("Card has been added to your account.");
                     } else {
                         updateSnackBarMessage("Card could not be added");
                     }
