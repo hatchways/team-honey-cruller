@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
-gridOne: {
-
-},
 form: {
     display: 'flex',
     flexDirection: 'column',
@@ -30,14 +27,23 @@ typography: {
 },
 cardNum: {
     width: '300px',
-    marginBottom: '20px'
+    padding: '10px',
+    marginBottom: '20px',
+    border: '1px solid #000000',
+    borderRadius: '5px'
 },
 cardExpiry: {
     width: '150px',
-    marginRight: '20px'
+    border: '1px solid #000000',
+    marginRight: '20px',
+    padding: '10px',
+    borderRadius: '5px'
 },
 cardCvc: {
-    width: '130px'
+    width: '110px',
+    border: '1px solid #000000',
+    padding: '10px',
+    borderRadius: '5px'
 },
 button: {
     color: '#000000',
@@ -47,6 +53,10 @@ button: {
     height: '6rem',
     fontSize: '15px'
 },
+div: {
+    display: 'flex',
+    flexDirection: 'row'
+}
 }))
 
 export default useStyles;

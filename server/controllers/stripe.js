@@ -105,12 +105,14 @@ exports.chargeCard = asyncHandler(async (req, res) => {
 
 exports.createToken = asyncHandler(async (req, res) => {
     const object = {}
-    object.card = { 
-        number: req.body.number, 
-        exp_month: req.body.exp_month, 
-        exp_year: req.body.exp_year, 
-        cvc: req.body.cvc
-    }
+    object.card = req.body.card
+    // { 
+        // number: req.body.number, 
+        // exp_month: req.body.exp_month, 
+        // exp_year: req.body.exp_year, 
+        // cvc: req.body.cvc
+    //     card: req.body.card
+    // }
     try {
         const token = await stripe.tokens.create(object)
         const tokenId = await token.id

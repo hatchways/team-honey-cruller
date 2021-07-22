@@ -5,7 +5,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import Payment from '../../components/Payment/Payment';
 import useStyles from "./useStyles";
-import env from "react-dotenv";
 
 interface TabPanelProps {
   children?: React.ReactNode;

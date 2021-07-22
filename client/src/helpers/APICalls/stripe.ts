@@ -1,5 +1,6 @@
 import { FetchOptions } from '../../interface/FetchOptions';
 import { AuthApiCustomerData } from '../../interface/AuthApiData';
+import { User } from '../../interface/User';
 
 export const createStripeUser = async (email: string, name: string): Promise<AuthApiCustomerData> => {
     const fetchOptions: FetchOptions = {
@@ -81,6 +82,20 @@ export const createCharge = async (customerId: string): Promise<AuthApiCustomerD
         .then((res) => res.json())
         .catch(() => ({
             error: { message: 'Unable to connect to server. Please try again' },
+    }));
+};
+
+export const addCardToCustomer = async (card: any,  stripeId: string): Promise<AuthApiCustomerData> => {
+    const fetchOptions: FetchOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({card, stripeId}),
+        credentials: 'include',
+    };
+    return await fetch(`/stripe/stripeToken`, fetchOptions)
+        .then((res) => res.json())
+        .catch(() => ({
+            error: { message: 'Unable to connect to Stripe. Please try again' },
     }));
 };
 
