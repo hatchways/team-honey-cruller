@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 exports.createPersonalInfo = asyncHandler(async (req, res) => {
   try {
     const info = PersonalInfo.create({
-      userId: req.user.id
+      userId: req.user.id,
       firstName: req.body.firstName,
       middleInit: req.body.middleInit,
       lastName: req.body.lastName,

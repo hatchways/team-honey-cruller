@@ -15,6 +15,7 @@ const contestRouter = require("./routes/contest");
 const convoRouter = require("./routes/convo");
 const uploadRouter = require("./routes/upload");
 const stripeRouter = require("./routes/stripe");
+const personalInfoRouter = require("./routes/personalInfo");
 
 const { json, urlencoded } = express;
 
@@ -42,7 +43,7 @@ app.use(express.static(join(__dirname, "public")));
 
 app.use((req, res, next) => {
   req.io = { io, cache };
-  
+
   next();
 });
 
@@ -52,6 +53,7 @@ app.use("/contest", contestRouter);
 app.use("/api/conversation", convoRouter);
 app.use("/upload", uploadRouter);
 app.use("/stripe", stripeRouter);
+app.use("/personal_info", personalInfoRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

@@ -31,4 +31,4 @@ const PersonalInfoSchema = new Schema({
   },
 });
 
-module.exports = model('PersonalInfo', PersonalInfoSchema;)
+module.exports = model('PersonalInfo', PersonalInfoSchema);
