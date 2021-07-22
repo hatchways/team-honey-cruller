@@ -185,7 +185,7 @@ export default function PersonalInfo({ handleSubmit }: Props): JSX.Element {
                 onChange={handleChange}/>
               </Grid>
             </Grid>
-            <Box>
+            <Box textAlign="center">
               <Button
               className={classes.submit}
               type="submit"
