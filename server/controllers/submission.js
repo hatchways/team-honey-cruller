@@ -1,7 +1,6 @@
 const Submission = require("../models/Submission");
 const Contest = require("../models/Contest");
 const asyncHandler = require("express-async-handler");
-const Contest = require("../models/Contest");
 const mongoose = require("mongoose");
 
 exports.createSubmission = asyncHandler(async (req, res) => {
