@@ -5,11 +5,11 @@ const protect = require("../middleware/auth");
 const {
   createNotification,
   getAllNotifications,
-  deleteAllNotifications,
+  deleteNotification,
 } = require("../controllers/notification");
 
 router.route("/").post(protect, createNotification);
 router.route("/").get(protect, getAllNotifications);
-router.route("/delete").delete(protect, deleteAllNotifications);
+router.route("/:id").delete(protect, deleteNotification);
 
 module.exports = router;
