@@ -53,7 +53,7 @@ export default function Payment(): JSX.Element {
             <Grid container justifyContent="center">
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <Grid container className={classes.formGrid}>
-                        <Grid className={classes.paper}>
+                        <Box className={classes.paper}>
                             <Container className={classes.container}>
                                 <Typography className={classes.typography}>
                                     Enter your card details:
@@ -82,7 +82,7 @@ export default function Payment(): JSX.Element {
                                 </Box>
                             </Container>
                             <Button type='submit' className={classes.button}>Add Card</Button>
-                        </Grid>
+                        </Box>
                     </Grid>
                 </form>
             </Grid>

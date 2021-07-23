@@ -12,8 +12,6 @@ formGrid: {
     width: '50%'
 },
 paper: {
-    display: 'flex',
-    flexDirection: 'column',
     height: '400px',
     width: '500px'
 },

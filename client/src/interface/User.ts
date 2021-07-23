@@ -13,7 +13,7 @@ export interface User {
 
 export interface Contest {
   //also need an id
-  _id: number;
+  _id: string;
   title: string;
   description: string;
   prizeAmount: number;

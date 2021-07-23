@@ -9,7 +9,6 @@ import Profile from './pages/Profile/Profile';
 import Discovery from './pages/Discovery/Discovery';
 import CreateContest from './pages/CreateContest/CreateContest';
 import Settings from './pages/Settings/Settings'
-import Contest from './pages/Contest/Contest'
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -30,7 +29,6 @@ function App(): JSX.Element {
                 <Route exact path="/discovery" component={Discovery} />
                 <Route exact path="/create-contest" component={CreateContest} />
                 <Route exact path="/settings" component={Settings} />
-                <Route exact path="/contest/:id" component={Contest} />
                 <Route exact path="/dashboard">
                   <Dashboard />
                 </Route>
