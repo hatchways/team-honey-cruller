@@ -14,7 +14,7 @@ const contestSchema = new Schema({
         required: true
     },
     deadlineDate: {
-        type: Date,
+        type: String,
         required: true,
     },
     dateCreated: {
