@@ -1,7 +1,17 @@
+import { Moment } from 'moment';
+
 export interface Contest {
   title: string;
   description: string;
   prizeAmount: number;
-  deadlineDate: Date;
+  deadlineDate: Moment;
+  images: Array<string>;
+}
+
+export interface ContestFormatted {
+  title: string;
+  description: string;
+  prizeAmount: number;
+  deadlineDate: string;
   images: Array<string>;
 }
