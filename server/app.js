@@ -20,6 +20,7 @@ const convoRouter = require("./routes/convo");
 const uploadRouter = require("./routes/upload");
 const stripeRouter = require("./routes/stripe");
 const notificationRouter = require("./routes/notification");
+const personalInfoRouter = require("./routes/personalInfo");
 
 const { json, urlencoded } = express;
 
@@ -79,6 +80,7 @@ app.use("/api/conversation", convoRouter);
 app.use("/upload", uploadRouter);
 app.use("/stripe", stripeRouter);
 app.use("/notification", notificationRouter);
+app.use("/info", personalInfoRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
