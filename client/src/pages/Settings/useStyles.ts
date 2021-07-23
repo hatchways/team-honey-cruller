@@ -27,6 +27,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     left: '10%',
     transform: 'rotate(90deg)',
   },
+  paymentDetails: {
+    fontSize: '35px',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: '20px 0 30px 0',
+    marginLeft: '58px'
+  }
 }));
 
 export default useStyles;

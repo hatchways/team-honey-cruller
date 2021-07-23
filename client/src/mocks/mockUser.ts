@@ -8,6 +8,7 @@ const mockLoggedInUser: User = {
   artist: true,
   artwork: [],
   activeConvo: [],
+  stripeId: '',
   contests: [
     {
       _id: '',
@@ -59,6 +60,7 @@ const mockOtherUser1: User = {
   profilePic: '',
   artist: true,
   artwork: [],
+  stripeId: '',
   activeConvo: [],
   contests: [
     {
@@ -111,6 +113,7 @@ const mockOtherUser2: User = {
   profilePic: '',
   artist: false,
   artwork: [],
+  stripeId:'',
   activeConvo: [],
   contests: [
     {
@@ -163,6 +166,7 @@ const mockOtherUser3: User = {
   profilePic: '',
   artist: false,
   artwork: [],
+  stripeId: '',
   activeConvo: [],
   contests: [
     {

@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 // @route POST /auth/register
 // @desc Register user
@@ -37,13 +38,20 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
       maxAge: secondsInWeek * 1000
     });
 
+    const customer = await stripe.customers.create({
+      email: email,
+      name: username
+  });
+
+
     res.status(201).json({
       success: {
         user: {
           id: user._id,
           username: user.username,
           email: user.email,
-          profilePic: user.profilePic
+          profilePic: user.profilePic,
+          stripeId: customer.id 
         }
       }
     });

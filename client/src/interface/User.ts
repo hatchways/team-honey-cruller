@@ -8,6 +8,7 @@ export interface User {
   contests: Contest[];
   conversations: Convo[];
   activeConvo: Message[];
+  stripeId: string;
 }
 
 export interface Contest {
@@ -62,6 +63,3 @@ export interface SearchUsersApiData {
   error?: { message: string };
 }
 
-export interface Customer {
-  id: string;
-}
