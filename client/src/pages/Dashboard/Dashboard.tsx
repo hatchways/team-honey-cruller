@@ -44,8 +44,7 @@ export default function Dashboard(): JSX.Element {
 
   return (
     <ConversationProvider>
-      {/* CURRENTLY NO ROUTE FOR "/CREATECONTEST" THIS MAY NEED TO CHANGE */}
-      <AuthHeader btnText="create contest" linkTo="/createcontest" />
+      <AuthHeader btnText="create contest" linkTo="/create-contest" />
       <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
         <CssBaseline />
         <Grid item xs={12} sm={6} md={4} className={classes.drawerWrapper}>
