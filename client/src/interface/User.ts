@@ -63,11 +63,3 @@ export interface SearchUsersApiData {
   error?: { message: string };
 }
 
-export interface Customer {
-  stripeId: string;
-  // number: string;
-  // exp_month: string;
-  // exp_year: string;
-  // cvc: string;
-  card: any;
-}

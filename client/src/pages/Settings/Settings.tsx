@@ -11,7 +11,7 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
-const stripeKey = loadStripe('pk_test_51JEJJrK3QVx74yV9vYujCrOpA8KwLKEE7uKSjHmUO0GGxUYSa5uxMlgaCZAbflwU9U0Npb2k4a86JEJBGmuBOfbw00CU3LpL8W' || '');
+const stripeKey = loadStripe('pk_test_51JEJJrK3QVx74yV9vYujCrOpA8KwLKEE7uKSjHmUO0GGxUYSa5uxMlgaCZAbflwU9U0Npb2k4a86JEJBGmuBOfbw00CU3LpL8W');
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
