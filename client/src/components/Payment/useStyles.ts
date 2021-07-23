@@ -49,11 +49,7 @@ button: {
     border: '1px solid #000000',
     width: '15rem',
     height: '6rem',
-    fontSize: '15px'
-},
-div: {
-    display: 'flex',
-    flexDirection: 'row'
+    fontSize: '15px',
 }
 }))
 

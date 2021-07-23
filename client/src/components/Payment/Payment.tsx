@@ -76,7 +76,7 @@ export default function Payment(): JSX.Element {
                                     }
                                 }}
                                 />
-                                <Box className={classes.div}>
+                                <Box display='flex' flex-direction='row'>
                                     <CardExpiryElement className={classes.cardExpiry} id="outlined-basic"></CardExpiryElement>
                                     <CardCvcElement className={classes.cardCvc} id="outlined-basic"></CardCvcElement>
                                 </Box>
