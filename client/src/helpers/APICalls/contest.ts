@@ -26,8 +26,8 @@ export const getContestByUser = async (): Promise<AuthApiData> => {
     .then(data => data.json())
     .catch(err => ({ error: { message: 'Could not find User Contests'}}))
 }
-//receives id as param
-export const getContestById = async (id:string): Promise<AuthApiData> => {
+
+export const getContestById = async (): Promise<AuthApiData> => {
     const fetchData: FetchOptions = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },

@@ -49,9 +49,9 @@ const AuthMenu = (): JSX.Element => {
         getContentAnchorEl={null}
       >
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
-      <Link to='/profile'>
-        <MenuItem>Profile</MenuItem>
-      </Link>
+        <Link to="/profile">
+          <MenuItem>Profile</MenuItem>
+        </Link>
       </Menu>
     </Box>
   );
