@@ -1,4 +1,4 @@
-import { Box, Typography, Grid, Paper } from '@material-ui/core';
+import { Box, Typography, Grid } from '@material-ui/core';
 import PersonalInfoForm from './PersonalnfoForm/PersonalInfoForm';
 import { PersonalInfoProps } from '../../interface/PersonalInfo';
 import { postPersonalInfo } from '../../helpers/APICalls/personalInfo';
@@ -27,8 +27,7 @@ export default function PersonalInfo(): JSX.Element {
       gender: gender,
       about: about,
     }
-    postPersonalInfo(info)
-      .then(res => console.log(res));
+    postPersonalInfo(info);
   }
 
   return (
