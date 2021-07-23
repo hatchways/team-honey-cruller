@@ -26,7 +26,9 @@ const useStyles = makeStyles(() => ({
     tableRow: {
         padding: '25px 0px 25px 0px',
         textAlign: 'center',
-        minWidth: 50
+        minWidth: 50,
+        maxWidth: 100,
+        flexWrap: 'wrap'
     },
     button: {
         fontWeight: 'bold',
@@ -34,6 +36,10 @@ const useStyles = makeStyles(() => ({
         color: 'white',
         padding: '4px 8px',
         marginLeft: '10px'
+    },
+    muiPicker: {
+        textAlign: 'center',
+        marginTop: '20px'
     }
 }))
 

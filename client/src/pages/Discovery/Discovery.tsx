@@ -7,6 +7,9 @@ import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import MomentUtils from '@date-io/moment';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -29,6 +32,7 @@ export default function Discovery(): JSX.Element {
   const [sortType, setSortType] = useState<keyof Contest>('deadlineDate');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [dateFilter, setDateFilter] = useState('')
   const { loggedInUser } = useAuth();
   const classes = useStyles();
 
@@ -73,14 +77,30 @@ export default function Discovery(): JSX.Element {
   return (
     <>
       <AuthHeader linkTo="/create-contest" btnText="create contest" />
-      <Grid container justify="center" className={classes.grid}>
-        <Container className={classes.tableContainer}>
-          <Grid item>
-            <Typography className={classes.typography}>All Open Contests</Typography>
-          </Grid>
-        </Container>
-        <Paper className={classes.paper}>
-          <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
+      <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
+        <Grid container justify="center" className={classes.grid}>
+          <Container className={classes.tableContainer}>
+            <Grid item>
+              <Typography className={classes.typography}>All Open Contests</Typography>
+            </Grid>
+            <Grid container justify="center" className={classes.muiPicker}>
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <Grid item xs={5}>
+                      <KeyboardDatePicker
+                      id="date"
+                      name="deadlineDate"
+                      margin="normal"
+                      variant="inline"
+                      inputVariant="outlined"
+                      format="MMMM Do YYYY"
+                      value='test'
+                      onChange={value => console.log(value)}
+                      keyboardIcon={<DateRangeIcon />}/>
+                    </Grid>
+                  </MuiPickersUtilsProvider>
+                  </Grid>
+          </Container>
+          <Paper className={classes.paper}>
             <TableContainer>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -124,9 +144,9 @@ export default function Discovery(): JSX.Element {
                 </TableBody>
               </Table>
             </TableContainer>
-          </Animated>
-        </Paper>
-      </Grid>
+          </Paper>
+        </Grid>
+      </Animated>
     </>
   );
 }
