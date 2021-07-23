@@ -10,6 +10,7 @@ const mockLoggedInUser: User = {
   activeConvo: [],
   contests: [
     {
+      _id: 1,
       title: 'My retirement tattoo',
       description: 'I am retiring and would like to celebrate with a cool tattoo',
       prizeAmount: 200,
@@ -19,9 +20,10 @@ const mockLoggedInUser: User = {
       submissions: [
         {
           images: [],
-          description: 'Congratulations on retiring. I have the perfect tattoo for you',
           artistName: 'Princess Peach',
           artistId: '987654321xyz',
+          contest: '',
+          active: true,
         },
       ],
     },
@@ -60,6 +62,7 @@ const mockOtherUser1: User = {
   activeConvo: [],
   contests: [
     {
+      _id: 2,
       title: 'my new favorite tattoo',
       description: 'I am looking for a cool island tattoo to warm my icy heart.',
       prizeAmount: 200,
@@ -69,8 +72,8 @@ const mockOtherUser1: User = {
       submissions: [
         {
           images: [],
-          description:
-            'Your tattoo would be very similar to the ones in these pictures. We could do color or just black',
+          contest: '',
+          active: true,
           artistName: 'Biker Jim',
           artistId: '123456789abc',
         },
@@ -111,6 +114,7 @@ const mockOtherUser2: User = {
   activeConvo: [],
   contests: [
     {
+      _id: 3,
       title: 'Grouchy tattoo',
       description: 'I need a tattoo to show people how grouchy I am',
       prizeAmount: 250,
@@ -120,7 +124,8 @@ const mockOtherUser2: User = {
       submissions: [
         {
           images: [],
-          description: "Grouchy tattoos are my specialty. I think you'll like what I have in mind for you",
+          contest: '',
+          active: true,
           artistName: 'Cookie Monster',
           artistId: '123456789xyz',
         },
@@ -161,6 +166,7 @@ const mockOtherUser3: User = {
   activeConvo: [],
   contests: [
     {
+      _id: 4,
       title: 'my new favorite tattoo',
       description: 'I am looking for a tattoo that expresses how hungry I am',
       prizeAmount: 300,
@@ -170,7 +176,8 @@ const mockOtherUser3: User = {
       submissions: [
         {
           images: [],
-          description: 'I love food too and I have the perfect tattoo for you',
+          contest: '',
+          active: true,
           artistName: 'Prison Mike',
           artistId: '987654321abc',
         },

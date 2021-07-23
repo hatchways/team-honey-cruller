@@ -8,6 +8,11 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'nowrap',
     alignItems: 'center',
   },
+  previewPic: {
+    width: 150,
+    height: 150,
+    margin: '20px 20px 0',
+  },
   uploadBox: {
     display: 'flex',
     height: '100%',
@@ -25,6 +30,18 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     fontSize: '10rem',
+  },
+  fileInputLabel: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+    height: '100%',
+    width: '100%',
+    marginBottom: '5rem',
+  },
+
+  fileInput: {
+    display: 'none',
   },
   chooseFile: {
     marginTop: '.5rem',

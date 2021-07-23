@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 
 exports.createSubmission = asyncHandler(async (req, res) => {
   const body = req.body;
+  console.log(req.body);
   try {
     //checking if the user for the contest, has already submitted
     const previousSubmission = await Submission.findOne({
@@ -11,19 +12,20 @@ exports.createSubmission = asyncHandler(async (req, res) => {
     });
 
     if (previousSubmission) {
-      previousSubmission.storeUrl = previousSubmission.storeUrl.concat(
-        body.storeUrl
-      );
+      previousSubmission.images = previousSubmission.images.concat(body);
       await previousSubmission.save();
       res.status(200).json(previousSubmission);
     } else {
       const submission = await Submission.create({
         contest: req.params.id,
-        user: req.user.id,
-        active: body.active,
-        storeUrl: body.storeUrl,
+        artistId: req.user.id,
+        images: body,
       });
-      res.status(201).json(submission);
+      const withArtist = await User.populate(submission, {
+        path: "artistId",
+        select: "username",
+      });
+      res.status(201).json(withArtist);
     }
   } catch (err) {
     res.status(500).json(err);

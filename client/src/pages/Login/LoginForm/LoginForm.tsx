@@ -24,15 +24,7 @@ interface Props {
       password: string;
     }>,
   ) => void;
-  handleDemoSubmit: (
-    {
-      email,
-      password,
-    }: {
-      email: string;
-      password: string;
-    },
-  ) => void;
+  handleDemoSubmit: ({ email, password }: { email: string; password: string }) => void;
 }
 
 export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.Element {
@@ -58,7 +50,7 @@ export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.El
           <Box mt={3} mb={3}>
             <Typography className={classes.label}>E-mail</Typography>
             <TextField
-              id="email"            
+              id="email"
               placeholder="Enter e-mail address"
               fullWidth
               margin="normal"
@@ -98,7 +90,13 @@ export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.El
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'SIGN IN'}
             </Button>
-            <Button onClick={() => handleDemoSubmit({email: "stanley@gmail.com", password:"123456"})} size="large" variant="contained" color="primary" className={classes.submit}>
+            <Button
+              onClick={() => handleDemoSubmit({ email: 'stanley@gmail.com', password: '123456' })}
+              size="large"
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'DEMO'}
             </Button>
           </Box>

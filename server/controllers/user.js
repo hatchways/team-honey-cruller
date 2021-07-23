@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const Contest = require("../models/Contest")
+const Contest = require("../models/Contest");
 const asyncHandler = require("express-async-handler");
 
 // @route POST /users
@@ -13,8 +13,8 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
     users = await User.find({
       username: {
         $regex: searchString,
-        $options: "i"
-      }
+        $options: "i",
+      },
     });
   }
 
@@ -24,30 +24,20 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
   }
 
   res.status(200).json({
-    users: users
+    users: users,
   });
 });
 
 exports.getContestByUser = asyncHandler(async (req, res, next) => {
   try {
     const allContests = await Contest.find({
-      userId: req.user.id
+      userId: req.user.id,
     });
 
     res.status(200).json({
-      contests: allContests
-    })
+      contests: allContests,
+    });
   } catch (err) {
     res.status(404).json(err);
   }
 });
-
-exports.updateProfile = asyncHandler(async (req, res, next) => {
-  try {
-    // EXPECTING REQ.BODY TO HAVE ONLY FIELDS WE WANT TO UPDATE WHICH MATCH THE MODEL
-    const newUserData = await User.findByIdAndUpdate(req.user.id, { $set: {...req.body} }, { new: true })
-    res.status(200).json(newUserData)
-  } catch (err) {
-    res.status(404).json(err);
-  }
-})

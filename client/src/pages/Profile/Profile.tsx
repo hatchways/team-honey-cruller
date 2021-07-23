@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { useAuth } from '../../context/useAuthContext';
 import useStyles from './useStyles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Tab from '@material-ui/core/Tab';
+import Box from '@material-ui/core/Box';
 import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
@@ -16,12 +17,18 @@ import ContestList from '../../components/ContestList/ContestList';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import { Contest } from '../../interface/User';
 import { getContestByUser } from '../../helpers/APICalls/contest';
+import updateProfile from '../../helpers/APICalls/profile';
+import { useSnackBar } from '../../context/useSnackbarContext';
+import loginWithCookies from '../../helpers/APICalls/loginWithCookies';
 
 export default function Profile(): JSX.Element {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [contests, setContests] = useState<Contest[]>([]);
-  const { loggedInUser } = useAuth();
+  const [newProfilePic, setNewProfilePic] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const { loggedInUser, updateLoginContext } = useAuth();
+  const { updateSnackBarMessage } = useSnackBar();
 
   const newTheme = createMuiTheme({
     palette: {
@@ -91,13 +98,56 @@ export default function Profile(): JSX.Element {
     );
   };
 
+  const submitNewPic = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setLoading(true);
+      try {
+        const formData = new FormData();
+        formData.append('image', e.target.files[0], e.target.files[0].name);
+        const newPic = await updateProfile(formData);
+        setNewProfilePic(newPic);
+        setLoading(false);
+        const { success } = await loginWithCookies();
+        if (success) {
+          updateLoginContext(success);
+        }
+      } catch (err) {
+        updateSnackBarMessage(err.message);
+      }
+    }
+  };
+
   return loggedInUser ? (
     <>
-      <AuthHeader linkTo="/createcontest" btnText="create contest" />
+      <AuthHeader linkTo="/create-contest" btnText="create contest" />
       <Grid className={classes.grid} container alignItems="center" direction="column">
-        <Avatar alt="Profile Image" src={loggedInUser.profilePic} className={classes.avatar}></Avatar>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <Avatar
+            alt="Profile Image"
+            src={newProfilePic || loggedInUser.profilePic}
+            className={classes.avatar}
+          ></Avatar>
+        )}
         <Typography className={classes.user}>{loggedInUser.username}</Typography>
-        <Button className={classes.button}>Edit Profile</Button>
+        <Box>
+          <Button className={classes.button}>Edit Profile</Button>
+          <Button className={classes.button}>
+            <label htmlFor="file" className={classes.fileInputLabel}>
+              Choose New Pic
+              <input
+                type="file"
+                accept="image/*"
+                id="file"
+                name="image"
+                multiple={false}
+                onChange={submitNewPic}
+                className={classes.fileInput}
+              />
+            </label>
+          </Button>
+        </Box>
         <Container className={classes.container}>
           <Toolbar className={classes.toolbar}>
             <ThemeProvider theme={newTheme}>
