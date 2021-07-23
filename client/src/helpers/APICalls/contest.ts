@@ -12,7 +12,7 @@ export const getAllContests = async (): Promise<AuthApiData> => {
 
   return await fetch('/contest', fetchData)
     .then((data) => data.json())
-    .catch((err) => ({ error: { message: 'Can not connect to server' } }));
+    .catch((err) => ({ error: { message: 'Cannot connect to server' } }));
 };
 
 export const getContestByUser = async (): Promise<AuthApiData> => {
@@ -34,7 +34,7 @@ export const getContestById = async (id: string): Promise<AuthApiData> => {
     credentials: 'include',
   };
 
-  return await fetch(`/contest${id}`, fetchData)
+  return await fetch(`/contest/${id}`, fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Could not find Contest.' } }));
 };

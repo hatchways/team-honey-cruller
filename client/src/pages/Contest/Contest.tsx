@@ -64,7 +64,6 @@ export default function Contest(): JSX.Element {
   const { id } = useParams() as { id: string };
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  //const [contestSubmissions, setContestSubmissions] = useState<Submission[]>([]);
   //currently leaving as any, need to change it after getting individual contest from api
   const [contestSubmissions, setContestSubmissions] = useState<any>([]);
   const { loggedInUser } = useAuth();
@@ -117,8 +116,6 @@ export default function Contest(): JSX.Element {
     );
   };
 
-  const capitalize = (s: string) => s && s[0].toUpperCase() + s.slice(1);
-
   return loggedInUser ? (
     <>
       <CssBaseline />
@@ -151,7 +148,9 @@ export default function Contest(): JSX.Element {
                 <Avatar alt="Profile Image" src={ProfilePic} className={classes.avatar}></Avatar>
               </Grid>
               <Grid item>
-                <Typography className={classes.user}>By {capitalize(loggedInUser.username)}</Typography>
+                <Typography className={classes.user}>
+                  By <span className={classes.username}>{loggedInUser.username}</span>
+                </Typography>
               </Grid>
             </Grid>
           </Grid>

@@ -57,7 +57,6 @@ export default function Discovery(): JSX.Element {
   const sortByHeader = (sortParam: Contest[] = contests) => {
     if (contests) {
       const sort = [...sortParam].sort((a: Contest, b: Contest) => {
-        console.log(a, b);
         if (a[sortType] > b[sortType]) {
           return 1;
         } else if (a[sortType] < b[sortType]) {
@@ -114,9 +113,9 @@ export default function Discovery(): JSX.Element {
                           <TableCell className={classes.tableRow}>{contest.deadlineDate}</TableCell>
                           <TableCell className={classes.tableRow}>
                             {/* Is this the link to go for a particular contest. If yes, then we can pass contest */}
-                            <Link to={`/contest/${contest._id}`}>
-                              <Button className={classes.button}>More Info</Button>
-                            </Link>
+                            <Button className={classes.button} component={Link} to={`/contest/${contest._id}`}>
+                              More Info
+                            </Button>
                           </TableCell>
                         </TableRow>
                       </>

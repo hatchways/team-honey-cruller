@@ -69,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     padding: 0,
   },
+  username: {
+    textTransform: 'capitalize',
+  },
   greyText: {
     color: '#CECECE',
     fontWeight: 'bolder',
