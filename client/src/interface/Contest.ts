@@ -7,11 +7,3 @@ export interface Contest {
   deadlineDate: Moment;
   images: Array<string>;
 }
-
-export interface ContestFormatted {
-  title: string;
-  description: string;
-  prizeAmount: number;
-  deadlineDate: string;
-  images: Array<string>;
-}
