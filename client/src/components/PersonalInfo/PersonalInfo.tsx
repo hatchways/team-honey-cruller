@@ -18,15 +18,9 @@ export default function PersonalInfo(): JSX.Element {
     about,
   }: PersonalInfoProps) => {
     const info = {
-      firstName: firstName,
-      middleInit: middleInit,
-      lastName: lastName,
-      email: email,
-      phone: phone,
-      dateOfBirth: dateOfBirth,
-      gender: gender,
-      about: about,
-    }
+      firstName, middleInit, lastName, email, phone, dateOfBirth, gender, about,
+    };
+
     postPersonalInfo(info);
   };
 
