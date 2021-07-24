@@ -2,7 +2,6 @@ const Contest = require("../models/Contest");
 const asyncHandler = require("express-async-handler");
 
 exports.createContest = asyncHandler(async (req, res) => {
-    console.log(req.user)
     try {
         const contest = await Contest.create({
             title: req.body.title,
