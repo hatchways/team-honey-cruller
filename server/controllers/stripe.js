@@ -8,7 +8,6 @@ exports.createCustomer = asyncHandler(async (req, res) => {
             name: req.body.name
         });
 
-
         res.status(201).json({
             customer: customer
         });
@@ -103,3 +102,21 @@ exports.chargeCard = asyncHandler(async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+exports.attachPaymentMethod = asyncHandler(async (req, res) => {
+    try {
+        const customerCard = await stripe.paymentMethods.attach(
+            req.body.cardId, {
+                customer: req.body.stripeId
+            }
+        )
+
+        res.status(200).json({
+            customer: customerCard
+        });
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err);
+    }
+})

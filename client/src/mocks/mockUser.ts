@@ -8,9 +8,10 @@ const mockLoggedInUser: User = {
   artist: true,
   artwork: [],
   activeConvo: [],
+  stripeId: '',
   contests: [
     {
-      _id: 1,
+      _id: '',
       title: 'My retirement tattoo',
       description: 'I am retiring and would like to celebrate with a cool tattoo',
       prizeAmount: 200,
@@ -59,10 +60,11 @@ const mockOtherUser1: User = {
   profilePic: '',
   artist: true,
   artwork: [],
+  stripeId: '',
   activeConvo: [],
   contests: [
     {
-      _id:2,
+      _id: '',
       title: 'my new favorite tattoo',
       description: 'I am looking for a cool island tattoo to warm my icy heart.',
       prizeAmount: 200,
@@ -111,10 +113,11 @@ const mockOtherUser2: User = {
   profilePic: '',
   artist: false,
   artwork: [],
+  stripeId:'',
   activeConvo: [],
   contests: [
     {
-      _id:3,
+      _id: '',
       title: 'Grouchy tattoo',
       description: 'I need a tattoo to show people how grouchy I am',
       prizeAmount: 250,
@@ -163,10 +166,11 @@ const mockOtherUser3: User = {
   profilePic: '',
   artist: false,
   artwork: [],
+  stripeId: '',
   activeConvo: [],
   contests: [
     {
-      _id:4,
+      _id: '',
       title: 'my new favorite tattoo',
       description: 'I am looking for a tattoo that expresses how hungry I am',
       prizeAmount: 300,

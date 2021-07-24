@@ -8,11 +8,12 @@ export interface User {
   contests: Contest[];
   conversations: Convo[];
   activeConvo: Message[];
+  stripeId: string;
 }
 
 export interface Contest {
   //also need an id
-  _id: number;
+  _id: string;
   title: string;
   description: string;
   prizeAmount: number;
@@ -62,6 +63,7 @@ export interface SearchUsersApiData {
   error?: { message: string };
 }
 
+
 export interface Customer {
   id: string;
 }
@@ -75,3 +77,4 @@ export interface Notification {
   createdAt: string;
   profilePic: string;
 }
+
