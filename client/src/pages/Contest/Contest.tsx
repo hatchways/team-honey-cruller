@@ -68,8 +68,7 @@ export default function ContestPage(): JSX.Element {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const { updateSnackBarMessage } = useSnackBar();
-  const [contestSubmissions, setContestSubmissions] = useState<Submission[]>();
-  //currently leaving as any, need to change it after getting individual contest from api
+  const [contestSubmissions, setContestSubmissions] = useState<Submission[]>([]);
   const [contest, setContest] = useState<Contest>();
   const { loggedInUser } = useAuth();
 
@@ -96,8 +95,9 @@ export default function ContestPage(): JSX.Element {
       try {
         const submissions = await getContestSubmissions(id);
         if (submissions) {
-          console.log(submissions);
           setContestSubmissions(submissions);
+        } else {
+          setContestSubmissions([]);
         }
       } catch (err) {
         updateSnackBarMessage(err.message);
@@ -197,7 +197,9 @@ export default function ContestPage(): JSX.Element {
                   },
                 }}
               >
-                <Tab label={contest ? `DESIGNS (${contest.images.length})` : `DESIGNS (30)`} />
+                {contestSubmissions.length && (
+                  <Tab label={contest ? `DESIGNS (${contest.images.length})` : `DESIGNS (30)`} />
+                )}
                 <Tab label="BRIEF" />
               </Tabs>
             </ThemeProvider>
@@ -205,8 +207,13 @@ export default function ContestPage(): JSX.Element {
           <Paper elevation={2}>
             <Panel value={value} index={0}>
               <Box textAlign="center">
-                <ImageList cols={4} gap={10} style={{ marginTop: '40px', marginBottom: '20px' }}>
-                  {contestSubmissions &&
+                <ImageList
+                  cols={4}
+                  gap={10}
+                  style={{ marginTop: '40px', marginBottom: '20px' }}
+                  className={classes.imageList}
+                >
+                  {contestSubmissions.length &&
                     contestSubmissions.map((submission) => (
                       <SubmittedDesigns
                         key={submission._id}

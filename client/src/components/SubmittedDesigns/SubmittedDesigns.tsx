@@ -10,13 +10,12 @@ const SubmittedDesigns = ({ images, artist }: Props): JSX.Element => {
   return (
     <>
       {images.map((image) => (
-        <ImageListItem key={image} cols={4}>
+        <ImageListItem key={image} cols={1} style={{ width: '25%', margin: '0 5px' }}>
           <img
             srcSet={`${image}?w=248&fit=crop&auto=format 1x,
-          ${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            ${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
             alt={artist}
             loading="lazy"
-            style={{ height: '100%', width: '100%' }}
           />
           <ImageListItemBar title={`By @${artist}`} />
         </ImageListItem>

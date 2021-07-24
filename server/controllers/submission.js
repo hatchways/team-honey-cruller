@@ -67,7 +67,7 @@ exports.getSubmissionByContest = asyncHandler(async (req, res) => {
       }));
       res.sendStatus(500);
     } else {
-      if (contest.submissions) {
+      if (contest) {
         const structured = contest.submissions.map(item => ({
           _id: item._id,
           images: item.images,
