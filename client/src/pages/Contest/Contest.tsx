@@ -6,18 +6,18 @@ import Button from '@material-ui/core/Button';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Toolbar from '@material-ui/core/Toolbar';
 import Box from '@material-ui/core/Box';
+import Avatar from '@material-ui/core/Avatar';
 import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import SubmittedDesigns from '../../components/SubmittedDesigns/SubmittedDesigns';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
-import ProfilePic from '../../Images/profilePic.png';
 import { Contest, Submission } from '../../interface/User';
 import { getContestById } from '../../helpers/APICalls/contest';
 import { getContestSubmissions } from '../../helpers/APICalls/submission';
@@ -95,6 +95,7 @@ export default function ContestPage(): JSX.Element {
       try {
         const submissions = await getContestSubmissions(id);
         if (submissions) {
+          console.log(submissions);
           setContestSubmissions(submissions);
         } else {
           setContestSubmissions([]);
@@ -165,11 +166,14 @@ export default function ContestPage(): JSX.Element {
             </Typography>
             <Grid direction="row" className={classes.grid} container>
               <Grid item>
-                <Avatar alt="Profile Image" src={ProfilePic} className={classes.avatar}></Avatar>
+                <Avatar
+                  src={contest && (contest.ownerProfilePic || `https://robohash.org/${contest.ownerName}.png`)}
+                  className={classes.avatar}
+                ></Avatar>
               </Grid>
               <Grid item>
                 <Typography className={classes.user}>
-                  By <span className={classes.username}>{loggedInUser.username}</span>
+                  By <span className={classes.username}>{contest ? contest.ownerName : ''}</span>
                 </Typography>
               </Grid>
             </Grid>
@@ -198,7 +202,7 @@ export default function ContestPage(): JSX.Element {
                 }}
               >
                 {contestSubmissions.length && (
-                  <Tab label={contest ? `DESIGNS (${contest.images.length})` : `DESIGNS (30)`} />
+                  <Tab label={contest && contest.images ? `DESIGNS (${contest.images.length})` : `DESIGNS (30)`} />
                 )}
                 <Tab label="BRIEF" />
               </Tabs>
@@ -207,12 +211,7 @@ export default function ContestPage(): JSX.Element {
           <Paper elevation={2} style={{ width: '100%' }}>
             <Panel value={value} index={0}>
               <Box textAlign="center">
-                <ImageList
-                  cols={4}
-                  gap={10}
-                  style={{ marginTop: '40px', marginBottom: '20px' }}
-                  className={classes.imageList}
-                >
+                <ImageList cols={4} gap={10} className={classes.imageList}>
                   {contestSubmissions.length &&
                     contestSubmissions.map((submission) => (
                       <SubmittedDesigns
@@ -225,9 +224,26 @@ export default function ContestPage(): JSX.Element {
               </Box>
             </Panel>
             <Panel value={value} index={1}>
-              <Typography style={{ height: '200px', marginTop: '40px' }}>
+              <Typography align="center" variant="h3" className={classes.descriptionHeader}>
+                Tattoo Description:
+              </Typography>
+              <Typography align="center" variant="h5">
                 {contest ? contest.description : 'Description of the contest'}
               </Typography>
+              <ImageList className={classes.imageList}>
+                {contest &&
+                  contest.images &&
+                  contest.images.map((image) => (
+                    <ImageListItem key={image} className={classes.listItem}>
+                      <img
+                        srcSet={`${image}?w=248&fit=crop&auto=format 1x,
+                          ${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                        alt={`${image} inspiration`}
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  ))}
+              </ImageList>
             </Panel>
           </Paper>
         </Grid>

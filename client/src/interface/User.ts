@@ -12,7 +12,6 @@ export interface User {
 }
 
 export interface Contest {
-  //also need an id
   _id: string;
   title: string;
   description: string;
@@ -21,6 +20,8 @@ export interface Contest {
   deadlineDate: string;
   dateCreated: string;
   userId: string;
+  ownerProfilePic: string;
+  ownerName: string;
   submissions: Submission[];
 }
 

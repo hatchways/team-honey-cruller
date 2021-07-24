@@ -49,7 +49,7 @@ exports.getSubmissionByContest = asyncHandler(async (req, res) => {
   const contestId = mongoose.Types.ObjectId(req.params.id)
   // EXPECTING THE ID OF THE CONTEST IN PARAMS
   Contest.findOne({
-    userId: userId,
+    userId,
     _id: contestId
   }).select('submissions').populate({
     path: 'submissions',

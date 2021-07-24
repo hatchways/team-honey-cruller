@@ -74,12 +74,24 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     padding: 0,
   },
+  descriptionHeader: { textDecoration: 'underline', margin: '15px 0 20px' },
   imageList: {
     flexWrap: 'nowrap',
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
     margin: '40px 0 20px',
     padding: '20px 0',
+    marginTop: '40px',
+    marginBottom: '20px',
+  },
+  listItem: {
+    margin: '0 5px',
+    width: '25%',
+    [theme.breakpoints.down('sm')]: {
+      width: '50%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '90%',
+    },
   },
   username: {
     textTransform: 'capitalize',
