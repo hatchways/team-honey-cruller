@@ -22,16 +22,15 @@ export default function CreateContest():JSX.Element {
       images
     }: Contest
   ) => {
-    const contest = {
-      title: title,
-      description: description,
-      prizeAmount: prizeAmount,
-      deadlineDate: deadlineDate.format('MMMM Do YYYY h:mm A z'),
-      images: images,
-    };
+    const contest = { title, description, prizeAmount, deadlineDate, images };
 
-    addContest(contest);
-    history.push('/discovery');
+    addContest(contest)
+      .then((res) => {
+        if (!res.error) {
+          history.push('/discovery');
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
