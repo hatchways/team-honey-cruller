@@ -142,7 +142,7 @@ export default function ContestPage(): JSX.Element {
     <>
       <CssBaseline />
       <GlobalCss />
-      <AuthHeader linkTo={`/submit-design/${id}`} btnText="SUBMIT DESIGN" />
+      <AuthHeader linkTo={`/create-contest`} btnText="create contest" />
       <Container className={classes.container}>
         <Grid className={classes.grid} container style={{ marginBottom: '35px' }}>
           <Grid item>
@@ -156,7 +156,7 @@ export default function ContestPage(): JSX.Element {
           </Grid>
         </Grid>
         <Grid className={classes.grid} container>
-          <Grid item xs={10}>
+          <Grid item xs={12} sm={10}>
             <Typography className={classes.contestTitle}>
               {contest ? contest.title : 'Lion tattoo concept in minimal style'}{' '}
               <Button className={classes.prizeAmount}>
@@ -174,7 +174,7 @@ export default function ContestPage(): JSX.Element {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={12} sm={2} justifyContent="center" alignItems="center">
             <Link to={`/submit-design/${id}`} style={{ textDecoration: 'none' }}>
               <Button variant="outlined" size="large" className={classes.button}>
                 submit design
@@ -204,7 +204,7 @@ export default function ContestPage(): JSX.Element {
               </Tabs>
             </ThemeProvider>
           </Toolbar>
-          <Paper elevation={2}>
+          <Paper elevation={2} style={{ width: '100%' }}>
             <Panel value={value} index={0}>
               <Box textAlign="center">
                 <ImageList

@@ -5,6 +5,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     fontWeight: 'bolder',
+    [theme.breakpoints.down('xs')]: {
+      display: 'flex',
+      justifyContent: 'center',
+    },
   },
   backIcon: {
     height: '10px',
@@ -13,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 38,
     fontWeight: 'bolder',
     fontFamily: "'Open Sans'",
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'center',
+    },
   },
   prizeAmount: {
     backgroundColor: 'black',
@@ -48,11 +55,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 0,
     marginTop: 12,
     textTransform: 'uppercase',
-    [theme.breakpoints.down('sm')]: {
-      fontSize: 'auto',
-      width: 'auto',
-      height: 'auto',
-      marginLeft: 10,
+    '&:hover': {
+      backgroundColor: 'black',
+      color: 'white',
     },
   },
   container: {
