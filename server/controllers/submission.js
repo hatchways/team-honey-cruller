@@ -45,11 +45,11 @@ exports.getSubmissionsByUser = asyncHandler(async (req, res) => {
 })
 
 exports.getSubmissionByContest = asyncHandler(async (req, res) => {
-  const artistId = mongoose.Types.ObjectId(req.user.id)
+  const userId = mongoose.Types.ObjectId(req.user.id)
   const contestId = mongoose.Types.ObjectId(req.params.id)
   // EXPECTING THE ID OF THE CONTEST IN PARAMS
   Contest.findOne({
-    userId: artistId,
+    userId: userId,
     _id: contestId
   }).select('submissions').populate({
     path: 'submissions',
@@ -59,7 +59,7 @@ exports.getSubmissionByContest = asyncHandler(async (req, res) => {
       model: 'User',
       select: 'username profilePic'
     }
-  }).exec(async (err, { submissions }) => {
+  }).exec(async (err, contest) => {
     if (err) {
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({
@@ -67,7 +67,19 @@ exports.getSubmissionByContest = asyncHandler(async (req, res) => {
       }));
       res.sendStatus(500);
     } else {
-      res.status(200).send(submissions)
+      if (contest.submissions) {
+        const structured = contest.submissions.map(item => ({
+          _id: item._id,
+          images: item.images,
+          contest: item.contest,
+          active: item.active,
+          artistName: item.artistId.username,
+          artistId: item.artistId._id,
+        }))
+        res.status(200).send(structured)
+      } else {
+        res.status(304).send([])
+      }
     }
   })
 })

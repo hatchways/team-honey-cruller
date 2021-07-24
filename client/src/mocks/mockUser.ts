@@ -12,6 +12,7 @@ const mockLoggedInUser: User = {
   contests: [
     {
       _id: '',
+      images: [],
       title: 'My retirement tattoo',
       description: 'I am retiring and would like to celebrate with a cool tattoo',
       prizeAmount: 200,
@@ -20,6 +21,7 @@ const mockLoggedInUser: User = {
       deadlineDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
       submissions: [
         {
+          _id: '',
           images: [],
           artistName: 'Princess Peach',
           artistId: '987654321xyz',
@@ -66,6 +68,7 @@ const mockOtherUser1: User = {
     {
       _id: '',
       title: 'my new favorite tattoo',
+      images: [],
       description: 'I am looking for a cool island tattoo to warm my icy heart.',
       prizeAmount: 200,
       dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
@@ -73,6 +76,7 @@ const mockOtherUser1: User = {
       deadlineDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
       submissions: [
         {
+          _id: '',
           images: [],
           contest: '',
           active: true,
@@ -113,11 +117,12 @@ const mockOtherUser2: User = {
   profilePic: '',
   artist: false,
   artwork: [],
-  stripeId:'',
+  stripeId: '',
   activeConvo: [],
   contests: [
     {
       _id: '',
+      images: [],
       title: 'Grouchy tattoo',
       description: 'I need a tattoo to show people how grouchy I am',
       prizeAmount: 250,
@@ -126,6 +131,7 @@ const mockOtherUser2: User = {
       deadlineDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
       submissions: [
         {
+          _id: '',
           images: [],
           contest: '',
           active: true,
@@ -171,6 +177,7 @@ const mockOtherUser3: User = {
   contests: [
     {
       _id: '',
+      images: [],
       title: 'my new favorite tattoo',
       description: 'I am looking for a tattoo that expresses how hungry I am',
       prizeAmount: 300,
@@ -179,6 +186,7 @@ const mockOtherUser3: User = {
       deadlineDate: 'Mon Sep 02 2021 00:00:00 GMT+0200',
       submissions: [
         {
+          _id: '',
           images: [],
           contest: '',
           active: true,

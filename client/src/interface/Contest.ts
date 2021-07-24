@@ -1,4 +1,4 @@
-export interface Contest {
+export interface NewContest {
   title: string;
   description: string;
   prizeAmount: number;

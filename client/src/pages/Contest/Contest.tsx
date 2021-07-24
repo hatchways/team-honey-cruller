@@ -10,17 +10,20 @@ import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Toolbar from '@material-ui/core/Toolbar';
+import Box from '@material-ui/core/Box';
+import ImageList from '@material-ui/core/ImageList';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import SubmittedDesigns from '../../components/SubmittedDesigns/SubmittedDesigns';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import ProfilePic from '../../Images/profilePic.png';
-import { Submission } from '../../interface/User';
+import { Contest, Submission } from '../../interface/User';
 import { getContestById } from '../../helpers/APICalls/contest';
-
+import { getContestSubmissions } from '../../helpers/APICalls/submission';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { Link, useParams } from 'react-router-dom';
+import { useSnackBar } from '../../context/useSnackbarContext';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -60,12 +63,14 @@ const GlobalCss = withStyles({
   },
 })(() => null);
 
-export default function Contest(): JSX.Element {
+export default function ContestPage(): JSX.Element {
   const { id } = useParams() as { id: string };
   const classes = useStyles();
   const [value, setValue] = useState(0);
+  const { updateSnackBarMessage } = useSnackBar();
+  const [contestSubmissions, setContestSubmissions] = useState<Submission[]>();
   //currently leaving as any, need to change it after getting individual contest from api
-  const [contestSubmissions, setContestSubmissions] = useState<any>([]);
+  const [contest, setContest] = useState<Contest>();
   const { loggedInUser } = useAuth();
 
   const newTheme = createMuiTheme({
@@ -87,17 +92,34 @@ export default function Contest(): JSX.Element {
   }
 
   useEffect(() => {
-    async function getContestAllSubmissions() {
+    async function getUserContestSubmissions() {
       try {
-        const contestAllSubmissions = await getContestById(id);
-        if (contestAllSubmissions) {
-          setContestSubmissions(contestAllSubmissions);
+        const submissions = await getContestSubmissions(id);
+        if (submissions) {
+          console.log(submissions);
+          setContestSubmissions(submissions);
+        }
+      } catch (err) {
+        updateSnackBarMessage(err.message);
+      }
+    }
+    if (loggedInUser) {
+      getUserContestSubmissions();
+    }
+  }, [loggedInUser, id, updateSnackBarMessage]);
+
+  useEffect(() => {
+    async function getContest() {
+      try {
+        const data = await getContestById(id);
+        if (data) {
+          setContest(data);
         }
       } catch (err) {
         console.log(err);
       }
     }
-    getContestAllSubmissions();
+    getContest();
   }, [id]);
 
   const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {
@@ -136,11 +158,9 @@ export default function Contest(): JSX.Element {
         <Grid className={classes.grid} container>
           <Grid item xs={10}>
             <Typography className={classes.contestTitle}>
-              {contestSubmissions.title ? contestSubmissions.title : 'Lion tattoo concept in minimal style'}{' '}
+              {contest ? contest.title : 'Lion tattoo concept in minimal style'}{' '}
               <Button className={classes.prizeAmount}>
-                <Typography className={classes.prize}>
-                  {contestSubmissions.prizeAmount ? contestSubmissions.prizeAmount : '$150'}
-                </Typography>
+                <Typography className={classes.prize}>{contest ? contest.prizeAmount : '$150'}</Typography>
               </Button>
             </Typography>
             <Grid direction="row" className={classes.grid} container>
@@ -177,20 +197,29 @@ export default function Contest(): JSX.Element {
                   },
                 }}
               >
-                <Tab
-                  label={contestSubmissions.images ? `DESIGNS (${contestSubmissions.images.length})` : `DESIGNS (30)`}
-                />
+                <Tab label={contest ? `DESIGNS (${contest.images.length})` : `DESIGNS (30)`} />
                 <Tab label="BRIEF" />
               </Tabs>
             </ThemeProvider>
           </Toolbar>
           <Paper elevation={2}>
             <Panel value={value} index={0}>
-              <SubmittedDesigns images={contestSubmissions.images} artist={contestSubmissions.artist} />
+              <Box textAlign="center">
+                <ImageList cols={4} gap={10} style={{ marginTop: '40px', marginBottom: '20px' }}>
+                  {contestSubmissions &&
+                    contestSubmissions.map((submission) => (
+                      <SubmittedDesigns
+                        key={submission._id}
+                        images={submission.images}
+                        artist={submission.artistName}
+                      />
+                    ))}
+                </ImageList>
+              </Box>
             </Panel>
             <Panel value={value} index={1}>
               <Typography style={{ height: '200px', marginTop: '40px' }}>
-                {contestSubmissions.description ? contestSubmissions.description : 'Description of the contest'}
+                {contest ? contest.description : 'Description of the contest'}
               </Typography>
             </Panel>
           </Paper>

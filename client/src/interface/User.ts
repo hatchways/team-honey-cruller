@@ -17,6 +17,7 @@ export interface Contest {
   title: string;
   description: string;
   prizeAmount: number;
+  images: string[];
   deadlineDate: string;
   dateCreated: string;
   userId: string;
@@ -24,6 +25,7 @@ export interface Contest {
 }
 
 export interface Submission {
+  _id: string;
   contest: string;
   images: string[];
   artistName: string;
@@ -62,4 +64,3 @@ export interface SearchUsersApiData {
   users?: User[];
   error?: { message: string };
 }
-
