@@ -32,7 +32,7 @@ export default function Discovery(): JSX.Element {
   const [sortType, setSortType] = useState<keyof Contest>('deadlineDate');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [dateFilter, setDateFilter] = useState('')
+  const [dateFilter, setDateFilter] = useState<Date | null>(new Date())
   const { loggedInUser } = useAuth();
   const classes = useStyles();
 
@@ -49,6 +49,13 @@ export default function Discovery(): JSX.Element {
     getAll();
   }, []);
 
+  useEffect(() => {
+    if(dateFilter){
+
+      console.log(dateFilter)
+    }
+  }, [dateFilter]);
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -56,6 +63,10 @@ export default function Discovery(): JSX.Element {
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const handleChangeDate = (date: any) => {
+    setDateFilter(date);
   };
 
   const sortByHeader = (sortParam: Contest[] = contests) => {
@@ -84,21 +95,21 @@ export default function Discovery(): JSX.Element {
               <Typography className={classes.typography}>All Open Contests</Typography>
             </Grid>
             <Grid container justify="center" className={classes.muiPicker}>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <Grid item xs={5}>
-                      <KeyboardDatePicker
-                      id="date"
-                      name="deadlineDate"
-                      margin="normal"
-                      variant="inline"
-                      inputVariant="outlined"
-                      format="MMMM Do YYYY"
-                      value='test'
-                      onChange={value => console.log(value)}
-                      keyboardIcon={<DateRangeIcon />}/>
-                    </Grid>
-                  </MuiPickersUtilsProvider>
-                  </Grid>
+              <MuiPickersUtilsProvider utils={MomentUtils}>
+                <Grid item xs={5}>
+                  <KeyboardDatePicker
+                    id="date"
+                    name="deadlineDate"
+                    margin="normal"
+                    variant="inline"
+                    inputVariant="outlined"
+                    format="MMMM Do YYYY"
+                    value={dateFilter}
+                    onChange={value => handleChangeDate(value)}
+                    keyboardIcon={<DateRangeIcon />} />
+                </Grid>
+              </MuiPickersUtilsProvider>
+            </Grid>
           </Container>
           <Paper className={classes.paper}>
             <TableContainer>
