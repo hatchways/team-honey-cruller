@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
@@ -6,6 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import { useAuth } from '../../context/useAuthContext';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import AuthMenu from '../AuthMenu/AuthMenu';
+import NotificationPopUp from '../NotificationPopUp/NotificationPopUp';
+
+import { getNotification, updateNotification } from '../../helpers/APICalls/notification';
+import { Notification } from '../../interface/User';
+
+
 
 interface Props {
   linkTo: string;
@@ -15,7 +22,22 @@ interface Props {
 const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
+  const [notifications, setNotifications] = useState<Notification[]>();
 
+  useEffect(() => {
+    async function getAll() {
+      const allNotifications = await getNotification();
+      if (allNotifications) {
+        setNotifications(allNotifications);
+      } else {
+        console.log('Notifications not found');
+        new Error('Notifications not found');
+      }
+    }
+    getAll();
+  }, []);
+
+  
   return (
     <Box p={1} className={classes.authHeader}>
       <Typography color="secondary" className={classes.tattooArt}>
@@ -41,7 +63,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
             </Typography>
           </Link>
           <Typography className={classes.navLink} color="secondary" display="inline">
-            Notifications
+            <NotificationPopUp notifications={notifications !== undefined ? notifications : []} />
           </Typography>
           <Link to={linkTo}>
             <Button className={classes.createContestBtn} size="large">

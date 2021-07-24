@@ -16,6 +16,13 @@ const notificationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    opened: {
+      type: Boolean,
+      default: false
+    },
+    profilePic: {
+      type: String
+    }
   },
   {
     timestamps: true,
