@@ -4,13 +4,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexGrow: 1,
-    height: '100vh',
     overflow: 'hidden',
   },
   tabs: {
     backgroundColor: theme.palette.background.paper,
-    width: '40vh',
-    overflow: 'hidden',
+    minWidth: 200,
+    width: '20vw',
+    height: 'auto',
     borderRight: `1px solid ${theme.palette.divider}`,
     boxShadow: '3px 0 5px -2px #DDDDDD',
     paddingTop: 20,
