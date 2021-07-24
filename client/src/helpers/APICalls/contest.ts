@@ -1,6 +1,6 @@
 import { FetchOptions } from '../../interface/FetchOptions';
 import { AuthApiData, ContestById } from '../../interface/AuthApiData';
-import { ContestFormatted } from '../../interface/Contest';
+import { Contest } from '../../interface/Contest';
 import axios from 'axios';
 
 export const getAllContests = async (): Promise<AuthApiData> => {
@@ -39,8 +39,11 @@ export const getContestById = async (id:string): Promise<AuthApiData> => {
     .catch(err => ({ error: { message: 'Could not find Contest.'}}))
 }
 
-export const addContest = async (contest: ContestFormatted): Promise<AuthApiData> => {
-    return await axios.post('/contest', contest)
-        .then((res) => res.data)
-        .catch(() => ({ error: { message: 'Cannot create contest' }}))
+export const addContest = async (contest: Contest): Promise<AuthApiData> => {
+    return await axios.post('/contest',
+    {
+       ...contest, deadlineDate: contest.deadlineDate.format('MMM Do YYYY h:mm A z')
+    })
+      .then((res) => res.data)
+      .catch(() => ({ error: { message: 'Cannot create contest' }}));
 }
