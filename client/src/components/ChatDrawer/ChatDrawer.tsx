@@ -16,15 +16,17 @@ const ChatDrawer = ({ convos }: Props): JSX.Element => {
   return (
     <div>
       <Fragment>
-        <Button
-          onClick={(): void => setExpanded(!expanded)}
-          color="primary"
-          size="large"
-          variant="contained"
-          className={classes.expandBtn}
-        >
-          All Conversations
-        </Button>
+        <div className={classes.btnContainer}>
+          <Button
+            onClick={(): void => setExpanded(!expanded)}
+            color="primary"
+            size="large"
+            variant="contained"
+            className={classes.expandBtn}
+          >
+            All Conversations
+          </Button>
+        </div>
         <Drawer anchor={'left'} open={expanded} onClose={(): void => setExpanded(!expanded)}>
           <ChatSideBanner convos={convos} />
         </Drawer>
