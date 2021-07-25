@@ -65,16 +65,36 @@ exports.getAllContestsByUser = asyncHandler(async (req, res) => {
 
 exports.getContestsByDeadlineDate = asyncHandler(async (req, res) => {
   try {
+    let {
+      deadlineDate
+    } = req.query
+
+    if (deadlineDate === "") {
+      return res.status(400).json({
+        message: 'please choose a deadlineDate'
+      })
+    }
+
     const allContests = await Contest.find({
-      createdAt: {
-        $gte: ISODate(Date.now()),
-        $lt: ISODate(req.params.deadlineDate)
+      deadlineDate: {
+        $gte: ISODate("2021-07-24T00:00:00Z"),
+        $lt: ISODate(deadlineDate)
       }
+    }).sort({
+      deadlineDate: 'asc'
     });
+
+    if (!allContests) {
+      return res.status(404).json({
+        status: 'failure',
+        message: 'Could not retrieve transactions'
+      })
+    }
 
     res.status(200).json({
       contests: allContests
     });
+
   } catch (err) {
     res.status(500).json(err);
   }

@@ -10,6 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import MomentUtils from '@date-io/moment';
+import moment from 'moment';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -32,7 +33,7 @@ export default function Discovery(): JSX.Element {
   const [sortType, setSortType] = useState<keyof Contest>('deadlineDate');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [dateFilter, setDateFilter] = useState<Date | null>(new Date())
+  const [dateFilter, setDateFilter] = useState("")
   const { loggedInUser } = useAuth();
   const classes = useStyles();
 
@@ -51,7 +52,6 @@ export default function Discovery(): JSX.Element {
 
   useEffect(() => {
     if(dateFilter){
-
       console.log(dateFilter)
     }
   }, [dateFilter]);
@@ -66,7 +66,8 @@ export default function Discovery(): JSX.Element {
   };
 
   const handleChangeDate = (date: any) => {
-    setDateFilter(date);
+    const utcTime = moment.utc(date._d).format()
+    setDateFilter(utcTime);
   };
 
   const sortByHeader = (sortParam: Contest[] = contests) => {
@@ -104,7 +105,7 @@ export default function Discovery(): JSX.Element {
                     variant="inline"
                     inputVariant="outlined"
                     format="MMMM Do YYYY"
-                    value={dateFilter}
+                    value={moment(dateFilter)}
                     onChange={value => handleChangeDate(value)}
                     keyboardIcon={<DateRangeIcon />} />
                 </Grid>
