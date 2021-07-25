@@ -5,7 +5,8 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       cursor: 'pointer',
     },
-    margin: '0 5px',
+    height: 'min-content',
+    padding: 10,
     width: '25%',
     [theme.breakpoints.down('sm')]: {
       width: '50%',
@@ -13,6 +14,13 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       width: '90%',
     },
+  },
+  by: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  titleBar: {
+    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
 }));
 

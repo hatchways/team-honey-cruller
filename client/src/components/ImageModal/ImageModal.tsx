@@ -32,7 +32,7 @@ const ImageModal = ({ artistPic, artistName, image, children }: Props): JSX.Elem
         <Paper className={classes.body}>
           <Box className={classes.box}>
             {artistPic ? <Avatar src={artistPic} /> : null}
-            <Typography>{artistName}</Typography>
+            <Typography className={classes.artistName}>{artistName}</Typography>
           </Box>
           <img src={image} alt="chosen design" className={classes.image} />
         </Paper>

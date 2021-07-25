@@ -39,7 +39,6 @@ const GlobalCss = withStyles({
       minHeight: 0,
     },
     'li.MuiImageListItem-root': {
-      height: '250px !important',
       overflowY: 'hidden',
     },
     '.MuiImageListItemBar-root': {
@@ -47,7 +46,6 @@ const GlobalCss = withStyles({
     },
     'ul.li.MuiImageListItem-item': {
       padding: 0,
-      height: '250px !important',
     },
     '.MuiImageListItemBar-titleWrap': {
       color: '#333',
@@ -57,6 +55,7 @@ const GlobalCss = withStyles({
       fontSize: '15px',
       fontWeight: 'bolder',
       textDecoration: 'underline',
+      color: 'white',
     },
     '.MuiImageListItem-imgFullHeight': {
       opacity: '0.8',
@@ -161,7 +160,7 @@ export default function ContestPage(): JSX.Element {
             <Typography className={classes.contestTitle}>
               {contest ? contest.title : 'Lion tattoo concept in minimal style'}{' '}
               <Button className={classes.prizeAmount}>
-                <Typography className={classes.prize}>{contest ? contest.prizeAmount : '$150'}</Typography>
+                <Typography className={classes.prize}>${contest ? contest.prizeAmount : '0'}</Typography>
               </Button>
             </Typography>
             <Grid direction="row" className={classes.grid} container>
@@ -211,11 +210,18 @@ export default function ContestPage(): JSX.Element {
           <Paper elevation={2}>
             {contestSubmissions.length && (
               <Panel value={value} index={0}>
-                <ImageList cols={4} gap={10} className={classes.imageList}>
-                  {contestSubmissions.map((submission) => (
-                    <SubmittedDesigns key={submission._id} images={submission.images} artist={submission.artistName} />
-                  ))}
-                </ImageList>
+                <div className={classes.imageWrapper}>
+                  <ImageList cols={4} gap={3} className={classes.imageList}>
+                    {contestSubmissions.map((submission) => (
+                      <SubmittedDesigns
+                        key={submission._id}
+                        images={submission.images}
+                        artistPic={submission.artistPic}
+                        artistName={submission.artistName}
+                      />
+                    ))}
+                  </ImageList>
+                </div>
               </Panel>
             )}
             <Panel value={value} index={contestSubmissions.length ? 1 : 0}>

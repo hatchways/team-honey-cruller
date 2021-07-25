@@ -74,6 +74,7 @@ exports.getSubmissionByContest = asyncHandler(async (req, res) => {
           contest: item.contest,
           active: item.active,
           artistName: item.artistId.username,
+          artistPic: item.artistId.profilePic,
           artistId: item.artistId._id,
         }))
         res.status(200).send(structured)

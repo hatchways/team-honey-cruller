@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 38,
     fontWeight: 'bolder',
     fontFamily: "'Open Sans'",
+    textTransform: 'capitalize',
     [theme.breakpoints.down('xs')]: {
       textAlign: 'center',
     },
@@ -75,30 +76,35 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
   },
   descriptionHeader: { textDecoration: 'underline', margin: '15px 0 20px' },
+  imageWrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+  },
   imageList: {
-    flexWrap: 'nowrap',
     transform: 'translateZ(0)',
     margin: '40px 0 20px',
     padding: '20px 0',
-    marginTop: '40px',
-    marginBottom: '20px',
+    width: '100%',
+    height: 450,
   },
   listItem: {
     '&:hover': {
       cursor: 'pointer',
     },
-    margin: '0 5px',
     width: '25%',
+    height: 'auto',
     [theme.breakpoints.down('sm')]: {
-      width: '50%',
+      width: '50% !important',
     },
     [theme.breakpoints.down('xs')]: {
-      width: '90%',
+      width: '90% !important',
     },
   },
   image: {
     width: '100%',
-    height: '100%',
+    height: 'auto',
   },
   username: {
     textTransform: 'capitalize',

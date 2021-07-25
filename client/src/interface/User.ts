@@ -31,6 +31,7 @@ export interface Submission {
   images: string[];
   artistName: string;
   artistId: string;
+  artistPic: string;
   active: boolean;
 }
 
