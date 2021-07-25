@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: 'white',
       color: 'black',
+      border: '1px solid black',
     },
     width: '90vw',
     borderRadius: 0,
