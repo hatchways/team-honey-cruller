@@ -10,7 +10,6 @@ sgMail.setApiKey(process.env.SENDGRID_KEY)
 //   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
 // }
 exports.sendMail = (msg) => {
-
   sgMail
   .send(msg)
   .then(() => {
