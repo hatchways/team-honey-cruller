@@ -18,6 +18,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import SubmittedDesigns from '../../components/SubmittedDesigns/SubmittedDesigns';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
+import ImageModal from '../../components/ImageModal/ImageModal';
 import { Contest, Submission } from '../../interface/User';
 import { getContestById } from '../../helpers/APICalls/contest';
 import { getContestSubmissions } from '../../helpers/APICalls/submission';
@@ -95,7 +96,6 @@ export default function ContestPage(): JSX.Element {
       try {
         const submissions = await getContestSubmissions(id);
         if (submissions) {
-          console.log(submissions);
           setContestSubmissions(submissions);
         } else {
           setContestSubmissions([]);
@@ -208,39 +208,37 @@ export default function ContestPage(): JSX.Element {
               </Tabs>
             </ThemeProvider>
           </Toolbar>
-          <Paper elevation={2} style={{ width: '100%' }}>
-            <Panel value={value} index={0}>
-              <Box textAlign="center">
+          <Paper elevation={2}>
+            {contestSubmissions.length && (
+              <Panel value={value} index={0}>
                 <ImageList cols={4} gap={10} className={classes.imageList}>
-                  {contestSubmissions.length &&
-                    contestSubmissions.map((submission) => (
-                      <SubmittedDesigns
-                        key={submission._id}
-                        images={submission.images}
-                        artist={submission.artistName}
-                      />
-                    ))}
+                  {contestSubmissions.map((submission) => (
+                    <SubmittedDesigns key={submission._id} images={submission.images} artist={submission.artistName} />
+                  ))}
                 </ImageList>
-              </Box>
-            </Panel>
-            <Panel value={value} index={1}>
+              </Panel>
+            )}
+            <Panel value={value} index={contestSubmissions.length ? 1 : 0}>
               <Typography align="center" variant="h3" className={classes.descriptionHeader}>
                 Tattoo Description:
               </Typography>
               <Typography align="center" variant="h5">
                 {contest ? contest.description : 'Description of the contest'}
               </Typography>
-              <ImageList className={classes.imageList}>
+              <ImageList cols={4} gap={10} className={classes.imageList}>
                 {contest &&
                   contest.images &&
                   contest.images.map((image) => (
-                    <ImageListItem key={image} className={classes.listItem}>
-                      <img
-                        srcSet={`${image}?w=248&fit=crop&auto=format 1x,
+                    <ImageListItem cols={1} key={image} className={classes.listItem}>
+                      <ImageModal image={image}>
+                        <img
+                          srcSet={`${image}?w=248&fit=crop&auto=format 1x,
                           ${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                        alt={`${image} inspiration`}
-                        loading="lazy"
-                      />
+                          alt={`${image} inspiration`}
+                          loading="lazy"
+                          className={classes.image}
+                        />
+                      </ImageModal>
                     </ImageListItem>
                   ))}
               </ImageList>

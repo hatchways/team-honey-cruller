@@ -84,6 +84,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '20px',
   },
   listItem: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
     margin: '0 5px',
     width: '25%',
     [theme.breakpoints.down('sm')]: {
@@ -92,6 +95,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       width: '90%',
     },
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   },
   username: {
     textTransform: 'capitalize',

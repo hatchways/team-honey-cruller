@@ -2,6 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
     margin: '0 5px',
     width: '25%',
     [theme.breakpoints.down('sm')]: {
