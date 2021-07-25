@@ -41,9 +41,6 @@ const GlobalCss = withStyles({
     'li.MuiImageListItem-root': {
       overflowY: 'hidden',
     },
-    '.MuiImageListItemBar-root': {
-      background: 'none',
-    },
     'ul.li.MuiImageListItem-item': {
       padding: 0,
     },
