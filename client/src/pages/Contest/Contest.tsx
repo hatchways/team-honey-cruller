@@ -205,7 +205,7 @@ export default function ContestPage(): JSX.Element {
             </ThemeProvider>
           </Toolbar>
           <Paper elevation={2}>
-            {contestSubmissions.length && (
+            {contestSubmissions.length ? (
               <Panel value={value} index={0}>
                 <div className={classes.imageWrapper}>
                   <ImageList cols={4} gap={3} className={classes.imageList}>
@@ -220,7 +220,7 @@ export default function ContestPage(): JSX.Element {
                   </ImageList>
                 </div>
               </Panel>
-            )}
+            ) : null}
             <Panel value={value} index={contestSubmissions.length ? 1 : 0}>
               <Typography align="center" variant="h3" className={classes.descriptionHeader}>
                 Tattoo Description:
