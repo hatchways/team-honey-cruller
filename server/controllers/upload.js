@@ -135,16 +135,20 @@ exports.uploadSubmissionPic = asyncHandler(async (req, res, next) => {
 })
 
 exports.deleteImage = asyncHandler(async (req, res) => {
-  s3.deleteObject({
-    Bucket: s3.bucket,
-    Key: req.body.fileName
-  }, function (err, data) {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      console.log("File has been deleted successfully");
-    }
-  })
+  try {
+    s3.deleteObject({
+      Bucket: s3.bucket,
+      Key: req.params.key
+    }, function (err, data) {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        console.log("File has been deleted successfully");
+      }
+    })
+  } catch (err) {
+    res.status(500).json(err);
+  }
 
   // s3.createBucket({
   //   Bucket: BUCKET_NAME /* Put your bucket name */
