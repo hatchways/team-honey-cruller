@@ -1,31 +1,46 @@
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 // @route POST /auth/register
 // @desc Register user
 // @access Public
 exports.registerUser = asyncHandler(async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const {
+    username,
+    email,
+    password
+  } = req.body;
 
-  const emailExists = await User.findOne({ email });
+  const emailExists = await User.findOne({
+    email
+  });
 
   if (emailExists) {
     res.status(400);
     throw new Error("A user with that email already exists");
   }
 
-  const usernameExists = await User.findOne({ username });
+  const usernameExists = await User.findOne({
+    username
+  });
 
   if (usernameExists) {
     res.status(400);
     throw new Error("A user with that username already exists");
   }
 
+  const customer = await stripe.customers.create({
+    email: email,
+    name: username
+  });
+
   const user = await User.create({
     username,
     email,
-    password
+    password,
+    stripeId: customer.id
   });
 
   if (user) {
@@ -37,13 +52,16 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
       maxAge: secondsInWeek * 1000
     });
 
+
+
     res.status(201).json({
       success: {
         user: {
           id: user._id,
           username: user.username,
           email: user.email,
-          profilePic: user.profilePic
+          profilePic: user.profilePic,
+          stripeId: customer.id
         }
       }
     });
@@ -57,9 +75,14 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 // @desc Login user
 // @access Public
 exports.loginUser = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const {
+    email,
+    password
+  } = req.body;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({
+    email
+  });
 
   if (user && (await user.matchPassword(password))) {
     const token = generateToken(user._id);
@@ -76,7 +99,8 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
           id: user._id,
           username: user.username,
           email: user.email,
-          profilePic: user.profilePic
+          profilePic: user.profilePic,
+          stripeId: user.stripeId
         }
       }
     });
@@ -103,7 +127,8 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
         id: user._id,
         username: user.username,
         email: user.email,
-        profilePic: user.profilePic
+        profilePic: user.profilePic,
+        stripeId: user.stripeId
       }
     }
   });

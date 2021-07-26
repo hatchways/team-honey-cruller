@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -12,12 +12,15 @@ import useStyles from './useStyles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { uploadSubmissionPic, createSubmission } from '../../helpers/APICalls/submission';
 
+interface Params {
+  id: string;
+}
+
 export default function SubmitDesign(): JSX.Element {
   const [allPics, setAllPics] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const classes = useStyles();
-  const location = useLocation();
-  const contestId = location.pathname.slice(15);
+  const params = useParams<Params>();
 
   const submitNewPic = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -35,7 +38,7 @@ export default function SubmitDesign(): JSX.Element {
   };
 
   const submitAllPics = async () => {
-    createSubmission(allPics, contestId);
+    createSubmission(allPics, params.id);
     // MESSAGE SUCCESS OR FAILURE HERE AND ROUTE TO NEXT PAGE
   };
 
@@ -71,7 +74,7 @@ export default function SubmitDesign(): JSX.Element {
                 Click to choose a file
               </Typography>
               <Typography className={classes.mutedText}>High resolution images</Typography>
-              <Typography className={`${classes.bottomLine} ${classes.mutedText}`}>PNG, JPG, GIF</Typography>
+              <Typography className={classes.mutedText}>PNG, JPG, GIF</Typography>
             </Paper>
           </label>
           <Button className={classes.uploadBtn} onClick={submitAllPics}>

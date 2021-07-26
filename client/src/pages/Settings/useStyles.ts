@@ -4,13 +4,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexGrow: 1,
-    height: '100vh',
     overflow: 'hidden',
   },
   tabs: {
     backgroundColor: theme.palette.background.paper,
-    width: '40vh',
-    overflow: 'hidden',
+    minWidth: 200,
+    width: '20vw',
+    height: 'auto',
     borderRight: `1px solid ${theme.palette.divider}`,
     boxShadow: '3px 0 5px -2px #DDDDDD',
     paddingTop: 20,
@@ -27,6 +27,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     left: '10%',
     transform: 'rotate(90deg)',
   },
+  paymentDetails: {
+    fontSize: '35px',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: '20px 0 30px 0',
+    marginLeft: '58px'
+  }
 }));
 
 export default useStyles;

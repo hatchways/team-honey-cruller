@@ -18,37 +18,47 @@ exports.createContest = asyncHandler(async (req, res) => {
 })
 
 exports.updateContest = asyncHandler(async (req, res) => {
-    try {
-        const update = await Contest.findOneAndUpdate({
-            _id: req.params.id
-        }, req.body, {
-            new: true
-        });
-
-        res.status(200).json(update);
-    } catch (err) {
-        res.status(500).json(err);
-    }
+  try {
+    const update = await Contest.findOneAndUpdate({
+      _id: req.params.id
+    }, req.body, {
+      new: true
+    });
+    res.status(200).json(update);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 exports.getSingleContest = asyncHandler(async (req, res) => {
-    try {
-        const singleContest = await Contest.findById(req.params.id);
-
-        res.status(200).json(singleContest);
-    } catch (err) {
-        res.status(500).json(err);
-    }
+  try {
+    const singleContest = await Contest.findById(req.params.id);
+    res.status(200).json(singleContest);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 })
 
 exports.getAllContests = asyncHandler(async (req, res) => {
-    try {
-        const allContests = await Contest.find({})
+  try {
+    const allContests = await Contest.find({}).select('-submissions')
+    res.status(200).json({
+      contests: allContests
+    })
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
 
-        res.status(200).json({
-            contests: allContests
-        })
-    } catch (err) {
-        res.status(500).json(err);
-    }
+exports.getAllContestsByUser = asyncHandler(async (req, res) => {
+  try {
+    const allContests = await Contest.find({
+      userId: req.user.id
+    })
+    res.status(200).json({
+      contests: allContests
+    })
+  } catch (err) {
+    res.status(500).json(err);
+  }
 })

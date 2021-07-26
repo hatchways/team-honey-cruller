@@ -4,8 +4,6 @@ import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
 import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 
-
-
 {
   /* these images are temporary, will be deleted, After getting images as props from Contest.tsx file*/
 }
