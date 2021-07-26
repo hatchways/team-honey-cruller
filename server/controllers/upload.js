@@ -83,9 +83,20 @@ const AWSPic = multer({
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   },
-}).single("image")
+}).single("image");
 
 exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
+
+  const {
+    profilePic
+  } = await User.find({
+    _id: req.user.id
+  });
+
+  if (profilePic) {
+    deleteImage(req.file.location)
+  }
+
   AWSPic(req, res, async (error) => {
     if (error) {
       res.json({
@@ -132,13 +143,14 @@ exports.uploadSubmissionPic = asyncHandler(async (req, res, next) => {
       }
     }
   })
-})
+});
 
-exports.deleteImage = asyncHandler(async (req, res) => {
+
+const deleteImage = asyncHandler(async (Key) => {
   try {
     s3.deleteObject({
       Bucket: s3.bucket,
-      Key: req.params.key
+      Key
     }, function (err, data) {
       if (err) {
         res.status(500).send(err);
@@ -149,10 +161,4 @@ exports.deleteImage = asyncHandler(async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-
-  // s3.createBucket({
-  //   Bucket: BUCKET_NAME /* Put your bucket name */
-  // }, function () {
-  //   s3.putObject(params, function (err, data) {});
-  // });
 })

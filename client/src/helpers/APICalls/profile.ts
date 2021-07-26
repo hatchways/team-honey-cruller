@@ -13,17 +13,17 @@ const updateProfile = async (file: FormData): Promise<string> => {
     }));
 };
 
-const deletePic = async (imgUrl: string): Promise<string> => {
+const deletePic = async (key: string): Promise<string> => {
   const fetchOptions: FetchOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
   };
-  return await fetch(`/upload/delete/${imgUrl}`, fetchOptions)
+  return await fetch(`/upload/delete/${key}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
     }));
 };
 
-export default updateProfile;
+export default { updateProfile, deletePic };
