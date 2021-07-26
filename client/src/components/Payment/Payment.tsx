@@ -25,7 +25,7 @@ export default function Payment(): JSX.Element {
         }
 
         const cardElement = elements.getElement(CardNumberElement);
-
+        
         if (loggedInUser && cardElement) {
             stripe
                 .createPaymentMethod({
