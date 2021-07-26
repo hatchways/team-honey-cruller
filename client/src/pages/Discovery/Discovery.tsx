@@ -105,7 +105,7 @@ export default function Discovery(): JSX.Element {
                     variant="inline"
                     inputVariant="outlined"
                     format="MMMM Do YYYY"
-                    value={moment(dateFilter)}
+                    value={moment()}
                     onChange={value => handleChangeDate(value)}
                     keyboardIcon={<DateRangeIcon />} />
                 </Grid>
