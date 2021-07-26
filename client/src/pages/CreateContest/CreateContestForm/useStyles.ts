@@ -14,9 +14,6 @@ const useStyles = makeStyles((theme) => ({
   label: {
     fontWeight: 'bold',
   },
-  inputs: {
-
-  },
   box: {
     width: '65%',
   },
@@ -47,8 +44,8 @@ const useStyles = makeStyles((theme) => ({
     padding: '20px',
   },
   img: {
-    width: 150,
-    height: 150,
+    width: '95%',
+    height: '95%',
     cursor: 'pointer',
   },
   checked: {

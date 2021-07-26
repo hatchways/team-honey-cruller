@@ -24,7 +24,7 @@ const MessageInput = ({ otherUserId }: Props): JSX.Element => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} autoComplete="off">
       <FormControl fullWidth hiddenLabel>
         <Grid container alignContent="center" className={classes.inputContainer}>
           <Grid item xs={10}>
