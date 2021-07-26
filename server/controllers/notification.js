@@ -32,9 +32,14 @@ exports.getAllNotifications = asyncHandler(async (req, res) => {
 });
 
 exports.deleteNotification = asyncHandler(async (req, res) => {
+  console.log('req.id', req.params.id)
   try {
-    await Notification.findByIdAndRemove(req.params.id);
-    res.status(204).end();
+    await Notification.findByIdAndDelete(req.params.id);
+    const changedNotification = await Notification.find({
+      to: req.user.id,
+    });
+
+    res.status(200).json(changedNotification);
   } catch (err) {
     res.status(500).json(err);
   }

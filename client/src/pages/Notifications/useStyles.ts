@@ -8,9 +8,11 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '0',
   },
   poptitle: {
-    margin: '15px',
+    marginTop: 20,
+    margin: 20,
     fontWeight: 'bold',
     fontSize: 25,
+    '-webkit-text-stroke': 'medium'
   },
   time: {
     marginLeft: 15,
@@ -27,10 +29,25 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 50,
     fontSize: 15
   },
-  popUpBox: {
-      top: '15px !important',
-      height: '80%'
+  paper: {
+    marginTop: 70,
+    marginLeft: '25%',
+    overflowY: 'hidden',
+    width: '50%',
+    [theme.breakpoints.down('sm')]: {
+      width: '90%',
+      marginLeft: '5%',
     }
+  },
+  delete: {
+    marginTop: '10px', 
+    color: '#fff', 
+    backgroundColor:'black',
+    '&:hover' : {
+      color: '#fff', 
+      backgroundColor:'black',
+    }
+  }
 }));
 
 export default useStyles;

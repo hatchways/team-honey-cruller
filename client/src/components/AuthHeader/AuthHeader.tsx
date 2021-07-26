@@ -22,7 +22,7 @@ interface Props {
 const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
-  const [notifications, setNotifications] = useState<Notification[]>();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
     async function getAll() {
@@ -36,7 +36,6 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
     }
     getAll();
   }, []);
-
   
   return (
     <Box p={1} className={classes.authHeader}>
@@ -63,7 +62,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
             </Typography>
           </Link>
           <Typography className={classes.navLink} color="secondary" display="inline">
-            <NotificationPopUp notifications={notifications !== undefined ? notifications : []} />
+            <NotificationPopUp notifications={notifications} />
           </Typography>
           <Link to={linkTo}>
             <Button className={classes.createContestBtn} size="large">

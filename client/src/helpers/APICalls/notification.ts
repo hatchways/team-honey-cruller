@@ -36,3 +36,18 @@ export const updateNotification = async (eNotification: existingNotification ): 
     }));
 };
 
+export const deleteNotification = async (id: string): Promise<Notification[]> => {
+    console.log('id is', id);
+    const fetchOptions: FetchOptions = {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include'
+  };
+
+  return await fetch(`/notification/${id}`, fetchOptions)
+    .then(res => res.json())
+    .catch((err) => ({
+      error: { message: 'Unable to delete notification', err },
+    }));
+};
+
