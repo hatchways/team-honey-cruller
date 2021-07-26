@@ -7,11 +7,13 @@ import { Contest } from '../../interface/Contest';
 import { addContest } from '../../helpers/APICalls/contest';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import { useHistory } from "react-router-dom";
+import { useSnackBar } from '../../context/useSnackbarContext';
 import useStyles from './useStyles';
 
 export default function CreateContest():JSX.Element {
   const classes = useStyles();
   const history = useHistory();
+  const { updateSnackBarMessage } = useSnackBar();
 
   const handleSubmit = (
     {
@@ -26,11 +28,13 @@ export default function CreateContest():JSX.Element {
 
     addContest(contest)
       .then((res) => {
-        if (!res.error) {
+        if (res.error) {
+          updateSnackBarMessage(res.error.message);
+        } else {
+          updateSnackBarMessage('Sucessfully created contest');
           history.push('/discovery');
         }
-      })
-      .catch((err) => console.error(err));
+      });
   };
 
   return (
