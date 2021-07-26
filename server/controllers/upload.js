@@ -87,14 +87,15 @@ const AWSPic = multer({
 
 exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
 
-  const {
-    profilePic
-  } = await User.find({
+  const user = await User.findOne({
     _id: req.user.id
   });
 
-  if (profilePic) {
-    deleteImage(req.file.location)
+console.log(user)
+
+
+  if (user.profilePic) {
+    deleteImage(user.profilePic)
   }
 
   AWSPic(req, res, async (error) => {
@@ -116,6 +117,7 @@ exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
           }, {
             new: true
           })
+          console.log(req.file)
           res.json(profilePic);
         } catch (err) {
           res.status(500).json(err);
@@ -153,12 +155,13 @@ const deleteImage = asyncHandler(async (Key) => {
       Key
     }, function (err, data) {
       if (err) {
-        res.status(500).send(err);
+        throw err
       } else {
+        console.log(data)
         console.log("File has been deleted successfully");
       }
     })
   } catch (err) {
-    res.status(500).json(err);
+  console.log(err)
   }
 })

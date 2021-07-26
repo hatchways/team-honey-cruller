@@ -9,7 +9,6 @@ const {
 } = require("../controllers/upload")
 
 router.route('/images').post(protect, upload)
-router.route('/delete/:key').delete(protect, deleteImage)
 router.route('/profile').post(protect, uploadProfilePic)
 router.route('/submission').post(protect, uploadSubmissionPic)
 
