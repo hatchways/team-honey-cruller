@@ -96,11 +96,15 @@ exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
         console.log("Error: No File Selected");
       } else {
         try {
-          const { profilePic } = await User.findByIdAndUpdate(req.user.id, {
+          const {
+            profilePic
+          } = await User.findByIdAndUpdate(req.user.id, {
             $set: {
               profilePic: req.file.location
             }
-          }, { new: true })
+          }, {
+            new: true
+          })
           res.json(profilePic);
         } catch (err) {
           res.status(500).json(err);
@@ -128,4 +132,23 @@ exports.uploadSubmissionPic = asyncHandler(async (req, res, next) => {
       }
     }
   })
+})
+
+exports.deleteImage = asyncHandler(async (req, res) => {
+  s3.deleteObject({
+    Bucket: s3.bucket,
+    Key: req.body.fileName
+  }, function (err, data) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      console.log("File has been deleted successfully");
+    }
+  })
+
+  // s3.createBucket({
+  //   Bucket: BUCKET_NAME /* Put your bucket name */
+  // }, function () {
+  //   s3.putObject(params, function (err, data) {});
+  // });
 })
