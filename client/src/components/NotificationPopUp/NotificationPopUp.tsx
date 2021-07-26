@@ -1,10 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-import { Notification } from '../../interface/User';
-import { updateNotification } from '../../helpers/APICalls/notification';
 import useStyles from './useStyles';
-
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import Badge from '@material-ui/core/Badge';
 import Popover from '@material-ui/core/Popover';
@@ -13,10 +9,8 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/core/styles';
-
-interface Props {
-  notifications: Notification[];
-}
+import { getNotification, updateNotification } from '../../helpers/APICalls/notification';
+import { Notification } from '../../interface/User';
 
 const GlobalCss = withStyles({
   // @global is handled by jss-plugin-global.
@@ -31,16 +25,30 @@ const GlobalCss = withStyles({
   },
 })(() => null);
 
-const NotificationPopUp = ({ notifications }: Props): JSX.Element => {
+const NotificationPopUp = (): JSX.Element => {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  useEffect(() => {
+    async function getAll() {
+      const allNotifications = await getNotification();
+      if (allNotifications) {
+        setNotifications(allNotifications);
+      } else {
+        console.log('Notifications not found');
+        new Error('Notifications not found');
+      }
+    }
+    getAll();
+  }, [id]);
 
   const filterNotification = notifications.length
     ? notifications?.filter((notification) => notification.opened === false)
@@ -83,6 +91,7 @@ const NotificationPopUp = ({ notifications }: Props): JSX.Element => {
       : `${diffDays} days ago`;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const sortedNotifications =
     notifications.length &&
     notifications.sort((a, b) => {
@@ -93,7 +102,7 @@ const NotificationPopUp = ({ notifications }: Props): JSX.Element => {
     <div>
       <GlobalCss />
       <Button aria-describedby={id} variant="contained" color="primary" onClick={handleNotification}>
-        <Badge badgeContent={notifications.length && filterNotification.length }>
+        <Badge badgeContent={notifications.length && filterNotification.length}>
           Notifications
           <NotificationsNoneIcon />
         </Badge>
@@ -120,7 +129,7 @@ const NotificationPopUp = ({ notifications }: Props): JSX.Element => {
             </Typography>
           </Grid>
           <Grid item>
-            <Link to={{ pathname: '/notifications', state : notifications  }} style={{ textDecoration: 'none' }}>
+            <Link to={{ pathname: '/notifications' }} style={{ textDecoration: 'none' }}>
               <Button className={classes.seeAll}>See All</Button>
             </Link>
           </Grid>

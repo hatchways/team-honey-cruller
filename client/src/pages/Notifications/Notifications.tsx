@@ -1,10 +1,7 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import { useState, useEffect } from 'react';
 import { Notification } from '../../interface/User';
-import { deleteNotification } from '../../helpers/APICalls/notification';
+import { getNotification, deleteNotification } from '../../helpers/APICalls/notification';
 import useStyles from './useStyles';
-
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -15,23 +12,40 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
-export default function Notifications(props: { location: { state: Notification[] } }): JSX.Element {
-  const [notifications, setNotifications] = useState<Notification[]>(props.location.state);
+export default function Notifications(): JSX.Element {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [delResponse, setdelResponse] = useState<number | null>();
   const { loggedInUser } = useAuth();
   const classes = useStyles();
   const { updateSnackBarMessage } = useSnackBar();
 
+  useEffect(() => {
+    async function getAll() {
+      const allNotifications = await getNotification();
+      if (allNotifications) {
+        setNotifications(allNotifications);
+      } else {
+        console.log('Notifications not found');
+        new Error('Notifications not found');
+      }
+    }
+    getAll();
+  }, [delResponse]);
+
   const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    setdelResponse(null);
     const target = event.target as HTMLButtonElement;
     const response = await deleteNotification(target.value);
-    if (response) {
+    if (response === 204) {
+      setdelResponse(response);
       updateSnackBarMessage('Notification deleted successfully');
-      setNotifications(response);
     } else {
+      setdelResponse(response);
       updateSnackBarMessage('Error deleting notification, trying again later');
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const sortedNotifications =
     notifications.length &&
     notifications.sort((a, b) => {

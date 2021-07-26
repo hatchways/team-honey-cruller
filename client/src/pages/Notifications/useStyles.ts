@@ -40,7 +40,10 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   delete: {
-    marginTop: '10px', 
+    padding: 9,
+    border: 'none',
+    fontSize: 12,
+    marginTop: '17px', 
     color: '#fff', 
     backgroundColor:'black',
     '&:hover' : {
