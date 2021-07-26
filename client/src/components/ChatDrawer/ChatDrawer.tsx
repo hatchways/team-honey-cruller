@@ -1,6 +1,7 @@
 import { useState, Fragment } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 import ChatSideBanner from '../ChatSideBanner/ChatSideBanner';
 import useStyles from './useStyles';
 import { Convo } from '../../interface/User';
@@ -16,7 +17,7 @@ const ChatDrawer = ({ convos }: Props): JSX.Element => {
   return (
     <div>
       <Fragment>
-        <div className={classes.btnContainer}>
+        <Box display="flex" justifyContent="center" width="100%">
           <Button
             onClick={(): void => setExpanded(!expanded)}
             color="primary"
@@ -26,7 +27,7 @@ const ChatDrawer = ({ convos }: Props): JSX.Element => {
           >
             All Conversations
           </Button>
-        </div>
+        </Box>
         <Drawer anchor={'left'} open={expanded} onClose={(): void => setExpanded(!expanded)}>
           <ChatSideBanner convos={convos} />
         </Drawer>
