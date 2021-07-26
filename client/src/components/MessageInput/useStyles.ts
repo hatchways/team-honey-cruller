@@ -21,10 +21,13 @@ const useStyles = makeStyles((theme) => ({
   sendBtn: {
     borderRadius: 0,
     backgroundColor: '#000',
-    border: '1px solid white',
+    border: '1px solid black',
     color: 'white',
     width: '100%',
     height: '100%',
+    '&:hover': {
+      color: 'black',
+    },
   },
 }));
 

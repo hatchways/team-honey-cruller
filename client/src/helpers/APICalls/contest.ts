@@ -40,8 +40,10 @@ export const getContestById = async (id: string): Promise<AuthApiData> => {
 };
 
 export const addContest = async (contest: Contest): Promise<AuthApiData> => {
-  return await axios
-    .post('/contest', contest)
-    .then((res) => res.data)
-    .catch(() => ({ error: { message: 'Cannot create contest' } }));
-};
+    return await axios.post('/contest',
+    {
+       ...contest, deadlineDate: contest.deadlineDate.format('MMM Do YYYY h:mm A z')
+    })
+      .then((res) => res.data)
+      .catch(() => ({ error: { message: 'Cannot create contest' }}));
+}
