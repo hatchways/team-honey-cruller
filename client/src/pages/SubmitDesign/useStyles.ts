@@ -51,16 +51,18 @@ const useStyles = makeStyles((theme) => ({
   mutedText: {
     color: 'rgba(0, 0, 0, .5)',
   },
-  bottomLine: {
-    marginBottom: '2rem',
-  },
   uploadBtn: {
-    backgroundColor: 'black',
-    border: '1px solid white',
-    color: 'white',
+    backgroundColor: 'white',
+    border: '2px solid black',
+    color: 'black',
     textTransform: 'uppercase',
     width: '15rem',
+    borderRadius: 0,
     padding: '25px 0',
+    '&:hover': {
+      backgroundColor: 'black',
+      color: 'white',
+    },
   },
 }));
 
