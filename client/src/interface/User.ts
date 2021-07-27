@@ -12,22 +12,26 @@ export interface User {
 }
 
 export interface Contest {
-  //also need an id
   _id: string;
   title: string;
   description: string;
   prizeAmount: number;
+  images: string[];
   deadlineDate: string;
   dateCreated: string;
   userId: string;
+  ownerProfilePic: string;
+  ownerName: string;
   submissions: Submission[];
 }
 
 export interface Submission {
+  _id: string;
   contest: string;
   images: string[];
   artistName: string;
   artistId: string;
+  artistPic: string;
   active: boolean;
 }
 
@@ -62,4 +66,3 @@ export interface SearchUsersApiData {
   users?: User[];
   error?: { message: string };
 }
-

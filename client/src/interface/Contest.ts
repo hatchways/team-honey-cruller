@@ -1,6 +1,6 @@
 import { Moment } from 'moment';
 
-export interface Contest {
+export interface NewContest {
   title: string;
   description: string;
   prizeAmount: number;
