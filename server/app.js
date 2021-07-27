@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
     socket.tokenId = verifyToken.id;
     console.log(`connected by ID of ${socket.tokenId}`);
     socket.on("send-message", (message, otherUserId) => {
-      socket.broadcast.emit("receive-message", message);
+      socket.emit("receive-message", message);
     });
   } else {
     socket.on("disconnect", () => {
