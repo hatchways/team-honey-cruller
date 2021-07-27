@@ -74,7 +74,7 @@ export default function SubmitDesign(): JSX.Element {
                 Click to choose a file
               </Typography>
               <Typography className={classes.mutedText}>High resolution images</Typography>
-              <Typography className={`${classes.bottomLine} ${classes.mutedText}`}>PNG, JPG, GIF</Typography>
+              <Typography className={classes.mutedText}>PNG, JPG, GIF</Typography>
             </Paper>
           </label>
           <Button className={classes.uploadBtn} onClick={submitAllPics}>
