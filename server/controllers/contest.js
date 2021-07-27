@@ -1,5 +1,6 @@
 const Contest = require("../models/Contest");
 const asyncHandler = require("express-async-handler");
+const moment = require('moment');
 
 exports.createContest = asyncHandler(async (req, res) => {
   try {
@@ -64,32 +65,42 @@ exports.getAllContestsByUser = asyncHandler(async (req, res) => {
 })
 
 exports.getContestsByDeadlineDate = asyncHandler(async (req, res) => {
+  console.log(req.params);
   try {
     let {
       deadlineDate
     } = req.query
 
-    if (deadlineDate === "") {
-      return res.status(400).json({
-        message: 'please choose a deadlineDate'
-      })
-    }
+    const formattedDate = deadlineDate
+    // const todaysDate = moment().format('MMM Do YYYY h:mm A z')
+    const isoDateString = Date.now().toISOString()
+    console.log(formattedDate);
+    
+
+    // if (deadlineDate === "") {
+    //   return res.status(400).json({
+    //     message: 'please choose a deadlineDate'
+    //   })
+    // }
 
     const allContests = await Contest.find({
       deadlineDate: {
-        $gte: ISODate("2021-07-24T00:00:00Z"),
-        $lt: ISODate(deadlineDate)
+        $gte: isoDateString,
+        $lte: ISODate("2021-07-28T06:00:00.000Z")
       }
-    }).sort({
-      deadlineDate: 'asc'
-    });
+    })
+    // .sort({
+    //   deadlineDate: 'asc'
+    // });
 
-    if (!allContests) {
-      return res.status(404).json({
-        status: 'failure',
-        message: 'Could not retrieve transactions'
-      })
-    }
+    console.log(allContests)
+
+    // if (!allContests) {
+    //   return res.status(404).json({
+    //     status: 'failure',
+    //     message: 'Could not retrieve contests'
+    //   })
+    // }
 
     res.status(200).json({
       contests: allContests
