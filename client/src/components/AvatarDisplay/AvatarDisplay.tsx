@@ -7,7 +7,7 @@ interface Props {
 }
 
 const AvatarDisplay = ({ user }: Props): JSX.Element => {
-  return <Avatar alt="Profile Image" src={`https://robohash.org/${user.email}.png`} />;
+  return <Avatar alt="Profile Image" src={user ? user.profilePic : `https://robohash.org/bob@email.com.png`} />;
 };
 
 export default AvatarDisplay;

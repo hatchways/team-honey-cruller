@@ -1,14 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
-  root: {
-    display: 'flex',
-  },
   avatar: {
-    height: 30,
-    width: 30,
-    marginRight: 11,
-    marginTop: 6,
+    margin: '10px 2rem 10px 10px',
   },
   usernameDate: {
     fontSize: 11,
@@ -17,14 +11,13 @@ const useStyles = makeStyles(() => ({
     marginBottom: 5,
   },
   bubble: {
-    backgroundImage: 'linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)',
+    border: '1px solid rgba(0, 0, 0, .2)',
     borderRadius: '0 10px 10px 10px',
+    minWidth: 'min-content',
   },
   text: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    letterSpacing: -0.2,
+    fontSize: '1rem',
+    fontWeight: 700,
     padding: 8,
   },
 }));

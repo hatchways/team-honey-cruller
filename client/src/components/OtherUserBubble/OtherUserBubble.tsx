@@ -1,6 +1,6 @@
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
 import useStyles from './useStyles';
 
 interface Props {
@@ -10,21 +10,21 @@ interface Props {
   otherPhoto: string;
 }
 
-const OtherUserBubble = ({time, text, otherUsername, otherPhoto}: Props): JSX.Element => {
- const classes = useStyles();
-	return (
-		<Box className={classes.root}>
+const OtherUserBubble = ({ time, text, otherUsername, otherPhoto }: Props): JSX.Element => {
+  const classes = useStyles();
+  return (
+    <Box display="flex" flex-direction="column" alignItems="flex-end" maxWidth="50%">
       <Avatar alt={otherUsername} src={otherPhoto} className={classes.avatar}></Avatar>
-      <Box>
-        <Typography className={classes.usernameDate}>
+      <Box maxWidth="50%">
+        {/* <Typography className={classes.usernameDate}>
           {otherUsername} {time}
-        </Typography>
+        </Typography> */}
         <Box className={classes.bubble}>
           <Typography className={classes.text}>{text}</Typography>
         </Box>
       </Box>
     </Box>
-	);
-}
+  );
+};
 
 export default OtherUserBubble;
