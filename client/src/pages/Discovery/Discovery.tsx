@@ -33,7 +33,7 @@ export default function Discovery(): JSX.Element {
   const [sortType, setSortType] = useState<keyof Contest>('deadlineDate');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [dateFilter, setDateFilter] = useState("")
+  const [dateFilter, setDateFilter] = useState<string>()
   const { loggedInUser } = useAuth();
   const classes = useStyles();
 
@@ -66,8 +66,10 @@ export default function Discovery(): JSX.Element {
   };
 
   const handleChangeDate = (date: any) => {
-    const utcTime = moment.utc(date._d).format()
-    setDateFilter(utcTime);
+    const momentTime = date
+    setDateFilter(momentTime);
+
+    
   };
 
   const sortByHeader = (sortParam: Contest[] = contests) => {
@@ -104,8 +106,8 @@ export default function Discovery(): JSX.Element {
                     margin="normal"
                     variant="inline"
                     inputVariant="outlined"
-                    format="MMMM Do YYYY"
-                    value={moment()}
+                    format="MMM Do YYYY h:mm A z"
+                    value={dateFilter}
                     onChange={value => handleChangeDate(value)}
                     keyboardIcon={<DateRangeIcon />} />
                 </Grid>
