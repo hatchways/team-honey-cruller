@@ -29,7 +29,7 @@ const AuthMenu = (): JSX.Element => {
   };
 
   return (
-    <Box display="flex" alignItems="center">
+    <Box display="flex" alignItems="center" className={classes.container}>
       <Box display="flex" alignItems="center" onClick={handleClick} className={classes.account}>
         <Typography color="secondary">Account</Typography>
         <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" color="secondary">

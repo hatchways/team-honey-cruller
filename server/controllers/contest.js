@@ -33,8 +33,12 @@ exports.updateContest = asyncHandler(async (req, res) => {
 
 exports.getSingleContest = asyncHandler(async (req, res) => {
   try {
-    const singleContest = await Contest.findById(req.params.id);
-    res.status(200).json(singleContest);
+    const singleContest = await Contest.findById(req.params.id).select('-__v').populate({path: "userId", select: "username profilePic"});
+    const contest = singleContest.toJSON()
+    contest.ownerName= contest.userId.username
+    contest.ownerProfilePic = contest.userId.profilePic
+    contest.userId = contest.userId._id
+    res.status(200).json(contest);
   } catch (err) {
     res.status(500).json(err);
   }
