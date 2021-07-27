@@ -20,7 +20,8 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  profilePic: String
+  profilePic: String,
+  stripeId: String
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {

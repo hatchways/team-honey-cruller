@@ -48,12 +48,14 @@ const AuthMenu = (): JSX.Element => {
         }}
         getContentAnchorEl={null}
       >
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout} style={{ marginTop: -7 }} className={classes.menuItem}>
+          Logout
+        </MenuItem>
         <Link className={classes.link} to="/profile">
-          <MenuItem>Profile</MenuItem>
+          <MenuItem className={classes.menuItem}>Profile</MenuItem>
         </Link>
         <Link className={classes.link} to="/settings">
-          <MenuItem>Settings</MenuItem>
+          <MenuItem className={classes.menuItem}>Settings</MenuItem>
         </Link>
       </Menu>
     </Box>

@@ -51,7 +51,7 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
         title: '',
         description: '',
         prizeAmount: 0,
-        deadlineDate: new Date(),
+        deadlineDate: moment(),
         images: [],
       }}
       validationSchema={Yup.object().shape({
@@ -62,15 +62,15 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
         images: Yup.array(),
       })}
       onSubmit={(contest) => {
-        // let newDate = moment();
-        // if (zone === 'PDT') {
-        //   newDate = contest.deadlineDate.tz("America/Los_Angeles", true);
-        // } else if (zone === 'CDT') {
-        //   newDate = contest.deadlineDate.tz("America/Chicago", true);
-        // } else {
-        //   newDate = contest.deadlineDate.tz("America/New_York", true);
-        // }
-        handleSubmit({ ...contest, images: images });
+        let newDate = moment();
+        if (zone === 'PDT') {
+          newDate = contest.deadlineDate.tz('America/Los_Angeles', true);
+        } else if (zone === 'CDT') {
+          newDate = contest.deadlineDate.tz('America/Chicago', true);
+        } else {
+          newDate = contest.deadlineDate.tz('America/New_York', true);
+        }
+        handleSubmit({ ...contest, deadlineDate: newDate, images: images });
       }}
     >
       {({ handleSubmit, handleChange, setFieldValue, values, touched, errors, isSubmitting }) => (

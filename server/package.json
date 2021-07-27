@@ -10,6 +10,7 @@
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.4.5",
     "aws-sdk": "^2.947.0",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
