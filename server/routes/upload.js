@@ -4,8 +4,7 @@ const protect = require('../middleware/auth')
 const {
     upload,
     uploadProfilePic,
-    uploadSubmissionPic,
-    deleteImage
+    uploadSubmissionPic
 } = require("../controllers/upload")
 
 router.route('/images').post(protect, upload)

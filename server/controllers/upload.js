@@ -3,6 +3,9 @@ const aws = require("aws-sdk");
 const multerS3 = require("multer-s3");
 const multer = require("multer");
 const path = require("path");
+const {
+  deleteImage
+} = require('../utils/deleteAws')
 
 const s3 = new aws.S3({
   accessKeyId: process.env.S3_ACCESSKEYID,
@@ -91,14 +94,14 @@ exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
     _id: req.user.id
   });
 
-console.log(user)
-
 
   if (user.profilePic) {
-    deleteImage(user.profilePic)
+    const splitProfile = user.profilePic.split('https://team-honey.s3.amazonaws.com/')
+    deleteImage(splitProfile[1])
   }
 
   AWSPic(req, res, async (error) => {
+    console.log(req.file)
     if (error) {
       res.json({
         error: error
@@ -146,22 +149,3 @@ exports.uploadSubmissionPic = asyncHandler(async (req, res, next) => {
     }
   })
 });
-
-
-const deleteImage = asyncHandler(async (Key) => {
-  try {
-    s3.deleteObject({
-      Bucket: s3.bucket,
-      Key
-    }, function (err, data) {
-      if (err) {
-        throw err
-      } else {
-        console.log(data)
-        console.log("File has been deleted successfully");
-      }
-    })
-  } catch (err) {
-  console.log(err)
-  }
-})
