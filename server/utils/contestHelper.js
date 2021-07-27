@@ -4,6 +4,7 @@ const {
 } = require('./sendgrid')
 const Notification = require('../models/notification');
 const Contest = require('../models/contest');
+const Winner = require('../models/winner');
 
 exports.scheduleContestEnd = async (contest) => {
   const date = new Date(contest.deadlineDate)
@@ -31,6 +32,29 @@ exports.scheduleContestEnd = async (contest) => {
       }, { new: true })
     });
   } catch (err) {
+    throw new Error(err)
+  }
+}
+
+exports.winnerChosen = async (winner, contestId, submissionId, images) => {
+  const imagesToDelete = images.filter(image => image !== winner.winningPic)
+  try {
+    const chosenWinner = await Winner.create(winner);
+    if (chosenWinner) {
+      await Notification.create({
+        to: winner.winningArtist,
+        from: winner.contestOwner,
+        notification: "Congratulations you have won a contest!!"
+      })
+    }
+  } catch(err) {
+    throw new Error(err)
+  }
+  try {
+    await Contest.findByIdAndDelete(contestId)
+    // Call brian's function to delete many images from aws
+    await Submission.findByIdAndDelete(submissionId)
+  } catch(err) {
     throw new Error(err)
   }
 }
