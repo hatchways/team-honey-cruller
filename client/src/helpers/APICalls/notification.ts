@@ -21,7 +21,7 @@ export const getNotification = async (): Promise<Notification[]> => {
 export const updateNotification = async (eNotification: existingNotification): Promise<Notification[]> => {
   eNotification.opened = true;
   const fetchOptions: FetchOptions = {
-    method: 'POST',
+    method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
     body: JSON.stringify(eNotification),

@@ -32,7 +32,6 @@ exports.getAllNotifications = asyncHandler(async (req, res) => {
 });
 
 exports.deleteNotification = asyncHandler(async (req, res) => {
-  console.log('req.id', req.params.id)
   try {
     await Notification.findByIdAndDelete(req.params.id);
     

@@ -12,6 +12,6 @@ const {
 router.route("/").post(protect, createNotification);
 router.route("/").get(protect, getAllNotifications);
 router.route("/:id").delete(protect, deleteNotification);
-router.route("/update/:id").post(protect, updateNotification);
+router.route("/update/:id").patch(protect, updateNotification);
 
 module.exports = router;

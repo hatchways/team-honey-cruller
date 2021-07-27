@@ -8,6 +8,7 @@ import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import AuthMenu from '../AuthMenu/AuthMenu';
 import NotificationPopUp from '../NotificationPopUp/NotificationPopUp';
 
+import { NotificationProvider } from '../../context/notificationContext';
 
 interface Props {
   linkTo: string;
@@ -17,7 +18,7 @@ interface Props {
 const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
-  
+
   return (
     <Box p={1} className={classes.authHeader}>
       <Typography color="secondary" className={classes.tattooArt}>
@@ -43,7 +44,9 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
             </Typography>
           </Link>
           <Typography className={classes.navLink} color="secondary" display="inline">
-            <NotificationPopUp />
+            <NotificationProvider>
+              <NotificationPopUp />
+            </NotificationProvider>
           </Typography>
           <Link to={linkTo}>
             <Button className={classes.createContestBtn} size="large">

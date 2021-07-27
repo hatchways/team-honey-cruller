@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '0',
   },
   poptitle: {
-    marginTop: 20,
     margin: 20,
     fontWeight: 'bold',
     fontSize: 25,

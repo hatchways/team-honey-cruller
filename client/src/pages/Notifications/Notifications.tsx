@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Notification } from '../../interface/User';
-import { getNotification, deleteNotification } from '../../helpers/APICalls/notification';
+import { useState, useContext } from 'react';
+import { deleteNotification } from '../../helpers/APICalls/notification';
 import useStyles from './useStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -12,43 +11,32 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
+import { NotificationContext } from '../../context/notificationContext';
+
 export default function Notifications(): JSX.Element {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [delResponse, setdelResponse] = useState<number | null>();
+  const notifications = useContext(NotificationContext).notifications;
+  const setId = useContext(NotificationContext).setId;
+  const [num, setNum] = useState<number>(2);
   const { loggedInUser } = useAuth();
   const classes = useStyles();
   const { updateSnackBarMessage } = useSnackBar();
 
-  useEffect(() => {
-    async function getAll() {
-      const allNotifications = await getNotification();
-      if (allNotifications) {
-        setNotifications(allNotifications);
-      } else {
-        console.log('Notifications not found');
-        new Error('Notifications not found');
-      }
-    }
-    getAll();
-  }, [delResponse]);
-
   const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    setdelResponse(null);
+    num === 2 ? setNum(3) : setNum(2);
+    setId(num);
     const target = event.target as HTMLButtonElement;
     const response = await deleteNotification(target.value);
     if (response === 204) {
-      setdelResponse(response);
       updateSnackBarMessage('Notification deleted successfully');
     } else {
-      setdelResponse(response);
       updateSnackBarMessage('Error deleting notification, trying again later');
     }
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const sortedNotifications =
-    notifications.length &&
-    notifications.sort((a, b) => {
+    notifications?.length &&
+    notifications?.sort((a: { createdAt: string | number | Date }, b: { createdAt: string | number | Date }) => {
       return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf();
     });
 
@@ -90,8 +78,8 @@ export default function Notifications(): JSX.Element {
             </Typography>
           </Grid>
         </Grid>
-        {notifications.length
-          ? notifications.map((notification) => (
+        {notifications?.length
+          ? notifications?.map((notification) => (
               <>
                 <Grid direction="row" container key={notification._id}>
                   <Grid item xs={12} sm={3} md={2}>
