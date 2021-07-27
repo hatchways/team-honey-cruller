@@ -1,5 +1,6 @@
 const Contest = require("../models/Contest");
 const asyncHandler = require("express-async-handler");
+const { scheduleContestEnd } = require('../utils/contestHelper');
 
 exports.createContest = asyncHandler(async (req, res) => {
     try {
@@ -11,6 +12,7 @@ exports.createContest = asyncHandler(async (req, res) => {
             userId: req.user.id,
             images: req.body.images
         });
+        scheduleContestEnd(contest)
         res.status(201).json(contest);
     } catch (err) {
         res.status(500).json(err);
