@@ -31,7 +31,8 @@ const GlobalCss = withStyles({
 })(() => null);
 
 //Pass 'artistId' through the react-router Link , when calling this component
-export default function AboutArtist(): JSX.Element {
+export default function AboutArtist(props: { state: string; }): JSX.Element {
+  const id = props.state
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [info, setInfo] = useState<PersonalInfo>();
@@ -57,7 +58,7 @@ export default function AboutArtist(): JSX.Element {
 
   useEffect(() => {
     async function getInfo() {
-      const artistInfo = await getPersonalInfo('60f101c8d872991344be3628');
+      const artistInfo = await getPersonalInfo(id);
       if (artistInfo !== null) {
         setInfo(artistInfo);
       } else {
@@ -65,8 +66,8 @@ export default function AboutArtist(): JSX.Element {
       }
     }
     getInfo();
-  }, []);
-
+  }, [id]);
+  
   const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {
     setValue(valueChange);
   };
