@@ -3,7 +3,8 @@ const { Schema, model } = require('mongoose');
 const PersonalInfoSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
-    ref: 'user',
+    //ref: 'user',
+    ref: 'User'
   },
   firstName: {
     type: String,
