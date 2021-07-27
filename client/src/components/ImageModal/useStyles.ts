@@ -11,11 +11,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: { width: '85%' },
     padding: 15,
   },
-  box: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: 10,
-  },
   artistName: {
     textTransform: 'capitalize',
     marginLeft: 20,

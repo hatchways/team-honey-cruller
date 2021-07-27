@@ -79,7 +79,7 @@ exports.getSubmissionByContest = asyncHandler(async (req, res) => {
         }))
         res.status(200).send(structured)
       } else {
-        res.status(304).send([])
+        res.status(204).send([])
       }
     }
   })

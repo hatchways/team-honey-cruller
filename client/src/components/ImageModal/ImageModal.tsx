@@ -30,7 +30,7 @@ const ImageModal = ({ artistPic, artistName, image, children }: Props): JSX.Elem
       <div onClick={handleOpen}>{children}</div>
       <Modal open={isOpen} onClose={handleClose} className={classes.modal}>
         <Paper className={classes.body}>
-          <Box className={classes.box}>
+          <Box display="flex" alignItems="center" padding={1}>
             {artistPic ? <Avatar src={artistPic} /> : null}
             <Typography className={classes.artistName}>{artistName}</Typography>
           </Box>

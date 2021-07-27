@@ -155,7 +155,7 @@ export default function ContestPage(): JSX.Element {
         <Grid className={classes.grid} container>
           <Grid item xs={12} sm={10}>
             <Typography className={classes.contestTitle}>
-              {contest ? contest.title : 'Lion tattoo concept in minimal style'}{' '}
+              {contest ? contest.title : ''}
               <Button className={classes.prizeAmount}>
                 <Typography className={classes.prize}>${contest ? contest.prizeAmount : '0'}</Typography>
               </Button>
@@ -226,7 +226,7 @@ export default function ContestPage(): JSX.Element {
                 Tattoo Description:
               </Typography>
               <Typography align="center" variant="h5">
-                {contest ? contest.description : 'Description of the contest'}
+                {contest ? contest.description : ''}
               </Typography>
               <ImageList cols={4} gap={10} className={classes.imageList}>
                 {contest &&
