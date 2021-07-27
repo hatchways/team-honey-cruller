@@ -1,32 +1,26 @@
-import { useState, FormEvent, ChangeEvent, useRef } from 'react';
+import { useState, FormEvent, ChangeEvent, useRef, VoidFunctionComponent } from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import useStyles from './useStyles';
-import { sendMessage } from '../../helpers/APICalls/conversations';
 import { useAuth } from '../../context/useAuthContext';
-import { io } from 'socket.io-client';
 
 interface Props {
-  otherUserId: string;
-}
+  displayMessage: (
+    msg: string
+  ) => void;
+};
 
-const MessageInput = ({ otherUserId }: Props): JSX.Element => {
+const MessageInput = ({ displayMessage }: Props): JSX.Element => {
   const classes = useStyles();
   const inputRef = useRef<HTMLInputElement>(null);
   const { loggedInUser } = useAuth();
-  const socket = io("http://localhost:3000");
-
-  socket.on("receive-message", (message) => {
-    console.log(message);
-  });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loggedInUser && inputRef.current) {
-      socket.emit("send-message", inputRef.current.value, otherUserId);
-      sendMessage({ to: otherUserId, message: inputRef.current.value });
+      displayMessage(inputRef.current.value);
     }
   };
 
