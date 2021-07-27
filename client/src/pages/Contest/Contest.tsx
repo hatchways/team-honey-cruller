@@ -229,21 +229,21 @@ export default function ContestPage(): JSX.Element {
                 {contest ? contest.description : ''}
               </Typography>
               <ImageList cols={4} gap={10} className={classes.imageList}>
-                {contest &&
-                  contest.images &&
-                  contest.images.map((image) => (
-                    <ImageListItem cols={1} key={image} className={classes.listItem}>
-                      <ImageModal image={image}>
-                        <img
-                          srcSet={`${image}?w=248&fit=crop&auto=format 1x,
+                {contest && contest.images
+                  ? contest.images.map((image) => (
+                      <ImageListItem cols={1} key={image} className={classes.listItem}>
+                        <ImageModal image={image}>
+                          <img
+                            srcSet={`${image}?w=248&fit=crop&auto=format 1x,
                           ${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                          alt={`${image} inspiration`}
-                          loading="lazy"
-                          className={classes.image}
-                        />
-                      </ImageModal>
-                    </ImageListItem>
-                  ))}
+                            alt={`${image} inspiration`}
+                            loading="lazy"
+                            className={classes.image}
+                          />
+                        </ImageModal>
+                      </ImageListItem>
+                    ))
+                  : null}
               </ImageList>
             </Panel>
           </Paper>
