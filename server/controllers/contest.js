@@ -73,7 +73,7 @@ exports.getContestsByDeadlineDate = asyncHandler(async (req, res) => {
 
     const formattedDate = deadlineDate
     // const todaysDate = moment().format('MMM Do YYYY h:mm A z')
-    const isoDateString = Date.now().toISOString()
+    const isoDateString = new Date().toISOString()
     console.log(formattedDate);
     
 
@@ -86,7 +86,7 @@ exports.getContestsByDeadlineDate = asyncHandler(async (req, res) => {
     const allContests = await Contest.find({
       deadlineDate: {
         $gte: isoDateString,
-        $lte: ISODate("2021-07-28T06:00:00.000Z")
+        // $lte: new Date("2021-08-31T06:00:00.000Z")
       }
     })
     // .sort({
