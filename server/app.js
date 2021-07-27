@@ -40,6 +40,9 @@ io.on("connection", (socket) => {
     const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
     socket.tokenId = verifyToken.id;
     console.log(`connected by ID of ${socket.tokenId}`);
+    socket.on("send-message", (message, otherUserId) => {
+      socket.broadcast.emit("receive-message", message);
+    });
   } else {
     socket.on("disconnect", () => {
       console.log("user disconnected");
