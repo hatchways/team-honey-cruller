@@ -60,26 +60,18 @@ export default function Profile(): JSX.Element {
     getUserContests();
   }, []);
 
-  // create function to figure out if a contest is still active
   const isActive = () => {
     if (contests) {
-      const filter = contests.filter((contest) => new Date() < new Date(contest.deadlineDate));
-
-      return filter;
+      return contests.filter((contest) => contest.active);
     }
-
-    return contests;
+    return [];
   };
 
-  //create a function to figure out if a contest is no longer active
   const isComplete = () => {
     if (contests) {
-      const filter = contests.filter((contest) => new Date() > new Date(contest.deadlineDate));
-
-      return filter;
+      return contests.filter((contest) => !contest.active);
     }
-
-    return contests;
+    return [];
   };
 
   const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {

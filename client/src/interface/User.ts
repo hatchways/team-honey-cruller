@@ -23,6 +23,7 @@ export interface Contest {
   ownerProfilePic: string;
   ownerName: string;
   submissions: Submission[];
+  active: boolean;
 }
 
 export interface Submission {

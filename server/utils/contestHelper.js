@@ -9,13 +9,13 @@ const Submission = require('../models/Submission');
 
 exports.scheduleContestEnd = async (contest) => {
   const date = new Date(contest.deadlineDate)
+  const {email} = await User.findOne({_id: contest.userId})
   const mailObj = {
-    to: "tylerbolty@gmail.com",
+    to: email,
     from: 'tattooartproject@outlook.com',
     subject: 'Choose A Winner For Your Tattoo Contest',
     text: contest.title,
-    html: `<h2>hello</h2>`,
-    // template_id: 'd-25a65a6e395f4a719be2c82ada87ece1'
+    html: `<h2>Your contest has ended. Go pick a winner!</h2>`,
   }
   try {
     // change format of date to match node-schedule documentation. Wait for final format from Minh and Brian
