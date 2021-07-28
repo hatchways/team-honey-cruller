@@ -4,7 +4,7 @@ const asyncHandler = require('express-async-handler');
 exports.getAllReviews = asyncHandler(async (req, res) => {
   try {
     const info = await Reviews.find({
-      userId: req.user.id
+      userId: "60ef477aa875e15d00c7c51e"
     });
 
     res.status(200).json(info);
@@ -16,10 +16,7 @@ exports.getAllReviews = asyncHandler(async (req, res) => {
 exports.createReview = asyncHandler(async (req, res) => {
   try {
     const review = await Reviews.create({
-      userId: req.userId,
-      reviews: [{
-        ...req.body
-      }]
+      ...req.body
     });
     res.status(201).json(review);
   } catch (err) {
