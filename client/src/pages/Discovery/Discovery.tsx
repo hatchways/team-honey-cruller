@@ -76,8 +76,6 @@ export default function Discovery(): JSX.Element {
   const handleChangeDate = (date: any) => {
     const momentTime = date
     setDateFilter(momentTime);
-
-
   };
 
   const sortByHeader = (sortParam: Contest[] = contests) => {
