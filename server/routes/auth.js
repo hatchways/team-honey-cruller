@@ -7,11 +7,14 @@ const {
   loginUser,
   loadUser,
   logoutUser,
+  googleLogin
 } = require("../controllers/auth");
 
 router.route("/register").post(validateRegister, registerUser);
 
 router.route("/login").post(validateLogin, loginUser);
+
+router.route("/googlelogin").post(googleLogin);
 
 router.route("/user").get(protect, loadUser);
 
