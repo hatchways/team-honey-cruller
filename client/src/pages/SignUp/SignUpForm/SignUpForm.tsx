@@ -6,6 +6,9 @@ import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
+import { GoogleLogin } from 'react-google-login';
+import loginGoogle from '../../../helpers/APICalls/google'
+
 
 interface Props {
   handleSubmit: (
@@ -43,6 +46,16 @@ interface Props {
 
   const SignUpForm = ({ handleSubmit, handleDemoSubmit }: Props): JSX.Element => {
   const classes = useStyles();
+
+  const responseSuccessGoogle = (response: any) => {
+    loginGoogle(response.tokenObj.id_token)
+    console.log(response);
+  }
+  
+  
+  const responseErrorGoogle = (response: any) => {
+    console.log(response);
+  }
 
   return (
     <Formik
@@ -128,6 +141,13 @@ interface Props {
             <Button onClick={() => handleDemoSubmit({email: "stanley@gmail.com", username: "stanleythemanly", password: "123456"})} size="large" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'DEMO'}
             </Button>
+            <GoogleLogin
+              clientId="957246139636-2mjg8o2ggfn63l16t9n95u3qi840shk9.apps.googleusercontent.com"
+              buttonText="Sign Up With Google"
+              onSuccess={responseSuccessGoogle}
+              onFailure={responseErrorGoogle}
+              cookiePolicy={'single_host_origin'}
+            />
           </Box>
         </form>
       )}

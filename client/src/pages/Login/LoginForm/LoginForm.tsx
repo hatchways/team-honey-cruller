@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
+import { GoogleLogin } from 'react-google-login';
+
 
 interface Props {
   handleSubmit: (
@@ -37,6 +39,16 @@ interface Props {
 
 export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.Element {
   const classes = useStyles();
+
+
+const responseSuccessGoogle = (response: any) => {
+  console.log(response);
+}
+
+
+const responseErrorGoogle = (response: any) => {
+  console.log(response);
+}
 
   return (
     <Formik
@@ -98,9 +110,16 @@ export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.El
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'SIGN IN'}
             </Button>
-            <Button onClick={() => handleDemoSubmit({email: "stanley@gmail.com", password:"123456"})} size="large" variant="contained" color="primary" className={classes.submit}>
+            <Button onClick={() => handleDemoSubmit({ email: "stanley@gmail.com", password: "123456" })} size="large" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'DEMO'}
             </Button>
+            <GoogleLogin
+              clientId="957246139636-2mjg8o2ggfn63l16t9n95u3qi840shk9.apps.googleusercontent.com"
+              buttonText="Login With Google"
+              onSuccess={responseSuccessGoogle}
+              onFailure={responseErrorGoogle}
+              cookiePolicy={'single_host_origin'}
+            />
           </Box>
           <div style={{ height: 95 }} />
         </form>
