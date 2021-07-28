@@ -1,4 +1,5 @@
 import Grid from '@material-ui/core/Grid';
+import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -39,7 +40,9 @@ export default function ContestList({ userContests }: Props): JSX.Element {
                       <>
                         <Typography>{contest.description}</Typography>
                         <Container className={classes.container}>
-                          <Button className={classes.button}>{contest.prizeAmount}</Button>
+                          <Link to={`/contest/${contest._id}`}>
+                            <Button className={classes.button}>{contest.prizeAmount}</Button>
+                          </Link>
                         </Container>
                       </>
                     }

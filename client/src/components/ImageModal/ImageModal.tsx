@@ -33,7 +33,7 @@ const ImageModal = ({ artistPic, artistName, image, submissionId, children }: Pr
   };
 
   const handleWinnerChoice = () => {
-    if (artistPic && submissionId) {
+    if (image && submissionId) {
       chooseWinner(image, submissionId)
         .then((res) => {
           if (res) {
