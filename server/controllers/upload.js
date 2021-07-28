@@ -101,7 +101,6 @@ exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
   }
 
   AWSPic(req, res, async (error) => {
-    console.log(req.file)
     if (error) {
       res.json({
         error: error
@@ -120,7 +119,6 @@ exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
           }, {
             new: true
           })
-          console.log(req.file)
           res.json(profilePic);
         } catch (err) {
           res.status(500).json(err);

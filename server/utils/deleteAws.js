@@ -7,14 +7,13 @@ exports.deleteImage = asyncHandler(async (Key) => {
             Key
         }, function (err, data) {
             if (err) {
-                throw err
+                res.status(404).json(err)
             } else {
-                console.log(data)
-                console.log("File has been deleted successfully");
+                res.status(200).json(data);
             }
         })
     } catch (err) {
-        console.log(err)
+        res.status(500).json(err);
     }
 })
 
@@ -36,10 +35,14 @@ exports.deleteImages = asyncHandler(async (imgArray) => {
     };
     try {
         s3.deleteObjects(params, function (err, data) {
-            if (err) console.log(err, err.stack); // an error occurred
-            else console.log(data); // successful response
+            if (err) {
+                res.status(404).json(err)
+            } 
+            else {
+                res.status(200).json(data);
+            } 
         });
     } catch (err) {
-        console.log(err)
+        res.status(500).json(err);
     }
 })
