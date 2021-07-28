@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
 import { GoogleLogin } from 'react-google-login';
+import loginGoogle from '../../../helpers/APICalls/google';
 
 
 interface Props {
@@ -41,14 +42,15 @@ export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.El
   const classes = useStyles();
 
 
-const responseSuccessGoogle = (response: any) => {
-  console.log(response);
-}
-
-
-const responseErrorGoogle = (response: any) => {
-  console.log(response);
-}
+  const responseSuccessGoogle = (response: any) => {
+    loginGoogle(response.tokenObj.id_token)
+  }
+  
+  const responseErrorGoogle = (response: any) => {
+    if(!response) {
+      throw new Error("Could not connect to server, please try again")
+    }
+  }
 
   return (
     <Formik
@@ -115,7 +117,7 @@ const responseErrorGoogle = (response: any) => {
             </Button>
             <GoogleLogin
               clientId="957246139636-2mjg8o2ggfn63l16t9n95u3qi840shk9.apps.googleusercontent.com"
-              buttonText="Login With Google"
+              buttonText="Sign In With Google"
               onSuccess={responseSuccessGoogle}
               onFailure={responseErrorGoogle}
               cookiePolicy={'single_host_origin'}

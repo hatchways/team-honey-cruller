@@ -184,7 +184,6 @@ exports.googleLogin = asyncHandler(async (req, res, next) => {
               const token = generateToken(_id);
               const secondsInWeek = 604800;
 
-
               res.cookie("token", token, {
                 httpOnly: true,
                 maxAge: secondsInWeek * 1000
@@ -200,42 +199,6 @@ exports.googleLogin = asyncHandler(async (req, res, next) => {
                   }
                 }
               });
-
-            } else {
-              const secondsInWeek = 604800;
-              let password = email + name + _id;
-              stripe.customers.create({
-                email: email,
-                name: username
-              }).then(data => {
-                User.create({
-                  username,
-                  email,
-                  password,
-                  stripeId: data.id
-                });
-
-                const token = generateToken(_id);
-
-                res.cookie("token", token, {
-                  httpOnly: true,
-                  maxAge: secondsInWeek * 1000
-                });
-
-                res.status(200).json({
-                  success: {
-                    user: {
-                      id: _id,
-                      username: username,
-                      email: email,
-                      stripeId: stripeId
-                    }
-                  }
-                });
-
-
-              })
-
             }
           }
 
