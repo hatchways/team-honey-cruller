@@ -46,3 +46,15 @@ export const addContest = async (contest: NewContest): Promise<AuthApiData> => {
     .then((res) => res.data)
     .catch(() => ({ error: { message: 'Cannot create contest' } }));
 };
+
+export const getContestsByDate = async (date: string): Promise<AuthApiData> => {
+  const fetchData: FetchOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  };
+
+  return await fetch(`/contest/deadline?deadlineDate=${date}`, fetchData)
+    .then((data) => data.json())
+    .catch((err) => ({ error: { message: 'Could not find Contests.' } }));
+};

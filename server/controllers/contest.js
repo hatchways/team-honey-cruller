@@ -33,9 +33,12 @@ exports.updateContest = asyncHandler(async (req, res) => {
 
 exports.getSingleContest = asyncHandler(async (req, res) => {
   try {
-    const singleContest = await Contest.findById(req.params.id).select('-__v').populate({path: "userId", select: "username profilePic"});
+    const singleContest = await Contest.findById(req.params.id).select('-__v').populate({
+      path: "userId",
+      select: "username profilePic"
+    });
     const contest = singleContest.toJSON()
-    contest.ownerName= contest.userId.username
+    contest.ownerName = contest.userId.username
     contest.ownerProfilePic = contest.userId.profilePic
     contest.userId = contest.userId._id
     res.status(200).json(contest);
@@ -69,42 +72,33 @@ exports.getAllContestsByUser = asyncHandler(async (req, res) => {
 })
 
 exports.getContestsByDeadlineDate = asyncHandler(async (req, res) => {
-  console.log(req.params);
   try {
     let {
       deadlineDate
     } = req.query
 
     const formattedDate = deadlineDate
-    // const todaysDate = moment().format('MMM Do YYYY h:mm A z')
-    const isoDateString = new Date().toISOString()
-    console.log(formattedDate);
-    
 
-    // if (deadlineDate === "") {
-    //   return res.status(400).json({
-    //     message: 'please choose a deadlineDate'
-    //   })
-    // }
+    if (deadlineDate === "") {
+      return res.status(400).json({
+        message: 'please choose a deadlineDate'
+      })
+    }
 
     const allContests = await Contest.find({
-      deadlineDate: {
-        $gte: isoDateString,
-        // $lte: new Date("2021-08-31T06:00:00.000Z")
-      }
-    })
-    // .sort({
-    //   deadlineDate: 'asc'
-    // });
+        deadlineDate: {
+          $lte: formattedDate
+        }
+      })
+      .sort({
+        deadlineDate: 'asc'
+      });
 
-    console.log(allContests)
-
-    // if (!allContests) {
-    //   return res.status(404).json({
-    //     status: 'failure',
-    //     message: 'Could not retrieve contests'
-    //   })
-    // }
+    if (!allContests) {
+      return res.status(404).json({
+        message: 'Could not retrieve contests'
+      })
+    }
 
     res.status(200).json({
       contests: allContests

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/useAuthContext';
 import { Contest } from '../../interface/User';
 import { Column } from '../../interface/Discovery';
-import { getAllContests } from '../../helpers/APICalls/contest';
+import { getAllContests, getContestsByDate } from '../../helpers/APICalls/contest';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -33,7 +33,7 @@ export default function Discovery(): JSX.Element {
   const [sortType, setSortType] = useState<keyof Contest>('deadlineDate');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [dateFilter, setDateFilter] = useState<string>()
+  const [dateFilter, setDateFilter] = useState<any>()
   const { loggedInUser } = useAuth();
   const classes = useStyles();
 
@@ -43,7 +43,6 @@ export default function Discovery(): JSX.Element {
       if (allContests.contests) {
         setContests(allContests.contests);
       } else {
-        console.log('No Contests Found');
         new Error('Could Not Get Contests');
       }
     }
@@ -51,8 +50,17 @@ export default function Discovery(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    if(dateFilter){
-      console.log(dateFilter)
+    async function getAllByDate(date: string) {
+      const allContests = await getContestsByDate(date);
+      if (allContests.contests) {
+        setContests(allContests.contests);
+      } else {
+        new Error('Could Not Get Contests');
+      }
+    }
+    if (dateFilter) {
+      const date = moment.utc(dateFilter._d).format()
+      getAllByDate(date)
     }
   }, [dateFilter]);
 
@@ -69,7 +77,7 @@ export default function Discovery(): JSX.Element {
     const momentTime = date
     setDateFilter(momentTime);
 
-    
+
   };
 
   const sortByHeader = (sortParam: Contest[] = contests) => {
