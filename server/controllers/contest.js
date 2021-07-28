@@ -1,6 +1,6 @@
 const Contest = require("../models/Contest");
 const asyncHandler = require("express-async-handler");
-const { scheduleContestEnd } = require('../utils/contestHelper');
+const { scheduleContestEnd, winnerChosen } = require('../utils/contestHelper');
 
 exports.createContest = asyncHandler(async (req, res) => {
     try {
@@ -66,5 +66,16 @@ exports.getAllContestsByUser = asyncHandler(async (req, res) => {
     })
   } catch (err) {
     res.status(500).json(err);
+  }
+})
+
+// req.params should be the id of the winning submission
+// req.body should be the winning image url string
+exports.completeContest = asyncHandler(async (req, res) => {
+  try {
+    const success = await winnerChosen(req.user.id, req.params.id, req.body)
+    res.status(200).send(success)
+  } catch (err) {
+    res.status(500).json(err)
   }
 })

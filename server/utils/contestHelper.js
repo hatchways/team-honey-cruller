@@ -5,6 +5,7 @@ const {
 const Notification = require('../models/notification');
 const Contest = require('../models/contest');
 const Winner = require('../models/winner');
+const Submission = require('../models/submission');
 
 exports.scheduleContestEnd = async (contest) => {
   const date = new Date(contest.deadlineDate)
@@ -19,7 +20,7 @@ exports.scheduleContestEnd = async (contest) => {
   try {
     // change format of date to match node-schedule documentation. Wait for final format from Minh and Brian
     schedule.scheduleJob(date, async function () {
-      sendMail(mailObj)
+      await sendMail(mailObj)
       await Notification.create({
         to: contest.userId,
         from: contest.userId,
@@ -29,32 +30,48 @@ exports.scheduleContestEnd = async (contest) => {
         $set: {
           active: false
         }
-      }, { new: true })
+      }, {
+        new: true
+      })
     });
   } catch (err) {
     throw new Error(err)
   }
 }
 
-exports.winnerChosen = async (winner, contestId, submissionId, images) => {
-  const imagesToDelete = images.filter(image => image !== winner.winningPic)
-  try {
-    const chosenWinner = await Winner.create(winner);
-    if (chosenWinner) {
-      await Notification.create({
-        to: winner.winningArtist,
-        from: winner.contestOwner,
-        notification: "Congratulations you have won a contest!!"
-      })
-    }
-  } catch(err) {
-    throw new Error(err)
+exports.winnerChosen = async (contestOwner, submissionId, winningPic) => {
+  const winningSubmission = await Submission.findOne({
+    _id: submissionId
+  }).populate("contest artistId")
+  const imagesToDelete = winningSubmission.images.filter(image => image !== winningPic)
+  const mailObj = {
+    to: winningSubmission.artistId.email,
+    from: 'tattooartproject@outlook.com',
+    subject: 'Congratulations your design won the contest!',
+    text: winningSubmission.contest.title,
+    html: `<h2>Congratulations on winning the contest!</h2>`,
+  }
+  const winner = {
+    contestOwner,
+    winningArtist: winningSubmission.artistId._id,
+    winningPic,
+    title: winningSubmission.contest.title,
+    description: winningSubmission.contest.description,
+    prizeAmount: winningSubmission.contest.prizeAmount
   }
   try {
-    await Contest.findByIdAndDelete(contestId)
-    // Call brian's function to delete many images from aws
+    await Winner.create(winner);
     await Submission.findByIdAndDelete(submissionId)
-  } catch(err) {
+    await Contest.findByIdAndDelete(winningSubmission.contest._id)
+    // Call brian's function to delete many images from aws
+    await Notification.create({
+      to: winner.winningArtist,
+      from: winner.contestOwner,
+      notification: "Congratulations you have won a contest!!"
+    })
+    await sendMail(mailObj)
+    return true;
+  } catch (err) {
     throw new Error(err)
   }
 }
