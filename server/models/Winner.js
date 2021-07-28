@@ -1,6 +1,6 @@
 const { model, Schema } = require('mongoose')
 
-const WinnerSchema = new Schema({
+const winnerSchema = new Schema({
   contestOwner: {
     type: Schema.Types.ObjectId,
     ref: 'User'
@@ -18,4 +18,4 @@ const WinnerSchema = new Schema({
   prizeAmount: Number
 })
 
-module.exports = model('Winner', WinnerSchema);
+module.exports = model('Winner', winnerSchema);

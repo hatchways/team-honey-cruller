@@ -49,3 +49,16 @@ export const addContest = async (contest: NewContest): Promise<AuthApiData> => {
     .then((res) => res.data)
     .catch(() => ({ error: { message: 'Cannot create contest' } }));
 };
+
+export const chooseWinner = async (winningPic: string, submissionId: string): Promise<boolean> => {
+  const fetchData: FetchOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ winningPic }),
+  };
+
+  return await fetch(`/contest/${submissionId}`, fetchData)
+    .then((data) => data.json())
+    .catch((err) => ({ error: { message: 'Could not complete Contest.' } }));
+};

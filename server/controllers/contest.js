@@ -22,6 +22,7 @@ exports.createContest = asyncHandler(async (req, res) => {
 exports.updateContest = asyncHandler(async (req, res) => {
   try {
     const update = await Contest.findOneAndUpdate({
+      active: true,
       _id: req.params.id
     }, req.body, {
       new: true
@@ -47,7 +48,7 @@ exports.getSingleContest = asyncHandler(async (req, res) => {
 
 exports.getAllContests = asyncHandler(async (req, res) => {
   try {
-    const allContests = await Contest.find({}).select('-submissions')
+    const allContests = await Contest.find({active: true}).select('-submissions')
     res.status(200).json({
       contests: allContests
     })
@@ -71,11 +72,12 @@ exports.getAllContestsByUser = asyncHandler(async (req, res) => {
 
 // req.params should be the id of the winning submission
 // req.body should be the winning image url string
-exports.completeContest = asyncHandler(async (req, res) => {
+exports.chooseWinner = asyncHandler(async (req, res) => {
   try {
-    const success = await winnerChosen(req.user.id, req.params.id, req.body)
+    const success = await winnerChosen(req.user.id, req.params.id, req.body.winningPic)
     res.status(200).send(success)
   } catch (err) {
-    res.status(500).json(err)
+    console.log(err)
+    res.status(500).send(err)
   }
 })
