@@ -121,7 +121,7 @@ module.exports = {
   createMessage: asyncHandler(async (req, res) => {
     let from = mongoose.Types.ObjectId(req.user.id);
     let to = mongoose.Types.ObjectId(req.body.to);
-    if (req.body.from === req.body.to) {
+    if (from === req.body.to) {
       throw new Error("can't send message to yourself")
     }
     Conversation.findOneAndUpdate({
@@ -157,7 +157,7 @@ module.exports = {
         } else {
           if (!conversation._id) {
             let newConversation = new Conversation({
-              recipients: [req.body.from, req.body.to],
+              recipients: [from, req.body.to],
               lastMessage: req.body.message
             })
             const {
