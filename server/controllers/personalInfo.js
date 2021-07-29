@@ -26,3 +26,15 @@ exports.getPersonalInfo = asyncHandler(async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+exports.getInfoById = asyncHandler(async (req, res) => {
+  try {
+    const info = await PersonalInfo.findOne({
+      userId: req.params.id
+    }).populate('userId', { profilePic: true })
+
+    res.status(200).json(info);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});

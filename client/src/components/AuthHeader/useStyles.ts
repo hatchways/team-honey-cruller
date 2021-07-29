@@ -61,6 +61,10 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid white',
     color: 'white',
     width: '10rem',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: 'black',
+    },
   },
 }));
 

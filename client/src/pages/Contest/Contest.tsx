@@ -6,21 +6,25 @@ import Button from '@material-ui/core/Button';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Toolbar from '@material-ui/core/Toolbar';
+import Box from '@material-ui/core/Box';
+import Avatar from '@material-ui/core/Avatar';
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import SubmittedDesigns from '../../components/SubmittedDesigns/SubmittedDesigns';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
-import ProfilePic from '../../Images/profilePic.png';
-import { Submission } from '../../interface/User';
+import ImageModal from '../../components/ImageModal/ImageModal';
+import { Contest, Submission } from '../../interface/User';
 import { getContestById } from '../../helpers/APICalls/contest';
-
+import { getContestSubmissions } from '../../helpers/APICalls/submission';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { Link, useParams } from 'react-router-dom';
+import { useSnackBar } from '../../context/useSnackbarContext';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -35,15 +39,10 @@ const GlobalCss = withStyles({
       minHeight: 0,
     },
     'li.MuiImageListItem-root': {
-      height: '250px !important',
       overflowY: 'hidden',
-    },
-    '.MuiImageListItemBar-root': {
-      background: 'none',
     },
     'ul.li.MuiImageListItem-item': {
       padding: 0,
-      height: '250px !important',
     },
     '.MuiImageListItemBar-titleWrap': {
       color: '#333',
@@ -53,6 +52,7 @@ const GlobalCss = withStyles({
       fontSize: '15px',
       fontWeight: 'bolder',
       textDecoration: 'underline',
+      color: 'white',
     },
     '.MuiImageListItem-imgFullHeight': {
       opacity: '0.8',
@@ -60,12 +60,13 @@ const GlobalCss = withStyles({
   },
 })(() => null);
 
-export default function Contest(): JSX.Element {
+export default function ContestPage(): JSX.Element {
   const { id } = useParams() as { id: string };
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  //currently leaving as any, need to change it after getting individual contest from api
-  const [contestSubmissions, setContestSubmissions] = useState<any>([]);
+  const { updateSnackBarMessage } = useSnackBar();
+  const [contestSubmissions, setContestSubmissions] = useState<Submission[]>([]);
+  const [contest, setContest] = useState<Contest>();
   const { loggedInUser } = useAuth();
 
   const newTheme = createMuiTheme({
@@ -87,17 +88,35 @@ export default function Contest(): JSX.Element {
   }
 
   useEffect(() => {
-    async function getContestAllSubmissions() {
+    async function getUserContestSubmissions() {
       try {
-        const contestAllSubmissions = await getContestById(id);
-        if (contestAllSubmissions) {
-          setContestSubmissions(contestAllSubmissions);
+        const submissions = await getContestSubmissions(id);
+        if (submissions) {
+          setContestSubmissions(submissions);
+        } else {
+          setContestSubmissions([]);
+        }
+      } catch (err) {
+        updateSnackBarMessage(err.message);
+      }
+    }
+    if (loggedInUser) {
+      getUserContestSubmissions();
+    }
+  }, [loggedInUser, id, updateSnackBarMessage]);
+
+  useEffect(() => {
+    async function getContest() {
+      try {
+        const data = await getContestById(id);
+        if (data) {
+          setContest(data);
         }
       } catch (err) {
         console.log(err);
       }
     }
-    getContestAllSubmissions();
+    getContest();
   }, [id]);
 
   const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {
@@ -120,7 +139,7 @@ export default function Contest(): JSX.Element {
     <>
       <CssBaseline />
       <GlobalCss />
-      <AuthHeader linkTo={`/submit-design/${id}`} btnText="SUBMIT DESIGN" />
+      <AuthHeader linkTo={`/create-contest`} btnText="create contest" />
       <Container className={classes.container}>
         <Grid className={classes.grid} container style={{ marginBottom: '35px' }}>
           <Grid item>
@@ -134,27 +153,28 @@ export default function Contest(): JSX.Element {
           </Grid>
         </Grid>
         <Grid className={classes.grid} container>
-          <Grid item xs={10}>
+          <Grid item xs={12} sm={10}>
             <Typography className={classes.contestTitle}>
-              {contestSubmissions.title ? contestSubmissions.title : 'Lion tattoo concept in minimal style'}{' '}
+              {contest ? contest.title : ''}
               <Button className={classes.prizeAmount}>
-                <Typography className={classes.prize}>
-                  {contestSubmissions.prizeAmount ? contestSubmissions.prizeAmount : '$150'}
-                </Typography>
+                <Typography className={classes.prize}>${contest ? contest.prizeAmount : '0'}</Typography>
               </Button>
             </Typography>
             <Grid direction="row" className={classes.grid} container>
               <Grid item>
-                <Avatar alt="Profile Image" src={ProfilePic} className={classes.avatar}></Avatar>
+                <Avatar
+                  src={contest && (contest.ownerProfilePic || `https://robohash.org/${contest.ownerName}.png`)}
+                  className={classes.avatar}
+                ></Avatar>
               </Grid>
               <Grid item>
                 <Typography className={classes.user}>
-                  By <span className={classes.username}>{loggedInUser.username}</span>
+                  By <span className={classes.username}>{contest ? contest.ownerName : ''}</span>
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={12} sm={2} justifyContent="center" alignItems="center">
             <Link to={`/submit-design/${id}`} style={{ textDecoration: 'none' }}>
               <Button variant="outlined" size="large" className={classes.button}>
                 submit design
@@ -177,21 +197,54 @@ export default function Contest(): JSX.Element {
                   },
                 }}
               >
-                <Tab
-                  label={contestSubmissions.images ? `DESIGNS (${contestSubmissions.images.length})` : `DESIGNS (30)`}
-                />
+                {contestSubmissions.length && (
+                  <Tab label={contest && contest.images ? `DESIGNS (${contest.images.length})` : `DESIGNS (30)`} />
+                )}
                 <Tab label="BRIEF" />
               </Tabs>
             </ThemeProvider>
           </Toolbar>
           <Paper elevation={2}>
-            <Panel value={value} index={0}>
-              <SubmittedDesigns images={contestSubmissions.images} artist={contestSubmissions.artist} />
-            </Panel>
-            <Panel value={value} index={1}>
-              <Typography style={{ height: '200px', marginTop: '40px' }}>
-                {contestSubmissions.description ? contestSubmissions.description : 'Description of the contest'}
+            {contestSubmissions.length ? (
+              <Panel value={value} index={0}>
+                <div className={classes.imageWrapper}>
+                  <ImageList cols={4} gap={3} className={classes.imageList}>
+                    {contestSubmissions.map((submission) => (
+                      <SubmittedDesigns
+                        key={submission._id}
+                        images={submission.images}
+                        artistPic={submission.artistPic}
+                        artistName={submission.artistName}
+                      />
+                    ))}
+                  </ImageList>
+                </div>
+              </Panel>
+            ) : null}
+            <Panel value={value} index={contestSubmissions.length ? 1 : 0}>
+              <Typography align="center" variant="h3" className={classes.descriptionHeader}>
+                Tattoo Description:
               </Typography>
+              <Typography align="center" variant="h5">
+                {contest ? contest.description : ''}
+              </Typography>
+              <ImageList cols={4} gap={10} className={classes.imageList}>
+                {contest && contest.images
+                  ? contest.images.map((image) => (
+                      <ImageListItem cols={1} key={image} className={classes.listItem}>
+                        <ImageModal image={image}>
+                          <img
+                            srcSet={`${image}?w=248&fit=crop&auto=format 1x,
+                          ${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                            alt={`${image} inspiration`}
+                            loading="lazy"
+                            className={classes.image}
+                          />
+                        </ImageModal>
+                      </ImageListItem>
+                    ))
+                  : null}
+              </ImageList>
             </Panel>
           </Paper>
         </Grid>
