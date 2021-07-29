@@ -12,10 +12,10 @@ exports.getWinnersByUser = asyncHandler(async (req, res) => {
 
 exports.getSomeWinners = asyncHandler(async (req, res) => {
   try {
-    if(typeof +req.params.num !== 'number'){
-      res.status(500).json("Not a number")
+    if(isNaN(parseInt(req.params.num))){
+      return res.status(500).send("Not a number")
     }
-    const winners = await Winner.find({}).limit(+req.params.num).populate({path: "contestOwner", select: "username email profilePic"}).populate({path: "winningArtist", select: "username email profilePic"})
+    const winners = await Winner.find({}).limit(+req.params.num)
     res.status(200).json(winners)
   } catch (err) {
     res.status(500).json(err)

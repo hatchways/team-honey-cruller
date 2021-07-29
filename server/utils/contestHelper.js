@@ -5,6 +5,7 @@ const Notification = require('../models/Notification');
 const Contest = require('../models/Contest');
 const Winner = require('../models/Winner');
 const Submission = require('../models/Submission');
+const { deleteImages } = require('./deleteAws');
 
 exports.scheduleContestEnd = asyncHandler(async (contest) => {
   const date = new Date(contest.deadlineDate)
@@ -85,7 +86,7 @@ exports.winnerChosen = (contestOwner, submissionId, winningPic) => {
         }
       })
       await Contest.findByIdAndDelete(winningSubmission.contest._id)
-      // Call brian's function to delete many images from aws (imagesToDelete and winningSubmission.contest.images)
+      await deleteImages([...imagesToDelete, ...winningSubmission.contest.images])
       await Notification.create({
         to: contestWinner.winningArtist,
         from: contestWinner.contestOwner,
