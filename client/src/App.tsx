@@ -11,9 +11,11 @@ import CreateContest from './pages/CreateContest/CreateContest';
 import AboutArtist from './pages/AboutArtist/AboutArtist';
 import Settings from './pages/Settings/Settings';
 import Contest from './pages/Contest/Contest';
+import Notifications from './pages/Notifications/Notifications';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
+import { NotificationProvider } from './context/notificationContext';
 import './App.css';
 
 function App(): JSX.Element {
@@ -23,23 +25,25 @@ function App(): JSX.Element {
         <SnackBarProvider>
           <AuthProvider>
             <SocketProvider>
-              <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/submit-design/:id" component={SubmitDesign} />
-                <Route exact path="/profile" component={Profile} />
-                <Route exact path="/discovery" component={Discovery} />
-                <Route exact path="/create-contest" component={CreateContest} />
-                <Route exact path="/settings" component={Settings} />
-                <Route exact path="/contest/:id" component={Contest} />
-                <Route exact path="/artist" component={AboutArtist} />
-                <Route exact path="/dashboard">
-                  <Dashboard />
-                </Route>
-                <Route path="*">
-                  <Redirect to="/login" />
-                </Route>
-              </Switch>
+              <NotificationProvider>
+                <Switch>
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/signup" component={Signup} />
+                  <Route exact path="/submit-design/:id" component={SubmitDesign} />
+                  <Route exact path="/profile" component={Profile} />
+                  <Route exact path="/discovery" component={Discovery} />
+                  <Route exact path="/create-contest" component={CreateContest} />
+                  <Route exact path="/settings" component={Settings} />
+                  <Route exact path="/notifications" component={Notifications} />
+                  <Route exact path="/contest/:id" component={Contest} />
+                  <Route exact path="/dashboard">
+                    <Dashboard />
+                  </Route>
+                  <Route path="*">
+                    <Redirect to="/login" />
+                  </Route>
+                </Switch>
+              </NotificationProvider>
             </SocketProvider>
           </AuthProvider>
         </SnackBarProvider>

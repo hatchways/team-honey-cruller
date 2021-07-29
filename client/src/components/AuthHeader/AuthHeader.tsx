@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { useAuth } from '../../context/useAuthContext';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import AuthMenu from '../AuthMenu/AuthMenu';
+import NotificationPopUp from '../NotificationPopUp/NotificationPopUp';
 
 interface Props {
   linkTo: string;
@@ -41,7 +42,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
             </Typography>
           </Link>
           <Typography className={classes.navLink} color="secondary" display="inline">
-            Notifications
+              <NotificationPopUp />
           </Typography>
           <Link to={linkTo}>
             <Button className={classes.createContestBtn} size="large">
