@@ -44,6 +44,7 @@ export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.El
 
   const responseSuccessGoogle = (response: any) => {
     loginGoogle(response.tokenObj.id_token)
+    location.reload()
   }
   
   const responseErrorGoogle = (response: any) => {
