@@ -1,13 +1,12 @@
 const schedule = require('node-schedule');
-const {
-  sendMail
-} = require('./sendgrid')
+const asyncHandler = require("express-async-handler");
+const { sendMail } = require('./sendgrid')
 const Notification = require('../models/Notification');
 const Contest = require('../models/Contest');
 const Winner = require('../models/Winner');
 const Submission = require('../models/Submission');
 
-exports.scheduleContestEnd = async (contest) => {
+exports.scheduleContestEnd = asyncHandler(async (contest) => {
   const date = new Date(contest.deadlineDate)
   const { email } = await User.findOne({
     _id: contest.userId
@@ -27,7 +26,12 @@ exports.scheduleContestEnd = async (contest) => {
     html: `<h2>We appreciate you so much. We hope you enjoy your experience.</h2>`,
   }
   try {
-    // await sendMail(confirmationMail)
+    await Notification.create({
+        to: contest.userId,
+        from: contest.userId,
+        notification: 'Thank you for creating a contest!'
+      })
+    await sendMail(confirmationMail)
     schedule.scheduleJob(date, async function () {
       await Contest.findByIdAndUpdate(contest._id, {
         $set: {
@@ -44,17 +48,18 @@ exports.scheduleContestEnd = async (contest) => {
       await sendMail(mailObj)
     });
   } catch (err) {
-    throw new Error(err)
+    return new Error(err)
   }
-}
+})
 
-exports.winnerChosen = async (contestOwner, submissionId, winningPic) => {
-  try {
-    const winningSubmission = await Submission.findOne({
-      _id: submissionId
+exports.winnerChosen = (contestOwner, submissionId, winningPic) => {
+    return new Promise (async (resolve, reject) => {
+
+      const winningSubmission = await Submission.findOne({
+        _id: submissionId
     }).populate("contest artistId")
     if (winningSubmission.contest.active) {
-      return { error: { message: 'Contest deadline has not been met yet' } }
+      return reject('Contest is still active.')
     }
     const imagesToDelete = winningSubmission.images.filter(image => image !== winningPic)
     const mailObj = {
@@ -74,7 +79,7 @@ exports.winnerChosen = async (contestOwner, submissionId, winningPic) => {
     })
     try {
       await contestWinner.save();
-      await Submission.remove({
+      await Submission.deleteMany({
         _id: {
           $in: winningSubmission.contest.submissions
         }
@@ -87,12 +92,9 @@ exports.winnerChosen = async (contestOwner, submissionId, winningPic) => {
         notification: "Congratulations you have won a contest!!"
       })
       await sendMail(mailObj)
-      return contestWinner;
+      return resolve(contestWinner);
     } catch (err) {
-      return { error: { message: 'Contest deadline has not been met yet' } }
+      return reject('Could not complete Contest.')
     }
-  } catch (err) {
-    return { error: { message: 'Contest deadline has not been met yet' } }
-  }
+})
 }
-
