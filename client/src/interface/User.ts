@@ -63,6 +63,23 @@ export interface Message {
   createdAt: string;
 }
 
+interface WinningUser {
+  _id: string;
+  username: string;
+  email: string;
+  profilePic?: string;
+}
+
+export interface Winner {
+  _id: string;
+  contestOwner: WinningUser;
+  winningArtist: WinningUser;
+  winningPic: string;
+  title: string;
+  description: string;
+  prizeAmount: number;
+}
+
 export interface SearchUsersApiData {
   users?: User[];
   error?: { message: string };

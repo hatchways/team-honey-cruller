@@ -1,6 +1,6 @@
 import { FetchOptions } from '../../interface/FetchOptions';
 import { AuthApiData } from '../../interface/AuthApiData';
-import { Contest } from '../../interface/User';
+import { Contest, Winner } from '../../interface/User';
 import { NewContest } from '../../interface/Contest';
 import axios from 'axios';
 
@@ -47,7 +47,7 @@ export const addContest = async (contest: NewContest): Promise<AuthApiData> => {
     .catch(() => ({ error: { message: 'Cannot create contest' } }));
 };
 
-export const chooseWinner = async (winningPic: string, submissionId: string): Promise<boolean> => {
+export const chooseWinner = async (winningPic: string, submissionId: string): Promise<Winner> => {
   const fetchData: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

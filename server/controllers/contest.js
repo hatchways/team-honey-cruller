@@ -74,10 +74,13 @@ exports.getAllContestsByUser = asyncHandler(async (req, res) => {
 // req.body.winningPic should be the winning image url string
 exports.chooseWinner = asyncHandler(async (req, res) => {
   try {
-    const success = await winnerChosen(req.user.id, req.params.id, req.body.winningPic)
-    res.status(200).send(success)
+    const data = await winnerChosen(req.user.id, req.params.id, req.body.winningPic)
+    if (!data.success) {
+      throw data
+    } else {
+      res.status(200).send(data)
+    }
   } catch (err) {
-    console.log(err)
-    res.status(500).send(err)
+    res.status(500).json(false)
   }
 })
