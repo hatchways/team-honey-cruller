@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './pages/Profile/Profile';
 import Discovery from './pages/Discovery/Discovery';
 import CreateContest from './pages/CreateContest/CreateContest';
+import AboutArtist from './pages/AboutArtist/AboutArtist';
 import Settings from './pages/Settings/Settings';
 import Contest from './pages/Contest/Contest';
 import Notifications from './pages/Notifications/Notifications';

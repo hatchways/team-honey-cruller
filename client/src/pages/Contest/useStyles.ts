@@ -5,6 +5,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     fontWeight: 'bolder',
+    [theme.breakpoints.down('xs')]: {
+      display: 'flex',
+      justifyContent: 'center',
+    },
   },
   backIcon: {
     height: '10px',
@@ -13,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 38,
     fontWeight: 'bolder',
     fontFamily: "'Open Sans'",
+    textTransform: 'capitalize',
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'center',
+    },
   },
   prizeAmount: {
     backgroundColor: 'black',
@@ -48,11 +56,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 0,
     marginTop: 12,
     textTransform: 'uppercase',
-    [theme.breakpoints.down('sm')]: {
-      fontSize: 'auto',
-      width: 'auto',
-      height: 'auto',
-      marginLeft: 10,
+    '&:hover': {
+      backgroundColor: 'black',
+      color: 'white',
     },
   },
   container: {
@@ -68,6 +74,37 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     fontWeight: 'bold',
     padding: 0,
+  },
+  descriptionHeader: { textDecoration: 'underline', margin: '15px 0 20px' },
+  imageWrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+  },
+  imageList: {
+    transform: 'translateZ(0)',
+    margin: '40px 0 20px',
+    padding: '20px 0',
+    width: '100%',
+    height: 450,
+  },
+  listItem: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+    width: '25%',
+    height: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '50% !important',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '90% !important',
+    },
+  },
+  image: {
+    width: '100%',
+    height: 'auto',
   },
   username: {
     textTransform: 'capitalize',

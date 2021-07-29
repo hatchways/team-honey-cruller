@@ -4,6 +4,7 @@ import { Box, Typography, Tabs, Tab } from '@material-ui/core';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import Payment from '../../components/Payment/Payment';
+import PersonalInfo from '../../components/PersonalInfo/PersonalInfo';
 import useStyles from "./useStyles";
 
 interface TabPanelProps {
@@ -25,8 +26,8 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
+        <Box p={2}>
+          <Box>{children}</Box>
         </Box>
       )}
     </div>
@@ -78,7 +79,7 @@ export default function Settings(): JSX.Element {
           Profile
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Personal Information
+          <PersonalInfo />
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Typography className={classes.paymentDetails}>Payment Details</Typography>

@@ -10,6 +10,7 @@
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.4.5",
     "aws-sdk": "^2.947.0",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
@@ -19,6 +20,7 @@
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "express-validator": "^6.11.1",
+    "google-auth-library": "^7.3.0",
     "http-errors": "~1.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.8",

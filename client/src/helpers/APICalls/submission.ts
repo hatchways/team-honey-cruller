@@ -21,7 +21,7 @@ export const createSubmission = async (images: string[], contestId: string): Pro
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(images),
   };
-  return await fetch(`/contest/${contestId}/submission`, fetchOptions)
+  return await fetch(`/submission/${contestId}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
