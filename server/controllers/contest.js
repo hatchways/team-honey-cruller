@@ -49,10 +49,35 @@ exports.getSingleContest = asyncHandler(async (req, res) => {
 
 exports.getAllContests = asyncHandler(async (req, res) => {
   try {
-    const allContests = await Contest.find({}).select('-submissions')
-    res.status(200).json({
-      contests: allContests
-    })
+    let {
+      deadlineDate
+    } = req.query
+
+    if (deadlineDate === '') {
+      const allContests = await Contest.find({}).select('-submissions')
+      res.status(200).json({
+        contests: allContests
+      })
+    } else {
+      const allContests = await Contest.find({
+          deadlineDate: {
+            $lte: deadlineDate
+          }
+        })
+        .sort({
+          deadlineDate: 'asc'
+        });
+
+      if (!allContests) {
+        return res.status(404).json({
+          message: 'Could not retrieve contests'
+        })
+      }
+
+      res.status(200).json({
+        contests: allContests
+      });
+    }
   } catch (err) {
     res.status(500).json(err);
   }
@@ -69,42 +94,4 @@ exports.getAllContestsByUser = asyncHandler(async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-})
-
-exports.getContestsByDeadlineDate = asyncHandler(async (req, res) => {
-  try {
-    let {
-      deadlineDate
-    } = req.query
-
-    const formattedDate = deadlineDate
-
-    if (deadlineDate === "") {
-      return res.status(400).json({
-        message: 'please choose a deadlineDate'
-      })
-    }
-
-    const allContests = await Contest.find({
-        deadlineDate: {
-          $lte: formattedDate
-        }
-      })
-      .sort({
-        deadlineDate: 'asc'
-      });
-
-    if (!allContests) {
-      return res.status(404).json({
-        message: 'Could not retrieve contests'
-      })
-    }
-
-    res.status(200).json({
-      contests: allContests
-    });
-
-  } catch (err) {
-    res.status(500).json(err);
-  }
-})
+});

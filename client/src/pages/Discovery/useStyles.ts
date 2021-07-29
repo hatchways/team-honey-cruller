@@ -39,7 +39,18 @@ const useStyles = makeStyles(() => ({
       color: 'black',
     },
   },
-    muiPicker: {
+  buttonReset: {
+    fontWeight: 'bold',
+    backgroundColor: 'black',
+    color: 'white',
+    padding: '3px 7px',
+    border: '1px solid black',
+    margin: '28px 15px',
+    '&:hover': {
+      color: 'black',
+    },
+  },
+  muiPicker: {
         textAlign: 'center',
         marginTop: '20px'
     }

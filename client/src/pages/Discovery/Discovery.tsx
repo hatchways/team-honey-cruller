@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/useAuthContext';
 import { Contest } from '../../interface/User';
 import { Column } from '../../interface/Discovery';
-import { getAllContests, getContestsByDate } from '../../helpers/APICalls/contest';
+import { getAllContests } from '../../helpers/APICalls/contest';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -33,34 +33,27 @@ export default function Discovery(): JSX.Element {
   const [sortType, setSortType] = useState<keyof Contest>('deadlineDate');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [dateFilter, setDateFilter] = useState<any>()
+  const [dateFilter, setDateFilter] = useState<any>();
   const { loggedInUser } = useAuth();
   const classes = useStyles();
 
-  useEffect(() => {
-    async function getAll() {
-      const allContests = await getAllContests();
-      if (allContests.contests) {
-        setContests(allContests.contests);
-      } else {
-        new Error('Could Not Get Contests');
-      }
+  const fetchCall = async (date: any) => {
+    const allContests = await getAllContests(date);
+    if (allContests.contests) {
+      setContests(allContests.contests);
+    } else {
+      new Error('Could Not Get Contests');
     }
-    getAll();
+  }
+
+  useEffect(() => {
+    fetchCall('')
   }, []);
 
   useEffect(() => {
-    async function getAllByDate(date: string) {
-      const allContests = await getContestsByDate(date);
-      if (allContests.contests) {
-        setContests(allContests.contests);
-      } else {
-        new Error('Could Not Get Contests');
-      }
-    }
-    if (dateFilter) {
+    if (dateFilter !== undefined) {
       const date = moment.utc(dateFilter._d).format()
-      getAllByDate(date)
+      fetchCall(date)
     }
   }, [dateFilter]);
 
@@ -89,7 +82,6 @@ export default function Discovery(): JSX.Element {
           return 0;
         }
       });
-
       setContests(sort);
     }
   };
@@ -115,9 +107,12 @@ export default function Discovery(): JSX.Element {
                     format="MMM Do YYYY"
                     value={dateFilter}
                     onChange={value => handleChangeDate(value)}
-                    keyboardIcon={<DateRangeIcon />} 
+                    keyboardIcon={<DateRangeIcon />}
                     autoOk={true}
-                    />
+                  />
+                  <Button className={classes.buttonReset} onClick={() => fetchCall('')}>
+                    Reset Filter
+                  </Button>
                 </Grid>
               </MuiPickersUtilsProvider>
             </Grid>
@@ -154,7 +149,6 @@ export default function Discovery(): JSX.Element {
                           <TableCell className={classes.tableRow}>${contest.prizeAmount}</TableCell>
                           <TableCell className={classes.tableRow}>{contest.deadlineDate}</TableCell>
                           <TableCell className={classes.tableRow}>
-                            {/* Is this the link to go for a particular contest. If yes, then we can pass contest */}
                             <Button className={classes.button} component={Link} to={`/contest/${contest._id}`}>
                               More Info
                             </Button>
