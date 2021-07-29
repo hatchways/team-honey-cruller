@@ -14,7 +14,7 @@ router.route("/register").post(validateRegister, registerUser);
 
 router.route("/login").post(validateLogin, loginUser);
 
-router.route("/googlelogin").post(googleLogin);
+router.route("/google-login").post(googleLogin);
 
 router.route("/user").get(protect, loadUser);
 
