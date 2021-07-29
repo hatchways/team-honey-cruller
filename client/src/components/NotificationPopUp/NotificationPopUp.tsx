@@ -43,7 +43,6 @@ const NotificationPopUp = (): JSX.Element => {
     : [];
 
   const handleNotification = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // setOpen(true);
     /**
      *  changing the opened property to true by sending post request
      *  so that once the notifications navitem is clicked, those notifications would not be counted as new
@@ -51,8 +50,6 @@ const NotificationPopUp = (): JSX.Element => {
     filterNotification.length &&
       filterNotification?.map(async (notification) => await updateNotification(notification));
     setAnchorEl(event.currentTarget);
-    //num === 0 ? setNum(1) : setNum(0);
-    //setId(num);
   };
 
   const hoursCalculator = (createdAt: string): string => {
