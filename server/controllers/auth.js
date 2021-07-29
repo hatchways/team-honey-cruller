@@ -57,8 +57,6 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
       maxAge: secondsInWeek * 1000
     });
 
-
-
     res.status(201).json({
       success: {
         user: {
@@ -170,8 +168,9 @@ exports.googleLogin = asyncHandler(async (req, res, next) => {
         .exec((err, user) => {
           if (err) {
             return res.status(400).json({
-              error: "This user doesn't exist, sign up first"
-            })
+              error: "Something went wrong..."
+            });
+            
           } else {
             if (user) {
               const {
@@ -199,9 +198,58 @@ exports.googleLogin = asyncHandler(async (req, res, next) => {
                   }
                 }
               });
+
+            } else {
+              const secondsInWeek = 604800;
+              let password = email + name + name + email;
+
+              stripe.customers.create({
+                email: email,
+                name: name
+              }).then(data => {
+
+                const newUser = new User({
+                  username: name,
+                  email,
+                  password,
+                  stripeId: data.id
+                });
+
+                newUser.save((err,data) => {
+                  if (err) {
+                    return res.status(400).json({
+                      error: "Something went wrong..."
+                    })
+                  }
+                  console.log("data",data)
+                  const {
+                    _id,
+                    username,
+                    email,
+                    stripeId
+                  } = newUser;
+
+                  const token = generateToken(_id);
+
+                  res.cookie("token", token, {
+                    httpOnly: true,
+                    maxAge: secondsInWeek * 1000
+                  });
+
+                  res.status(200).json({
+                    success: {
+                      user: {
+                        id: _id,
+                        username: username,
+                        email: email,
+                        stripeId: stripeId
+                      }
+                    }
+                  });
+                })
+              })
             }
           }
-
         })
     }
   });
