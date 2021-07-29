@@ -1,19 +1,20 @@
 const asyncHandler = require("express-async-handler");
 
-exports.deleteImage = asyncHandler(async (Key) => {
+exports.deleteImage = asyncHandler(async (image) => {
+    const [_ , Key] = image.split('https://team-honey.s3.amazonaws.com/')
     try {
         s3.deleteObject({
             Bucket: process.env.S3_BUCKET,
             Key
         }, function (err, data) {
             if (err) {
-                res.status(404).json(err)
+                return err;
             } else {
-                res.status(200).json(data);
+                return `Image has been deleted successfully - ${data}`
             }
         })
     } catch (err) {
-        res.status(500).json(err);
+        return err;
     }
 })
 
@@ -36,13 +37,12 @@ exports.deleteImages = asyncHandler(async (imgArray) => {
     try {
         s3.deleteObjects(params, function (err, data) {
             if (err) {
-                res.status(404).json(err)
-            } 
-            else {
-                res.status(200).json(data);
-            } 
+                return err;
+            } else {
+                return `Submission Images have been deleted - ${data}`;
+            }
         });
     } catch (err) {
-        res.status(500).json(err);
+        return err;
     }
 })

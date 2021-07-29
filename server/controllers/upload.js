@@ -96,8 +96,7 @@ exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
 
 
   if (user.profilePic) {
-    const splitProfile = user.profilePic.split('https://team-honey.s3.amazonaws.com/')
-    deleteImage(splitProfile[1])
+    deleteImage(user.profilePic)
   }
 
   AWSPic(req, res, async (error) => {
