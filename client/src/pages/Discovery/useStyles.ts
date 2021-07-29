@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import HeroImg from '../../Images/heroImg.jpg'
 
 const useStyles = makeStyles(() => ({
   grid: {
@@ -39,6 +40,21 @@ const useStyles = makeStyles(() => ({
       color: 'black',
     },
   },
+  heroImage: {
+    background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url(${HeroImg})`,
+    backgroundSize: '100%',
+    height: '50vh',
+    width: '63vw',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    position: 'relative',
+    marginBottom: '15px'
+  },
+  heroContents: {
+    paddingTop: '220px',
+    textAlign: 'center',
+    color: 'white'
+  }
 }));
 
 export default useStyles;

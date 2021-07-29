@@ -17,6 +17,8 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import TablePagination from '@material-ui/core/TablePagination';
+import Box from '@material-ui/core/Box';
+import Carousel from 'react-material-ui-carousel';
 import SortIcon from '@material-ui/icons/Sort';
 import { Animated } from 'react-animated-css';
 import useStyles from './useStyles';
@@ -73,12 +75,35 @@ export default function Discovery(): JSX.Element {
   return (
     <>
       <AuthHeader linkTo="/create-contest" btnText="create contest" />
-      <Grid container justify="center" className={classes.grid}>
-        <Container className={classes.tableContainer}>
-          <Grid item>
+      <Grid xs={12} sm={6} md={4} container justify="center" className={classes.grid}>
+        <Grid xs={12} sm={6} md={7} className={classes.tableContainer}>
+          <Paper elevation={20} className={classes.heroImage}>
+            <Box className={classes.heroContents}>
+              <Typography variant='h2'>Welcome to Tatoo Art</Typography>
+              <Typography paragraph={true}>Premier tatoo designs created by artists all over the world.</Typography>
+            </Box>
+          </Paper>
+
+          <Paper>
+            <Carousel
+              animation="fade"
+              next={(now: any, previous: any) => console.log(`Next User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
+              prev={(now: any, previous: any) => console.log(`Prev User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
+              onChange={(now: any, previous: any) => console.log(`OnChange User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
+            >
+              {contests.map((contest, i) => {
+                return (
+                  <>
+                    <Typography variant='h4'>{contest.title}</Typography>
+                  </>
+                )
+              })}
+            </Carousel>
+          </Paper>
+          <Grid xs={12} sm={6} md={4} item>
             <Typography className={classes.typography}>All Open Contests</Typography>
           </Grid>
-        </Container>
+        </Grid>
         <Paper className={classes.paper}>
           <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
             <TableContainer>
