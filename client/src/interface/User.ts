@@ -85,3 +85,18 @@ export interface SearchUsersApiData {
   users?: User[];
   error?: { message: string };
 }
+
+export interface Customer {
+  id: string;
+}
+
+export interface Notification {
+  opened: boolean;
+  _id: string;
+  to: string;
+  from: string;
+  notification: string;
+  createdAt: string;
+  profilePic: string;
+}
+

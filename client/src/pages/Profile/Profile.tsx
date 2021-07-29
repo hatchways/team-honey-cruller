@@ -117,7 +117,7 @@ export default function Profile(): JSX.Element {
         if (success) {
           updateLoginContext(success);
         }
-      } catch (err) {
+      } catch (err: any) {
         updateSnackBarMessage(err.message);
       }
     }
