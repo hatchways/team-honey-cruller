@@ -112,10 +112,12 @@ export default function Discovery(): JSX.Element {
                     margin="normal"
                     variant="inline"
                     inputVariant="outlined"
-                    format="MMM Do YYYY h:mm A z"
+                    format="MMM Do YYYY"
                     value={dateFilter}
                     onChange={value => handleChangeDate(value)}
-                    keyboardIcon={<DateRangeIcon />} />
+                    keyboardIcon={<DateRangeIcon />} 
+                    autoOk={true}
+                    />
                 </Grid>
               </MuiPickersUtilsProvider>
             </Grid>
