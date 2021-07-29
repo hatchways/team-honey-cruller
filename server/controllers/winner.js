@@ -3,9 +3,7 @@ const Winner = require('../models/Winner');
 
 exports.getWinnersByUser = asyncHandler(async (req, res) => {
   try {
-    console.log(req.user.id)
     const winners = await Winner.find({contestOwner: req.user.id}).populate({path: "contestOwner", select: "username email profilePic"}).populate({path: "winningArtist", select: "username email profilePic"})
-    console.log(winners)
     res.status(200).json(winners)
   } catch (err) {
     res.status(500).json(err)

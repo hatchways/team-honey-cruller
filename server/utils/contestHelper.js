@@ -19,7 +19,15 @@ exports.scheduleContestEnd = async (contest) => {
     text: contest.title,
     html: `<h2>Your contest has ended. Go pick a winner!</h2>`,
   }
+    const confirmationMail = {
+    to: email,
+    from: 'tattooartproject@outlook.com',
+    subject: 'Thank you for creating a contest with Tattoo Art',
+    text: contest.title,
+    html: `<h2>We appreciate you so much. We hope you enjoy your experience.</h2>`,
+  }
   try {
+    // await sendMail(confirmationMail)
     schedule.scheduleJob(date, async function () {
       await Contest.findByIdAndUpdate(contest._id, {
         $set: {
@@ -46,7 +54,7 @@ exports.winnerChosen = async (contestOwner, submissionId, winningPic) => {
       _id: submissionId
     }).populate("contest artistId")
     if (winningSubmission.contest.active) {
-      throw "Contest deadline has not been met yet"
+      return { error: { message: 'Contest deadline has not been met yet' } }
     }
     const imagesToDelete = winningSubmission.images.filter(image => image !== winningPic)
     const mailObj = {
@@ -79,11 +87,12 @@ exports.winnerChosen = async (contestOwner, submissionId, winningPic) => {
         notification: "Congratulations you have won a contest!!"
       })
       await sendMail(mailObj)
-      return true;
+      return contestWinner;
     } catch (err) {
-      return err
+      return { error: { message: 'Contest deadline has not been met yet' } }
     }
   } catch (err) {
-    return err;
+    return { error: { message: 'Contest deadline has not been met yet' } }
   }
 }
+

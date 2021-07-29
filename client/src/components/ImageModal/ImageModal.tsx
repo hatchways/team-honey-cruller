@@ -36,12 +36,11 @@ const ImageModal = ({ artistPic, artistName, image, submissionId, children }: Pr
     if (image && submissionId) {
       chooseWinner(image, submissionId)
         .then((res) => {
-          if (!res) {
+          if (res.error) {
             updateSnackBarMessage('Contest deadline has not been met yet');
-          } else {
-            updateSnackBarMessage('Congratulations. Your contest is now closed');
-            history.push('/profile');
           }
+          updateSnackBarMessage('Congratulations. Your contest is now closed');
+          history.push('/profile');
         })
         .catch((err) => {
           updateSnackBarMessage(err.message);

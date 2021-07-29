@@ -78,6 +78,7 @@ export interface Winner {
   title: string;
   description: string;
   prizeAmount: number;
+  error?: { message: string };
 }
 
 export interface SearchUsersApiData {

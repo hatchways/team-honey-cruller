@@ -75,12 +75,12 @@ exports.getAllContestsByUser = asyncHandler(async (req, res) => {
 exports.chooseWinner = asyncHandler(async (req, res) => {
   try {
     const data = await winnerChosen(req.user.id, req.params.id, req.body.winningPic)
-    if (!data.success) {
+    if (data.error) {
       throw data
-    } else {
-      res.status(200).send(data)
     }
+    res.status(200).send(data)
   } catch (err) {
-    res.status(500).json(false)
+    console.log(err)
+    res.status(500).json(err)
   }
 })
