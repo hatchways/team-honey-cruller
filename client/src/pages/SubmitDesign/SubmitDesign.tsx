@@ -49,7 +49,7 @@ export default function SubmitDesign(): JSX.Element {
         updateSnackBarMessage(`Successfully submitted design${allPics.length > 1 ? 's' : null}`);
         history.push(`/contest/${params.id}`);
       }
-    } catch (err) {
+    } catch (err: any) { 
       updateSnackBarMessage(err.message);
     }
   };

@@ -7,6 +7,10 @@ import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import MomentUtils from '@date-io/moment';
+import moment from 'moment';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -29,21 +33,29 @@ export default function Discovery(): JSX.Element {
   const [sortType, setSortType] = useState<keyof Contest>('deadlineDate');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [dateFilter, setDateFilter] = useState<any>();
   const { loggedInUser } = useAuth();
   const classes = useStyles();
 
-  useEffect(() => {
-    async function getAll() {
-      const allContests = await getAllContests();
-      if (allContests.contests) {
-        setContests(allContests.contests);
-      } else {
-        console.log('No Contests Found');
-        new Error('Could Not Get Contests');
-      }
+  const fetchCall = async (date: any) => {
+    const allContests = await getAllContests(date);
+    if (allContests.contests) {
+      setContests(allContests.contests);
+    } else {
+      new Error('Could Not Get Contests');
     }
-    getAll();
+  }
+
+  useEffect(() => {
+    fetchCall('')
   }, []);
+
+  useEffect(() => {
+    if (dateFilter !== undefined) {
+      const date = moment.utc(dateFilter._d).format()
+      fetchCall(date)
+    }
+  }, [dateFilter]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -52,6 +64,11 @@ export default function Discovery(): JSX.Element {
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const handleChangeDate = (date: any) => {
+    const momentTime = date
+    setDateFilter(momentTime);
   };
 
   const sortByHeader = (sortParam: Contest[] = contests) => {
@@ -65,7 +82,6 @@ export default function Discovery(): JSX.Element {
           return 0;
         }
       });
-
       setContests(sort);
     }
   };
@@ -73,14 +89,35 @@ export default function Discovery(): JSX.Element {
   return (
     <>
       <AuthHeader linkTo="/create-contest" btnText="create contest" />
-      <Grid container justify="center" className={classes.grid}>
-        <Container className={classes.tableContainer}>
-          <Grid item>
-            <Typography className={classes.typography}>All Open Contests</Typography>
-          </Grid>
-        </Container>
-        <Paper className={classes.paper}>
-          <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
+      <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
+        <Grid container justify="center" className={classes.grid}>
+          <Container className={classes.tableContainer}>
+            <Grid item>
+              <Typography className={classes.typography}>All Open Contests</Typography>
+            </Grid>
+            <Grid container justify="center" className={classes.muiPicker}>
+              <MuiPickersUtilsProvider utils={MomentUtils}>
+                <Grid item xs={5}>
+                  <KeyboardDatePicker
+                    id="date"
+                    name="deadlineDate"
+                    margin="normal"
+                    variant="inline"
+                    inputVariant="outlined"
+                    format="MMM Do YYYY"
+                    value={dateFilter}
+                    onChange={value => handleChangeDate(value)}
+                    keyboardIcon={<DateRangeIcon />}
+                    autoOk={true}
+                  />
+                  <Button className={classes.buttonReset} onClick={() => fetchCall('')}>
+                    Reset Filter
+                  </Button>
+                </Grid>
+              </MuiPickersUtilsProvider>
+            </Grid>
+          </Container>
+          <Paper className={classes.paper}>
             <TableContainer>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -112,7 +149,6 @@ export default function Discovery(): JSX.Element {
                           <TableCell className={classes.tableRow}>${contest.prizeAmount}</TableCell>
                           <TableCell className={classes.tableRow}>{contest.deadlineDate}</TableCell>
                           <TableCell className={classes.tableRow}>
-                            {/* Is this the link to go for a particular contest. If yes, then we can pass contest */}
                             <Button className={classes.button} component={Link} to={`/contest/${contest._id}`}>
                               More Info
                             </Button>
@@ -124,9 +160,9 @@ export default function Discovery(): JSX.Element {
                 </TableBody>
               </Table>
             </TableContainer>
-          </Animated>
-        </Paper>
-      </Grid>
+          </Paper>
+        </Grid>
+      </Animated>
     </>
   );
 }
