@@ -5,6 +5,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import Payment from '../../components/Payment/Payment';
 import PersonalInfo from '../../components/PersonalInfo/PersonalInfo';
+import Notifications from '../Notifications/Notifications';
 import useStyles from "./useStyles";
 
 interface TabPanelProps {
@@ -88,7 +89,7 @@ export default function Settings(): JSX.Element {
           </Elements>
         </TabPanel>
         <TabPanel value={value} index={3}>
-          Notification
+          <Notifications header={false}/>
         </TabPanel>
         <TabPanel value={value} index={4}>
           Password

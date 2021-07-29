@@ -33,7 +33,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     textAlign: 'center',
     padding: '20px 0 30px 0',
     marginLeft: '58px'
-  }
+  },
+  'tabpanel-3': {
+    width: '100%'
+}
 }));
 
 export default useStyles;

@@ -13,7 +13,12 @@ import { useSnackBar } from '../../context/useSnackbarContext';
 
 import { NotificationContext } from '../../context/notificationContext';
 
-export default function Notifications(): JSX.Element {
+interface NotificationProps {
+  header: boolean
+}
+
+export default function Notifications({ header } : NotificationProps): JSX.Element {
+  header === undefined ? header = true : header;
   const notifications = useContext(NotificationContext).notifications;
   const setNotifications = useContext(NotificationContext).setNotifications;
   const { loggedInUser } = useAuth();
@@ -61,7 +66,7 @@ export default function Notifications(): JSX.Element {
   return loggedInUser ? (
     <div>
       <CssBaseline />
-      <AuthHeader linkTo={`/create-contest`} btnText="CREATE CONTEST" />
+      {header ? <AuthHeader linkTo={`/create-contest`} btnText="CREATE CONTEST" /> : ''}
       <Paper className={classes.paper} elevation={2}>
         <Grid direction="row" container>
           <Grid item>
