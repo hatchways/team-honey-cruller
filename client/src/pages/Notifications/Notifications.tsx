@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { deleteNotification } from '../../helpers/APICalls/notification';
 import useStyles from './useStyles';
 import Paper from '@material-ui/core/Paper';
@@ -15,30 +15,22 @@ import { NotificationContext } from '../../context/notificationContext';
 
 export default function Notifications(): JSX.Element {
   const notifications = useContext(NotificationContext).notifications;
-  const setId = useContext(NotificationContext).setId;
-  const [num, setNum] = useState<number>(2);
+  const setNotifications = useContext(NotificationContext).setNotifications;
   const { loggedInUser } = useAuth();
   const classes = useStyles();
   const { updateSnackBarMessage } = useSnackBar();
 
   const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    num === 2 ? setNum(3) : setNum(2);
-    setId(num);
     const target = event.target as HTMLButtonElement;
     const response = await deleteNotification(target.value);
     if (response === 204) {
       updateSnackBarMessage('Notification deleted successfully');
+      const filteredNotifications = notifications?.filter((item) => item._id !== target.value);
+      setNotifications(filteredNotifications);
     } else {
       updateSnackBarMessage('Error deleting notification, trying again later');
     }
   };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const sortedNotifications =
-    notifications?.length &&
-    notifications?.sort((a: { createdAt: string | number | Date }, b: { createdAt: string | number | Date }) => {
-      return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf();
-    });
 
   const hoursCalculator = (createdAt: string): string => {
     const createdDate = new Date(createdAt);
@@ -80,26 +72,24 @@ export default function Notifications(): JSX.Element {
         </Grid>
         {notifications?.length
           ? notifications?.map((notification) => (
-              <>
-                <Grid direction="row" container key={notification._id}>
-                  <Grid item xs={12} sm={3} md={2}>
-                    <Avatar alt="Profile Image" src={notification.profilePic} className={classes.avatar}></Avatar>
-                  </Grid>
-                  <Grid item xs={12} sm={7} md={7}>
-                    <Typography className={classes.typography} key={notification._id}>
-                      {notification.notification}
-                    </Typography>
-                    <Typography key={notification.notification} className={classes.time}>
-                      {hoursCalculator(notification.createdAt)}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={1} md={1}>
-                    <button className={classes.delete} onClick={handleDelete} value={notification._id}>
-                      Delete
-                    </button>
-                  </Grid>
+              <Grid direction="row" container key={notification._id}>
+                <Grid item xs={12} sm={3} md={2}>
+                  <Avatar alt="Profile Image" src={notification.profilePic} className={classes.avatar}></Avatar>
                 </Grid>
-              </>
+                <Grid item xs={12} sm={7} md={7}>
+                  <Typography className={classes.typography} key={notification._id}>
+                    {notification.notification}
+                  </Typography>
+                  <Typography key={notification.notification} className={classes.time}>
+                    {hoursCalculator(notification.createdAt)}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={1} md={1}>
+                  <button className={classes.delete} onClick={handleDelete} value={notification._id}>
+                    Delete
+                  </button>
+                </Grid>
+              </Grid>
             ))
           : 'No notification'}
       </Paper>

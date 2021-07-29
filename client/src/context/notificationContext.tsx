@@ -4,17 +4,16 @@ import { Notification } from '../interface/User';
 
 interface NotificationContext {
   notifications?: Notification[];
-  setId: (id: number) => void;
+  setNotifications: (notification: Notification[] | undefined) => void;
 }
 
 export const NotificationContext = createContext<NotificationContext>({
   notifications: [],
-  setId: () => null,
+  setNotifications: () => null,
 });
 
 export const NotificationProvider: FunctionComponent = ({ children }): JSX.Element => {
   const [notifications, setNotifications] = useState<Notification[]>();
-  const [id, setId] = useState<number>();
   useEffect(() => {
     async function getAll() {
       const allNotifications = await getNotification();
@@ -25,7 +24,14 @@ export const NotificationProvider: FunctionComponent = ({ children }): JSX.Eleme
       }
     }
     getAll();
-  }, [id]);
+  }, []);
 
-  return <NotificationContext.Provider value={{ notifications, setId }}>{children}</NotificationContext.Provider>;
+  notifications?.length &&
+    notifications?.sort((a: { createdAt: string | number | Date }, b: { createdAt: string | number | Date }) => {
+      return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf();
+    });
+
+  return (
+    <NotificationContext.Provider value={{ notifications, setNotifications }}>{children}</NotificationContext.Provider>
+  );
 };

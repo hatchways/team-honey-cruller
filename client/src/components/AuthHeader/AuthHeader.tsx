@@ -8,8 +8,6 @@ import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import AuthMenu from '../AuthMenu/AuthMenu';
 import NotificationPopUp from '../NotificationPopUp/NotificationPopUp';
 
-import { NotificationProvider } from '../../context/notificationContext';
-
 interface Props {
   linkTo: string;
   btnText: string;
@@ -44,9 +42,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
             </Typography>
           </Link>
           <Typography className={classes.navLink} color="secondary" display="inline">
-            <NotificationProvider>
               <NotificationPopUp />
-            </NotificationProvider>
           </Typography>
           <Link to={linkTo}>
             <Button className={classes.createContestBtn} size="large">
