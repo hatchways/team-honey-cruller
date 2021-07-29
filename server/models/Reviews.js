@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const ReviewsSchema = new Schema(
   {
-    userId: {
+    artistId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
