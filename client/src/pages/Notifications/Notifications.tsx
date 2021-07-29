@@ -4,13 +4,13 @@ import useStyles from './useStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
-
 import { NotificationContext } from '../../context/notificationContext';
 
 interface NotificationProps {
@@ -64,9 +64,10 @@ export default function Notifications({ header } : NotificationProps): JSX.Eleme
   };
 
   return loggedInUser ? (
-    <div>
+     <>
       <CssBaseline />
       {header ? <AuthHeader linkTo={`/create-contest`} btnText="CREATE CONTEST" /> : ''}
+      <Box className={classes.root}>
       <Paper className={classes.paper} elevation={2}>
         <Grid direction="row" container>
           <Grid item>
@@ -98,7 +99,8 @@ export default function Notifications({ header } : NotificationProps): JSX.Eleme
             ))
           : 'No notification'}
       </Paper>
-    </div>
+    </Box>
+    </>
   ) : (
     <CircularProgress />
   );
