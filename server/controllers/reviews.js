@@ -3,11 +3,10 @@ const asyncHandler = require('express-async-handler');
 
 exports.getAllReviews = asyncHandler(async (req, res) => {
   try {
-    const info = await Reviews.find({
-      userId: "60ef477aa875e15d00c7c51e"
+    const review = await Reviews.find({
+      userId: req.user.id,
     });
-
-    res.status(200).json(info);
+    res.status(200).json(review);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -16,9 +15,21 @@ exports.getAllReviews = asyncHandler(async (req, res) => {
 exports.createReview = asyncHandler(async (req, res) => {
   try {
     const review = await Reviews.create({
+      userId: req.user.id,
       ...req.body
     });
     res.status(201).json(review);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+exports.deleteReview = asyncHandler(async (req, res) => {
+  try {
+    const review = await Reviews.deleteOne({
+      reviewerId: req.user.id,
+    });
+    res.status(200).json(review);
   } catch (err) {
     res.status(500).json(err);
   }
