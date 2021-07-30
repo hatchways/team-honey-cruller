@@ -62,7 +62,6 @@ export default function Profile(): JSX.Element {
 
     async function getWinners() {
       const usersWinners = await getWinnersByUser();
-      console.log(usersWinners);
       if (usersWinners) {
         setWinners(usersWinners);
       } else {

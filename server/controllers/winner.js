@@ -13,7 +13,7 @@ exports.getWinnersByUser = asyncHandler(async (req, res) => {
 exports.getSomeWinners = asyncHandler(async (req, res) => {
   try {
     if(isNaN(parseInt(req.params.num))){
-      return res.status(500).send("Not a number")
+      return res.status(400).send("Not a number")
     }
     const winners = await Winner.find({}).limit(+req.params.num)
     res.status(200).json(winners)

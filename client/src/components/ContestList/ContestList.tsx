@@ -26,7 +26,7 @@ export default function ContestList({ userContests }: Props): JSX.Element {
           {/* map through given data and alter the return inside of the map */}
           {userContests.map((contest) => (
             <>
-              <ListItem key={contest.title}>
+              <ListItem key={contest._id}>
                 <Avatar className={classes.avatar} alt="Test Contest Image" variant="square" src={LionTatoo} />
                 <Grid className={classes.grid} container>
                   <ListItemText
@@ -39,9 +39,9 @@ export default function ContestList({ userContests }: Props): JSX.Element {
                       <>
                         <Typography>{contest.description}</Typography>
                         <Container className={classes.container}>
-                          <Link to={`/contest/${contest._id}`}>
-                            <Button className={classes.button}>{contest.prizeAmount}</Button>
-                          </Link>
+                          <Button component={Link} to={`/contest/${contest._id}`} className={classes.button}>
+                            {contest.prizeAmount}
+                          </Button>
                         </Container>
                       </>
                     }
