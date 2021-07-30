@@ -29,13 +29,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 15
   },
   paper: {
-    marginTop: 70,
-    marginLeft: '25%',
+    marginTop: '5%',
     overflowY: 'hidden',
-    width: '50%',
+    width: '65%',
     [theme.breakpoints.down('sm')]: {
-      width: '90%',
+      width: '100%',
       marginLeft: '5%',
+      marginRight: '5%',
+    },
+    [theme.breakpoints.only('xl')]: {
+      width: '40%',
+      marginLeft: '2%',
+      marginRight: '5%',
     }
   },
   delete: {
