@@ -7,15 +7,16 @@ interface Props {
   images: string[];
   artistName: string;
   artistPic: string;
+  submissionId: string;
 }
 
-const SubmittedDesigns = ({ images, artistName, artistPic }: Props): JSX.Element => {
+const SubmittedDesigns = ({ images, artistName, artistPic, submissionId }: Props): JSX.Element => {
   const classes = useStyles();
   return (
     <>
       {images.map((image) => (
         <ImageListItem key={image} cols={1} className={classes.listItem}>
-          <ImageModal artistPic={artistPic} artistName={artistName} image={image}>
+          <ImageModal submissionId={submissionId} artistPic={artistPic} artistName={artistName} image={image}>
             <img
               srcSet={`${image}?w=248&fit=crop&auto=format 1x,
             ${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
