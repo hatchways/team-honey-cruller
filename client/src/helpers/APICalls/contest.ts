@@ -4,14 +4,14 @@ import { Contest } from '../../interface/User';
 import { NewContest } from '../../interface/Contest';
 import axios from 'axios';
 
-export const getAllContests = async (): Promise<AuthApiData> => {
+export const getAllContests = async (date: string): Promise<AuthApiData> => {
   const fetchData: FetchOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
   };
 
-  return await fetch('/contest', fetchData)
+  return await fetch(`/contest/?deadlineDate=${date}`, fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Cannot connect to server' } }));
 };
@@ -42,10 +42,7 @@ export const getContestById = async (id: string): Promise<Contest> => {
 
 export const addContest = async (contest: NewContest): Promise<AuthApiData> => {
   return await axios
-    .post('/contest', {
-      ...contest,
-      deadlineDate: contest.deadlineDate.format('MMM Do YYYY h:mm A z'),
-    })
+    .post('/contest', contest)
     .then((res) => res.data)
     .catch(() => ({ error: { message: 'Cannot create contest' } }));
 };

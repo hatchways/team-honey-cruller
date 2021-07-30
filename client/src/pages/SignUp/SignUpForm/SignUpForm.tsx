@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
+import { GoogleLogin } from 'react-google-login';
+
 
 interface Props {
   handleSubmit: (

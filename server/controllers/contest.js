@@ -1,20 +1,21 @@
 const Contest = require("../models/Contest");
 const asyncHandler = require("express-async-handler");
+const moment = require('moment');
 
 exports.createContest = asyncHandler(async (req, res) => {
-    try {
-        const contest = await Contest.create({
-            title: req.body.title,
-            description: req.body.description,
-            prizeAmount: req.body.prizeAmount,
-            deadlineDate: req.body.deadlineDate,
-            userId: req.user.id,
-            images: req.body.images
-        });
-        res.status(201).json(contest);
-    } catch (err) {
-        res.status(500).json(err);
-    }
+  try {
+    const contest = await Contest.create({
+      title: req.body.title,
+      description: req.body.description,
+      prizeAmount: req.body.prizeAmount,
+      deadlineDate: req.body.deadlineDate,
+      userId: req.user.id,
+      images: req.body.images
+    });
+    res.status(201).json(contest);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 })
 
 exports.updateContest = asyncHandler(async (req, res) => {
@@ -32,9 +33,12 @@ exports.updateContest = asyncHandler(async (req, res) => {
 
 exports.getSingleContest = asyncHandler(async (req, res) => {
   try {
-    const singleContest = await Contest.findById(req.params.id).select('-__v').populate({path: "userId", select: "username profilePic"});
+    const singleContest = await Contest.findById(req.params.id).select('-__v').populate({
+      path: "userId",
+      select: "username profilePic"
+    });
     const contest = singleContest.toJSON()
-    contest.ownerName= contest.userId.username
+    contest.ownerName = contest.userId.username
     contest.ownerProfilePic = contest.userId.profilePic
     contest.userId = contest.userId._id
     res.status(200).json(contest);
@@ -45,10 +49,35 @@ exports.getSingleContest = asyncHandler(async (req, res) => {
 
 exports.getAllContests = asyncHandler(async (req, res) => {
   try {
-    const allContests = await Contest.find({}).select('-submissions')
-    res.status(200).json({
-      contests: allContests
-    })
+    let {
+      deadlineDate
+    } = req.query
+
+    if (deadlineDate === '') {
+      const allContests = await Contest.find({}).select('-submissions')
+      res.status(200).json({
+        contests: allContests
+      })
+    } else {
+      const allContests = await Contest.find({
+          deadlineDate: {
+            $lte: deadlineDate
+          }
+        })
+        .sort({
+          deadlineDate: 'asc'
+        });
+
+      if (!allContests) {
+        return res.status(404).json({
+          message: 'Could not retrieve contests'
+        })
+      }
+
+      res.status(200).json({
+        contests: allContests
+      });
+    }
   } catch (err) {
     res.status(500).json(err);
   }
@@ -65,4 +94,4 @@ exports.getAllContestsByUser = asyncHandler(async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-})
+});
