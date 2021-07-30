@@ -83,8 +83,10 @@ const NotificationPopUp = (): JSX.Element => {
       <GlobalCss />
       <Button aria-describedby={id} variant="contained" color="primary" onClick={handleNotification}>
         <Badge badgeContent={notifications?.length && filterNotification.length}>
-          Notifications
-          <NotificationsNoneIcon />
+          <Typography className={classes.authHeaderText} color="secondary">
+            Notifications
+          </Typography>
+          <NotificationsNoneIcon color="secondary" />
         </Badge>
       </Button>
       <Popover

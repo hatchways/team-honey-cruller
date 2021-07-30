@@ -18,7 +18,11 @@ export default function Dashboard(): JSX.Element {
   const classes = useStyles();
   const { convo } = useConvoContext();
   const { loggedInUser } = useAuth();
-  const [otherUser, setOtherUser] = useState<OtherUser>();
+  const [otherUser, setOtherUser] = useState<OtherUser>({
+    id: '99',
+    name: 'No other user',
+    pic: '',
+  });
 
   useEffect(() => {
     const other =
@@ -33,17 +37,19 @@ export default function Dashboard(): JSX.Element {
             name: convo[0].senderName,
             pic: convo[0].senderPic,
           };
-    setOtherUser(other);
+    if (other) {
+      setOtherUser(other);
+    }
   }, [convo, loggedInUser]);
 
   return otherUser ? (
-    <Paper className={classes.root}>
+    <Box display="flex" flexDirection="column" className={classes.activeChat}>
       <MessageHeader online={false} username={otherUser.name} profilePic={otherUser.pic} />
       <Box className={classes.chatContainer}>
         <Messages convo={convo} />
-        <MessageInput otherUserId={otherUser.id} />
+        <MessageInput otherUserId={otherUser.id} otherUsername={otherUser.name} />
       </Box>
-    </Paper>
+    </Box>
   ) : (
     <div></div>
   );
