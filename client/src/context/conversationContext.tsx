@@ -40,7 +40,6 @@ export const ConversationProvider: FunctionComponent = ({ children }): JSX.Eleme
       });
       getOneConvo(friendId)
         .then((res) => {
-          console.log(res);
           if ('username' in res) {
             setRecipient(res);
           } else {
