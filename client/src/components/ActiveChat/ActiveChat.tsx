@@ -38,7 +38,7 @@ export default function Dashboard(): JSX.Element {
       <MessageHeader online={false} username={otherUser.username} profilePic={otherUser.profilePic} />
       <Box className={classes.chatContainer}>
         <Messages convo={convo} />
-        <MessageInput otherUserId={otherUser._id} />
+        <MessageInput otherUserId={otherUser._id} otherUsername={otherUser.username} />
       </Box>
     </Paper>
   ) : (

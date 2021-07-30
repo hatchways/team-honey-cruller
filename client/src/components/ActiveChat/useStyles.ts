@@ -3,26 +3,21 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexGrow: 8,
     flexDirection: 'column',
+  },
+  activeChat: {
+    height: '100%',
   },
   chatContainer: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    padding: '0 20px',
     '&::-webkit-scrollbar': {
       display: 'none',
     },
-    height: '65vh',
-    [theme.breakpoints.down('md')]: {
-      height: '65vh',
-    },
-    [theme.breakpoints.down('sm')]: {
-      height: '60vh',
-    },
-    [theme.breakpoints.down('xs')]: {
-      height: '48vh',
-    },
+    height: '100%',
+    overflowY: 'scroll',
   },
 }));
 

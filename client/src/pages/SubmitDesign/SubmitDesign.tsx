@@ -46,7 +46,7 @@ export default function SubmitDesign(): JSX.Element {
     try {
       const submission = await createSubmission(allPics, params.id);
       if (submission) {
-        updateSnackBarMessage(`Successfully submitted design${allPics.length > 1 ? 's' : null}`);
+        updateSnackBarMessage(`Successfully submitted design${allPics.length > 1 ? 's' : ''}`);
         history.push(`/contest/${params.id}`);
       }
     } catch (err: any) { 

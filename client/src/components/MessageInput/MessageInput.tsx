@@ -9,9 +9,10 @@ import { useAuth } from '../../context/useAuthContext';
 
 interface Props {
   otherUserId: string;
+  otherUsername: string;
 }
 
-const MessageInput = ({ otherUserId }: Props): JSX.Element => {
+const MessageInput = ({ otherUserId, otherUsername }: Props): JSX.Element => {
   const classes = useStyles();
   const inputRef = useRef<HTMLInputElement>(null);
   const { loggedInUser } = useAuth();
@@ -29,7 +30,7 @@ const MessageInput = ({ otherUserId }: Props): JSX.Element => {
         <Grid container alignContent="center" className={classes.inputContainer}>
           <Grid item xs={10}>
             <Input
-              placeholder="Type something..."
+              placeholder={`Reply to ${otherUsername}`}
               className={classes.input}
               name="text"
               inputProps={{
