@@ -18,7 +18,7 @@ export default function Dashboard(): JSX.Element {
   const classes = useStyles();
   const { convo } = useConvoContext();
   const { loggedInUser } = useAuth();
-  const [otherUser, setOtherUser] = useState<OtherUser | undefined>({
+  const [otherUser, setOtherUser] = useState<OtherUser>({
     id: '99',
     name: 'No other user',
     pic: '',
@@ -37,7 +37,9 @@ export default function Dashboard(): JSX.Element {
             name: convo[0].senderName,
             pic: convo[0].senderPic,
           };
-    setOtherUser(other);
+    if (other) {
+      setOtherUser(other);
+    }
   }, [convo, loggedInUser]);
 
   return otherUser ? (

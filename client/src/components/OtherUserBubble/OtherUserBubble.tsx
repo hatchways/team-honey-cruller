@@ -16,9 +16,6 @@ const OtherUserBubble = ({ time, text, otherUsername, otherPhoto }: Props): JSX.
     <Box display="flex" flex-direction="column" alignItems="flex-end" maxWidth="90%">
       <Avatar alt={otherUsername} src={otherPhoto} className={classes.avatar}></Avatar>
       <Box maxWidth="50%">
-        {/* <Typography className={classes.usernameDate}>
-          {otherUsername} {time}
-        </Typography> */}
         <Box className={classes.bubble}>
           <Typography className={classes.text}>{text}</Typography>
         </Box>
