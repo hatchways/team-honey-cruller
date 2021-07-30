@@ -4,14 +4,14 @@ import { Contest, Winner } from '../../interface/User';
 import { NewContest } from '../../interface/Contest';
 import axios from 'axios';
 
-export const getAllContests = async (): Promise<AuthApiData> => {
+export const getAllContests = async (date: string): Promise<AuthApiData> => {
   const fetchData: FetchOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
   };
 
-  return await fetch('/contest', fetchData)
+  return await fetch(`/contest/?deadlineDate=${date}`, fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Cannot connect to server' } }));
 };
