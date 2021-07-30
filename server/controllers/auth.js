@@ -170,7 +170,7 @@ exports.googleLogin = asyncHandler(async (req, res, next) => {
             return res.status(400).json({
               error: "Something went wrong..."
             });
-            
+
           } else {
             if (user) {
               const {
@@ -220,8 +220,8 @@ exports.googleLogin = asyncHandler(async (req, res, next) => {
                     return res.status(400).json({
                       error: "Something went wrong..."
                     })
-                  }
-                  console.log("data",data)
+                  };
+                  
                   const {
                     _id,
                     username,
