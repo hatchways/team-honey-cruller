@@ -14,7 +14,7 @@ const SenderBubble = ({ time, text }: Props): JSX.Element => {
   const classes = useStyles();
   return (
     <Box display="flex" justifyContent="flex-end">
-      <Box width="50%" display="flex" justifyContent="flex-end">
+      <Box width="50%" maxWidth="45%" display="flex" justifyContent="flex-end">
         {/* <Typography className={classes.date}>{time}</Typography> */}
         <Box className={classes.bubble}>
           <Typography className={classes.text}>{text}</Typography>

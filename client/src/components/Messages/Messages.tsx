@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import Box from '@material-ui/core/Box';
 import SenderBubble from '../SenderBubble/SenderBubble';
 import OtherUserBubble from '../OtherUserBubble/OtherUserBubble';
@@ -13,6 +14,13 @@ interface Props {
 const Messages = ({ convo }: Props): JSX.Element => {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
+  const lastMessage = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (lastMessage.current) {
+      lastMessage.current.scrollIntoView();
+    }
+  }, [convo]);
 
   return (
     <Box className={classes.root}>
@@ -38,6 +46,7 @@ const Messages = ({ convo }: Props): JSX.Element => {
             />
           );
         })}
+      <div ref={lastMessage}></div>
     </Box>
   );
 };

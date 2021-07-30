@@ -9,8 +9,8 @@ const useStyles = makeStyles(() => ({
     flexGrow: 1,
   },
   username: {
-    fontWeight: 'bold',
-    letterSpacing: -0.2,
+    textTransform: 'capitalize',
+    fontWeight: 900,
   },
   lastMessage: {
     fontSize: 12,

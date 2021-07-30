@@ -13,7 +13,7 @@ interface Props {
 const OtherUserBubble = ({ time, text, otherUsername, otherPhoto }: Props): JSX.Element => {
   const classes = useStyles();
   return (
-    <Box display="flex" flex-direction="column" alignItems="flex-end" maxWidth="50%">
+    <Box display="flex" flex-direction="column" alignItems="flex-end" maxWidth="90%">
       <Avatar alt={otherUsername} src={otherPhoto} className={classes.avatar}></Avatar>
       <Box maxWidth="50%">
         {/* <Typography className={classes.usernameDate}>

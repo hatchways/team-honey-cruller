@@ -26,7 +26,7 @@ module.exports = {
       .project({
         '__v': 0,
         'recipientObj': 0,
-      })
+      }).sort({updatedAt: -1})
       .exec(async (err, conversations) => {
         if (err) {
           console.log(err);

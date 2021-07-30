@@ -7,9 +7,6 @@ const useStyles = makeStyles((theme) => ({
   },
   activeChat: {
     height: '100%',
-    [theme.breakpoints.down('xs')]: {
-      height: '85%',
-    },
   },
   chatContainer: {
     display: 'flex',
@@ -19,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     '&::-webkit-scrollbar': {
       display: 'none',
     },
-    maxHeight: '100%',
+    height: '100%',
     overflowY: 'scroll',
   },
 }));

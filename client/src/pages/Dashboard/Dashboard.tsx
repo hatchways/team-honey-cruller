@@ -49,18 +49,16 @@ export default function Dashboard(): JSX.Element {
         <AuthHeader btnText="create contest" linkTo="/create-contest" />
         <Grid container component="main" className={classes.container}>
           <CssBaseline />
-          <Grid item xs={12} sm={6} md={4} className={classes.drawerWrapper}>
-            <Hidden xsDown={true}>
+          <Grid item xs={12} md={6} lg={4} className={classes.drawerWrapper}>
+            <Hidden smDown={true}>
               <ChatSideBanner convos={convos} />
             </Hidden>
-            <Hidden smUp={true}>
+            <Hidden mdUp={true}>
               <ChatDrawer convos={convos} />
             </Hidden>
           </Grid>
-          <Grid item xs={12} sm={6} md={8} className={classes.chatWrapper}>
-            {/* <Paper elevation={3} className={classes.paper}> */}
+          <Grid item xs={12} md={6} lg={8} className={classes.chatWrapper}>
             <ActiveChat />
-            {/* </Paper> */}
           </Grid>
         </Grid>
       </Container>

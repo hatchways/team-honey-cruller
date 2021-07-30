@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
   chatWrapper: {
     height: '100%',
+    [theme.breakpoints.down('sm')]: {
+      height: 'calc(100% - 50px)',
+    },
   },
   paper: {
     maxHeight: '100%',
