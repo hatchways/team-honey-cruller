@@ -33,7 +33,7 @@ export default function Dashboard(): JSX.Element {
     setOtherUser(other);
   }, [convo, loggedInUser, recipient]);
 
-  return otherUser ? (
+  return otherUser && otherUser.username ? (
     <Paper className={classes.root}>
       <MessageHeader online={false} username={otherUser.username} profilePic={otherUser.profilePic} />
       <Box className={classes.chatContainer}>
