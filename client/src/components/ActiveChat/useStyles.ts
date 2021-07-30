@@ -4,6 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
+    height: '100%',
   },
   activeChat: {
     height: '100%',
