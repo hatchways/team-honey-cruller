@@ -215,6 +215,7 @@ export default function ContestPage(): JSX.Element {
                         images={submission.images}
                         artistPic={submission.artistPic}
                         artistName={submission.artistName}
+                        submissionId={submission._id}
                       />
                     ))}
                   </ImageList>
