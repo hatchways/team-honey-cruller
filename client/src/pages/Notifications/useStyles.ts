@@ -54,11 +54,6 @@ const useStyles = makeStyles((theme) => ({
       color: '#fff', 
       backgroundColor:'black',
     }
-  },
-  root:{
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
   }
 }));
 

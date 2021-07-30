@@ -67,7 +67,10 @@ export default function Notifications({ header } : NotificationProps): JSX.Eleme
      <>
       <CssBaseline />
       {header ? <AuthHeader linkTo={`/create-contest`} btnText="CREATE CONTEST" /> : ''}
-      <Box className={classes.root}>
+      <Box 
+      display='flex'
+      justifyContent='center' 
+      >
       <Paper className={classes.paper} elevation={2}>
         <Grid direction="row" container>
           <Grid item>
