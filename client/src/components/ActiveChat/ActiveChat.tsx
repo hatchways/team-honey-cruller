@@ -7,41 +7,38 @@ import MessageInput from '../MessageInput/MessageInput';
 import Messages from '../Messages/Messages';
 import { useConvoContext } from '../../context/conversationContext';
 import { useAuth } from '../../context/useAuthContext';
-
-interface OtherUser {
-  id: string;
-  name: string;
-  pic: string;
-}
+import { OtherUser } from '../../interface/Convo';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
-  const { convo } = useConvoContext();
+  const { convo, recipient } = useConvoContext();
   const { loggedInUser } = useAuth();
   const [otherUser, setOtherUser] = useState<OtherUser>();
 
   useEffect(() => {
     const other =
-      loggedInUser && convo && loggedInUser.id === convo[0].senderId
+      loggedInUser && convo && convo.length && loggedInUser.id === convo[0].senderId
         ? {
-            id: convo[0].recipientId,
-            name: convo[0].recipientName,
-            pic: convo[0].recipientPic,
+            _id: convo[0].recipientId,
+            username: convo[0].recipientName,
+            profilePic: convo[0].recipientPic,
           }
-        : convo && {
-            id: convo[0].senderId,
-            name: convo[0].senderName,
-            pic: convo[0].senderPic,
-          };
+        : convo && convo.length
+        ? {
+            _id: convo[0].senderId,
+            username: convo[0].senderName,
+            profilePic: convo[0].senderPic,
+          }
+        : recipient;
     setOtherUser(other);
-  }, [convo, loggedInUser]);
+  }, [convo, loggedInUser, recipient]);
 
   return otherUser ? (
     <Paper className={classes.root}>
-      <MessageHeader online={false} username={otherUser.name} profilePic={otherUser.pic} />
+      <MessageHeader online={false} username={otherUser.username} profilePic={otherUser.profilePic} />
       <Box className={classes.chatContainer}>
         <Messages convo={convo} />
-        <MessageInput otherUserId={otherUser.id} />
+        <MessageInput otherUserId={otherUser._id} />
       </Box>
     </Paper>
   ) : (

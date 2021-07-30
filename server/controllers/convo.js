@@ -97,6 +97,10 @@ module.exports = {
           }));
           res.sendStatus(500);
         } else {
+          if(!messages.length) {
+            const otherUser = await User.findOne({_id: user2})
+            return res.status(200).json(otherUser)
+          }
           const populated = await Message.populate(messages, {
             path: 'from to',
             select: '-__v -password -register_date'
