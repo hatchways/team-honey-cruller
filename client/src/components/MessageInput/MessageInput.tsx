@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent, useRef } from 'react';
+import { FormEvent, useRef } from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
@@ -37,6 +37,7 @@ const MessageInput = ({ otherUserId, otherUsername }: Props): JSX.Element => {
                 ref: inputRef,
               }}
               disableUnderline={true}
+              classes={{ input: classes.placeholder }}
             />
           </Grid>
           <Grid item xs={2}>

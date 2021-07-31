@@ -6,6 +6,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { User } from '../../interface/User';
 import { useDebounce } from 'use-debounce';
 import { searchUsers } from '../../helpers/APICalls/searchUsers';
+import { useConvoContext } from '../../context/conversationContext';
 
 interface Props {
   search: string;
@@ -17,6 +18,7 @@ const Search = ({ search, handleChange }: Props): JSX.Element => {
   const [loading, setLoading] = useState(false);
   // limit our call to the api with a debounced value at max of 1 per 0.5 seconds
   const [debouncedSearch] = useDebounce(search, 500);
+  const { setFriendId } = useConvoContext();
 
   const classes = useStyles();
 
@@ -48,6 +50,12 @@ const Search = ({ search, handleChange }: Props): JSX.Element => {
     };
   }, [debouncedSearch]);
 
+  const handleFriendChange = (value: User) => {
+    if (value) {
+      setFriendId(value.id);
+    }
+  };
+
   // creates a combobox search which is dynamically updated with call's to the API
   return (
     <form
@@ -68,6 +76,7 @@ const Search = ({ search, handleChange }: Props): JSX.Element => {
         getOptionLabel={(option) => option.username}
         options={options}
         loading={loading}
+        onChange={(e, value) => handleFriendChange(value as User)}
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         onInputChange={handleChange}
