@@ -172,7 +172,7 @@ export default function Discovery(): JSX.Element {
                           <TableCell className={classes.tableRow}>{contest.title}</TableCell>
                           <TableCell className={classes.tableRow}>{contest.description}</TableCell>
                           <TableCell className={classes.tableRow}>${contest.prizeAmount}</TableCell>
-                          <TableCell className={classes.tableRow}>{contest.deadlineDate}</TableCell>
+                          <TableCell className={classes.tableRow}>{moment(contest.deadlineDate).local().format('MM-DD-YYYY')}</TableCell>
                           <TableCell className={classes.tableRow}>
                             <Button className={classes.button} component={Link} to={`/contest/${contest._id}`}>
                               More Info

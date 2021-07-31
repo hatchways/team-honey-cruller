@@ -42,7 +42,7 @@ const useStyles = makeStyles(() => ({
   },
   heroImage: {
     background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url(${HeroImg})`,
-    backgroundSize: '100%',
+    backgroundSize: 'cover',
     height: '50vh',
     width: '63vw',
     backgroundPosition: 'center',
