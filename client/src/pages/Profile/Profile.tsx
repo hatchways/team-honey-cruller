@@ -136,7 +136,7 @@ export default function Profile(): JSX.Element {
           ></Avatar>
         )}
         <Typography className={classes.user}>{loggedInUser.username}</Typography>
-        <Box>
+        <Box className={classes.buttonBox}>
           <Button className={classes.button}>Edit Profile</Button>
           <Button className={classes.button}>
             <label htmlFor="file" className={classes.fileInputLabel}>
@@ -163,8 +163,9 @@ export default function Profile(): JSX.Element {
                 textColor="primary"
                 variant="fullWidth"
               >
-                <Tab label="IN PROGRESS" />
-                <Tab label="COMPLETED" />
+                <Tab label="in progress" className={classes.tab} />
+                <Tab label="choose a winner" className={classes.tab} />
+                <Tab label="past winners" className={classes.tab} />
               </Tabs>
             </ThemeProvider>
           </Toolbar>
@@ -174,6 +175,9 @@ export default function Profile(): JSX.Element {
             </Panel>
             <Panel value={value} index={1}>
               <ContestList userContests={isComplete()} />
+            </Panel>
+            <Panel value={value} index={2}>
+              <ContestList userContests={winners} />
             </Panel>
           </Paper>
         </Container>
