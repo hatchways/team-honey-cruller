@@ -50,6 +50,12 @@ const Search = ({ search, handleChange }: Props): JSX.Element => {
     };
   }, [debouncedSearch]);
 
+  const handleFriendChange = (value: User) => {
+    if (value) {
+      setFriendId(value.id);
+    }
+  };
+
   // creates a combobox search which is dynamically updated with call's to the API
   return (
     <form
@@ -70,7 +76,7 @@ const Search = ({ search, handleChange }: Props): JSX.Element => {
         getOptionLabel={(option) => option.username}
         options={options}
         loading={loading}
-        onChange={(e, value: any) => value && value.id && setFriendId(value.id)}
+        onChange={(e, value) => handleFriendChange(value as User)}
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         onInputChange={handleChange}
