@@ -11,7 +11,6 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import MomentUtils from '@date-io/moment';
 import moment from 'moment';
-import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -25,18 +24,22 @@ import Box from '@material-ui/core/Box';
 import Carousel from 'react-material-ui-carousel';
 import SortIcon from '@material-ui/icons/Sort';
 import { Animated } from 'react-animated-css';
+import withWidth, { WithWidth } from '@material-ui/core/withWidth';
+import Hidden from '@material-ui/core/Hidden';
 import useStyles from './useStyles';
 
 //might have to delete later
 import { Link } from 'react-router-dom';
 
-export default function Discovery(): JSX.Element {
+export default function Discovery(props: WithWidth): JSX.Element {
+
   const [contests, setContests] = useState<Contest[]>([]);
   const [sortType, setSortType] = useState<keyof Contest>('deadlineDate');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [dateFilter, setDateFilter] = useState<any>();
   const { loggedInUser } = useAuth();
+  const { width } = props;
   const classes = useStyles();
 
   const fetchCall = async (date: any) => {
@@ -44,7 +47,7 @@ export default function Discovery(): JSX.Element {
     if (allContests.contests) {
       setContests(allContests.contests);
     } else {
-      new Error('Could Not Get Contests');
+      return new Error('Could Not Get Contests');
     }
   }
 
@@ -93,30 +96,32 @@ export default function Discovery(): JSX.Element {
       <AuthHeader linkTo="/create-contest" btnText="create contest" />
       <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
         <Grid container justify="center" className={classes.grid}>
-          <Container className={classes.tableContainer}>
-          <Paper elevation={20} className={classes.heroImage}>
-            <Box className={classes.heroContents}>
-              <Typography variant='h2'>Welcome to Tatoo Art</Typography>
-              <Typography paragraph={true}>Premier tatoo designs created by artists all over the world.</Typography>
-            </Box>
-          </Paper>
+          <Grid className={classes.tableContainer}>
+            <Hidden xsDown>
+              <Paper elevation={20} className={classes.heroImage}>
+                <Box className={classes.heroContents}>
+                  <Typography variant='h2'>Welcome to Tatoo Art</Typography>
+                  <Typography paragraph={true}>Premier tatoo designs created by artists all over the world.</Typography>
+                </Box>
+              </Paper>
 
-          <Paper>
-            <Carousel
-              animation="fade"
-              next={(now: any, previous: any) => console.log(`Next User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
-              prev={(now: any, previous: any) => console.log(`Prev User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
-              onChange={(now: any, previous: any) => console.log(`OnChange User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
-            >
-              {contests.map((contest, i) => {
-                return (
-                  <>
-                    <Typography variant='h4'>{contest.title}</Typography>
-                  </>
-                )
-              })}
-            </Carousel>
-          </Paper>
+              <Paper>
+                <Carousel
+                  animation="fade"
+                  next={(now: any, previous: any) => console.log(`Next User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
+                  prev={(now: any, previous: any) => console.log(`Prev User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
+                  onChange={(now: any, previous: any) => console.log(`OnChange User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
+                >
+                  {contests.map((contest, i) => {
+                    return (
+                      <>
+                        <Typography variant='h4'>{contest.title}</Typography>
+                      </>
+                    )
+                  })}
+                </Carousel>
+              </Paper>
+              </Hidden>
             <Grid item>
               <Typography className={classes.typography}>All Open Contests</Typography>
             </Grid>
@@ -141,7 +146,7 @@ export default function Discovery(): JSX.Element {
                 </Grid>
               </MuiPickersUtilsProvider>
             </Grid>
-          </Container>
+          </Grid>
           <Paper className={classes.paper}>
             <TableContainer>
               <Table stickyHeader aria-label="sticky table">

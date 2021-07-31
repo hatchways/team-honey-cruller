@@ -51,7 +51,7 @@ const useStyles = makeStyles(() => ({
     marginBottom: '15px'
   },
   heroContents: {
-    paddingTop: '220px',
+    paddingTop: '275px',
     textAlign: 'center',
     color: 'white'
   },
