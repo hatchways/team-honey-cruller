@@ -53,19 +53,6 @@ exports.setUpIntents = asyncHandler(async (req, res) => {
     }
 })
 
-exports.createPaymentMethod = asyncHandler(async (req, res) => {
-    try {
-        const createPayment = await stripe.paymentMethods.create({
-            type: req.body.type,
-            // req.body.card should be an object with number, expMonth, expYear, and cvc inside.
-            card: req.body.card
-        })
-        res.status(201).json(createPayment)
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
 exports.createCheckoutSession = asyncHandler(async (req, res) => {
     try {
         const checkoutSession = await stripe.checkout.sessions.create({
@@ -116,7 +103,30 @@ exports.attachPaymentMethod = asyncHandler(async (req, res) => {
         });
 
     } catch (err) {
-        console.log(err)
+        res.status(500).json(err);
+    }
+})
+
+exports.updatePaymentMethod = asyncHandler(async (req, res) => {
+    try {
+        const updatePayment = await stripe.paymentMethods.update(req.body.cardId);
+        res.status(200).json({
+            updatePayment
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+exports.listPaymentMethod = asyncHandler(async (req, res) => {
+    try {
+        const listPayments = await stripe.paymentMethods.list({
+            customer: req.body.stripeId,
+            type: 'card'
+        })
+
+        res.status(200).json(listPayments);
+    } catch (err) {
         res.status(500).json(err);
     }
 })
