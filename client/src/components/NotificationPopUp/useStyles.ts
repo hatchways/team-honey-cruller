@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     paddingBottom: '0',
   },
+  authHeaderText: {
+    marginRight: 10,
+  },
   poptitle: {
     margin: '15px',
     fontWeight: 'bold',
@@ -25,12 +28,12 @@ const useStyles = makeStyles((theme) => ({
   seeAll: {
     marginLeft: 70,
     marginTop: 50,
-    fontSize: 15
+    fontSize: 15,
   },
   popUpBox: {
-      top: '15px !important',
-      height: '80%'
-    }
+    top: '15px !important',
+    height: '80%',
+  },
 }));
 
 export default useStyles;

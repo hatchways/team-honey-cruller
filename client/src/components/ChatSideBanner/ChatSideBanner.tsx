@@ -10,9 +10,10 @@ import { Convo } from '../../interface/User';
 
 interface Props {
   convos: Convo[];
+  closeDrawer?: (arg0: boolean) => void;
 }
 
-const ChatSideBanner = ({ convos }: Props): JSX.Element => {
+const ChatSideBanner = ({ convos, closeDrawer }: Props): JSX.Element => {
   const [search, setSearch] = useState<string>('test');
   const [newChatUser, setNewChatUser] = useState<User | null>(null);
   const classes = useStyles();
@@ -31,10 +32,12 @@ const ChatSideBanner = ({ convos }: Props): JSX.Element => {
           Inbox Messages
         </Typography>
       </Box>
-      <Box>
+      <Box marginBottom={3}>
         <Search search={search} handleChange={handleChange} />
       </Box>
-      {convos && convos.map((convo) => <ConvoCard key={convo._id} convo={convo} />)}
+      <Box className={classes.convosContainer}>
+        {convos && convos.map((convo) => <ConvoCard key={convo._id} convo={convo} closeDrawer={closeDrawer} />)}
+      </Box>
     </Grid>
   );
 };

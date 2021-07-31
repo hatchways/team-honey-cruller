@@ -6,6 +6,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     height: 'min-content',
     overflowY: 'scroll',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
     maxHeight: '90%',
     width: '70%',
     [theme.breakpoints.down('sm')]: { width: '85%' },

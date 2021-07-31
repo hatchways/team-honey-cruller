@@ -23,6 +23,7 @@ export interface Contest {
   ownerProfilePic: string;
   ownerName: string;
   submissions: Submission[];
+  active: boolean;
 }
 
 export interface Submission {
@@ -60,6 +61,24 @@ export interface Message {
   recipientPic: string;
   text: string;
   createdAt: string;
+}
+
+interface WinningUser {
+  _id: string;
+  username: string;
+  email: string;
+  profilePic?: string;
+}
+
+export interface Winner {
+  _id: string;
+  contestOwner: WinningUser;
+  winningArtist: WinningUser;
+  winningPic: string;
+  title: string;
+  description: string;
+  prizeAmount: number;
+  error?: { message: string };
 }
 
 export interface SearchUsersApiData {

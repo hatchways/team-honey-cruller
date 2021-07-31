@@ -46,7 +46,7 @@ export default function SubmitDesign(): JSX.Element {
     try {
       const submission = await createSubmission(allPics, params.id);
       if (submission) {
-        updateSnackBarMessage(`Successfully submitted design${allPics.length > 1 ? 's' : null}`);
+        updateSnackBarMessage(`Successfully submitted design${allPics.length > 1 ? 's' : ''}`);
         history.push(`/contest/${params.id}`);
       }
     } catch (err: any) { 
@@ -89,8 +89,8 @@ export default function SubmitDesign(): JSX.Element {
               <Typography className={classes.mutedText}>PNG, JPG, GIF</Typography>
             </Paper>
           </label>
-          <Button className={classes.uploadBtn} onClick={submitAllPics}>
-            submit
+          <Button disabled={loading ? true : false} className={classes.uploadBtn} onClick={submitAllPics}>
+            {loading ? <CircularProgress /> : 'Submit'}
           </Button>
         </Grid>
       </Grid>

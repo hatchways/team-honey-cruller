@@ -16,8 +16,14 @@ const ConvoContent = ({ username, lastMessage }: Props): JSX.Element => {
   return (
     <Box className={classes.root} onClick={() => setUnread(0)}>
       <Box>
-        <Typography className={classes.username}>{username}</Typography>
-        <Typography className={classes.lastMessage}>{lastMessage}</Typography>
+        <Typography className={classes.username}>
+          {username.slice(0, 15)}
+          {username.length > 40 ? '...' : ''}
+        </Typography>
+        <Typography className={classes.lastMessage}>
+          {lastMessage.slice(0, 40)}
+          {lastMessage.length > 40 ? '...' : ''}
+        </Typography>
       </Box>
       {unread ? <Chip color="primary" label={unread} className={classes.chip} /> : null}
     </Box>

@@ -65,6 +65,8 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
         let newDate = moment();
         if (zone === 'PDT') {
           newDate = contest.deadlineDate.tz('America/Los_Angeles', true);
+        } else if (zone === 'MDT') {
+          newDate = contest.deadlineDate.tz('America/Denver', true);
         } else if (zone === 'CDT') {
           newDate = contest.deadlineDate.tz('America/Chicago', true);
         } else {
@@ -172,6 +174,7 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
                       onChange={(value) => setZone(value.target.value)}
                     >
                       <MenuItem value="PDT">PDT</MenuItem>
+                      <MenuItem value="MDT">MDT</MenuItem>
                       <MenuItem value="CDT">CDT</MenuItem>
                       <MenuItem value="EDT">EDT</MenuItem>
                     </TextField>

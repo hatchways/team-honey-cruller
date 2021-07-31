@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     alignItems: 'center',
     '&:hover': {
-      cursor: 'grab',
+      cursor: 'pointer',
     },
   },
   profilePic: {

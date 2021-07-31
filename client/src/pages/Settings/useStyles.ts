@@ -1,4 +1,4 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles, Theme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -14,9 +14,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderRight: `1px solid ${theme.palette.divider}`,
     boxShadow: '3px 0 5px -2px #DDDDDD',
     paddingTop: 20,
-    "& .MuiTab-wrapper": {
-      flexDirection: "row",
-      justifyContent: "flex-start"
+    '& .MuiTab-wrapper': {
+      flexDirection: 'row',
+      justifyContent: 'flex-start'
     },
   },
   label: {
@@ -32,8 +32,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontWeight: 'bold',
     textAlign: 'center',
     padding: '20px 0 30px 0',
-    marginLeft: '58px'
-  }
+    marginLeft: '58px',
+  },
+  tabPanel: {
+    width: '80%'
+  },
 }));
 
 export default useStyles;
