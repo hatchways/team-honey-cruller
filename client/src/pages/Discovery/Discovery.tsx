@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/useAuthContext';
-import { Contest } from '../../interface/User';
+import { Contest, Winner } from '../../interface/User';
 import { Column } from '../../interface/Discovery';
 import { getAllContests } from '../../helpers/APICalls/contest';
+import { getSomeWinners } from '../../helpers/APICalls/winner'
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -26,6 +27,7 @@ import SortIcon from '@material-ui/icons/Sort';
 import { Animated } from 'react-animated-css';
 import withWidth, { WithWidth } from '@material-ui/core/withWidth';
 import Hidden from '@material-ui/core/Hidden';
+import WinnerCard from '../../components/WinnerCard/WinnerCard'
 import useStyles from './useStyles';
 
 //might have to delete later
@@ -38,6 +40,7 @@ export default function Discovery(props: WithWidth): JSX.Element {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [dateFilter, setDateFilter] = useState<any>();
+  const [winners, setWinners] = useState<Winner[]>([]);
   const { loggedInUser } = useAuth();
   const { width } = props;
   const classes = useStyles();
@@ -51,8 +54,18 @@ export default function Discovery(props: WithWidth): JSX.Element {
     }
   }
 
+  const winnersData = async () => {
+    const getWinners = await getSomeWinners(7);
+    if (getWinners) {
+      setWinners(getWinners);
+    } else {
+      return new Error('Could Not Get Winners');
+    }
+  }
+
   useEffect(() => {
-    fetchCall('')
+    fetchCall('');
+    winnersData();
   }, []);
 
   useEffect(() => {
@@ -112,16 +125,20 @@ export default function Discovery(props: WithWidth): JSX.Element {
                   prev={(now: any, previous: any) => console.log(`Prev User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
                   onChange={(now: any, previous: any) => console.log(`OnChange User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
                 >
-                  {contests.map((contest, i) => {
-                    return (
-                      <>
-                        <Typography variant='h4'>{contest.title}</Typography>
-                      </>
-                    )
+                  {winners.map((winner, i) => {
+                    console.log(winner, i)
+                    return <WinnerCard 
+                        key={i}
+                        winningPic={winner.winningPic}
+                        title={winner.title}
+                        prizeAmount={winner.prizeAmount}
+                        description={winner.description}
+                        winningArtist={winner.winningArtist}
+                        />
                   })}
                 </Carousel>
               </Paper>
-              </Hidden>
+            </Hidden>
             <Grid item>
               <Typography className={classes.typography}>All Open Contests</Typography>
             </Grid>

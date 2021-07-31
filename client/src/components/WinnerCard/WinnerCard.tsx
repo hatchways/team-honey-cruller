@@ -19,9 +19,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 interface Props {
     winningPic: string;
     title: string;
-    prizeAmount: string;
-    winningArtist: string;
+    prizeAmount: number;
+    winningArtist: any;
     description: string;
+    key: number;
 }
 
 const WinnerCard = (props: Props): JSX.Element => {
@@ -31,7 +32,7 @@ const WinnerCard = (props: Props): JSX.Element => {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-
+    console.log(props);
     return (
         <>
             <Card className={classes.card}>

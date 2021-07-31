@@ -10,7 +10,10 @@ cardHeader: {
 avatar: {
 
 },
-media: {},
+media: {
+    height: 0,
+    paddingTop: '56.25%'
+},
 expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
