@@ -116,7 +116,7 @@ exports.attachPaymentMethod = asyncHandler(async (req, res) => {
         const makeDefaultPayment = await stripe.customers.update(
             req.body.stripeId, {
                 invoice_settings: {
-                    default_payment_method: customerCard.id
+                    default_payment_method: req.body.cardId
                 }
             }
         )
