@@ -21,15 +21,13 @@ exports.retrieveCustomer = asyncHandler(async (req, res) => {
     try {
         const customer = await stripe.customers.retrieve(req.params.id);
 
-        if(customer.invoice_settings.default_payment_method === null){
+        if (customer.invoice_settings.default_payment_method === null) {
             res.status(200).json({
-                // cardExists: false
-                customer: customer
+                cardExists: false
             })
         } else {
             res.status(200).json({
-                // cardExists: true
-                customer: customer
+                cardExists: true
             })
         }
 
@@ -101,14 +99,30 @@ exports.chargeCard = asyncHandler(async (req, res) => {
 
 exports.attachPaymentMethod = asyncHandler(async (req, res) => {
     try {
+        const customer = await stripe.customers.retrieve(req.body.stripeId);
+
+        const oldPayment = customer.invoice_settings.default_payment_method
+
+        if (oldPayment != null) {
+            const detach = await stripe.paymentMethods.detach(oldPayment);
+        }
+
         const customerCard = await stripe.paymentMethods.attach(
             req.body.cardId, {
                 customer: req.body.stripeId
             }
+        );
+
+        const makeDefaultPayment = await stripe.customers.update(
+            req.body.stripeId, {
+                invoice_settings: {
+                    default_payment_method: customerCard.id
+                }
+            }
         )
 
         res.status(200).json({
-            customer: customerCard
+            customer: makeDefaultPayment
         });
 
     } catch (err) {
@@ -126,16 +140,3 @@ exports.updatePaymentMethod = asyncHandler(async (req, res) => {
         res.status(500).json(err);
     }
 });
-
-exports.listPaymentMethod = asyncHandler(async (req, res) => {
-    try {
-        const listPayments = await stripe.paymentMethods.list({
-            customer: req.body.stripeId,
-            type: 'card'
-        })
-        
-        res.status(200).json(listPayments);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-})

@@ -98,31 +98,3 @@ export const addCardToCustomer = async (cardId: string,  stripeId: string): Prom
             error: { message: 'Unable to connect to Stripe. Please try again' },
     }));
 };
-
-export const updateCustomerCard = async (cardId: string): Promise<AuthApiCustomerData> => {
-    const fetchOptions: FetchOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({cardId}),
-        credentials: 'include',
-    };
-    return await fetch(`/stripe/update-payment`, fetchOptions)
-        .then((res) => res.json())
-        .catch(() => ({
-            error: { message: 'Unable to connect to Stripe. Please try again' },
-    }));
-};
-
-export const listCustomerCard = async (stripeId: string): Promise<AuthApiCustomerData> => {
-    const fetchOptions: FetchOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ stripeId }),
-        credentials: 'include',
-    };
-    return await fetch(`/stripe/list-card`, fetchOptions)
-        .then((res) => res.json())
-        .catch(() => ({
-            error: { message: 'Unable to connect to Stripe. Please try again' },
-    }));
-};
