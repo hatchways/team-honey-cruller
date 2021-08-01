@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement, } from '@stripe/react-stripe-js';
-import { addCardToCustomer } from '../../helpers/APICalls/stripe'
+import { addCardToCustomer, retrieveStripeUser, updateCustomerCard } from '../../helpers/APICalls/stripe'
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import useStyles from './useStyles'
@@ -14,8 +14,23 @@ export default function Payment(): JSX.Element {
     const stripe = useStripe();
     const elements = useElements();
     const classes = useStyles();
+    const [cardExists, setCardExists] = useState<boolean>()
     const { loggedInUser } = useAuth();
     const { updateSnackBarMessage } = useSnackBar();
+
+    
+    const checkStripeInfo = async () => {
+        console.log(loggedInUser)
+        if (loggedInUser) {
+            const getInfo = await retrieveStripeUser(loggedInUser.stripeId);
+
+            setCardExists(getInfo.cardExists)
+        }
+    }
+
+    useEffect(() => {
+        checkStripeInfo()
+    })
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -25,7 +40,7 @@ export default function Payment(): JSX.Element {
         }
 
         const cardElement = elements.getElement(CardNumberElement);
-        
+
         if (loggedInUser && cardElement) {
             stripe
                 .createPaymentMethod({
@@ -35,12 +50,20 @@ export default function Payment(): JSX.Element {
                         name: loggedInUser.username,
                     },
                 })
-                .then(function (result) {
-                    if(result.paymentMethod){
+                .then(result => {
+                    if (result.paymentMethod) {
                         const cardId = result.paymentMethod.id;
                         const stripeId = loggedInUser.stripeId;
-                        addCardToCustomer(cardId, stripeId);
-                        updateSnackBarMessage("Card has been added to your account.");
+
+                        if (cardExists) {
+                            console.log("hit if")
+                        }
+                        else {
+                            const test = addCardToCustomer(cardId, stripeId);
+                            console.log(test)
+                            updateSnackBarMessage("Card has been added to your account.");
+                        }
+
                     } else {
                         updateSnackBarMessage("Card could not be added");
                     }

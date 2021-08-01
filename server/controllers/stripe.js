@@ -21,9 +21,18 @@ exports.retrieveCustomer = asyncHandler(async (req, res) => {
     try {
         const customer = await stripe.customers.retrieve(req.params.id);
 
-        res.status(200).json({
-            customer: customer
-        })
+        if(customer.invoice_settings.default_payment_method === null){
+            res.status(200).json({
+                // cardExists: false
+                customer: customer
+            })
+        } else {
+            res.status(200).json({
+                // cardExists: true
+                customer: customer
+            })
+        }
+
     } catch (err) {
         res.status(500).json(err);
     }
@@ -124,7 +133,7 @@ exports.listPaymentMethod = asyncHandler(async (req, res) => {
             customer: req.body.stripeId,
             type: 'card'
         })
-
+        
         res.status(200).json(listPayments);
     } catch (err) {
         res.status(500).json(err);
