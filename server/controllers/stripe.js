@@ -128,15 +128,4 @@ exports.attachPaymentMethod = asyncHandler(async (req, res) => {
     } catch (err) {
         res.status(500).json(err);
     }
-})
-
-exports.updatePaymentMethod = asyncHandler(async (req, res) => {
-    try {
-        const updatePayment = await stripe.paymentMethods.update(req.body.cardId);
-        res.status(200).json({
-            updatePayment
-        });
-    } catch (err) {
-        res.status(500).json(err);
-    }
 });
