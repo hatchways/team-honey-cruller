@@ -11,7 +11,7 @@ interface CardBaseProps {
     noBg?: boolean;
     liftUp?: boolean;
     align?: 'left' | 'right' | 'center';
-    cardContentProps?: object;
+    cardContentProps?: Record<string, unknown>;
     // All other props
     [x: string]: any;
 }

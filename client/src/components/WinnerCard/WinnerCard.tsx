@@ -25,7 +25,7 @@ const WinnerCard = (props: Props): JSX.Element => {
 
     return (
         <>
-        <Collapse in={props.useWindowPosition('header')}  {...( props.useWindowPosition('header') ? { timeout: 1000 } : {})}>
+        <Collapse in={props.useWindowPosition('header')}  {...( props.useWindowPosition('header') ? { timeout: 500 } : {})}>
                 <Card className={classes.root}>
                         <CardMedia
                             className={classes.media}

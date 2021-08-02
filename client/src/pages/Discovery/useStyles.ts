@@ -18,8 +18,7 @@ const useStyles = makeStyles((theme) => ({
     width: '50%',
   },
   tableContainer: {
-    marginBottom: '50px',
-    // minHeight: '100vh',
+    minHeight: '100vh',
     background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url(${HeroImg})`,
     backgroundSize: 'cover',
   },
@@ -30,12 +29,16 @@ const useStyles = makeStyles((theme) => ({
   },
   winnerCard: {
       minHeight: '100vh',
+      backgroundColor: 'black',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       [theme.breakpoints.down('md')]: {
           flexDirection: 'column',
       },
+  },
+  h1: {
+    color: '#fff'
   },
   tableHead: {
     width: '100%',
@@ -55,16 +58,6 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       color: 'black',
     },
-  },
-  heroImage: {
-    background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url(${HeroImg})`,
-    backgroundSize: 'cover',
-    height: '50vh',
-    width: '63vw',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    position: 'relative',
-    marginBottom: '15px'
   },
   heroContents: {
     paddingTop: '55vh',

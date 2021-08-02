@@ -27,7 +27,8 @@ import { Animated } from 'react-animated-css';
 import Hidden from '@material-ui/core/Hidden';
 import WinnerCard from '../../components/WinnerCard/WinnerCard'
 import { CssBaseline } from '@material-ui/core';
-import { Link as Scroll } from 'react-scroll'
+import { Link as Scroll } from 'react-scroll';
+import DashSection from '../../components/DashSection/DashSection';
 import Collapse from '@material-ui/core/Collapse';
 import useStyles from './useStyles';
 
@@ -145,6 +146,9 @@ export default function Discovery(): JSX.Element {
           </Collapse>
         </Grid>
         <Grid ref={ref} id='header' className={classes.winnerCard}>
+        <Grid>
+            <Typography className={classes.typography}>Past Winners</Typography>
+          </Grid>
           {winners.map((winner, i) => {
             return (
               <>
@@ -162,8 +166,9 @@ export default function Discovery(): JSX.Element {
             )
           })}
         </Grid>
-
-        
+        <Grid>
+          <DashSection />
+        </Grid>
         <Grid container justify="center" className={classes.grid}>
           <Grid>
             <Typography className={classes.typography}>All Open Contests</Typography>

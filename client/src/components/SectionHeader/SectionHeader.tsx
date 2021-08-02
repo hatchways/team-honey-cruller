@@ -16,9 +16,9 @@ interface SectionHeaderProps {
     titleVariant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     subtitleVariant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subtitle1' | 'subtitle2' | 'body1' | 'body2';
     subtitleColor?: 'textPrimary' | 'textSecondary' | 'primary' | 'secondary';
-    labelProps?: object;
-    titleProps?: object;
-    subtitleProps?: object;
+    labelProps?: Record<string, unknown>;
+    titleProps?: Record<string, unknown>;
+    subtitleProps?: Record<string, unknown>;
     [x: string]: any;
 }
 
@@ -39,8 +39,8 @@ const SectionHeader = ({
     labelProps = {},
     titleProps = {},
     subtitleProps = {},
-    ...rest
-}: SectionHeaderProps): JSX.Element => {
+    ...rest 
+    }: SectionHeaderProps): JSX.Element => {
     const classes = useStyles();
     let justifyGrid: ('center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'space-evenly' | undefined) = 'center';
     if (align === 'left') {
