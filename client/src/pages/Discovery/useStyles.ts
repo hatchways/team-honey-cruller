@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import HeroImg from '../../Images/heroImg.jpg'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   grid: {
     height: '100%',
     width: '100%',
@@ -19,7 +19,23 @@ const useStyles = makeStyles(() => ({
   },
   tableContainer: {
     marginBottom: '50px',
-    marginTop: '50px',
+    // minHeight: '100vh',
+    background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url(${HeroImg})`,
+    backgroundSize: 'cover',
+  },
+  expand: {
+    marginTop: '10px',
+    color: 'white',
+    fontSize: '3rem'
+  },
+  winnerCard: {
+      minHeight: '100vh',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      [theme.breakpoints.down('md')]: {
+          flexDirection: 'column',
+      },
   },
   tableHead: {
     width: '100%',
@@ -51,7 +67,7 @@ const useStyles = makeStyles(() => ({
     marginBottom: '15px'
   },
   heroContents: {
-    paddingTop: '275px',
+    paddingTop: '55vh',
     textAlign: 'center',
     color: 'white'
   },

@@ -1,29 +1,23 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-card: {
-    maxWidth: 345  
-},
-cardHeader: {
-
-},
-avatar: {
-
+root: {
+    maxWidth: 645,
+    background: 'rgba(0,0,0,0.5)',
+    margin: '20px'
 },
 media: {
-    height: 0,
-    paddingTop: '56.25%'
+    height: 440
 },
-expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-    }),
+title: {
+    fontWeight: 'bold',
+    fontSize: '2rem',
+    color: '#fff'
 },
-expandOpen: {
-    transform: 'rotate(180deg)',
-},
+description: {
+    fontSize: '1.1rem',
+    color: '#ddd'
+}
 }));
 
 export default useStyles;
