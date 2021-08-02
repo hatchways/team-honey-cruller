@@ -30,6 +30,9 @@ import { CssBaseline } from '@material-ui/core';
 import { Link as Scroll } from 'react-scroll';
 import DashSection from '../../components/DashSection/DashSection';
 import Collapse from '@material-ui/core/Collapse';
+import Section from '../../components/Section/Section'
+import SectionHeader from '../../components/SectionHeader/SectionHeader';
+import Hero from '../../components/Hero/Hero'
 import useStyles from './useStyles';
 
 //might have to delete later
@@ -113,8 +116,7 @@ export default function Discovery(): JSX.Element {
     useLayoutEffect(() => {
       function updatePosition() {
         const offetSetHeight = ref.current && ref.current.offsetHeight;
-        if (offetSetHeight) {
-
+        if (offetSetHeight) {          
           if (window.pageYOffset > offetSetHeight * 0.7) {
             setAnimation(true);
           }
@@ -130,8 +132,47 @@ export default function Discovery(): JSX.Element {
   return (
     <>
       <AuthHeader linkTo="/create-contest" btnText="create contest" />
-      <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
-        <Grid className={classes.tableContainer}>
+      <Hero />
+      <Section>
+      <div>
+      <SectionHeader
+                title={
+                        <Typography component="span" variant="inherit" color="primary">Check out some of our recent Contest winners.</Typography>
+                }
+                subtitle="We Guarantee atleast 20 submissions to your contest and you could receive up to 500+."
+                fadeUp
+            />
+      {winners.map((winner, i) => {
+            return (
+              <>
+              <Grid
+            key={i}
+            item
+            container
+            alignItems="center"
+            direction="column"
+            xs={12}
+            sm={6}
+            md={3}
+            data-aos="fade-up"
+          >
+                <WinnerCard
+                  winningPic={winner.winningPic}
+                  title={winner.title}
+                  prizeAmount={winner.prizeAmount}
+                  winningArtist={winner.winningArtist}
+                  description={winner.description}
+                  key={winner.description}
+                  className="class"
+                />
+                </Grid>
+              </>
+            )
+          })}
+      </div>
+      </Section>
+      {/* <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}> */}
+        {/* <Grid className={classes.tableContainer}>
           <CssBaseline />
           <Collapse in={checked} {...(checked ? { timeout: 4000 } : {})} collapsedHeight={50}>
             <Box className={classes.heroContents}>
@@ -144,9 +185,9 @@ export default function Discovery(): JSX.Element {
               </Scroll>
             </Box>
           </Collapse>
-        </Grid>
-        <Grid ref={ref} id='header' className={classes.winnerCard}>
-        <Grid>
+        </Grid> */}
+        {/* <Grid ref={ref} id='header' className={classes.winnerCard}> */}
+        {/* <Grid>
             <Typography className={classes.typography}>Past Winners</Typography>
           </Grid>
           {winners.map((winner, i) => {
@@ -165,11 +206,11 @@ export default function Discovery(): JSX.Element {
               </>
             )
           })}
-        </Grid>
-        <Grid>
+        </Grid> */}
+        {/* <Grid>
           <DashSection />
-        </Grid>
-        <Grid container justify="center" className={classes.grid}>
+        </Grid> */}
+        {/* <Grid container justify="center" className={classes.grid}>
           <Grid>
             <Typography className={classes.typography}>All Open Contests</Typography>
           </Grid>
@@ -193,8 +234,8 @@ export default function Discovery(): JSX.Element {
                 </Button>
               </Grid>
             </MuiPickersUtilsProvider>
-          </Grid>
-          <Paper className={classes.paper}>
+          </Grid> */}
+          {/* <Paper className={classes.paper}>
             <TableContainer>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -237,9 +278,9 @@ export default function Discovery(): JSX.Element {
                 </TableBody>
               </Table>
             </TableContainer>
-          </Paper>
-        </Grid>
-      </Animated>
-    </>
+          </Paper> */}
+        {/* </Grid> */}
+      {/* </Animated> */}
+      </>
   );
 }

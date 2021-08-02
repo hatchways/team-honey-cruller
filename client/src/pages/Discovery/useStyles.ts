@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottomWidth: '2px',
     borderBottomStyle: 'solid',
     textAlign: 'center',
+    color: 'white'
   },
   paper: {
     width: '50%',

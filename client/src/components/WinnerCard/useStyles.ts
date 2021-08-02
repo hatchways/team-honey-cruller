@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
 root: {
     maxWidth: 645,
     width: '400px',
-    background: 'rgba(0,0,0,0.5)',
+    background: 'black',
     margin: '20px'
 },
 media: {
