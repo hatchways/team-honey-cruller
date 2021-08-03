@@ -8,8 +8,10 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { useAuth } from '../../context/useAuthContext';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
+import { useSocket } from '../../context/useSocketContext';
 
 const AuthMenu = (): JSX.Element => {
+  const { socket } = useSocket();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { logout } = useAuth();
@@ -26,6 +28,9 @@ const AuthMenu = (): JSX.Element => {
   const handleLogout = () => {
     handleClose();
     logout();
+    socket?.on('disconnect', () => {
+      console.log('user disconnected');
+    })
   };
 
   return (

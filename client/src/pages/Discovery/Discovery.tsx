@@ -44,16 +44,16 @@ export default function Discovery(): JSX.Element {
     } else {
       new Error('Could Not Get Contests');
     }
-  }
+  };
 
   useEffect(() => {
-    fetchCall('')
+    fetchCall('');
   }, []);
 
   useEffect(() => {
     if (dateFilter !== undefined) {
-      const date = moment.utc(dateFilter._d).format()
-      fetchCall(date)
+      const date = moment.utc(dateFilter._d).format();
+      fetchCall(date);
     }
   }, [dateFilter]);
 
@@ -67,7 +67,7 @@ export default function Discovery(): JSX.Element {
   };
 
   const handleChangeDate = (date: any) => {
-    const momentTime = date
+    const momentTime = date;
     setDateFilter(momentTime);
   };
 
@@ -106,7 +106,7 @@ export default function Discovery(): JSX.Element {
                     inputVariant="outlined"
                     format="MMM Do YYYY"
                     value={dateFilter}
-                    onChange={value => handleChangeDate(value)}
+                    onChange={(value) => handleChangeDate(value)}
                     keyboardIcon={<DateRangeIcon />}
                     autoOk={true}
                   />

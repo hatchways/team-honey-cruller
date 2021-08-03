@@ -14,11 +14,11 @@ import { useSnackBar } from '../../context/useSnackbarContext';
 import { NotificationContext } from '../../context/notificationContext';
 
 interface NotificationProps {
-  header: boolean
+  header: boolean;
 }
 
-export default function Notifications({ header } : NotificationProps): JSX.Element {
-  header === undefined ? header = true : header;
+export default function Notifications({ header }: NotificationProps): JSX.Element {
+  header === undefined ? (header = true) : header;
   const notifications = useContext(NotificationContext).notifications;
   const setNotifications = useContext(NotificationContext).setNotifications;
   const { loggedInUser } = useAuth();
@@ -64,45 +64,42 @@ export default function Notifications({ header } : NotificationProps): JSX.Eleme
   };
 
   return loggedInUser ? (
-     <>
+    <>
       <CssBaseline />
       {header ? <AuthHeader linkTo={`/create-contest`} btnText="CREATE CONTEST" /> : ''}
-      <Box 
-      display='flex'
-      justifyContent='center' 
-      >
-      <Paper className={classes.paper} elevation={2}>
-        <Grid direction="row" container>
-          <Grid item>
-            <Typography variant="h5" className={classes.poptitle}>
-              Notifications
-            </Typography>
+      <Box display="flex" justifyContent="center">
+        <Paper className={classes.paper} elevation={2}>
+          <Grid direction="row" container>
+            <Grid item>
+              <Typography variant="h5" className={classes.poptitle}>
+                Notifications
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
-        {notifications?.length
-          ? notifications?.map((notification) => (
-              <Grid direction="row" container key={notification._id}>
-                <Grid item xs={12} sm={3} md={2}>
-                  <Avatar alt="Profile Image" src={notification.profilePic} className={classes.avatar}></Avatar>
+          {notifications?.length
+            ? notifications?.map((notification) => (
+                <Grid direction="row" container key={notification._id}>
+                  <Grid item xs={12} sm={3} md={2}>
+                    <Avatar alt="Profile Image" src={notification.profilePic} className={classes.avatar}></Avatar>
+                  </Grid>
+                  <Grid item xs={12} sm={7} md={7}>
+                    <Typography className={classes.typography} key={notification._id}>
+                      {notification.notification}
+                    </Typography>
+                    <Typography key={notification.notification} className={classes.time}>
+                      {hoursCalculator(notification.createdAt)}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={1} md={1}>
+                    <button className={classes.delete} onClick={handleDelete} value={notification._id}>
+                      Delete
+                    </button>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} sm={7} md={7}>
-                  <Typography className={classes.typography} key={notification._id}>
-                    {notification.notification}
-                  </Typography>
-                  <Typography key={notification.notification} className={classes.time}>
-                    {hoursCalculator(notification.createdAt)}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={1} md={1}>
-                  <button className={classes.delete} onClick={handleDelete} value={notification._id}>
-                    Delete
-                  </button>
-                </Grid>
-              </Grid>
-            ))
-          : 'No notification'}
-      </Paper>
-    </Box>
+              ))
+            : 'No notification'}
+        </Paper>
+      </Box>
     </>
   ) : (
     <CircularProgress />

@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext} from 'react';
 import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
 import useStyles from './useStyles';
@@ -18,9 +17,10 @@ import { ConversationProvider } from '../../context/conversationContext';
 import { Convo } from '../../interface/User';
 
 export default function Dashboard(): JSX.Element {
+
   const classes = useStyles();
   const { loggedInUser } = useAuth();
-  const { initSocket } = useSocket();
+  const { initSocket, socket } = useSocket();
   const history = useHistory();
   const [convos, setConvos] = useState<Convo[]>([]);
 
@@ -35,6 +35,14 @@ export default function Dashboard(): JSX.Element {
   useEffect(() => {
     initSocket();
   }, [initSocket]);
+
+  //sending users to the socket server
+  useEffect(() => {
+    socket?.emit('sendUser', loggedInUser?.id);
+    socket?.on('getUsers', (users) => {
+      console.log('users', users);
+    });
+  }, [loggedInUser, socket]);
 
   if (loggedInUser === undefined) return <CircularProgress />;
   if (!loggedInUser) {
