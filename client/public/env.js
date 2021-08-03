@@ -1,3 +1,0 @@
-window.env = {
-"STRIPE_API_KEY": "pk_test_51JEJJrK3QVx74yV9vYujCrOpA8KwLKEE7uKSjHmUO0GGxUYSa5uxMlgaCZAbflwU9U0Npb2k4a86JEJBGmuBOfbw00CU3LpL8W"
-};
