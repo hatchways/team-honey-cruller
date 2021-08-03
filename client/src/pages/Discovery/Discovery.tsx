@@ -5,6 +5,7 @@ import { Contest } from '../../interface/User';
 import { Column } from '../../interface/Discovery';
 import { getAllContests } from '../../helpers/APICalls/contest';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
+import MyTablePagination from '../../components/TablePagination/TablePagination';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -39,8 +40,8 @@ export default function Discovery(): JSX.Element {
   const classes = useStyles();
   const { updateSnackBarMessage } = useSnackBar();
 
-  const fetchCall = async (date = '', createdAt = '') => {
-    const allContests = await getAllContests(date, createdAt);
+  const fetchCall = async (date = '', createdAt = '', rows = 10) => {
+    const allContests = await getAllContests(date, createdAt, rows);
     if (allContests.contests) {
       setContests(allContests.contests);
     } else {
@@ -51,32 +52,34 @@ export default function Discovery(): JSX.Element {
   useEffect(() => {
     if (dateFilter !== undefined) {
       const date = moment.utc(dateFilter._d).format();
-      fetchCall(date);
+      fetchCall(date, '', rowsPerPage);
     } else {
-      fetchCall();
+      fetchCall('', '', rowsPerPage);
     }
-  }, [dateFilter]);
+  }, [dateFilter, rowsPerPage]);
 
   useEffect(() => {
     fetchCall();
   }, []);
 
-  const handleChangePage = async (date: string, newPage: number) => {
+  const handleChangePage = async (e: any, newPage: number) => {
     let same = true;
     const allContests = await getAllContests(
-      date,
-      contests.length && dateFilter !== undefined ? contests[contests.length - 1].dateCreated : '',
+      dateFilter !== undefined ? moment.utc(dateFilter._d).format() : '',
+      contests.length ? contests[contests.length - 1].dateCreated : '',
     );
-    allContests.contests &&
-      allContests.contests.forEach((item, i) => {
-        if (contests.length && item._id !== contests[i]._id) {
+    if (allContests.contests) {
+      for (let i = 0; i < allContests.contests.length; i++) {
+        if (contests.length && allContests.contests[i]._id !== contests[i]._id) {
           same = false;
+          break;
         }
-      });
+      }
+    }
     if (allContests.contests && !same) {
+      setPage(newPage);
       setContests([...allContests.contests]);
     }
-    setPage(newPage);
   };
 
   useEffect(() => {
@@ -190,6 +193,12 @@ export default function Discovery(): JSX.Element {
                     );
                   })}
                 </TableBody>
+                <MyTablePagination
+                  page={page}
+                  rowsPerPage={rowsPerPage}
+                  handleChangePage={handleChangePage}
+                  handleChangeRowsPerPage={handleChangeRowsPerPage}
+                />
               </Table>
             </TableContainer>
           </Paper>

@@ -56,13 +56,14 @@ exports.getAllContests = asyncHandler(async (req, res) => {
   try {
     let {
       deadlineDate,
-      createdAt
+      createdAt,
+      howMany
     } = req.query
 
     if (deadlineDate === '' && createdAt === '') {
       const tenContests = await Contest.find({
         active: true
-      }).sort({dateCreated: 1}).limit(10)
+      }).sort({dateCreated: -1}).limit(+howMany)
       res.status(200).json({
         contests: tenContests
       })
@@ -70,9 +71,9 @@ exports.getAllContests = asyncHandler(async (req, res) => {
       const tenContests = await Contest.find({
         active: true,
         dateCreated: {
-          $lte: createdAt
+          $lt: createdAt
         }
-      }).sort({dateCreated: -1}).limit(10)
+      }).sort({dateCreated: -1}).limit(+howMany)
       res.status(200).json({
         contests: tenContests
       })
@@ -80,12 +81,12 @@ exports.getAllContests = asyncHandler(async (req, res) => {
       const tenContests = await Contest.find({
         active: true,
         dateCreated: {
-          $lte: createdAt
+          $lt: createdAt
         },
         deadlineDate: {
           $lte: deadlineDate,
         }
-      }).sort({deadlineDate: -1}).limit(10)
+      }).sort({deadlineDate: -1}).limit(+howMany)
       res.status(200).json({
         contests: tenContests
       })
