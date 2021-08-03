@@ -22,6 +22,7 @@ const stripeRouter = require("./routes/stripe");
 const notificationRouter = require("./routes/notification");
 const personalInfoRouter = require("./routes/personalInfo");
 const reviewsRouter = require("./routes/reviews");
+const winnerRouter = require("./routes/winner");
 
 const { json, urlencoded } = express;
 
@@ -83,6 +84,7 @@ app.use("/stripe", stripeRouter);
 app.use("/notification", notificationRouter);
 app.use("/info", personalInfoRouter);
 app.use("/reviews", reviewsRouter);
+app.use("/winners", winnerRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

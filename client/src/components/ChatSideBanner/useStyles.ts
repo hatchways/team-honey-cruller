@@ -6,10 +6,16 @@ const useStyles = makeStyles((theme) => ({
   chatSideBanner: {
     display: 'flex',
     flexDirection: 'column',
-    height: '80vh',
+    height: '100%',
     padding: '1rem 1rem',
     [theme.breakpoints.up('md')]: {
-      padding: '2rem 2rem',
+      padding: '2rem',
+    },
+  },
+  convosContainer: {
+    overflowY: 'scroll',
+    '&::-webkit-scrollbar': {
+      display: 'none',
     },
   },
   userPanel: {
@@ -18,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '2rem',
   },
   heading: {
+    marginLeft: 20,
     fontWeight: 900,
   },
   chatTitle: {

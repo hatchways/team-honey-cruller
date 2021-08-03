@@ -21,6 +21,7 @@ const mockLoggedInUser: User = {
       dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
       userId: '123456789',
       deadlineDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
+      active: true,
       submissions: [
         {
           _id: '',
@@ -79,6 +80,7 @@ const mockOtherUser1: User = {
       dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
       userId: '123456780',
       deadlineDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
+      active: true,
       submissions: [
         {
           _id: '',
@@ -137,6 +139,7 @@ const mockOtherUser2: User = {
       dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
       userId: '123456788',
       deadlineDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
+      active: true,
       submissions: [
         {
           _id: '',
@@ -195,6 +198,7 @@ const mockOtherUser3: User = {
       dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
       userId: '123456787',
       deadlineDate: 'Mon Sep 02 2021 00:00:00 GMT+0200',
+      active: true,
       submissions: [
         {
           _id: '',

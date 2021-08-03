@@ -98,4 +98,3 @@ export const addCardToCustomer = async (cardId: string,  stripeId: string): Prom
             error: { message: 'Unable to connect to Stripe. Please try again' },
     }));
 };
-

@@ -1,5 +1,6 @@
 const Contest = require("../models/Contest");
 const asyncHandler = require("express-async-handler");
+const { scheduleContestEnd, winnerChosen } = require('../utils/contestHelper');
 
 exports.createContest = asyncHandler(async (req, res) => {
     try {
@@ -11,6 +12,7 @@ exports.createContest = asyncHandler(async (req, res) => {
             userId: req.user.id,
             images: req.body.images
         });
+        scheduleContestEnd(contest)
         res.status(201).json(contest);
     } catch (err) {
         res.status(500).json(err);
@@ -20,6 +22,7 @@ exports.createContest = asyncHandler(async (req, res) => {
 exports.updateContest = asyncHandler(async (req, res) => {
   try {
     const update = await Contest.findOneAndUpdate({
+      active: true,
       _id: req.params.id
     }, req.body, {
       new: true
@@ -32,9 +35,12 @@ exports.updateContest = asyncHandler(async (req, res) => {
 
 exports.getSingleContest = asyncHandler(async (req, res) => {
   try {
-    const singleContest = await Contest.findById(req.params.id).select('-__v').populate({path: "userId", select: "username profilePic"});
+    const singleContest = await Contest.findById(req.params.id).select('-__v').populate({
+      path: "userId",
+      select: "username profilePic"
+    });
     const contest = singleContest.toJSON()
-    contest.ownerName= contest.userId.username
+    contest.ownerName = contest.userId.username
     contest.ownerProfilePic = contest.userId.profilePic
     contest.userId = contest.userId._id
     res.status(200).json(contest);
@@ -45,10 +51,35 @@ exports.getSingleContest = asyncHandler(async (req, res) => {
 
 exports.getAllContests = asyncHandler(async (req, res) => {
   try {
-    const allContests = await Contest.find({}).select('-submissions')
-    res.status(200).json({
-      contests: allContests
-    })
+    let {
+      deadlineDate
+    } = req.query
+
+    if (deadlineDate === '') {
+      const allContests = await Contest.find({active: true}).select('-submissions')
+      res.status(200).json({
+        contests: allContests
+      })
+    } else {
+      const allContests = await Contest.find({
+          deadlineDate: {
+            $lte: deadlineDate
+          }
+        })
+        .sort({
+          deadlineDate: 'asc'
+        });
+
+      if (!allContests) {
+        return res.status(404).json({
+          message: 'Could not retrieve contests'
+        })
+      }
+
+      res.status(200).json({
+        contests: allContests
+      });
+    }
   } catch (err) {
     res.status(500).json(err);
   }
@@ -65,4 +96,12 @@ exports.getAllContestsByUser = asyncHandler(async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+})
+
+// req.params should be the id of the winning submission
+// req.body.winningPic should be the winning image url string
+exports.chooseWinner = asyncHandler(async (req, res) => {
+    winnerChosen(req.user.id, req.params.id, req.body.winningPic)
+      .then(data => res.status(200).json(data))
+      .catch(err => res.status(500).send(err))
 })

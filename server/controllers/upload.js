@@ -3,6 +3,9 @@ const aws = require("aws-sdk");
 const multerS3 = require("multer-s3");
 const multer = require("multer");
 const path = require("path");
+const {
+  deleteImage
+} = require('../utils/deleteAws')
 
 const s3 = new aws.S3({
   accessKeyId: process.env.S3_ACCESSKEYID,
@@ -83,9 +86,19 @@ const AWSPic = multer({
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   },
-}).single("image")
+}).single("image");
 
 exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
+
+  const user = await User.findOne({
+    _id: req.user.id
+  });
+
+
+  if (user.profilePic) {
+    deleteImage(user.profilePic)
+  }
+
   AWSPic(req, res, async (error) => {
     if (error) {
       res.json({
@@ -96,11 +109,15 @@ exports.uploadProfilePic = asyncHandler(async (req, res, next) => {
         console.log("Error: No File Selected");
       } else {
         try {
-          const { profilePic } = await User.findByIdAndUpdate(req.user.id, {
+          const {
+            profilePic
+          } = await User.findByIdAndUpdate(req.user.id, {
             $set: {
               profilePic: req.file.location
             }
-          }, { new: true })
+          }, {
+            new: true
+          })
           res.json(profilePic);
         } catch (err) {
           res.status(500).json(err);
@@ -128,4 +145,4 @@ exports.uploadSubmissionPic = asyncHandler(async (req, res, next) => {
       }
     }
   })
-})
+});

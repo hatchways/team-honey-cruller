@@ -28,8 +28,13 @@ const ChatDrawer = ({ convos }: Props): JSX.Element => {
             All Conversations
           </Button>
         </Box>
-        <Drawer anchor={'left'} open={expanded} onClose={(): void => setExpanded(!expanded)}>
-          <ChatSideBanner convos={convos} />
+        <Drawer
+          anchor={'left'}
+          classes={{ paper: classes.paper }}
+          open={expanded}
+          onClose={(): void => setExpanded(!expanded)}
+        >
+          <ChatSideBanner convos={convos} closeDrawer={setExpanded} />
         </Drawer>
       </Fragment>
     </div>

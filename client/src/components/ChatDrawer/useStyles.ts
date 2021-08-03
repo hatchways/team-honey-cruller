@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
     margin: '5px 0',
     border: '1px solid white',
   },
+  paper: {
+    maxWidth: '80%',
+  },
 }));
 
 export default useStyles;

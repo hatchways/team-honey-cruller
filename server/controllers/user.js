@@ -10,12 +10,20 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
 
   let users;
   if (searchString) {
-    users = await User.find({
-      username: {
-        $regex: searchString,
-        $options: "i"
+    users = await User.aggregate([{
+      $match: {
+        username: {
+          $regex: searchString,
+          $options: "i",
+        },
       }
-    });
+    }]).project({
+      id: "$_id",
+      _id: 0,
+      username: 1,
+      email: 1,
+      profilePic: 1
+    })
   }
 
   if (!users) {
