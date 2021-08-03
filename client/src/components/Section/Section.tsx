@@ -16,7 +16,6 @@ const Section = ({
     narrow,
     disablePadding,
     className,
-    ...rest
 }: Props): JSX.Element => {
     const classes = useStyles();
 
@@ -30,7 +29,6 @@ const Section = ({
                 disablePadding ? classes.disablePadding : {},
                 className,
             )}
-            {...rest}
         >
             {children}
         </section>

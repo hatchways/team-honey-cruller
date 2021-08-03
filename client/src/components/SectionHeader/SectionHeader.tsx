@@ -32,8 +32,7 @@ const SectionHeader = ({
     ctaGroup,
     disableGutter,
     titleClasses,
-    className,
-    ...rest 
+    className
     }: Props): JSX.Element => {
     const classes = useStyles();
     let justifyGrid: ('center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'space-evenly' | undefined) = 'center';
@@ -54,7 +53,6 @@ const SectionHeader = ({
                 disableGutter ? classes.disableGutter : {},
                 className,
             )}
-            {...rest}
         >
             {overline && (
                 <Grid

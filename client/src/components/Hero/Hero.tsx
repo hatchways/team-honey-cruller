@@ -8,15 +8,14 @@ import HeroImg from '../../Images/heroImg.jpg'
 
 interface Props {
     className?: string;
-    data?: any;
     [x: string]: any;
 }
 
-const Hero = ({ className, ...rest }: Props): JSX.Element => {
+const Hero = ({ className }: Props): JSX.Element => {
     const classes = useStyles();
 
     return (
-        <div className={className} {...rest}>
+        <div className={className}>
             <HeroShaped
                 leftSide={
                     <div>

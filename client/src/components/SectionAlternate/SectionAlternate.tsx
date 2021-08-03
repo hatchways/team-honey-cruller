@@ -8,13 +8,12 @@ interface Props {
     [x: string]: any;
 }
 
-const SectionAlternate = ({ children, innerNarrowed, className, ...rest }: Props): JSX.Element => {
+const SectionAlternate = ({ children, innerNarrowed, className }: Props): JSX.Element => {
     const classes = useStyles();
 
     return (
         <section
             className={clsx('section-alternate', classes.root, className)}
-            {...rest}
         >
             <div
                 className={clsx(

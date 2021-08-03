@@ -27,8 +27,7 @@ const CardReview = ({
     reviewerTitle,
     align = 'center',
     textVariant = 'h6',
-    className,
-    ...rest
+    className
 }: Props): JSX.Element => {
     const classes = useStyles();
 
@@ -42,7 +41,6 @@ const CardReview = ({
     return (
         <CardBase
             className={clsx('card-review', classes.root, className)}
-            {...rest}
         >
             <Grid container spacing={2} className="card-review__wrapper">
                 <Grid item xs={12} className="card-review__text-wrapper">

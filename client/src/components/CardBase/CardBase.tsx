@@ -11,7 +11,6 @@ interface Props {
     noBg?: boolean;
     liftUp?: boolean;
     align?: 'left' | 'right' | 'center';
-    cardContentProps?: Record<string, unknown>;
     [x: string]: any;
 }
 
@@ -24,8 +23,6 @@ const CardBase = ({
     children,
     align = 'center',
     className,
-    cardContentProps = {},
-    ...rest
 }: Props): JSX.Element => {
     const classes = useStyles();
 
@@ -41,11 +38,9 @@ const CardBase = ({
                 liftUp ? classes.liftUp : {},
                 className,
             )}
-            {...rest}
         >
             <CardContent
                 className={clsx('card-base__content', classes.content, classes[align])}
-                {...cardContentProps}
             >
                 {children}
             </CardContent>
