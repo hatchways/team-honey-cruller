@@ -12,6 +12,7 @@ import AboutArtist from './pages/AboutArtist/AboutArtist';
 import Settings from './pages/Settings/Settings';
 import Contest from './pages/Contest/Contest';
 import Notifications from './pages/Notifications/Notifications';
+import Reset from './pages/Reset/Reset';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -36,6 +37,7 @@ function App(): JSX.Element {
                   <Route exact path="/settings" component={Settings} />
                   <Route exact path="/notifications" component={Notifications} />
                   <Route exact path="/contest/:id" component={Contest} />
+                  <Route exact path="/reset" component={Reset} />
                   <Route exact path="/dashboard">
                     <Dashboard />
                   </Route>
