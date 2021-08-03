@@ -7,7 +7,6 @@ interface Props {
     className?: string;
     rightSide: JSX.Element;
     leftSide: JSX.Element;
-    [x: string]: any;
 }
 
 const HeroShaped = ({ leftSide, rightSide, className, ...rest }: Props): JSX.Element => {

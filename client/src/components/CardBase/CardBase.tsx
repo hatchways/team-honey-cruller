@@ -11,7 +11,6 @@ interface Props {
     noBg?: boolean;
     liftUp?: boolean;
     align?: 'left' | 'right' | 'center';
-    [x: string]: any;
 }
 
 const CardBase = ({

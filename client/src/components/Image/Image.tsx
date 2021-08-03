@@ -9,7 +9,6 @@ interface Props {
     alt?: string;
     lazyProps?: Record<string, unknown>;
     lazy?: boolean;
-    [x: string]: any;
 }
 
 const Image = ({

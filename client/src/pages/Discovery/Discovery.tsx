@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/useAuthContext';
-import { Contest, Winner } from '../../interface/User';
+import {  Winner } from '../../interface/User';
 import ContestTable from '../../components/ContestTable/ContestTable'
 import { getSomeWinners } from '../../helpers/APICalls/winner'
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
@@ -25,7 +25,7 @@ export default function Discovery(): JSX.Element {
 
 
   const winnersData = async () => {
-    const getWinners = await getSomeWinners(2);
+    const getWinners = await getSomeWinners(4);
     if (getWinners) {
       setWinners(getWinners);
     } else {
@@ -51,31 +51,31 @@ export default function Discovery(): JSX.Element {
               subtitle="We Guarantee atleast 20 submissions to your contest and you could receive up to 500+."
               fadeUp
             />
-    <div className={classes.winnerCard}>
-            {winners.map((winner, i) => {
-              return (
-                <>
-                <Grid
-                  item
-                  container
-                  alignItems="center"
-                  direction="column"
-                  xs={12}
-                  sm={6}
-                  md={3}
-                >
-                    <WinnerCard
-                      winningPic={winner.winningPic}
-                      title={winner.title}
-                      prizeAmount={winner.prizeAmount}
-                      winningArtist={winner.winningArtist}
-                      description={winner.description}
-                      key={winner.description}
-                    />
-                  </Grid>
-                </>
-              )
-            })}
+            <div className={classes.winnerCard}>
+              {winners.map((winner, i) => {
+                return (
+                  <>
+                    <Grid
+                      item
+                      container
+                      alignItems="center"
+                      direction="column"
+                      xs={12}
+                      sm={6}
+                      md={3}
+                    >
+                      <WinnerCard
+                        winningPic={winner.winningPic}
+                        title={winner.title}
+                        prizeAmount={winner.prizeAmount}
+                        winningArtist={winner.winningArtist}
+                        description={winner.description}
+                        key={winner.description}
+                      />
+                    </Grid>
+                  </>
+                )
+              })}
             </div>
           </Grid>
         </Section>

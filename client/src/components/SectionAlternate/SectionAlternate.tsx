@@ -5,7 +5,6 @@ interface Props {
     className?: string;
     children?: JSX.Element;
     innerNarrowed?: boolean;
-    [x: string]: any;
 }
 
 const SectionAlternate = ({ children, innerNarrowed, className }: Props): JSX.Element => {

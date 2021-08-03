@@ -11,7 +11,6 @@ import "swiper/components/pagination/pagination.min.css";
 
 interface Props {
     className?: string;
-    [x: string]: any;
 }
 
 const reviews = [

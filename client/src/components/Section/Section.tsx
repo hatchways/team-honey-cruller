@@ -7,7 +7,6 @@ interface Props {
     narrow?: boolean;
     fullWidth?: boolean;
     disablePadding?: boolean;
-    [x: string]: any;
 }
 
 const Section = ({

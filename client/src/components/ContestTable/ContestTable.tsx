@@ -48,7 +48,7 @@ const ContestTable = (): JSX.Element => {
 
     useEffect(() => {
         fetchCall('');
-      }, []);
+    }, []);
 
 
     const handleChangePage = (event: unknown, newPage: number) => {

@@ -14,7 +14,6 @@ interface Props {
     description: string;
     key: string;
     className?: string;
-    [x: string]: any;
 }
 
 const WinnerCard = ({ winningPic, title, prizeAmount, description, key, winningArtist, className }: Props): JSX.Element => {
@@ -29,7 +28,7 @@ const WinnerCard = ({ winningPic, title, prizeAmount, description, key, winningA
                     image={winningPic}
                     title={title}
                 />
-                <CardContent>
+                <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h1" className={classes.title}>
                         {title}
                     </Typography>

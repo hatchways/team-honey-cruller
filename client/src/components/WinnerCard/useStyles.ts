@@ -13,11 +13,14 @@ media: {
 title: {
     fontWeight: 'bold',
     fontSize: '2rem',
-    color: '#fff'
+    color: 'black'
 },
 description: {
     fontSize: '1.1rem',
-    color: '#ddd'
+    color: 'black'
+},
+cardContent: {
+    background: 'rgb(247, 249, 250)'
 }
 }));
 
