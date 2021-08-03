@@ -46,6 +46,10 @@ const ContestTable = (): JSX.Element => {
         }
     }, [dateFilter]);
 
+    useEffect(() => {
+        fetchCall('');
+      }, []);
+
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);

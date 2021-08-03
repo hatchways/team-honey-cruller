@@ -13,6 +13,7 @@ import Section from '../../components/Section/Section'
 import SectionHeader from '../../components/SectionHeader/SectionHeader';
 import { Divider } from '@material-ui/core';
 import SplashReviews from '../../components/SplashReviews/SplashReviews'
+import SectionAlternate from '../../components/SectionAlternate/SectionAlternate';
 import Hero from '../../components/Hero/Hero'
 import useStyles from './useStyles';
 
@@ -50,20 +51,19 @@ export default function Discovery(): JSX.Element {
               subtitle="We Guarantee atleast 20 submissions to your contest and you could receive up to 500+."
               fadeUp
             />
-            
-            <Grid
-              key="testing"
-              item
-              container
-              alignItems="center"
-              direction="row"
-              xs={12}
-              sm={6}
-              md={3}
-            >
+    <div className={classes.winnerCard}>
             {winners.map((winner, i) => {
               return (
                 <>
+                <Grid
+                  item
+                  container
+                  alignItems="center"
+                  direction="column"
+                  xs={12}
+                  sm={6}
+                  md={3}
+                >
                     <WinnerCard
                       winningPic={winner.winningPic}
                       title={winner.title}
@@ -72,20 +72,22 @@ export default function Discovery(): JSX.Element {
                       description={winner.description}
                       key={winner.description}
                     />
+                  </Grid>
                 </>
               )
             })}
-            </Grid>
+            </div>
           </Grid>
         </Section>
         <Divider />
-        <Section>
+        <SectionAlternate>
           <SplashReviews className="reviews" />
-        </Section>
+        </SectionAlternate>
         <Divider />
-        <Section>
+        <div className={classes.table}>
           <ContestTable />
-        </Section>
+        </div>
+        <Divider />
       </Animated>
     </>
   );
