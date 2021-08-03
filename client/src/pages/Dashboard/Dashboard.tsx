@@ -20,7 +20,7 @@ export default function Dashboard(): JSX.Element {
 
   const classes = useStyles();
   const { loggedInUser } = useAuth();
-  const { initSocket, socket } = useSocket();
+  const { socket } = useSocket();
   const history = useHistory();
   const [convos, setConvos] = useState<Convo[]>([]);
 
@@ -31,12 +31,8 @@ export default function Dashboard(): JSX.Element {
       }
     });
   }, []);
-
-  useEffect(() => {
-    initSocket();
-  }, [initSocket]);
-
-  //sending users to the socket server
+  
+  //sending userto the socket server
   useEffect(() => {
     socket?.emit('sendUser', loggedInUser?.id);
     socket?.on('getUsers', (users) => {

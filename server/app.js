@@ -44,31 +44,44 @@ let users = [];
 
 const addUser = (userId, socketId) => {
   userId !== null &&
-    !users.some((user) => user.userId === userId) &&
+    users.find((user) => user.userId === userId) === undefined &&
     users.push({ userId, socketId });
 };
 
 const getUser = (to) => {
-  return users.find((user) => user.userId === to);
+  const user = users.find((user) => user.userId === to);
+  return user;
 };
 
 const removeUser = (socketId) => {
   users = users.filter((user) => user.socketId !== socketId);
 };
 
-io.on("connection", (socket) => {
+/*io.on("connection", (socket) => {
   const socketId = socket.id;
   const token = cookie.parse(socket.handshake.headers.cookie).token;
   if (token) {
     const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
     socket.tokenId = verifyToken.id;
     console.log(`connected by ID of ${socket.tokenId}`);
-    //After every connection take userId and socketId from user
-    socket.on("sendUser", (userId) => {
-      addUser(userId, socketId);
-      io.emit("getUsers", users);
+    const userId = socket.tokenId;
+    addUser(userId, socketId);
+    console.log(`socketId: ${socketId}, userId: ${userId}`);
+  }else{
+    socket.on("disconnect", () => {
+      console.log("user disconnected", socket.id);
+      removeUser(socketId);
     });
   }
+});*/
+io.on("connection", (socket) => {
+  //on connection
+  console.log("a user is connected.");
+  //take userId and socketId from user
+  socket.on("sendUser", (user) => {
+    addUser(user, socket.id);
+    io.emit("getUsers", users);
+  });
 
   socket.on("joinChat", (res) => {
     console.log("inside joinChat");
@@ -76,15 +89,15 @@ io.on("connection", (socket) => {
 
   //send and get notifications
   socket.on("sendNotification", (notification) => {
-    const user = getUser(notification.to);
-    io.to(user.socketId).emit("getNotification", notification);
+    const to = notification.to;
+    getUser(to) !== undefined && io.to(getUser(to).socketId).emit("getNotification", notification);
   });
 
+  //on disconnect
   socket.on("disconnect", () => {
-    if (token === undefined) {
-      console.log("user disconnected", socket.id);
-      removeUser(socketId);
-    }
+    console.log("a user disconnected!");
+    removeUser(socket.id);
+    io.emit("getUsers", users);
   });
 });
 
@@ -105,7 +118,6 @@ app.use((req, res, next) => {
     io,
     cache,
   };
-
   next();
 });
 

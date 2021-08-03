@@ -33,6 +33,8 @@ const NotificationPopUp = (): JSX.Element => {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  console.log('notifications', notifications);
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -122,16 +124,18 @@ const NotificationPopUp = (): JSX.Element => {
                   <Avatar alt="Profile Image" src={notification.profilePic} className={classes.avatar}></Avatar>
                 </Grid>
                 <Grid item>
-                  <Typography className={classes.typography} key={notification._id}>
-                    {notification.notification}
-                  </Typography>
+                  <Link to={notification.contestId ? `/contest/${notification.contestId}` : `/dashboard`}>
+                      <Typography className={classes.typography} key={notification._id}>
+                        {notification.notification}
+                      </Typography>
+                    </Link>
                   <Typography key={notification.notification} className={classes.time}>
                     {hoursCalculator(notification.createdAt)}
                   </Typography>
                 </Grid>
               </Grid>
             ))
-          : 'No notification'}
+          : <Typography align="center">{`You do not have any notification`}</Typography>}
       </Popover>
     </>
   );

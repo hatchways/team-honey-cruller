@@ -60,6 +60,6 @@ export const deleteNotification = async (id: string): Promise<number> => {
   };
 
   return await fetch(`/notification/${id}`, fetchOptions)
-    .then((res) => res.status)
-    .catch((err) => err.status);
+    .then(res => res.status)
+    .catch(err => err);
 };

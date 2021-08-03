@@ -12,6 +12,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { NotificationContext } from '../../context/notificationContext';
+import { Link } from 'react-router-dom';
 
 interface NotificationProps {
   header: boolean;
@@ -29,9 +30,9 @@ export default function Notifications({ header }: NotificationProps): JSX.Elemen
     const target = event.target as HTMLButtonElement;
     const response = await deleteNotification(target.value);
     if (response === 204) {
+      const filteredNotifications = notifications && notifications.filter((item) => item._id !== target.value);
       updateSnackBarMessage('Notification deleted successfully');
-      const filteredNotifications = notifications?.filter((item) => item._id !== target.value);
-      setNotifications(filteredNotifications);
+      setNotifications(filteredNotifications ? filteredNotifications : notifications);
     } else {
       updateSnackBarMessage('Error deleting notification, trying again later');
     }
@@ -83,6 +84,11 @@ export default function Notifications({ header }: NotificationProps): JSX.Elemen
                     <Avatar alt="Profile Image" src={notification.profilePic} className={classes.avatar}></Avatar>
                   </Grid>
                   <Grid item xs={12} sm={7} md={7}>
+                    <Link to={notification.contestId ? `/contest/${notification.contestId}` : `/dashboard`}>
+                      <Typography className={classes.typography} key={notification._id}>
+                        {notification.notification}
+                      </Typography>
+                    </Link>
                     <Typography className={classes.typography} key={notification._id}>
                       {notification.notification}
                     </Typography>
@@ -97,7 +103,7 @@ export default function Notifications({ header }: NotificationProps): JSX.Elemen
                   </Grid>
                 </Grid>
               ))
-            : 'No notification'}
+            : <Typography align="center">{`You do not have any notification`}</Typography>}
         </Paper>
       </Box>
     </>

@@ -11,6 +11,7 @@ exports.createNotification = asyncHandler(async (req, res) => {
       from: req.user.id,
       notification: body.notification,
       profilePic: user.profilePic,
+      contestId: body.contestId
     });
 
     res.status(201).json(notification);
@@ -34,7 +35,6 @@ exports.getAllNotifications = asyncHandler(async (req, res) => {
 exports.deleteNotification = asyncHandler(async (req, res) => {
   try {
     await Notification.findByIdAndDelete(req.params.id);
-    
     res.status(204).end();
   } catch (err) {
     res.status(500).json(err);
@@ -48,6 +48,7 @@ exports.updateNotification = asyncHandler(async (req, res) => {
     to: body.to,
     from: body.from,
     notification: body.notification,
+    contestId: body.contestId
   };
 
   try {

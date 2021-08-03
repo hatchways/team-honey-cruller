@@ -23,7 +23,7 @@ const MessageInput = ({ otherUserId, otherUsername }: Props): JSX.Element => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loggedInUser && inputRef.current) {
-      const message = await sendMessage({ to: otherUserId, message: inputRef.current.value });
+      const response = await sendMessage({ to: otherUserId, message: inputRef.current.value });
       const notificationBody = { to: otherUserId, notification: `${loggedInUser?.username} sent you a message`};
       const notification = await createNotification(notificationBody);
       //send notification to the socket server using emit action of sendnotification

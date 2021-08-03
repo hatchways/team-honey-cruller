@@ -4,13 +4,13 @@ import { Notification } from '../interface/User';
 
 interface ISocketContext {
   socket: Socket | undefined;
-  initSocket: () => void;
+  //initSocket: () => void;
   socketNotification: Notification | undefined;
 }
 
 export const SocketContext = createContext<ISocketContext>({
   socket: undefined,
-  initSocket: () => null,
+  //initSocket: () => null,
   socketNotification: undefined,
 });
 
@@ -18,22 +18,17 @@ export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => 
   const [socket, setSocket] = useState<Socket | undefined>(undefined);
   const [socketNotification, setSocketNotification] = useState<Notification>();
 
-  const initSocket = useCallback(() => {
-    console.log('trying to connect');
-    setSocket(
-      io('/', {
-        withCredentials: true,
-      }),
-    );
+  useEffect(() => {
+    setSocket(io('/'));
   }, []);
 
   useEffect(() => {
     socket?.on('getNotification', (notification) => {
       setSocketNotification(notification);
     });
-  });
-
-  return <SocketContext.Provider value={{ socket, initSocket, socketNotification }}>{children}</SocketContext.Provider>;
+  }, [socket]);
+  
+  return <SocketContext.Provider value={{ socket, socketNotification }}>{children}</SocketContext.Provider>;
 };
 
 export function useSocket(): ISocketContext {
