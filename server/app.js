@@ -34,18 +34,44 @@ const io = socketio(server, {
   },
 });
 
+const users = [];
+
+const addUser = (userId, socketId) => {
+  !users.some((user) => user.userId === userId) &&
+    users.push({ userId, socketId });
+};
+
+const removeUser = (socketId) => {
+  users = users.filter((user) => user.socketId !== socketId);
+};
+
+const getUser = (userId) => {
+  return users.find((user) => user.userId === userId);
+};
+
 io.on("connection", (socket) => {
   const token = cookie.parse(socket.handshake.headers.cookie).token;
   if (token) {
     const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
     socket.tokenId = verifyToken.id;
     console.log(`connected by ID of ${socket.tokenId}`);
-    socket.on("send-message", (message, otherUserId) => {
-      socket.emit("receive-message", message);
+
+    socket.on("add-user", (userId) => {
+      addUser(userId, socket.id);
+    });
+
+    socket.on("send-message", (senderId, receiverId, message) => {
+      const user = getUser(receiverId);
+      socket.to(user.socketId).emit("receive-message", {
+        senderId: senderId,
+        receiverId: receiverId,
+        message: message,
+      });
     });
   } else {
     socket.on("disconnect", () => {
       console.log("user disconnected");
+      removeUser(socket.id);
     });
   }
 
