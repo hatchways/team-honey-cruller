@@ -8,7 +8,7 @@ import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
 import { GoogleLogin } from 'react-google-login';
 import loginGoogle from '../../../helpers/APICalls/google';
-
+import { Link } from 'react-router-dom';
 
 interface Props {
   handleSubmit: (
@@ -46,7 +46,7 @@ export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.El
     loginGoogle(response.tokenObj.id_token)
     location.reload()
   }
-  
+
   const responseErrorGoogle = (response: any) => {
     if(!response) {
       throw new Error("Could not connect to server, please try again")
@@ -108,6 +108,9 @@ export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.El
               value={values.password}
               onChange={handleChange}
             />
+          </Box>
+          <Box>
+            <Link className={classes.reset} to="/reset">Forgot Password?</Link>
           </Box>
           <Box textAlign="center">
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
