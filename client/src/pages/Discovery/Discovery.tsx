@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/useAuthContext';
+import { useSnackBar } from '../../context/useSnackbarContext';
 import { Contest } from '../../interface/User';
 import { Column } from '../../interface/Discovery';
 import { getAllContests } from '../../helpers/APICalls/contest';
@@ -36,30 +37,61 @@ export default function Discovery(): JSX.Element {
   const [dateFilter, setDateFilter] = useState<any>();
   const { loggedInUser } = useAuth();
   const classes = useStyles();
+  const { updateSnackBarMessage } = useSnackBar();
 
-  const fetchCall = async (date: any) => {
-    const allContests = await getAllContests(date);
+  const fetchCall = async (date = '', createdAt = '') => {
+    const allContests = await getAllContests(date, createdAt);
     if (allContests.contests) {
       setContests(allContests.contests);
     } else {
       new Error('Could Not Get Contests');
     }
-  }
-
-  useEffect(() => {
-    fetchCall('')
-  }, []);
+  };
 
   useEffect(() => {
     if (dateFilter !== undefined) {
-      const date = moment.utc(dateFilter._d).format()
-      fetchCall(date)
+      const date = moment.utc(dateFilter._d).format();
+      fetchCall(date);
+    } else {
+      fetchCall();
     }
   }, [dateFilter]);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  useEffect(() => {
+    fetchCall();
+  }, []);
+
+  const handleChangePage = async (date: string, newPage: number) => {
+    let same = true;
+    const allContests = await getAllContests(
+      date,
+      contests.length && dateFilter !== undefined ? contests[contests.length - 1].dateCreated : '',
+    );
+    allContests.contests &&
+      allContests.contests.forEach((item, i) => {
+        if (contests.length && item._id !== contests[i]._id) {
+          same = false;
+        }
+      });
+    if (allContests.contests && !same) {
+      setContests([...allContests.contests]);
+    }
     setPage(newPage);
   };
+
+  useEffect(() => {
+    const initialFetch = async () => {
+      try {
+        const allContests = await getAllContests('', '');
+        if (allContests.contests) {
+          setContests(allContests.contests);
+        }
+      } catch (err) {
+        updateSnackBarMessage(err.message);
+      }
+    };
+    initialFetch();
+  }, [updateSnackBarMessage]);
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
@@ -67,7 +99,7 @@ export default function Discovery(): JSX.Element {
   };
 
   const handleChangeDate = (date: any) => {
-    const momentTime = date
+    const momentTime = date;
     setDateFilter(momentTime);
   };
 
@@ -106,11 +138,11 @@ export default function Discovery(): JSX.Element {
                     inputVariant="outlined"
                     format="MMM Do YYYY"
                     value={dateFilter}
-                    onChange={value => handleChangeDate(value)}
+                    onChange={(value) => handleChangeDate(value)}
                     keyboardIcon={<DateRangeIcon />}
                     autoOk={true}
                   />
-                  <Button className={classes.buttonReset} onClick={() => fetchCall('')}>
+                  <Button className={classes.buttonReset} onClick={() => setDateFilter(undefined)}>
                     Reset Filter
                   </Button>
                 </Grid>
