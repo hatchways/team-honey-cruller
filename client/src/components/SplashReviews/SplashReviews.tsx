@@ -44,7 +44,7 @@ const reviews = [
     },
 ];
 
-const SplashReviews = ({ data, className, ...rest }: Props): JSX.Element => {
+const SplashReviews = ({  className}: Props): JSX.Element => {
     const classes = useStyles();
 
     useEffect(() => {
@@ -63,7 +63,7 @@ const SplashReviews = ({ data, className, ...rest }: Props): JSX.Element => {
     },[]);
 
     return (
-        <div className={className} data-aos="fade-up" {...rest}>
+        <div className={className}>
             <SectionHeader
                 title="Customer Reviews"
                 subtitle="Take a look at some of our recent contest creators feedback."
