@@ -1,14 +1,14 @@
 import clsx from 'clsx';
 import useStyles from './useStyles';
 
-interface SectionAlternateProps {
+interface Props {
     className?: string;
     children?: JSX.Element;
     innerNarrowed?: boolean;
     [x: string]: any;
 }
 
-const SectionAlternate = ({ children, innerNarrowed, className, ...rest }: SectionAlternateProps): JSX.Element => {
+const SectionAlternate = ({ children, innerNarrowed, className, ...rest }: Props): JSX.Element => {
     const classes = useStyles();
 
     return (

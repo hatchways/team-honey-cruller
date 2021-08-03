@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import useStyles from './useStyles'
 
-interface ImageProps {
+interface Props {
     className?: string;
     src: string;
     srcSet?: string;
@@ -24,7 +24,7 @@ const Image = ({
     },
     className,
     ...rest
-}: ImageProps): JSX.Element => {
+}: Props): JSX.Element => {
 
     const classes = useStyles();
 

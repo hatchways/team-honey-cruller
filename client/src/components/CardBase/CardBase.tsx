@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { Card, CardContent } from '@material-ui/core';
 import useStyles from './useStyles';
 
-interface CardBaseProps {
+interface Props {
     className?: string;
     children: JSX.Element;
     withShadow?: boolean;
@@ -12,7 +12,6 @@ interface CardBaseProps {
     liftUp?: boolean;
     align?: 'left' | 'right' | 'center';
     cardContentProps?: Record<string, unknown>;
-    // All other props
     [x: string]: any;
 }
 
@@ -27,7 +26,7 @@ const CardBase = ({
     className,
     cardContentProps = {},
     ...rest
-}: CardBaseProps): JSX.Element => {
+}: Props): JSX.Element => {
     const classes = useStyles();
 
     return (

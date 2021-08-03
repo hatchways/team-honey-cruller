@@ -6,13 +6,13 @@ import Image from '../Image/Image';
 import Typography from '@material-ui/core/Typography';
 import HeroImg from '../../Images/heroImg.jpg'
 
-interface ViewComponentProps {
+interface Props {
     className?: string;
     data?: any;
     [x: string]: any;
 }
 
-const Hero = ({ className, ...rest }: ViewComponentProps): JSX.Element => {
+const Hero = ({ className, ...rest }: Props): JSX.Element => {
     const classes = useStyles();
 
     return (

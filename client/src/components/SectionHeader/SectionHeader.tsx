@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import useStyles from './useStyles';
 import { Grid, Typography } from '@material-ui/core';
 
-interface SectionHeaderProps {
+interface Props {
     className?: string;
     title: string | JSX.Element;
     subtitle?: string | JSX.Element;
@@ -16,9 +16,6 @@ interface SectionHeaderProps {
     titleVariant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     subtitleVariant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subtitle1' | 'subtitle2' | 'body1' | 'body2';
     subtitleColor?: 'textPrimary' | 'textSecondary' | 'primary' | 'secondary';
-    labelProps?: Record<string, unknown>;
-    titleProps?: Record<string, unknown>;
-    subtitleProps?: Record<string, unknown>;
     [x: string]: any;
 }
 
@@ -36,11 +33,8 @@ const SectionHeader = ({
     disableGutter,
     titleClasses,
     className,
-    labelProps = {},
-    titleProps = {},
-    subtitleProps = {},
     ...rest 
-    }: SectionHeaderProps): JSX.Element => {
+    }: Props): JSX.Element => {
     const classes = useStyles();
     let justifyGrid: ('center' | 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'space-evenly' | undefined) = 'center';
     if (align === 'left') {
@@ -80,7 +74,6 @@ const SectionHeader = ({
                         color="primary"
                         component="p"
                         align={align || 'center'}
-                        {...labelProps}
                     >
                         {label}
                     </Typography>
@@ -96,7 +89,6 @@ const SectionHeader = ({
                         titleClasses ? titleClasses : {},
                     )}
                     color="textPrimary"
-                    {...titleProps}
                 >
                     {title}
                 </Typography>
@@ -108,7 +100,6 @@ const SectionHeader = ({
                         align={align || 'center'}
                         color={subtitleColor || 'textSecondary'}
                         className="section-header__subtitle"
-                        {...subtitleProps}
                     >
                         {subtitle}
                     </Typography>

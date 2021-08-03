@@ -3,14 +3,14 @@ import useStyles from './useStyles';
 import Section from '../../Section/Section';
 import Divider from '@material-ui/core/Divider'
 
-interface HeroShapedProps {
+interface Props {
     className?: string;
     rightSide: JSX.Element;
     leftSide: JSX.Element;
     [x: string]: any;
 }
 
-const HeroShaped = ({ leftSide, rightSide, className, ...rest }: HeroShapedProps): JSX.Element => {
+const HeroShaped = ({ leftSide, rightSide, className, ...rest }: Props): JSX.Element => {
     const classes = useStyles();
     return (
         <div className={clsx(classes.root, 'hero-shaped', className)} {...rest}>

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import useStyles from './useStyles';
 
-interface SectionProps {
+interface Props {
     className?: string;
     children?: JSX.Element;
     narrow?: boolean;
@@ -17,7 +17,7 @@ const Section = ({
     disablePadding,
     className,
     ...rest
-}: SectionProps): JSX.Element => {
+}: Props): JSX.Element => {
     const classes = useStyles();
 
     return (
