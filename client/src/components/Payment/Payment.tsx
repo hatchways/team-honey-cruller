@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -17,6 +17,7 @@ export default function Payment(): JSX.Element {
     const { loggedInUser } = useAuth();
     const { updateSnackBarMessage } = useSnackBar();
 
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -25,7 +26,7 @@ export default function Payment(): JSX.Element {
         }
 
         const cardElement = elements.getElement(CardNumberElement);
-        
+
         if (loggedInUser && cardElement) {
             stripe
                 .createPaymentMethod({
@@ -35,12 +36,14 @@ export default function Payment(): JSX.Element {
                         name: loggedInUser.username,
                     },
                 })
-                .then(function (result) {
-                    if(result.paymentMethod){
+                .then(result => {
+                    if (result.paymentMethod) {
                         const cardId = result.paymentMethod.id;
                         const stripeId = loggedInUser.stripeId;
                         addCardToCustomer(cardId, stripeId);
                         updateSnackBarMessage("Card has been added to your account.");
+
+
                     } else {
                         updateSnackBarMessage("Card could not be added");
                     }
