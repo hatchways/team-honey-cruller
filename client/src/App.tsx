@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import SubmitDesign from './pages/SubmitDesign/SubmitDesign';
 import Signup from './pages/SignUp/SignUp';
-import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './pages/Profile/Profile';
 import Discovery from './pages/Discovery/Discovery';
 import CreateContest from './pages/CreateContest/CreateContest';
@@ -40,7 +39,7 @@ function App(): JSX.Element {
                   <Route exact path="/notifications" component={Notifications} />
                   <Route exact path="/contest/:id" component={Contest} />
                   <Route exact path="/forgot-password" component={ForgotPassword} />
-                  <Route path="/reset-password" component={ResetPassword} />
+                  <Route path="/reset-password/:token/:id" component={ResetPassword} />
                   <Route exact path="/artist" component={AboutArtist} />
                   <Route exact path="/dashboard" component={Discovery} />
                   <Route path="*">
