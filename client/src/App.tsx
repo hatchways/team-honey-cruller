@@ -39,7 +39,7 @@ function App(): JSX.Element {
                   <Route exact path="/notifications" component={Notifications} />
                   <Route exact path="/contest/:id" component={Contest} />
                   <Route exact path="/forgot-password" component={ForgotPassword} />
-                  <Route exact path="/reset" component={ResetPassword} />
+                  <Route path="/reset-password" component={ResetPassword} />
                   <Route exact path="/dashboard">
                     <Dashboard />
                   </Route>
