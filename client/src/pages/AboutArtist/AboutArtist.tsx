@@ -16,6 +16,7 @@ import AboutArtistTab from '../../components/AboutArtistTab/AboutArtistTab';
 import { PersonalInfo } from '../../interface/PersonalInfo';
 import { getPersonalInfo } from '../../helpers/APICalls/personalInfo';
 import { withStyles } from '@material-ui/core/styles';
+import ReviewTab from '../../components/ReviewTab/ReviewTab';
 
 const GlobalCss = withStyles({
   // @global is handled by jss-plugin-global.
@@ -26,13 +27,13 @@ const GlobalCss = withStyles({
     },
     '.MuiToolbar-regular': {
       minHeight: 0,
-    },
+    }
   },
 })(() => null);
 
 //Pass 'artistId' through the react-router Link , when calling this component
-export default function AboutArtist(props: { state: string; }): JSX.Element {
-  const id = props.state
+export default function AboutArtist(props: { location : { state: string; }}): JSX.Element {
+  const id = props.location.state
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [info, setInfo] = useState<PersonalInfo>();
@@ -91,7 +92,6 @@ export default function AboutArtist(props: { state: string; }): JSX.Element {
       <Grid className={classes.grid} container alignItems="center" direction="column">
         <Avatar alt="Profile Image" src={info?.userId.profilePic} className={classes.avatar}></Avatar>
         <Typography className={classes.user}>{`${info?.firstName} ${info?.lastName}`}</Typography>
-
         <Container className={classes.container}>
           <Toolbar className={classes.toolbar}>
             <ThemeProvider theme={newTheme}>
@@ -112,7 +112,7 @@ export default function AboutArtist(props: { state: string; }): JSX.Element {
                 <AboutArtistTab info={info}/>
             </Panel>
             <Panel value={value} index={1}>
-                <AboutArtistTab info={null}/>
+               <ReviewTab />
             </Panel>
           </Paper>
         </Container>

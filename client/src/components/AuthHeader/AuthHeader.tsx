@@ -30,7 +30,13 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
           minWidth="55vw"
           flexWrap="wrap"
           className={classes.linkContainer}
-        >
+        > 
+          {/* delete later */}
+          <Link to={{ pathname: '/artist', state:'60f101c8d872991344be3628' }}>
+            <Typography className={classes.navLink} color="secondary" display="inline">
+              Artist
+            </Typography>
+          </Link>
           <Link to="/discovery">
             <Typography className={classes.navLink} color="secondary" display="inline">
               Discover
