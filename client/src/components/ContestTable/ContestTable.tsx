@@ -36,7 +36,7 @@ const ContestTable = (): JSX.Element => {
   const { updateSnackBarMessage } = useSnackBar();
 
   const getContestsLength = () => {
-    getNumContests().then((data) => {
+    getNumContests().then((data: number) => {
       setNumContests(data);
     });
   };
@@ -45,7 +45,7 @@ const ContestTable = (): JSX.Element => {
     if (!dateFilter && !contests) {
       getContestsLength();
     }
-  });
+  }, [dateFilter, contests]);
 
   const fetchCall = async (date = '', rows = 10, page = 0) => {
     const allContests = await getAllContests(date, rows, page);
@@ -68,21 +68,12 @@ const ContestTable = (): JSX.Element => {
   }, [dateFilter, rowsPerPage, page]);
 
   const handleChangePage = async (e: any, newPage: number) => {
-    let same = true;
     const allContests = await getAllContests(
       dateFilter !== undefined ? moment.utc(dateFilter._d).format() : '',
       rowsPerPage,
       newPage,
     );
     if (allContests.contests) {
-      for (let i = 0; i < allContests.contests.length; i++) {
-        if (contests.length && allContests.contests[i]._id !== contests[i]._id) {
-          same = false;
-          break;
-        }
-      }
-    }
-    if (allContests.contests && !same) {
       setPage(newPage);
       setContests(allContests.contests);
       setNumContests(allContests.contests.length);
