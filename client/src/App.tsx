@@ -14,28 +14,14 @@ import AboutArtist from './pages/AboutArtist/AboutArtist';
 import Settings from './pages/Settings/Settings';
 import Contest from './pages/Contest/Contest';
 import Notifications from './pages/Notifications/Notifications';
-import { AuthProvider, useAuth } from './context/useAuthContext';
+import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { NotificationProvider } from './context/notificationContext';
-import Tour from 'reactour';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import './App.css';
 
 function App(): JSX.Element {
-  const steps = [
-    {
-      selector: '[data-nav="nav-btn"]',
-      content: <TourContent content="this is the first step" />,
-      style: {
-        padding: 50,
-      },
-    },
-  ];
-  const { loggedInUser } = useAuth();
-
-  const [isTourOpen, setIsTourOpen] = useState<boolean>(true);
-  const [currentStep, setCurrentStep] = useState<number>(0);
   return (
     <MuiThemeProvider theme={theme}>
       <BrowserRouter>
@@ -61,14 +47,7 @@ function App(): JSX.Element {
                     <Redirect to="/login" />
                   </Route>
                 </Switch>
-                {loggedInUser?.username === 'stanleythemanly' && (
-                  <Tour
-                    steps={steps}
-                    isOpen={isTourOpen}
-                    onRequestClose={() => setIsTourOpen(false)}
-                    getCurrentStep={(curr) => setCurrentStep(curr)}
-                  />
-                )}
+                <TourContent />
               </NotificationProvider>
             </SocketProvider>
           </AuthProvider>
