@@ -22,6 +22,7 @@ const stripeRouter = require("./routes/stripe");
 const notificationRouter = require("./routes/notification");
 const personalInfoRouter = require("./routes/personalInfo");
 const winnerRouter = require("./routes/winner");
+const resetRouter = require("./routes/reset");
 
 const { json, urlencoded } = express;
 
@@ -36,7 +37,7 @@ const io = socketio(server, {
 });
 
 io.on("connection", (socket) => {
-  const token = cookie.parse(socket.handshake.headers.cookie).token;
+  const token = socket.handshake.headers.cookie ? cookie.parse(socket.handshake.headers.cookie).token : null;
   if (token) {
     const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
     socket.tokenId = verifyToken.id;
@@ -83,6 +84,7 @@ app.use("/stripe", stripeRouter);
 app.use("/notification", notificationRouter);
 app.use("/info", personalInfoRouter);
 app.use("/winners", winnerRouter);
+app.use("/reset", resetRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

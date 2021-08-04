@@ -35,7 +35,7 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     res.status(400);
     throw new Error("A user with that username already exists");
   }
-  
+
   const customer = await stripe.customers.create({
     email: email,
     name: username
@@ -221,7 +221,7 @@ exports.googleLogin = asyncHandler(async (req, res, next) => {
                       error: "Something went wrong..."
                     })
                   };
-                  
+
                   const {
                     _id,
                     username,
