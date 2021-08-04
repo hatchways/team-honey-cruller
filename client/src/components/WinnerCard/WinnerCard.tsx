@@ -12,7 +12,7 @@ interface Props {
     prizeAmount: number;
     winningArtist: any;
     description: string;
-    key: number;
+    key: string;
     className?: string;
 }
 

@@ -39,7 +39,7 @@ export default function Discovery(): JSX.Element {
 
   return (
     <>
-      <AuthHeader linkTo="/login" btnText={loggedInUser ? "Create Contest" : "Log In"} />
+      <AuthHeader linkTo={loggedInUser ? "/create-contest" : "/login"} btnText={loggedInUser ? "Create Contest" : "Log In"} />
       <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
         <Hero />
         <Section>
@@ -70,7 +70,7 @@ export default function Discovery(): JSX.Element {
                         prizeAmount={winner.prizeAmount}
                         winningArtist={winner.winningArtist}
                         description={winner.description}
-                        key={i}
+                        key={winner._id}
                       />
                     </Grid>
                   </>
