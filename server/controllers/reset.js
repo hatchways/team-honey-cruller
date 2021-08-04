@@ -42,18 +42,18 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
 
 exports.resetPassword = asyncHandler(async (req, res) => {
   try {
-    const passwordResetToken = await Token.findOne({ userId });
+    const passwordResetToken = await Token.findOne({ userId: req.body.userId });
     if (!passwordResetToken) {
       res.status(400);
       throw new Error("Invalid or expired password reset token");
     }
-    const isValid = await bcrypt.compare(token, passwordResetToken.token);
+    const isValid = await bcrypt.compare(req.body.token, passwordResetToken.token);
     if (!isValid) {
       res.status(400);
       throw new Error("Invalid or expired password reset token");
     }
     const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, Number(sale));
+    const hash = await bcrypt.hash(req.body.password, Number(salt));
     await User.updateOne(
       { _id: userId },
       { $set: { password: hash } },
