@@ -4,6 +4,6 @@ const protect = require('../middleware/auth')
 const { getWinnersByUser, getSomeWinners } = require('../controllers/winner');
 
 router.route('/').get(protect, getWinnersByUser)
-router.route('/:num').get(protect, getSomeWinners)
+router.route('/:num').get(getSomeWinners)
 
 module.exports = router;
