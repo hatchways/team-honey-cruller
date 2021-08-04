@@ -5,6 +5,11 @@ const useStyles = makeStyles((theme) => ({
     height: '240px',
     padding: 10,
   },
+  activity: {
+    margin:0,
+    WebkitTextStroke: 'medium',
+    paddingTop:30
+  },
   heading: {
     WebkitTextStroke: 'medium',
     marginTop: 10,
