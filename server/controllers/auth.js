@@ -2,6 +2,11 @@ const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const {
+  OAuth2Client
+} = require('google-auth-library');
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // @route POST /auth/register
 // @desc Register user
@@ -30,7 +35,7 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     res.status(400);
     throw new Error("A user with that username already exists");
   }
-
+  
   const customer = await stripe.customers.create({
     email: email,
     name: username
@@ -51,8 +56,6 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
       httpOnly: true,
       maxAge: secondsInWeek * 1000
     });
-
-
 
     res.status(201).json({
       success: {
@@ -142,3 +145,112 @@ exports.logoutUser = asyncHandler(async (req, res, next) => {
 
   res.send("You have successfully logged out");
 });
+
+exports.googleLogin = asyncHandler(async (req, res, next) => {
+  const {
+    tokenId
+  } = req.body;
+
+  client.verifyIdToken({
+    idToken: tokenId,
+    audience: process.env.GOOGLE_CLIENT_ID
+  }).then(response => {
+    const {
+      email_verified,
+      name,
+      email
+    } = response.payload
+
+    if (email_verified) {
+      User.findOne({
+          email: email
+        })
+        .exec((err, user) => {
+          if (err) {
+            return res.status(400).json({
+              error: "Something went wrong..."
+            });
+
+          } else {
+            if (user) {
+              const {
+                _id,
+                username,
+                email,
+                stripeId
+              } = user;
+
+              const token = generateToken(_id);
+              const secondsInWeek = 604800;
+
+              res.cookie("token", token, {
+                httpOnly: true,
+                maxAge: secondsInWeek * 1000
+              });
+
+              res.status(200).json({
+                success: {
+                  user: {
+                    id: _id,
+                    username: username,
+                    email: email,
+                    stripeId: stripeId
+                  }
+                }
+              });
+
+            } else {
+              const secondsInWeek = 604800;
+              let password = email + name + name + email;
+
+              stripe.customers.create({
+                email: email,
+                name: name
+              }).then(data => {
+
+                const newUser = new User({
+                  username: name,
+                  email,
+                  password,
+                  stripeId: data.id
+                });
+
+                newUser.save((err,data) => {
+                  if (err) {
+                    return res.status(400).json({
+                      error: "Something went wrong..."
+                    })
+                  };
+                  
+                  const {
+                    _id,
+                    username,
+                    email,
+                    stripeId
+                  } = newUser;
+
+                  const token = generateToken(_id);
+
+                  res.cookie("token", token, {
+                    httpOnly: true,
+                    maxAge: secondsInWeek * 1000
+                  });
+
+                  res.status(200).json({
+                    success: {
+                      user: {
+                        id: _id,
+                        username: username,
+                        email: email,
+                        stripeId: stripeId
+                      }
+                    }
+                  });
+                })
+              })
+            }
+          }
+        })
+    }
+  });
+})

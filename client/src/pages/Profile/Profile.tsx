@@ -15,8 +15,9 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import ContestList from '../../components/ContestList/ContestList';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
-import { Contest } from '../../interface/User';
+import { Contest, Winner } from '../../interface/User';
 import { getContestByUser } from '../../helpers/APICalls/contest';
+import { getWinnersByUser } from '../../helpers/APICalls/winner';
 import updateProfile from '../../helpers/APICalls/profile';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import loginWithCookies from '../../helpers/APICalls/loginWithCookies';
@@ -25,6 +26,7 @@ export default function Profile(): JSX.Element {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [contests, setContests] = useState<Contest[]>([]);
+  const [winners, setWinners] = useState<Winner[]>([]);
   const [newProfilePic, setNewProfilePic] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const { loggedInUser, updateLoginContext } = useAuth();
@@ -57,29 +59,32 @@ export default function Profile(): JSX.Element {
         new Error('Could Not Get Contests');
       }
     }
+
+    async function getWinners() {
+      const usersWinners = await getWinnersByUser();
+      if (usersWinners) {
+        setWinners(usersWinners);
+      } else {
+        new Error('Could not get winners');
+      }
+    }
+
     getUserContests();
+    getWinners();
   }, []);
 
-  // create function to figure out if a contest is still active
   const isActive = () => {
     if (contests) {
-      const filter = contests.filter((contest) => new Date() < new Date(contest.deadlineDate));
-
-      return filter;
+      return contests.filter((contest) => contest.active);
     }
-
-    return contests;
+    return [];
   };
 
-  //create a function to figure out if a contest is no longer active
   const isComplete = () => {
     if (contests) {
-      const filter = contests.filter((contest) => new Date() > new Date(contest.deadlineDate));
-
-      return filter;
+      return contests.filter((contest) => !contest.active);
     }
-
-    return contests;
+    return [];
   };
 
   const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {
@@ -111,7 +116,7 @@ export default function Profile(): JSX.Element {
         if (success) {
           updateLoginContext(success);
         }
-      } catch (err) {
+      } catch (err: any) {
         updateSnackBarMessage(err.message);
       }
     }
@@ -131,7 +136,7 @@ export default function Profile(): JSX.Element {
           ></Avatar>
         )}
         <Typography className={classes.user}>{loggedInUser.username}</Typography>
-        <Box>
+        <Box className={classes.buttonBox}>
           <Button className={classes.button}>Edit Profile</Button>
           <Button className={classes.button}>
             <label htmlFor="file" className={classes.fileInputLabel}>
@@ -158,8 +163,9 @@ export default function Profile(): JSX.Element {
                 textColor="primary"
                 variant="fullWidth"
               >
-                <Tab label="IN PROGRESS" />
-                <Tab label="COMPLETED" />
+                <Tab label="in progress" className={classes.tab} />
+                <Tab label="choose a winner" className={classes.tab} />
+                <Tab label="past winners" className={classes.tab} />
               </Tabs>
             </ThemeProvider>
           </Toolbar>
@@ -169,6 +175,9 @@ export default function Profile(): JSX.Element {
             </Panel>
             <Panel value={value} index={1}>
               <ContestList userContests={isComplete()} />
+            </Panel>
+            <Panel value={value} index={2}>
+              <ContestList userContests={winners} />
             </Panel>
           </Paper>
         </Container>

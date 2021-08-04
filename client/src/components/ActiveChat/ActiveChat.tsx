@@ -9,37 +9,34 @@ import { useConvoContext } from '../../context/conversationContext';
 import { useAuth } from '../../context/useAuthContext';
 import { sendMessage } from '../../helpers/APICalls/conversations';
 import { io } from 'socket.io-client';
+import { OtherUser } from '../../interface/Convo';
 
 const socket = io("http://localhost:3000");
 
-interface OtherUser {
-  id: string;
-  name: string;
-  pic: string;
-}
-
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
-  const { convo } = useConvoContext();
+  const { convo, recipient } = useConvoContext();
   const { loggedInUser } = useAuth();
   const [otherUser, setOtherUser] = useState<OtherUser>();
   const [newMessages, setNewMessages] = useState(0);
 
   useEffect(() => {
     const other =
-      loggedInUser && convo && loggedInUser.id === convo[0].senderId
+      loggedInUser && convo && convo.length && loggedInUser.id === convo[0].senderId
         ? {
-            id: convo[0].recipientId,
-            name: convo[0].recipientName,
-            pic: convo[0].recipientPic,
+            _id: convo[0].recipientId,
+            username: convo[0].recipientName,
+            profilePic: convo[0].recipientPic,
           }
-        : convo && {
-            id: convo[0].senderId,
-            name: convo[0].senderName,
-            pic: convo[0].senderPic,
-          };
+        : convo && convo.length
+        ? {
+            _id: convo[0].senderId,
+            username: convo[0].senderName,
+            profilePic: convo[0].senderPic,
+          }
+        : recipient;
     setOtherUser(other);
-  }, [convo, loggedInUser, newMessages]);
+  }, [convo, loggedInUser, recipient]);
 
   socket.on("receive-message", (data) => {
     if (convo) {
@@ -66,17 +63,18 @@ export default function Dashboard(): JSX.Element {
 
   const displayMessage = (message: string)=> {
     if (loggedInUser && otherUser) {
-      socket.emit("send-message", loggedInUser.id, otherUser.id, message);
-      sendMessage({ to: otherUser.id, message: message });
+      socket.emit("send-message", loggedInUser.id, otherUser._id, message);
+      sendMessage({ to: otherUser._id, message: message });
     }
   };
 
-  return otherUser ? (
+  return otherUser && otherUser.username ? (
     <Paper className={classes.root}>
-      <MessageHeader online={false} username={otherUser.name} profilePic={otherUser.pic} />
+      <MessageHeader online={false} username={otherUser.username} profilePic={otherUser.profilePic} />
       <Box className={classes.chatContainer}>
-        <Messages convo={convo}/>
-        <MessageInput displayMessage={displayMessage}/>
+        <Messages convo={convo} />
+        <MessageInput otherUserId={otherUser._id} otherUsername={otherUser.username}
+          displayMessage={displayMessage}/>
       </Box>
     </Paper>
   ) : (

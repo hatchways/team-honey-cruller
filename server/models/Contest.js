@@ -14,7 +14,7 @@ const contestSchema = new Schema({
         required: true
     },
     deadlineDate: {
-        type: String,
+        type: Date,
         required: true,
     },
     dateCreated: {
@@ -31,7 +31,11 @@ const contestSchema = new Schema({
     submissions: [{
         type: Schema.Types.ObjectId,
         ref: 'Submission'
-    }]
+    }],
+    active: {
+      type: Boolean,
+      default: true
+    }
 });
 
 

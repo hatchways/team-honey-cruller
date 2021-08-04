@@ -11,17 +11,25 @@ import { Convo } from '../../interface/User';
 
 interface Props {
   convo: Convo;
+  closeDrawer?: (arg0: boolean) => void;
 }
 
-const ConvoCard = ({ convo }: Props): JSX.Element => {
+const ConvoCard = ({ convo, closeDrawer }: Props): JSX.Element => {
   const [online, setOnline] = useState<boolean>(false);
   const classes = useStyles();
   const { setFriendId } = useConvoContext();
   const { loggedInUser } = useAuth();
   const [otherUser] = convo.recipients.filter((person) => loggedInUser && person._id !== loggedInUser.id);
+  const lastMessageDate = new Date(convo.updatedAt);
 
-  return (
-    <Box className={classes.root} onClick={() => setFriendId(otherUser._id)}>
+  return otherUser ? (
+    <Box
+      className={classes.root}
+      onClick={() => {
+        setFriendId(otherUser._id);
+        closeDrawer && closeDrawer(false);
+      }}
+    >
       <Badge
         classes={{ badge: `${classes.badge} ${online && classes.online}` }}
         variant="dot"
@@ -32,10 +40,11 @@ const ConvoCard = ({ convo }: Props): JSX.Element => {
       </Badge>
       <ConvoContent username={otherUser.username} lastMessage={convo.lastMessage} />
       <Box>
-        {/* PROBABLY WANT TO FORMAT THIS DATE SOMEHOW BEFORE THIS STEP */}
-        <Typography className={classes.date}>{convo.updatedAt.slice(0, 10)}</Typography>
+        <Typography className={classes.date}>{lastMessageDate.toString().slice(0, 10)}</Typography>
       </Box>
     </Box>
+  ) : (
+    <div></div>
   );
 };
 

@@ -26,7 +26,7 @@ module.exports = {
       .project({
         '__v': 0,
         'recipientObj': 0,
-      })
+      }).sort({updatedAt: -1})
       .exec(async (err, conversations) => {
         if (err) {
           console.log(err);
@@ -97,6 +97,10 @@ module.exports = {
           }));
           res.sendStatus(500);
         } else {
+          if(!messages.length) {
+            const otherUser = await User.findOne({_id: user2})
+            return res.status(200).json(otherUser)
+          }
           const populated = await Message.populate(messages, {
             path: 'from to',
             select: '-__v -password -register_date'
@@ -121,7 +125,7 @@ module.exports = {
   createMessage: asyncHandler(async (req, res) => {
     let from = mongoose.Types.ObjectId(req.user.id);
     let to = mongoose.Types.ObjectId(req.body.to);
-    if (req.body.from === req.body.to) {
+    if (from === req.body.to) {
       throw new Error("can't send message to yourself")
     }
     Conversation.findOneAndUpdate({
@@ -157,7 +161,7 @@ module.exports = {
         } else {
           if (!conversation._id) {
             let newConversation = new Conversation({
-              recipients: [req.body.from, req.body.to],
+              recipients: [from, req.body.to],
               lastMessage: req.body.message
             })
             const {

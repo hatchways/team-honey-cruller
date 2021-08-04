@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { useAuth } from '../../context/useAuthContext';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import AuthMenu from '../AuthMenu/AuthMenu';
+import NotificationPopUp from '../NotificationPopUp/NotificationPopUp';
 
 interface Props {
   linkTo: string;
@@ -29,7 +30,13 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
           minWidth="55vw"
           flexWrap="wrap"
           className={classes.linkContainer}
-        >
+        > 
+          {/* delete later */}
+          <Link to={{ pathname: '/artist', state:'60f101c8d872991344be3628' }}>
+            <Typography className={classes.navLink} color="secondary" display="inline">
+              Artist
+            </Typography>
+          </Link>
           <Link to="/discovery">
             <Typography className={classes.navLink} color="secondary" display="inline">
               Discover
@@ -41,7 +48,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
             </Typography>
           </Link>
           <Typography className={classes.navLink} color="secondary" display="inline">
-            Notifications
+              <NotificationPopUp />
           </Typography>
           <Link to={linkTo}>
             <Button className={classes.createContestBtn} size="large">

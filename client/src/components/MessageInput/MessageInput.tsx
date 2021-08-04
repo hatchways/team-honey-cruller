@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent, useRef, VoidFunctionComponent } from 'react';
+import { FormEvent, useRef } from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
@@ -7,12 +7,14 @@ import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
 
 interface Props {
+  otherUserId: string;
+  otherUsername: string;
   displayMessage: (
     msg: string
   ) => void;
 };
 
-const MessageInput = ({ displayMessage }: Props): JSX.Element => {
+const MessageInput = ({ otherUserId, otherUsername, displayMessage }: Props): JSX.Element => {
   const classes = useStyles();
   const inputRef = useRef<HTMLInputElement>(null);
   const { loggedInUser } = useAuth();
@@ -30,13 +32,14 @@ const MessageInput = ({ displayMessage }: Props): JSX.Element => {
         <Grid container alignContent="center" className={classes.inputContainer}>
           <Grid item xs={10}>
             <Input
-              placeholder="Type something..."
+              placeholder={`Reply to ${otherUsername}`}
               className={classes.input}
               name="text"
               inputProps={{
                 ref: inputRef,
               }}
               disableUnderline={true}
+              classes={{ input: classes.placeholder }}
             />
           </Grid>
           <Grid item xs={2}>

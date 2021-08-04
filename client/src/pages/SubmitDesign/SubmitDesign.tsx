@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -11,6 +11,7 @@ import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import useStyles from './useStyles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { uploadSubmissionPic, createSubmission } from '../../helpers/APICalls/submission';
+import { useSnackBar } from '../../context/useSnackbarContext';
 
 interface Params {
   id: string;
@@ -21,9 +22,12 @@ export default function SubmitDesign(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(false);
   const classes = useStyles();
   const params = useParams<Params>();
+  const { updateSnackBarMessage } = useSnackBar();
+  const history = useHistory();
 
   const submitNewPic = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      setLoading(true);
       try {
         const formData = new FormData();
         for (let i = 0; i < e.target.files.length; i++) {
@@ -31,6 +35,7 @@ export default function SubmitDesign(): JSX.Element {
         }
         const newPic = await uploadSubmissionPic(formData);
         setAllPics([newPic, ...allPics]);
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -38,8 +43,15 @@ export default function SubmitDesign(): JSX.Element {
   };
 
   const submitAllPics = async () => {
-    createSubmission(allPics, params.id);
-    // MESSAGE SUCCESS OR FAILURE HERE AND ROUTE TO NEXT PAGE
+    try {
+      const submission = await createSubmission(allPics, params.id);
+      if (submission) {
+        updateSnackBarMessage(`Successfully submitted design${allPics.length > 1 ? 's' : ''}`);
+        history.push(`/contest/${params.id}`);
+      }
+    } catch (err: any) { 
+      updateSnackBarMessage(err.message);
+    }
   };
 
   return (
@@ -77,8 +89,8 @@ export default function SubmitDesign(): JSX.Element {
               <Typography className={classes.mutedText}>PNG, JPG, GIF</Typography>
             </Paper>
           </label>
-          <Button className={classes.uploadBtn} onClick={submitAllPics}>
-            submit
+          <Button disabled={loading ? true : false} className={classes.uploadBtn} onClick={submitAllPics}>
+            {loading ? <CircularProgress /> : 'Submit'}
           </Button>
         </Grid>
       </Grid>

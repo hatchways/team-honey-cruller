@@ -12,18 +12,24 @@ const mockLoggedInUser: User = {
   contests: [
     {
       _id: '',
+      images: [],
+      ownerName: 'stanleythemanly',
+      ownerProfilePic: '',
       title: 'My retirement tattoo',
       description: 'I am retiring and would like to celebrate with a cool tattoo',
       prizeAmount: 200,
       dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
       userId: '123456789',
       deadlineDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
+      active: true,
       submissions: [
         {
+          _id: '',
           images: [],
           artistName: 'Princess Peach',
           artistId: '987654321xyz',
           contest: '',
+          artistPic: '',
           active: true,
         },
       ],
@@ -65,16 +71,22 @@ const mockOtherUser1: User = {
   contests: [
     {
       _id: '',
+      ownerName: 'dwightk',
+      ownerProfilePic: '',
       title: 'my new favorite tattoo',
+      images: [],
       description: 'I am looking for a cool island tattoo to warm my icy heart.',
       prizeAmount: 200,
       dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
       userId: '123456780',
       deadlineDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
+      active: true,
       submissions: [
         {
+          _id: '',
           images: [],
           contest: '',
+          artistPic: '',
           active: true,
           artistName: 'Biker Jim',
           artistId: '123456789abc',
@@ -113,21 +125,27 @@ const mockOtherUser2: User = {
   profilePic: '',
   artist: false,
   artwork: [],
-  stripeId:'',
+  stripeId: '',
   activeConvo: [],
   contests: [
     {
       _id: '',
+      ownerName: 'oscar',
+      ownerProfilePic: '',
+      images: [],
       title: 'Grouchy tattoo',
       description: 'I need a tattoo to show people how grouchy I am',
       prizeAmount: 250,
       dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
       userId: '123456788',
       deadlineDate: 'Sun Sep 01 2021 00:00:00 GMT+0200',
+      active: true,
       submissions: [
         {
+          _id: '',
           images: [],
           contest: '',
+          artistPic: '',
           active: true,
           artistName: 'Cookie Monster',
           artistId: '123456789xyz',
@@ -171,16 +189,22 @@ const mockOtherUser3: User = {
   contests: [
     {
       _id: '',
+      ownerName: 'malonescones',
+      ownerProfilePic: '',
+      images: [],
       title: 'my new favorite tattoo',
       description: 'I am looking for a tattoo that expresses how hungry I am',
       prizeAmount: 300,
       dateCreated: 'Sat Aug 21 2021 00:00:00 GMT+0200',
       userId: '123456787',
       deadlineDate: 'Mon Sep 02 2021 00:00:00 GMT+0200',
+      active: true,
       submissions: [
         {
+          _id: '',
           images: [],
           contest: '',
+          artistPic: '',
           active: true,
           artistName: 'Prison Mike',
           artistId: '987654321abc',

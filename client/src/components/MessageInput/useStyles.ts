@@ -11,12 +11,18 @@ const useStyles = makeStyles((theme) => ({
     height: '10vh',
     borderTop: '1px solid rgba(0,0,0,0.2)',
     padding: '0 30px',
+    [theme.breakpoints.down('md')]: {
+      padding: 0,
+    },
   },
   input: {
     backgroundColor: '#F4F6FA',
     borderRadius: 8,
     width: '100%',
     padding: '15px 0',
+  },
+  placeholder: {
+    paddingLeft: 20,
   },
   sendBtn: {
     borderRadius: 0,

@@ -12,22 +12,27 @@ export interface User {
 }
 
 export interface Contest {
-  //also need an id
   _id: string;
   title: string;
   description: string;
   prizeAmount: number;
+  images: string[];
   deadlineDate: string;
   dateCreated: string;
   userId: string;
+  ownerProfilePic: string;
+  ownerName: string;
   submissions: Submission[];
+  active: boolean;
 }
 
 export interface Submission {
+  _id: string;
   contest: string;
   images: string[];
   artistName: string;
   artistId: string;
+  artistPic: string;
   active: boolean;
 }
 
@@ -58,8 +63,44 @@ export interface Message {
   createdAt: string;
 }
 
+interface WinningUser {
+  _id: string;
+  username: string;
+  email: string;
+  profilePic?: string;
+}
+
+export interface Winner {
+  _id: string;
+  contestOwner: WinningUser;
+  winningArtist: WinningUser;
+  winningPic: string;
+  title: string;
+  description: string;
+  prizeAmount: number;
+  error?: { message: string };
+}
+
 export interface SearchUsersApiData {
   users?: User[];
   error?: { message: string };
 }
 
+export interface Customer {
+  id: string;
+}
+
+export interface Notification {
+  opened: boolean;
+  _id: string;
+  to: string;
+  from: string;
+  notification: string;
+  createdAt: string;
+  profilePic: string;
+}
+
+export interface Review {
+  rating: number;
+  text: string;
+}

@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
   user: {
     fontSize: 24,
+    textTransform: 'capitalize',
   },
 
   button: {
@@ -37,12 +38,20 @@ const useStyles = makeStyles((theme) => ({
   fileInput: {
     display: 'none',
   },
-
+  tab: {
+    textTransform: 'uppercase',
+  },
   container: {
     width: '75%',
     marginTop: '32px',
   },
-
+  buttonBox: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+    },
+  },
   toolbar: {
     border: 0,
   },

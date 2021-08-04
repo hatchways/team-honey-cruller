@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
 import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
@@ -44,23 +45,23 @@ export default function Dashboard(): JSX.Element {
 
   return (
     <ConversationProvider>
-      <AuthHeader btnText="create contest" linkTo="/create-contest" />
-      <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
-        <CssBaseline />
-        <Grid item xs={12} sm={6} md={4} className={classes.drawerWrapper}>
-          <Hidden xsDown={true}>
-            <ChatSideBanner convos={convos} />
-          </Hidden>
-          <Hidden smUp={true}>
-            <ChatDrawer convos={convos} />
-          </Hidden>
-        </Grid>
-        <Grid item xs={12} sm={6} md={8} className={classes.chatWrapper}>
-          <Paper elevation={3}>
+      <Container classes={{ root: classes.root }} maxWidth={false}>
+        <AuthHeader btnText="create contest" linkTo="/create-contest" />
+        <Grid container component="main" className={classes.container}>
+          <CssBaseline />
+          <Grid item xs={12} md={6} lg={4} className={classes.drawerWrapper}>
+            <Hidden smDown={true}>
+              <ChatSideBanner convos={convos} />
+            </Hidden>
+            <Hidden mdUp={true}>
+              <ChatDrawer convos={convos} />
+            </Hidden>
+          </Grid>
+          <Grid item xs={12} md={6} lg={8} className={classes.chatWrapper}>
             <ActiveChat />
-          </Paper>
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </ConversationProvider>
   );
 }
