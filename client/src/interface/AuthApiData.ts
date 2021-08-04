@@ -17,6 +17,7 @@ export interface AuthApiCustomerData {
   error?: { message: string };
   success?: { message: string };
   customer?: string;
+  cardExists?: boolean;
 }
 
 export interface ContestById {

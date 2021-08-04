@@ -16,6 +16,7 @@ import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { NotificationProvider } from './context/notificationContext';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 import './App.css';
 
 function App(): JSX.Element {
