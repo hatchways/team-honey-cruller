@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     backgroundColor: 'black',
     padding: '2.5rem',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       justifyContent: 'center',
       padding: '1.5rem',
     },
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 20,
     letterSpacing: '.4em',
     textTransform: 'uppercase',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       margin: '0 25 0 24',
       display: 'flex',
       justifyContent: 'center',
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   linkContainer: {
     justifyContent: 'space-between',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       justifyContent: 'center',
       marginLeft: 49,
     },
