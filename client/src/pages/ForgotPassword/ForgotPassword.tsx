@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Box, Typography, Paper } from '@material-ui/core';
 import ForgotPasswordForm from './ForgotPasswordForm/ForgotPasswordForm';
-import forgotPassword from '../../helpers/APICalls/forgotPassword';
+import { forgotPassword } from '../../helpers/APICalls/forgotPassword';
 import useStyles from './useStyles';
 
 export default function Reset(): JSX.Element {
   const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>();
   const classes = useStyles();
 
   const handleSubmit = (

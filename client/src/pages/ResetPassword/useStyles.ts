@@ -13,6 +13,21 @@ const useStyles = makeStyles(() => ({
     width: '25%',
     minWidth: '20%',
   },
+  linkContainer: {
+    display: 'flex',
+    justifyContent: 'space-around'
+  },
+  link: {
+    border: '1px solid black',
+    borderRadius: 5,
+    padding: 5,
+    textDecoration: 'none',
+    color: '#EEEEEE',
+    backgroundColor: '#111111',
+    '&:hover': {
+      backgroundColor: 'gray'
+    }
+  }
 }));
 
 export default useStyles;
