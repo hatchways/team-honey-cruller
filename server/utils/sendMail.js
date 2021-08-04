@@ -16,7 +16,7 @@ const sendMail = (user, token) => {
     text:
       `Hello ${user.username},\n\n` +
       `Please click on the following link to reset your password:\n` +
-      `http://localhost:3000/reset-password?token=${token}&id=${user._id}\n`
+      `http://localhost:3000/reset-password/${token}/${user._id}\n`
   };
 
   transporter.sendMail(options, (err) => {
