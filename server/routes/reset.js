@@ -4,6 +4,6 @@ const protect = require("../middleware/auth");
 const { forgotPassword, resetPassword } = require("../controllers/reset");
 
 router.route("/").post(forgotPassword);
-router.route("/reset/:id").put(resetPassword);
+router.route("/update-password/:id").patch(resetPassword);
 
 module.exports = router;
