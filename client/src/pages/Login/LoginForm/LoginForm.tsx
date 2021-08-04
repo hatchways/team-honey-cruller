@@ -110,7 +110,7 @@ export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.El
             />
           </Box>
           <Box>
-            <Link className={classes.reset} to="/reset">Forgot Password?</Link>
+            <Link className={classes.reset} to="/forgot-password">Forgot Password?</Link>
           </Box>
           <Box textAlign="center">
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
