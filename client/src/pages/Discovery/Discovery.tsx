@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { Contest } from '../../interface/User';
-import { Column } from '../../interface/Discovery';
-import { getAllContests } from '../../helpers/APICalls/contest';
+import { getAllContests, getNumContests } from '../../helpers/APICalls/contest';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import MyTablePagination from '../../components/TablePagination/TablePagination';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import MomentUtils from '@date-io/moment';
@@ -22,7 +19,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
-import TablePagination from '@material-ui/core/TablePagination';
 import SortIcon from '@material-ui/icons/Sort';
 import { Animated } from 'react-animated-css';
 import useStyles from './useStyles';
@@ -32,18 +28,31 @@ import { Link } from 'react-router-dom';
 
 export default function Discovery(): JSX.Element {
   const [contests, setContests] = useState<Contest[]>([]);
+  const [numContests, setNumContests] = useState<number>(contests.length);
   const [sortType, setSortType] = useState<keyof Contest>('deadlineDate');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [dateFilter, setDateFilter] = useState<any>();
-  const { loggedInUser } = useAuth();
   const classes = useStyles();
   const { updateSnackBarMessage } = useSnackBar();
 
-  const fetchCall = async (date = '', createdAt = '', rows = 10) => {
-    const allContests = await getAllContests(date, createdAt, rows);
+  const getContestsLength = () => {
+    getNumContests().then((data) => {
+      setNumContests(data);
+    });
+  };
+
+  useEffect(() => {
+    if (!dateFilter && !contests) {
+      getContestsLength();
+    }
+  });
+
+  const fetchCall = async (date = '', rows = 10, page = 0) => {
+    const allContests = await getAllContests(date, rows, page);
     if (allContests.contests) {
       setContests(allContests.contests);
+      setNumContests(allContests.contests.length);
     } else {
       new Error('Could Not Get Contests');
     }
@@ -52,21 +61,19 @@ export default function Discovery(): JSX.Element {
   useEffect(() => {
     if (dateFilter !== undefined) {
       const date = moment.utc(dateFilter._d).format();
-      fetchCall(date, '', rowsPerPage);
+      fetchCall(date, rowsPerPage, page);
     } else {
-      fetchCall('', '', rowsPerPage);
+      fetchCall('', rowsPerPage, page);
+      getContestsLength();
     }
-  }, [dateFilter, rowsPerPage]);
-
-  useEffect(() => {
-    fetchCall();
-  }, []);
+  }, [dateFilter, rowsPerPage, page]);
 
   const handleChangePage = async (e: any, newPage: number) => {
     let same = true;
     const allContests = await getAllContests(
       dateFilter !== undefined ? moment.utc(dateFilter._d).format() : '',
-      contests.length ? contests[contests.length - 1].dateCreated : '',
+      rowsPerPage,
+      newPage,
     );
     if (allContests.contests) {
       for (let i = 0; i < allContests.contests.length; i++) {
@@ -78,14 +85,15 @@ export default function Discovery(): JSX.Element {
     }
     if (allContests.contests && !same) {
       setPage(newPage);
-      setContests([...allContests.contests]);
+      setContests(allContests.contests);
+      setNumContests(allContests.contests.length);
     }
   };
 
   useEffect(() => {
     const initialFetch = async () => {
       try {
-        const allContests = await getAllContests('', '');
+        const allContests = await getAllContests();
         if (allContests.contests) {
           setContests(allContests.contests);
         }
@@ -94,6 +102,7 @@ export default function Discovery(): JSX.Element {
       }
     };
     initialFetch();
+    getContestsLength();
   }, [updateSnackBarMessage]);
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,6 +111,7 @@ export default function Discovery(): JSX.Element {
   };
 
   const handleChangeDate = (date: any) => {
+    setPage(0);
     const momentTime = date;
     setDateFilter(momentTime);
   };
@@ -176,13 +186,19 @@ export default function Discovery(): JSX.Element {
                 </TableHead>
                 <TableBody>
                   {contests.map((contest) => {
+                    const goodLookingDate = new Date(contest.deadlineDate).toString().slice(0, 15);
                     return (
                       <>
                         <TableRow hover role="checkbox" className={classes.tableHead} tabIndex={-1} key={contest.title}>
                           <TableCell className={classes.tableRow}>{contest.title}</TableCell>
-                          <TableCell className={classes.tableRow}>{contest.description}</TableCell>
+                          <TableCell className={classes.tableRow}>
+                            {contest.description.length > 20
+                              ? `${contest.description.slice(0, 17)}...`
+                              : contest.description}
+                            {contest.description}
+                          </TableCell>
                           <TableCell className={classes.tableRow}>${contest.prizeAmount}</TableCell>
-                          <TableCell className={classes.tableRow}>{contest.deadlineDate}</TableCell>
+                          <TableCell className={classes.tableRow}>{goodLookingDate}</TableCell>
                           <TableCell className={classes.tableRow}>
                             <Button className={classes.button} component={Link} to={`/contest/${contest._id}`}>
                               More Info
@@ -193,14 +209,15 @@ export default function Discovery(): JSX.Element {
                     );
                   })}
                 </TableBody>
-                <MyTablePagination
-                  page={page}
-                  rowsPerPage={rowsPerPage}
-                  handleChangePage={handleChangePage}
-                  handleChangeRowsPerPage={handleChangeRowsPerPage}
-                />
               </Table>
             </TableContainer>
+            <MyTablePagination
+              page={page}
+              rowsPerPage={rowsPerPage}
+              handleChangePage={handleChangePage}
+              handleChangeRowsPerPage={handleChangeRowsPerPage}
+              numContests={numContests}
+            />
           </Paper>
         </Grid>
       </Animated>

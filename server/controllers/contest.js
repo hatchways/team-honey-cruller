@@ -5,6 +5,17 @@ const {
   winnerChosen
 } = require('../utils/contestHelper');
 
+exports.getNumContests = asyncHandler(asyncHandler(async (req, res) => {
+  try {
+    const contests = await Contest.find({active: true})
+    if(contests) {
+      res.status(200).json(contests.length)
+    }
+  } catch (err) {
+    res.status(500).send(err)
+  }
+}))
+
 exports.createContest = asyncHandler(async (req, res) => {
   try {
     const contest = await Contest.create({
@@ -56,57 +67,38 @@ exports.getAllContests = asyncHandler(async (req, res) => {
   try {
     let {
       deadlineDate,
-      createdAt,
-      howMany
+      howMany,
+      page
     } = req.query
 
-    if (deadlineDate === '' && createdAt === '') {
-      const tenContests = await Contest.find({
-        active: true
-      }).sort({dateCreated: -1}).limit(+howMany)
-      res.status(200).json({
-        contests: tenContests
-      })
-    } else if (createdAt !== '' && deadlineDate === '') {
-      const tenContests = await Contest.find({
-        active: true,
-        dateCreated: {
-          $lt: createdAt
-        }
-      }).sort({dateCreated: -1}).limit(+howMany)
-      res.status(200).json({
-        contests: tenContests
-      })
-    } else if (createdAt !== '' && deadlineDate !== '') {
-      const tenContests = await Contest.find({
-        active: true,
-        dateCreated: {
-          $lt: createdAt
-        },
-        deadlineDate: {
-          $lte: deadlineDate,
-        }
-      }).sort({deadlineDate: -1}).limit(+howMany)
-      res.status(200).json({
-        contests: tenContests
-      })
-    } else {
+    if (deadlineDate) {
       const allContests = await Contest.find({
-          deadlineDate: {
-            $lte: deadlineDate,
-          },
-          active: true
-        })
-        .sort({
-          deadlineDate: -1
-        });
-
+        active: true,
+        deadlineDate: {
+          $lte: deadlineDate
+        }
+      }).sort({
+        deadlineDate: 1
+      }).skip(howMany * page).limit(+howMany)
       if (!allContests) {
         return res.status(404).json({
           message: 'Could not retrieve contests'
         })
       }
-
+      res.status(200).json({
+        contests: allContests
+      });
+    } else {
+      const allContests = await Contest.find({
+        active: true
+      }).sort({
+        deadlineDate: 1
+      }).skip(howMany * page).limit(+howMany)
+      if (!allContests) {
+        return res.status(404).json({
+          message: 'Could not retrieve contests'
+        })
+      }
       res.status(200).json({
         contests: allContests
       });
