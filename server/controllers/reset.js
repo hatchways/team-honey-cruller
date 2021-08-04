@@ -39,3 +39,30 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+exports.updatePassword = asyncHandler(async (req, res) => {
+  try {
+    const passwordResetToken = await Token.findOne({ userId });
+    if (!passwordResetToken) {
+      res.status(400);
+      throw new Error("Invalid or expired password reset token");
+    }
+    const isValid = await bcrypt.compare(token, passwordResetToken.token);
+    if (!isValid) {
+      res.status(400);
+      throw new Error("Invalid or expired password reset token");
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, Number(sale));
+    await User.updateOne(
+      { _id: userId },
+      { $set: { password: hash } },
+      { new: true }
+    );
+    res.status(200).json({
+      message: 'Sucessfully updated password'
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
