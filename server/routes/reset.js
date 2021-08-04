@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const protect = require("../middleware/auth");
-const { forgotPassword, updatePassword } = require("../controllers/reset");
+const { forgotPassword, resetPassword } = require("../controllers/reset");
 
 router.route("/").post(protect, forgotPassword);
-router.route("/update-password").put(protect, updatePassword);
+router.route("/reset-password").put(protect, resetPassword);
 
 module.exports = router;

@@ -40,7 +40,7 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
   }
 });
 
-exports.updatePassword = asyncHandler(async (req, res) => {
+exports.resetPassword = asyncHandler(async (req, res) => {
   try {
     const passwordResetToken = await Token.findOne({ userId });
     if (!passwordResetToken) {
