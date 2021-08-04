@@ -1,225 +1,85 @@
 import { useEffect, useState } from 'react';
-import { useSnackBar } from '../../context/useSnackbarContext';
-import { Contest } from '../../interface/User';
-import { getAllContests, getNumContests } from '../../helpers/APICalls/contest';
+import { useAuth } from '../../context/useAuthContext';
+import { Winner } from '../../interface/User';
+import ContestTable from '../../components/ContestTable/ContestTable';
+import { getSomeWinners } from '../../helpers/APICalls/winner';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import MyTablePagination from '../../components/TablePagination/TablePagination';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateRangeIcon from '@material-ui/icons/DateRange';
-import MomentUtils from '@date-io/moment';
-import moment from 'moment';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import TableContainer from '@material-ui/core/TableContainer';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import TableBody from '@material-ui/core/TableBody';
-import SortIcon from '@material-ui/icons/Sort';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { Animated } from 'react-animated-css';
+import WinnerCard from '../../components/WinnerCard/WinnerCard';
+import Section from '../../components/Section/Section';
+import SectionHeader from '../../components/SectionHeader/SectionHeader';
+import { Divider } from '@material-ui/core';
+import SplashReviews from '../../components/SplashReviews/SplashReviews';
+import SectionAlternate from '../../components/SectionAlternate/SectionAlternate';
+import Hero from '../../components/Hero/Hero';
 import useStyles from './useStyles';
 
-//might have to delete later
-import { Link } from 'react-router-dom';
-
 export default function Discovery(): JSX.Element {
-  const [contests, setContests] = useState<Contest[]>([]);
-  const [numContests, setNumContests] = useState<number>(contests.length);
-  const [sortType, setSortType] = useState<keyof Contest>('deadlineDate');
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [dateFilter, setDateFilter] = useState<any>();
+  const [winners, setWinners] = useState<Winner[]>([]);
   const classes = useStyles();
-  const { updateSnackBarMessage } = useSnackBar();
 
-  const getContestsLength = () => {
-    getNumContests().then((data) => {
-      setNumContests(data);
-    });
-  };
-
-  useEffect(() => {
-    if (!dateFilter && !contests) {
-      getContestsLength();
-    }
-  });
-
-  const fetchCall = async (date = '', rows = 10, page = 0) => {
-    const allContests = await getAllContests(date, rows, page);
-    if (allContests.contests) {
-      setContests(allContests.contests);
-      setNumContests(allContests.contests.length);
+  const winnersData = async () => {
+    const getWinners = await getSomeWinners(4);
+    if (getWinners) {
+      setWinners(getWinners);
     } else {
-      new Error('Could Not Get Contests');
+      return new Error('Could Not Get Winners');
     }
   };
 
   useEffect(() => {
-    if (dateFilter !== undefined) {
-      const date = moment.utc(dateFilter._d).format();
-      fetchCall(date, rowsPerPage, page);
-    } else {
-      fetchCall('', rowsPerPage, page);
-      getContestsLength();
-    }
-  }, [dateFilter, rowsPerPage, page]);
-
-  const handleChangePage = async (e: any, newPage: number) => {
-    let same = true;
-    const allContests = await getAllContests(
-      dateFilter !== undefined ? moment.utc(dateFilter._d).format() : '',
-      rowsPerPage,
-      newPage,
-    );
-    if (allContests.contests) {
-      for (let i = 0; i < allContests.contests.length; i++) {
-        if (contests.length && allContests.contests[i]._id !== contests[i]._id) {
-          same = false;
-          break;
-        }
-      }
-    }
-    if (allContests.contests && !same) {
-      setPage(newPage);
-      setContests(allContests.contests);
-      setNumContests(allContests.contests.length);
-    }
-  };
-
-  useEffect(() => {
-    const initialFetch = async () => {
-      try {
-        const allContests = await getAllContests();
-        if (allContests.contests) {
-          setContests(allContests.contests);
-        }
-      } catch (err) {
-        updateSnackBarMessage(err.message);
-      }
-    };
-    initialFetch();
-    getContestsLength();
-  }, [updateSnackBarMessage]);
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  const handleChangeDate = (date: any) => {
-    setPage(0);
-    const momentTime = date;
-    setDateFilter(momentTime);
-  };
-
-  const sortByHeader = (sortParam: Contest[] = contests) => {
-    if (contests) {
-      const sort = [...sortParam].sort((a: Contest, b: Contest) => {
-        if (a[sortType] > b[sortType]) {
-          return 1;
-        } else if (a[sortType] < b[sortType]) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-      setContests(sort);
-    }
-  };
+    winnersData();
+  }, []);
 
   return (
     <>
       <AuthHeader linkTo="/create-contest" btnText="create contest" />
       <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
-        <Grid container justify="center" className={classes.grid}>
-          <Container className={classes.tableContainer}>
-            <Grid item>
-              <Typography className={classes.typography}>All Open Contests</Typography>
-            </Grid>
-            <Grid container justify="center" className={classes.muiPicker}>
-              <MuiPickersUtilsProvider utils={MomentUtils}>
-                <Grid item xs={5}>
-                  <KeyboardDatePicker
-                    id="date"
-                    name="deadlineDate"
-                    margin="normal"
-                    variant="inline"
-                    inputVariant="outlined"
-                    format="MMM Do YYYY"
-                    value={dateFilter}
-                    onChange={(value) => handleChangeDate(value)}
-                    keyboardIcon={<DateRangeIcon />}
-                    autoOk={true}
-                  />
-                  <Button className={classes.buttonReset} onClick={() => setDateFilter(undefined)}>
-                    Reset Filter
-                  </Button>
-                </Grid>
-              </MuiPickersUtilsProvider>
-            </Grid>
-          </Container>
-          <Paper className={classes.paper}>
-            <TableContainer>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow className={classes.tableHead}>
-                    <TableCell className={classes.tableRow} key="Contest Title">
-                      Contest Title
-                    </TableCell>
-                    <TableCell className={classes.tableRow} key="Contest Description">
-                      Contest Description
-                    </TableCell>
-                    <TableCell className={classes.tableRow} key="Prize Amount">
-                      Prize Amount
-                    </TableCell>
-                    <TableCell className={classes.tableRow} key="Deadline Date">
-                      <div onClick={() => sortByHeader()}>Deadline Date</div>
-                    </TableCell>
-                    <TableCell className={classes.tableRow} key="Contest Page">
-                      Contest Page
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {contests.map((contest) => {
-                    const goodLookingDate = new Date(contest.deadlineDate).toString().slice(0, 15);
-                    return (
-                      <>
-                        <TableRow hover role="checkbox" className={classes.tableHead} tabIndex={-1} key={contest.title}>
-                          <TableCell className={classes.tableRow}>{contest.title}</TableCell>
-                          <TableCell className={classes.tableRow}>
-                            {contest.description.length > 20
-                              ? `${contest.description.slice(0, 17)}...`
-                              : contest.description}
-                            {contest.description}
-                          </TableCell>
-                          <TableCell className={classes.tableRow}>${contest.prizeAmount}</TableCell>
-                          <TableCell className={classes.tableRow}>{goodLookingDate}</TableCell>
-                          <TableCell className={classes.tableRow}>
-                            <Button className={classes.button} component={Link} to={`/contest/${contest._id}`}>
-                              More Info
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      </>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <MyTablePagination
-              page={page}
-              rowsPerPage={rowsPerPage}
-              handleChangePage={handleChangePage}
-              handleChangeRowsPerPage={handleChangeRowsPerPage}
-              numContests={numContests}
+        <Hero />
+        <Section>
+          <Grid>
+            <SectionHeader
+              title={
+                <Typography component="span" variant="inherit" color="primary">
+                  Check out some of our recent Contest winners.
+                </Typography>
+              }
+              subtitle="We Guarantee atleast 20 submissions to your contest and you could receive up to 500+."
+              fadeUp
             />
-          </Paper>
-        </Grid>
+            <div className={classes.winnerCard}>
+              {winners.map((winner, i) => {
+                return (
+                  <>
+                    <Grid item container alignItems="center" direction="column" xs={12} sm={6} md={3}>
+                      <WinnerCard
+                        winningPic={winner.winningPic}
+                        title={winner.title}
+                        prizeAmount={winner.prizeAmount}
+                        winningArtist={winner.winningArtist}
+                        description={winner.description}
+                        key={winner.description}
+                      />
+                    </Grid>
+                  </>
+                );
+              })}
+            </div>
+          </Grid>
+        </Section>
+        <Divider />
+        <SectionAlternate>
+          <SplashReviews className="reviews" />
+        </SectionAlternate>
+        <Divider />
+        <div className={classes.table}>
+          <ContestTable />
+        </div>
+        <Divider />
       </Animated>
     </>
   );
