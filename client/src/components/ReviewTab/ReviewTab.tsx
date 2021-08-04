@@ -1,35 +1,69 @@
-import { Box, Typography, Grid } from '@material-ui/core';
+import { Box, Typography, Grid, Paper } from '@material-ui/core';
 import ReviewTabForm from './ReviewTabForm/ReviewTabForm';
 import { Review } from '../../interface/User';
 import useStyles from './useStyles';
-import ArtistCarousel from '../ArtistCarousel/ArtistCarousel';
+import ReviewCarousel from '../ReviewCarousel/ReviewCarousel';
 import Switch from '@material-ui/core/Switch';
 import { ChangeEvent, useState } from 'react';
+import { useAuth } from '../../context/useAuthContext';
+import { useSnackBar } from '../../context/useSnackbarContext';
+import { createReviews, getReviews } from '../../helpers/APICalls/review';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { useEffect } from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Rating from '@material-ui/lab/Rating';
 
-export default function PersonalInfo(): JSX.Element {
+type Props = {
+  artistId: string;
+};
+
+export default function ReviewTab({ artistId }: Props): JSX.Element {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
+  const { loggedInUser } = useAuth();
+  const { updateSnackBarMessage } = useSnackBar();
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
   };
-
-  const handleSubmit = ({ rating, text }: Review) => {
-    console.log('rating is', rating);
-    console.log('text is', text);
+  const handleSubmit = async ({ rating, text }: Review) => {
+    const review = {
+      artistId,
+      rating,
+      text,
+    };
+    const result = await createReviews(review);
+    if (result.error) {
+      updateSnackBarMessage(result.error);
+    } else {
+      updateSnackBarMessage('Review submitted successfully');
+      const updatedRev = reviews ? [...reviews, result] : [result];
+      setReviews(updatedRev);
+    }
   };
 
-  return (
-    <Box textAlign="center">
+  useEffect(() => {
+    async function reviews() {
+      const reviews = await getReviews(artistId);
+      if (reviews !== null) {
+        setReviews(reviews);
+      } else {
+        new Error('Could Not Get Artist Info');
+      }
+    }
+    reviews();
+  }, [artistId]);
+
+  return loggedInUser ? (
+    <Box textAlign="center" pb={5}>
       <Typography className={classes.activity} variant="h5">
         Recent Reviews
       </Typography>
-      <ArtistCarousel />
-      <Typography align="center" component="h1" variant="subtitle1">Read all</Typography>
-      <Switch checked={checked} onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
-      <Grid container direction="column" style={{ marginTop: '120px' }}>
-        <Box mt={1} mb={1}>
-          <Typography align="center" component="h1" variant="subtitle1">
+      <ReviewCarousel reviews={reviews} />
+      <Paper className={classes.formPaper}>
+        <Box mt={1} mb={1} pt={5}>
+          <Typography align="center" component="h1" variant="h5">
             Your review
           </Typography>
         </Box>
@@ -38,7 +72,36 @@ export default function PersonalInfo(): JSX.Element {
             <ReviewTabForm handleSubmit={handleSubmit} />
           </Grid>
         </Grid>
-      </Grid>
+      </Paper>
+      <Typography align="center" component="h1" variant="subtitle1" className={classes.readAll}>
+        Read all
+      </Typography>
+      <Switch checked={checked} onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
+      {checked === true
+        ? reviews &&
+          reviews.map((review) => (
+            <Box key={review._id} display="flex" justifyContent="center">
+              <Paper className={classes.paper}>
+                <Box display="flex" mb={2} textAlign="center" pt={2}>
+                  <Avatar alt="Profile Image" src={review.reviewerId.profilePic} className={classes.avatar}></Avatar>
+                  <Typography className={classes.username}>
+                    @{review.reviewerId.username}
+                  </Typography>
+                </Box>
+                <Box display="flex" mb={2} textAlign="center">
+                  <Rating value={review.rating} size="large" />
+                </Box>
+                <Box display="flex" mb={2}>
+                  <Typography className={classes.username}>
+                    {review.text}
+                  </Typography>
+                </Box>
+              </Paper>
+            </Box>
+          ))
+        : ''}
     </Box>
+  ) : (
+    <CircularProgress />
   );
 }

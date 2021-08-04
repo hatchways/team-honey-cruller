@@ -101,6 +101,9 @@ export interface Notification {
 }
 
 export interface Review {
+  _id: string;
+  error: string;
   rating: number;
   text: string;
+  reviewerId: { profilePic :string, username :string};
 }

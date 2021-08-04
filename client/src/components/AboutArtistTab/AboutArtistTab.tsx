@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import EmailIcon from '@material-ui/icons/Email';
 import PhoneIcon from '@material-ui/icons/Phone';
-import ArtistCarousel from '../ArtistCarousel/ArtistCarousel';
 
 interface Props {
   info: PersonalInfo | undefined | null;
@@ -16,8 +15,6 @@ const AboutArtistTab = ({ info }: Props): JSX.Element => {
 
   return (
     <Box textAlign="center">
-      <Typography className={classes.activity} variant='h5'>Recent Activity</Typography>
-      <ArtistCarousel />
         <Grid container direction="column" className={classes.root}>
           <Grid item>
             <Typography variant="h4" className={classes.heading}>

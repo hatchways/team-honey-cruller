@@ -5,7 +5,7 @@ exports.getAllReviews = asyncHandler(async (req, res) => {
   try {
     const review = await Reviews.find({
       artistId: req.params.id,
-    });
+    }).populate('reviewerId', { profilePic: true, username: true });
     res.status(200).json(review);
   } catch (err) {
     res.status(500).json(err);

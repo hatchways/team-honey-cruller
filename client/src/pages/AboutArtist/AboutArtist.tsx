@@ -91,7 +91,7 @@ export default function AboutArtist(props: { location : { state: string; }}): JS
       <AuthHeader linkTo="/create-contest" btnText="create contest" />
       <Grid className={classes.grid} container alignItems="center" direction="column">
         <Avatar alt="Profile Image" src={info?.userId.profilePic} className={classes.avatar}></Avatar>
-        <Typography className={classes.user}>{`${info?.firstName} ${info?.lastName}`}</Typography>
+        <Typography className={classes.user}>{`${info ? info.firstName: ''} ${info ? info.lastName: ''}`}</Typography>
         <Container className={classes.container}>
           <Toolbar className={classes.toolbar}>
             <ThemeProvider theme={newTheme}>
@@ -112,7 +112,7 @@ export default function AboutArtist(props: { location : { state: string; }}): JS
                 <AboutArtistTab info={info}/>
             </Panel>
             <Panel value={value} index={1}>
-               <ReviewTab />
+               <ReviewTab artistId={id} />
             </Panel>
           </Paper>
         </Container>
