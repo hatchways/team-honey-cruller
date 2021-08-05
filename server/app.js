@@ -36,7 +36,7 @@ const io = socketio(server, {
   },
 });
 
-const users = [];
+var users = [];
 
 const addUser = (userId, socketId) => {
   !users.some((user) => user.userId === userId) &&
@@ -64,11 +64,15 @@ io.on("connection", (socket) => {
 
     socket.on("send-message", (senderId, receiverId, message) => {
       const user = getUser(receiverId);
-      socket.to(user.socketId).emit("receive-message", {
-        senderId: senderId,
-        receiverId: receiverId,
-        message: message,
-      });
+      console.log('server', user);
+      if (user) {
+        console.log("emitting");
+        socket.to(user.socketId).emit("receive-message", {
+          senderId: senderId,
+          receiverId: receiverId,
+          message: message,
+        });
+      }
     });
   } else {
     socket.on("disconnect", () => {
