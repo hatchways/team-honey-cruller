@@ -107,3 +107,9 @@ export interface Review {
   text: string;
   reviewerId: { profilePic :string, username :string};
 }
+
+export interface submissionByArtist {
+  _id: string;
+  contest: { title: string};
+  created_at: string;
+}
