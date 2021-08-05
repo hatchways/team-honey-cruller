@@ -16,6 +16,8 @@ export default function Reset(): JSX.Element {
       .then((res) => {
         if (res.error) {
           setError(res.error.message);
+        } else {
+          setError('');
         }
       });
     setHasSubmitted(prev => !prev);
@@ -29,13 +31,17 @@ export default function Reset(): JSX.Element {
         </Typography>
       </Box>
       <Box mt={3} mb={3} boxShadow={4} component={Paper} className={classes.form}>
-        {hasSubmitted && !error ?
-          <Box>
-            <Typography align="center">
-              A reset link has been sent to your email
-            </Typography>
-          </Box> : error ? <Typography align="center">{error}</Typography> :
-          <ForgotPasswordForm handleSubmit={handleSubmit}/>}
+        {
+          hasSubmitted && !error
+          ? <Box>
+              <Typography align="center">
+                A reset link has been sent to your email
+              </Typography>
+            </Box>
+          : error
+          ? <Typography align="center">{error}</Typography>
+          : <ForgotPasswordForm handleSubmit={handleSubmit}/>
+        }
       </Box>
     </Box>
   );

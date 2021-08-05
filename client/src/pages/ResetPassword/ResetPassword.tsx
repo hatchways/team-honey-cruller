@@ -18,6 +18,8 @@ export default function Reset(): JSX.Element {
       .then((res) => {
         if (res.error) {
           setError(res.error.message);
+        } else {
+          setError('');
         }
       });
     setHasSubmitted(prev => !prev);
@@ -31,17 +33,21 @@ export default function Reset(): JSX.Element {
         </Typography>
       </Box>
       <Box mt={3} mb={3} boxShadow={4} component={Paper} className={classes.form}>
-        {hasSubmitted && !error ?
-        <Box>
-          <Typography align="center">
-            Your password has be updated!
-          </Typography>
-          <Box mt={2} mb={2} className={classes.linkContainer}>
-            <Link to="/login" className={classes.link}>Login</Link>
-            <Link to="/dashboard" className={classes.link}>Home</Link>
-          </Box>
-        </Box> : error ? <Typography align="center">{error}</Typography> :
-        <ResetPasswordForm handleSubmit={handleSubmit}/>}
+        {
+          hasSubmitted && !error
+          ? <Box>
+              <Typography align="center">
+                Your password has be updated!
+              </Typography>
+              <Box mt={2} mb={2} className={classes.linkContainer}>
+                <Link to="/login" className={classes.link}>Login</Link>
+                <Link to="/dashboard" className={classes.link}>Home</Link>
+              </Box>
+            </Box>
+          : error
+          ? <Typography align="center">{error}</Typography>
+          : <ResetPasswordForm handleSubmit={handleSubmit}/>
+        }
       </Box>
     </Box>
   );
