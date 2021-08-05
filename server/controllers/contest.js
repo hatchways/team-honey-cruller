@@ -1,9 +1,42 @@
 const Contest = require("../models/Contest");
 const asyncHandler = require("express-async-handler");
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const {
   scheduleContestEnd,
   winnerChosen
 } = require('../utils/contestHelper');
+
+exports.createContest = asyncHandler(async (req, res) => {
+  try {
+
+    const findUser = await User.findOne({
+      _id: req.user.id
+    });
+
+    const findStripe = await stripe.customers.retrieve(findUser.stripeId);
+
+    if (findStripe.invoice_settings.default_payment_method === null) {
+      res.status(404).json({
+        message: "You must have a credit card on file in order to start a contest."
+      });
+    } else {
+
+      const contest = await Contest.create({
+        title: req.body.title,
+        description: req.body.description,
+        prizeAmount: req.body.prizeAmount,
+        deadlineDate: req.body.deadlineDate,
+        userId: req.user.id,
+        images: req.body.images
+      });
+      scheduleContestEnd(contest)
+      res.status(201).json(contest);
+    }
+  }catch (err) {
+    res.status(500).json(err);
+  }
+})
+
 
 exports.getNumContests = asyncHandler(asyncHandler(async (req, res) => {
   try {
@@ -16,22 +49,6 @@ exports.getNumContests = asyncHandler(asyncHandler(async (req, res) => {
   }
 }))
 
-exports.createContest = asyncHandler(async (req, res) => {
-  try {
-    const contest = await Contest.create({
-      title: req.body.title,
-      description: req.body.description,
-      prizeAmount: req.body.prizeAmount,
-      deadlineDate: req.body.deadlineDate,
-      userId: req.user.id,
-      images: req.body.images
-    });
-    scheduleContestEnd(contest)
-    res.status(201).json(contest);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-})
 
 exports.updateContest = asyncHandler(async (req, res) => {
   try {
