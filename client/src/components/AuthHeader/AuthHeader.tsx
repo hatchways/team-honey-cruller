@@ -42,7 +42,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
             </Typography>
           </Link>
           <Typography className={classes.navLink} color="secondary" display="inline">
-              <NotificationPopUp />
+            <NotificationPopUp />
           </Typography>
           <Link to={linkTo}>
             <Button className={classes.createContestBtn} size="large">

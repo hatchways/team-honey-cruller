@@ -9,14 +9,14 @@ const useStyles = makeStyles((theme) => ({
     height: '125px',
     width: theme.spacing(17),
     marginBottom: '16px',
-    marginTop: '64px',
+    marginTop: '50px',
   },
   user: {
     fontSize: 24,
   },
   container: {
-    width: '75%',
-    marginTop: '32px',
+    width: '100%',
+    marginTop: '15px'
   },
   toolbar: {
     border: 0,

@@ -96,7 +96,7 @@ export default function ContestPage(): JSX.Element {
         } else {
           setContestSubmissions([]);
         }
-      } catch (err) {
+      } catch (err: any) {
         updateSnackBarMessage(err.message);
       }
     }
@@ -175,11 +175,17 @@ export default function ContestPage(): JSX.Element {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={2} justifyContent="center" alignItems="center">
-            <Link to={`/submit-design/${id}`} style={{ textDecoration: 'none' }}>
-              <Button variant="outlined" size="large" className={classes.button}>
+            {loggedInUser.id === contest?.userId ? (
+              <Button variant="outlined" size="large" className={classes.button} disabled>
                 submit design
               </Button>
-            </Link>
+            ) : (
+              <Link to={`/submit-design/${id}`} style={{ textDecoration: 'none' }}>
+                <Button variant="outlined" size="large" className={classes.button}>
+                  submit design
+                </Button>
+              </Link>
+            )}
           </Grid>
         </Grid>
         <Grid container direction="column" className={classes.designGrid}>

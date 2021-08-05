@@ -16,6 +16,7 @@ import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { NotificationProvider } from './context/notificationContext';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
 import './App.css';
 
 function App(): JSX.Element {
@@ -36,11 +37,10 @@ function App(): JSX.Element {
                   <Route exact path="/settings" component={Settings} />
                   <Route exact path="/notifications" component={Notifications} />
                   <Route exact path="/contest/:id" component={Contest} />
-                  <Route exact path="/dashboard">
-                    <Dashboard />
-                  </Route>
+                  <Route exact path="/artist" component={AboutArtist} />
+                  <Route exact path="/dashboard" component={Discovery} />
                   <Route path="*">
-                    <Redirect to="/login" />
+                    <Redirect to="/dashboard" />
                   </Route>
                 </Switch>
               </NotificationProvider>

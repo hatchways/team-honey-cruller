@@ -21,9 +21,16 @@ exports.retrieveCustomer = asyncHandler(async (req, res) => {
     try {
         const customer = await stripe.customers.retrieve(req.params.id);
 
-        res.status(200).json({
-            customer: customer
-        })
+        if (customer.invoice_settings.default_payment_method === null) {
+            res.status(200).json({
+                cardExists: false
+            })
+        } else {
+            res.status(200).json({
+                cardExists: true
+            })
+        }
+
     } catch (err) {
         res.status(500).json(err);
     }
@@ -52,19 +59,6 @@ exports.setUpIntents = asyncHandler(async (req, res) => {
         res.status(500).json(err);
     }
 })
-
-exports.createPaymentMethod = asyncHandler(async (req, res) => {
-    try {
-        const createPayment = await stripe.paymentMethods.create({
-            type: req.body.type,
-            // req.body.card should be an object with number, expMonth, expYear, and cvc inside.
-            card: req.body.card
-        })
-        res.status(201).json(createPayment)
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
 
 exports.createCheckoutSession = asyncHandler(async (req, res) => {
     try {
@@ -105,18 +99,33 @@ exports.chargeCard = asyncHandler(async (req, res) => {
 
 exports.attachPaymentMethod = asyncHandler(async (req, res) => {
     try {
+        const customer = await stripe.customers.retrieve(req.body.stripeId);
+
+        const oldPayment = customer.invoice_settings.default_payment_method
+
+        if (oldPayment != null) {
+            const detach = await stripe.paymentMethods.detach(oldPayment);
+        }
+
         const customerCard = await stripe.paymentMethods.attach(
             req.body.cardId, {
                 customer: req.body.stripeId
             }
+        );
+
+        const makeDefaultPayment = await stripe.customers.update(
+            req.body.stripeId, {
+                invoice_settings: {
+                    default_payment_method: req.body.cardId
+                }
+            }
         )
 
         res.status(200).json({
-            customer: customerCard
+            customer: makeDefaultPayment
         });
 
     } catch (err) {
-        console.log(err)
         res.status(500).json(err);
     }
-})
+});
