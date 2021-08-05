@@ -15,6 +15,8 @@ import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import AboutArtistTab from '../../components/AboutArtistTab/AboutArtistTab';
 import { PersonalInfo } from '../../interface/PersonalInfo';
 import { getPersonalInfo } from '../../helpers/APICalls/personalInfo';
+import { submissionByArtist } from '../../interface/User';
+import { getartistSubmission } from '../../helpers/APICalls/submission';
 import { withStyles } from '@material-ui/core/styles';
 import ReviewTab from '../../components/ReviewTab/ReviewTab';
 
@@ -37,6 +39,7 @@ export default function AboutArtist(props: { location : { state: string; }}): JS
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [info, setInfo] = useState<PersonalInfo>();
+  const [submission, setSubmission] = useState<submissionByArtist[]>([]);
   const { loggedInUser } = useAuth();
 
   const newTheme = createTheme({
@@ -60,14 +63,22 @@ export default function AboutArtist(props: { location : { state: string; }}): JS
   useEffect(() => {
     async function getInfo() {
       const artistInfo = await getPersonalInfo(id);
+      const artistSubmission = await getartistSubmission(id);
       if (artistInfo !== null) {
         setInfo(artistInfo);
       } else {
         new Error('Could Not Get Artist Info');
       }
+      if (artistSubmission !== null) {
+        setSubmission(artistSubmission);
+      } else {
+        new Error('Could Not Get Artist Submssions');
+      }
     }
     getInfo();
   }, [id]);
+
+  console.log('submissions are', submission);
   
   const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {
     setValue(valueChange);
@@ -109,7 +120,7 @@ export default function AboutArtist(props: { location : { state: string; }}): JS
           </Toolbar>
           <Paper square elevation={2} style={{ marginBottom: '10px' }}>
             <Panel value={value} index={0}>
-                <AboutArtistTab info={info}/>
+                <AboutArtistTab info={info} submission={submission}/>
             </Panel>
             <Panel value={value} index={1}>
                <ReviewTab artistId={id} />

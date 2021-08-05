@@ -5,10 +5,8 @@ import useStyles from './useStyles';
 import ReviewCarousel from '../ReviewCarousel/ReviewCarousel';
 import Switch from '@material-ui/core/Switch';
 import { ChangeEvent, useState } from 'react';
-import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { createReviews, getReviews } from '../../helpers/APICalls/review';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Rating from '@material-ui/lab/Rating';
@@ -20,7 +18,6 @@ type Props = {
 export default function ReviewTab({ artistId }: Props): JSX.Element {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
-  const { loggedInUser } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
   const [reviews, setReviews] = useState<Review[]>([]);
 
@@ -55,7 +52,7 @@ export default function ReviewTab({ artistId }: Props): JSX.Element {
     reviews();
   }, [artistId]);
 
-  return loggedInUser ? (
+  return (
     <Box textAlign="center" pb={5}>
       <Typography className={classes.activity} variant="h5">
         Recent Reviews
@@ -64,7 +61,7 @@ export default function ReviewTab({ artistId }: Props): JSX.Element {
       <Paper className={classes.formPaper}>
         <Box mt={1} mb={1} pt={5}>
           <Typography align="center" component="h1" variant="h5">
-            Your review
+            Submit your review
           </Typography>
         </Box>
         <Grid container justifyContent="center">
@@ -77,31 +74,32 @@ export default function ReviewTab({ artistId }: Props): JSX.Element {
         Read all
       </Typography>
       <Switch checked={checked} onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
-      {checked === true
-        ? reviews &&
+      {checked === true ? (
+        reviews.length ? (
           reviews.map((review) => (
             <Box key={review._id} display="flex" justifyContent="center">
               <Paper className={classes.paper}>
                 <Box display="flex" mb={2} textAlign="center" pt={2}>
                   <Avatar alt="Profile Image" src={review.reviewerId.profilePic} className={classes.avatar}></Avatar>
-                  <Typography className={classes.username}>
-                    @{review.reviewerId.username}
-                  </Typography>
+                  <Typography className={classes.username}>@{review.reviewerId.username}</Typography>
                 </Box>
                 <Box display="flex" mb={2} textAlign="center">
                   <Rating value={review.rating} size="large" />
                 </Box>
                 <Box display="flex" mb={2}>
-                  <Typography className={classes.username}>
-                    {review.text}
-                  </Typography>
+                  <Typography className={classes.username}>{review.text}</Typography>
                 </Box>
               </Paper>
             </Box>
           ))
-        : ''}
+        ) : (
+          <Typography style={{ marginTop: '30px', padding: '20px' }} variant="h4">
+            This artist does not have any review
+          </Typography>
+        )
+      ) : (
+        ''
+      )}
     </Box>
-  ) : (
-    <CircularProgress />
   );
 }

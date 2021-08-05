@@ -1,5 +1,6 @@
 import { FetchOptions } from '../../interface/FetchOptions';
 import { Submission } from '../../interface/User';
+import { submissionByArtist } from '../../interface/User';
 
 export const uploadSubmissionPic = async (file: FormData): Promise<string> => {
   const fetchOptions: FetchOptions = {
@@ -50,4 +51,16 @@ export const getUserSubmissions = async (): Promise<Submission[]> => {
   return await fetch(`/submission`, fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Could not find Contest.' } }));
+};
+
+export const getartistSubmission = async (artistId: string): Promise<submissionByArtist[]> => {
+  const fetchData: FetchOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  };
+
+  return await fetch(`/submission/artist/${artistId}`, fetchData)
+    .then((data) => data.json())
+    .catch((err) => ({ error: { message: 'Could not get submission.' } }));
 };

@@ -12,17 +12,17 @@ const useStyles = makeStyles((theme) => ({
     width: '95%',
     height: theme.spacing(30),
   },
-  avatar: {
-    height: theme.spacing(11),
-    width: theme.spacing(10),
-  },
   username: {
     marginTop: theme.spacing(4), 
     marginLeft: theme.spacing(4), 
     fontWeight: 'bold'
   },
-  rating:{
-    marginBottom: theme.spacing(1)
+  title: {
+    fontWeight: 'bold',
+    marginTop: theme.spacing(2) 
+  },
+  date:{
+    marginTop: theme.spacing(2) 
   }
 }));
 
