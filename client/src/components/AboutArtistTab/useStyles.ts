@@ -1,27 +1,31 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '240px',
-    padding: 10,
-  },
   activity: {
-    margin:0,
+    margin: 0,
     WebkitTextStroke: 'medium',
-    paddingTop:30
+    paddingTop: 70,
   },
   heading: {
     WebkitTextStroke: 'medium',
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(6),
   },
   contentMarginsLeft: {
-    marginLeft: 15 
+    marginLeft: 15,
   },
   contentMarginsTop: {
-    marginTop: 10 
+    marginTop: 10,
+    fontSize: 18,
   },
-
+  root: {
+    backgroundColor: '#fafafa',
+  },
+  about: {
+    marginTop: theme.spacing(8),
+    padding: theme.spacing(3),
+    fontWeight: 'bold',
+  },
 }));
 
 export default useStyles;

@@ -101,6 +101,15 @@ export interface Notification {
 }
 
 export interface Review {
+  _id: string;
+  error: string;
   rating: number;
   text: string;
+  reviewerId: { profilePic :string, username :string};
+}
+
+export interface submissionByArtist {
+  _id: string;
+  contest: { title: string};
+  created_at: string;
 }

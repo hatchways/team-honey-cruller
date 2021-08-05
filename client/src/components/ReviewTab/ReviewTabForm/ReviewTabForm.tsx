@@ -15,6 +15,9 @@ export default function ReviewTabForm({ handleSubmit }: Props): JSX.Element {
   const INITIAL_VALUES = {
     rating: 5,
     text: '',
+    error: '',
+    reviewerId: { profilePic: '', username: '' },
+    _id: ''
   };
 
   const VALIDATION_SCHEMA = Yup.object().shape({
