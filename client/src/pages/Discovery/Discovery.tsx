@@ -3,6 +3,7 @@ import { useAuth } from '../../context/useAuthContext';
 import { Winner } from '../../interface/User';
 import ContestTable from '../../components/ContestTable/ContestTable';
 import { getSomeWinners } from '../../helpers/APICalls/winner';
+import { getNumContests } from '../../helpers/APICalls/contest';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import MyTablePagination from '../../components/TablePagination/TablePagination';
 import Grid from '@material-ui/core/Grid';
@@ -20,6 +21,7 @@ import useStyles from './useStyles';
 
 export default function Discovery(): JSX.Element {
   const [winners, setWinners] = useState<Winner[]>([]);
+  const [numContests, setNumContests] = useState<number>(0);
   const classes = useStyles();
 
   const winnersData = async () => {
@@ -33,6 +35,9 @@ export default function Discovery(): JSX.Element {
 
   useEffect(() => {
     winnersData();
+    getNumContests().then((data: number) => {
+      setNumContests(data);
+    });
   }, []);
 
   return (
@@ -86,7 +91,7 @@ export default function Discovery(): JSX.Element {
         </SectionAlternate>
         <Divider />
         <div className={classes.table}>
-          <ContestTable />
+          <ContestTable allContestsLength={numContests} />
         </div>
         <Divider />
       </Animated>

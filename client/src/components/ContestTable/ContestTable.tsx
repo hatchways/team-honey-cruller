@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { Contest } from '../../interface/User';
-import { getAllContests, getNumContests } from '../../helpers/APICalls/contest';
+import { getAllContests } from '../../helpers/APICalls/contest';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import MyTablePagination from '../../components/TablePagination/TablePagination';
 import Grid from '@material-ui/core/Grid';
@@ -25,9 +25,13 @@ import useStyles from './useStyles';
 import SectionHeader from '../../components/SectionHeader/SectionHeader';
 import { Link } from 'react-router-dom';
 
-const ContestTable = (): JSX.Element => {
+interface Props {
+  allContestsLength: number;
+}
+
+const ContestTable = ({ allContestsLength }: Props): JSX.Element => {
   const [contests, setContests] = useState<Contest[]>([]);
-  const [numContests, setNumContests] = useState<number>(contests.length);
+  const [numContests, setNumContests] = useState<number>(allContestsLength);
   const [sortType, setSortType] = useState<keyof Contest>('deadlineDate');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -35,27 +39,11 @@ const ContestTable = (): JSX.Element => {
   const classes = useStyles();
   const { updateSnackBarMessage } = useSnackBar();
 
-  const getContestsLength = () => {
-    getNumContests().then((data: number) => {
-      setNumContests(data);
-    });
-  };
-
   useEffect(() => {
     if (!dateFilter && !contests) {
-      getContestsLength();
+      setNumContests(allContestsLength);
     }
-  }, [dateFilter, contests]);
-
-  const fetchCall = async (date = '', rows = 10, page = 0) => {
-    const allContests = await getAllContests(date, rows, page);
-    if (allContests.contests) {
-      setContests(allContests.contests);
-      setNumContests(allContests.contests.length);
-    } else {
-      new Error('Could Not Get Contests');
-    }
-  };
+  }, [dateFilter, contests, allContestsLength]);
 
   useEffect(() => {
     if (dateFilter !== undefined) {
@@ -63,9 +51,21 @@ const ContestTable = (): JSX.Element => {
       fetchCall(date, rowsPerPage, page);
     } else {
       fetchCall('', rowsPerPage, page);
-      getContestsLength();
+      setNumContests(allContestsLength);
     }
-  }, [dateFilter, rowsPerPage, page]);
+  }, [dateFilter, rowsPerPage, page, allContestsLength]);
+
+  const fetchCall = async (date = '', rows = 10, page = 0) => {
+    const allContests = await getAllContests(date, rows, page);
+    if (allContests.contests) {
+      setContests(allContests.contests);
+      if (date !== '') {
+        setNumContests(allContests.contests.length);
+      }
+    } else {
+      new Error('Could Not Get Contests');
+    }
+  };
 
   const handleChangePage = async (e: any, newPage: number) => {
     const allContests = await getAllContests(
@@ -76,24 +76,8 @@ const ContestTable = (): JSX.Element => {
     if (allContests.contests) {
       setPage(newPage);
       setContests(allContests.contests);
-      setNumContests(allContests.contests.length);
     }
   };
-
-  useEffect(() => {
-    const initialFetch = async () => {
-      try {
-        const allContests = await getAllContests();
-        if (allContests.contests) {
-          setContests(allContests.contests);
-        }
-      } catch (err) {
-        updateSnackBarMessage(err.message);
-      }
-    };
-    initialFetch();
-    getContestsLength();
-  }, [updateSnackBarMessage]);
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
