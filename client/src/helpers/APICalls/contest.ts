@@ -4,14 +4,26 @@ import { Contest, Winner } from '../../interface/User';
 import { NewContest } from '../../interface/Contest';
 import axios from 'axios';
 
-export const getAllContests = async (date: string): Promise<AuthApiData> => {
+export const getAllContests = async (date?: string, howMany = 10, page = 0): Promise<AuthApiData> => {
   const fetchData: FetchOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
   };
 
-  return await fetch(`/contest/?deadlineDate=${date}`, fetchData)
+  return await fetch(`/contest/?deadlineDate=${date}&howMany=${howMany}&page=${page}`, fetchData)
+    .then((data) => data.json())
+    .catch((err) => ({ error: { message: 'Cannot connect to server' } }));
+};
+
+export const getNumContests = async (): Promise<number> => {
+  const fetchData: FetchOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  };
+
+  return await fetch(`/contest/num`, fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Cannot connect to server' } }));
 };

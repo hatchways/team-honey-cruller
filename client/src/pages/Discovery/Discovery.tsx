@@ -5,6 +5,7 @@ import { Winner } from '../../interface/User';
 import ContestTable from '../../components/ContestTable/ContestTable';
 import TourContent from '../../components/TourContent/TourContent';
 import { getSomeWinners } from '../../helpers/APICalls/winner';
+import { getNumContests } from '../../helpers/APICalls/contest';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -20,10 +21,11 @@ import useStyles from './useStyles';
 
 export default function Discovery(): JSX.Element {
   const [winners, setWinners] = useState<Winner[]>([]);
-  const { loggedInUser } = useAuth();
+  const [numContests, setNumContests] = useState<number>(0);
   const classes = useStyles();
   const history = useHistory();
 
+  const { loggedInUser } = useAuth();
   const winnersData = async () => {
     const getWinners = await getSomeWinners(4);
     if (getWinners) {
@@ -61,6 +63,9 @@ export default function Discovery(): JSX.Element {
 
   useEffect(() => {
     winnersData();
+    getNumContests().then((data: number) => {
+      setNumContests(data);
+    });
   }, []);
 
   return (
@@ -82,22 +87,32 @@ export default function Discovery(): JSX.Element {
               subtitle="We Guarantee atleast 20 submissions to your contest and you could receive up to 500+."
               fadeUp
             />
-            <div className={classes.winnerCard}>
-              {winners.map((winner) => (
-                <>
-                  <Grid item container alignItems="center" direction="column" xs={12} sm={6} md={3}>
+            <Grid container className={classes.winnerCard}>
+              {winners.map((winner) => {
+                return (
+                  <Grid
+                    item
+                    alignItems="center"
+                    direction="column"
+                    spacing={5}
+                    xs={12}
+                    sm={6}
+                    md={3}
+                    key={winner._id}
+                    className={classes.winnerWrapper}
+                  >
                     <WinnerCard
                       winningPic={winner.winningPic}
                       title={winner.title}
                       prizeAmount={winner.prizeAmount}
                       winningArtist={winner.winningArtist}
                       description={winner.description}
-                      key={winner._id}
+                      key={winner.description}
                     />
                   </Grid>
-                </>
-              ))}
-            </div>
+                );
+              })}
+            </Grid>
           </Grid>
         </Section>
         <Divider />
@@ -106,7 +121,7 @@ export default function Discovery(): JSX.Element {
         </SectionAlternate>
         <Divider />
         <div className={classes.table} data-tour="contests">
-          <ContestTable />
+          <ContestTable allContestsLength={numContests} />
         </div>
         <Divider />
       </Animated>

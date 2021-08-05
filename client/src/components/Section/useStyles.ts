@@ -1,9 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 1236,
-    width: '100%',
+    width: 'inherit',
     margin: '0 auto',
     padding: theme.spacing(6, 2),
     [theme.breakpoints.up('sm')]: {
@@ -24,4 +24,4 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default useStyles
+export default useStyles;
