@@ -32,12 +32,49 @@ export default function Discovery(): JSX.Element {
   };
 
   useEffect(() => {
+    fetchCall('');
+  }, []);
+
+  useEffect(() => {
+    if (dateFilter !== undefined) {
+      const date = moment.utc(dateFilter._d).format();
+      fetchCall(date);
+    }
+  }, [dateFilter]);
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const handleChangeDate = (date: any) => {
+    const momentTime = date;
+    setDateFilter(momentTime);
+  };
+
+  const sortByHeader = (sortParam: Contest[] = contests) => {
+    if (contests) {
+      const sort = [...sortParam].sort((a: Contest, b: Contest) => {
+        if (a[sortType] > b[sortType]) {
+          return 1;
+        } else if (a[sortType] < b[sortType]) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+      setContests(sort);
+    }
+  };
     winnersData();
     getNumContests().then((data: number) => {
       setNumContests(data);
     });
   }, []);
-
   return (
     <>
       <AuthHeader
@@ -45,6 +82,31 @@ export default function Discovery(): JSX.Element {
         btnText={loggedInUser ? 'Create Contest' : 'Log In'}
       />
       <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
+        <Grid container justify="center" className={classes.grid}>
+          <Container className={classes.tableContainer}>
+            <Grid item>
+              <Typography className={classes.typography}>All Open Contests</Typography>
+            </Grid>
+            <Grid container justify="center" className={classes.muiPicker}>
+              <MuiPickersUtilsProvider utils={MomentUtils}>
+                <Grid item xs={5}>
+                  <KeyboardDatePicker
+                    id="date"
+                    name="deadlineDate"
+                    margin="normal"
+                    variant="inline"
+                    inputVariant="outlined"
+                    format="MMM Do YYYY"
+                    value={dateFilter}
+                    onChange={(value) => handleChangeDate(value)}
+                    keyboardIcon={<DateRangeIcon />}
+                    autoOk={true}
+                  />
+                  <Button className={classes.buttonReset} onClick={() => fetchCall('')}>
+                    Reset Filter
+                  </Button>
+                </Grid>
+              </MuiPickersUtilsProvider>
         <Hero />
         <Section>
           <Grid>

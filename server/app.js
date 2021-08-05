@@ -36,20 +36,58 @@ const io = socketio(server, {
   },
 });
 
+io.use((socket, next) => {
+  next();
+});
+
+//users connected in socket
+let users = [];
+
+const addUser = (userId, socketId) => {
+  const existingUser = userId !== null && users.find((user) => user.userId === userId);
+  if(existingUser){
+    removeUser(existingUser.socketId);
+  }
+  users.push({ userId, socketId });
+};
+
+const getUser = (to) => {
+  return users.find((user) => user.userId === to);
+};
+
+const removeUser = (socketId) => {
+  users = users.filter((user) => user.socketId !== socketId);
+};
+
 io.on("connection", (socket) => {
+  const socketId = socket.id;
   const token = cookie.parse(socket.handshake.headers.cookie).token;
   if (token) {
     const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
     socket.tokenId = verifyToken.id;
-    console.log(`connected by ID of ${socket.tokenId}`);
-  } else {
-    socket.on("disconnect", () => {
-      console.log("user disconnected");
+    console.log(`connected by User-ID: ${socket.tokenId} and Socket-ID: ${socketId}`);
+    addUser(socket.tokenId, socketId);
+    //After every connection take userId and socketId from user
+    socket.on("sendUser", () => {
+      io.emit("getUsers", users);
     });
+    console.log('users ', users);
   }
 
   socket.on("joinChat", (res) => {
     console.log("inside joinChat");
+  });
+
+  //send and get notifications
+  socket.on("sendNotification", (notification) => {
+    const to = notification.to;
+    getUser(to) !== undefined && io.to(getUser(to).socketId).emit("getNotification", notification);
+  });
+
+  socket.on("disconnect", () => {
+      console.log(`disconnected by User-ID: ${socket.tokenId} and Socket-ID: ${socketId}`);
+      removeUser(socketId);
+      io.emit("getUsers", users);
   });
 });
 
