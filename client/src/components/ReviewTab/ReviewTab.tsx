@@ -41,7 +41,7 @@ export default function ReviewTab({ artistId }: Props): JSX.Element {
   };
 
   useEffect(() => {
-    async function reviews() {
+    async function getReviewsForArtist() {
       const reviews = await getReviews(artistId);
       if (reviews !== null) {
         setReviews(reviews);
@@ -49,7 +49,7 @@ export default function ReviewTab({ artistId }: Props): JSX.Element {
         new Error('Could Not Get Artist Info');
       }
     }
-    reviews();
+    getReviewsForArtist();
   }, [artistId]);
 
   return (
@@ -70,7 +70,7 @@ export default function ReviewTab({ artistId }: Props): JSX.Element {
           </Grid>
         </Grid>
       </Paper>
-      <Typography align="center" component="h1" variant="subtitle1" className={classes.readAll}>
+      <Typography align="center" variant="subtitle1" className={classes.readAll}>
         Read all
       </Typography>
       <Switch checked={checked} onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
@@ -84,7 +84,7 @@ export default function ReviewTab({ artistId }: Props): JSX.Element {
                   <Typography className={classes.username}>@{review.reviewerId.username}</Typography>
                 </Box>
                 <Box display="flex" mb={2} textAlign="center">
-                  <Rating value={review.rating} size="large" />
+                  <Rating value={review.rating} size="large" name="read-only" readOnly />
                 </Box>
                 <Box display="flex" mb={2}>
                   <Typography className={classes.username}>{review.text}</Typography>
