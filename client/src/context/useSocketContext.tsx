@@ -5,7 +5,7 @@ import { Notification } from '../interface/User';
 interface ISocketContext {
   socket: Socket | undefined;
   initSocket: () => void;
-  socketNotification: Notification | undefined;
+  socketNotification?: Notification;
 }
 
 export const SocketContext = createContext<ISocketContext>({
@@ -26,10 +26,10 @@ export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => 
       }),
     );
   }, []);
-
+  
   useEffect(() => {
     socket?.on('getNotification', (notification) => {
-      setSocketNotification(notification);
+        setSocketNotification(notification);
     });
   });
 

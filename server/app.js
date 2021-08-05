@@ -43,9 +43,11 @@ io.use((socket, next) => {
 let users = [];
 
 const addUser = (userId, socketId) => {
-  userId !== null &&
-    !users.some((user) => user.userId === userId) &&
-    users.push({ userId, socketId });
+  const existingUser = userId !== null && users.find((user) => user.userId === userId);
+  if(existingUser){
+    removeUser(existingUser.socketId);
+  }
+  users.push({ userId, socketId });
 };
 
 const getUser = (to) => {
@@ -62,12 +64,13 @@ io.on("connection", (socket) => {
   if (token) {
     const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
     socket.tokenId = verifyToken.id;
-    console.log(`connected by ID of ${socket.tokenId}`);
+    console.log(`connected by User-ID: ${socket.tokenId} and Socket-ID: ${socketId}`);
+    addUser(socket.tokenId, socketId);
     //After every connection take userId and socketId from user
-    socket.on("sendUser", (userId) => {
-      addUser(userId, socketId);
+    socket.on("sendUser", () => {
       io.emit("getUsers", users);
     });
+    console.log('users ', users);
   }
 
   socket.on("joinChat", (res) => {
@@ -76,15 +79,14 @@ io.on("connection", (socket) => {
 
   //send and get notifications
   socket.on("sendNotification", (notification) => {
-    const user = getUser(notification.to);
-    io.to(user.socketId).emit("getNotification", notification);
+    const to = notification.to;
+    getUser(to) !== undefined && io.to(getUser(to).socketId).emit("getNotification", notification);
   });
 
   socket.on("disconnect", () => {
-    if (token === undefined) {
-      console.log("user disconnected", socket.id);
+      console.log(`disconnected by User-ID: ${socket.tokenId} and Socket-ID: ${socketId}`);
       removeUser(socketId);
-    }
+      io.emit("getUsers", users);
   });
 });
 

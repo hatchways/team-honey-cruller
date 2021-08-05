@@ -30,7 +30,7 @@ export default function Notifications({ header }: NotificationProps): JSX.Elemen
     const response = await deleteNotification(target.value);
     if (response === 204) {
       updateSnackBarMessage('Notification deleted successfully');
-      const filteredNotifications = notifications?.filter((item) => item._id !== target.value);
+      const filteredNotifications = notifications && notifications.filter((item) => item._id !== target.value);
       setNotifications(filteredNotifications);
     } else {
       updateSnackBarMessage('Error deleting notification, trying again later');
