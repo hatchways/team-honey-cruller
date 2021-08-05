@@ -154,6 +154,7 @@ export default function Profile(): JSX.Element {
           </Button>
         </Box>
         <Container className={classes.container}>
+          <div data-tour="profile"></div>
           <Toolbar className={classes.toolbar}>
             <ThemeProvider theme={newTheme}>
               <Tabs

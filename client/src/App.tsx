@@ -6,7 +6,6 @@ import Login from './pages/Login/Login';
 import SubmitDesign from './pages/SubmitDesign/SubmitDesign';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
-import TourContent from './components/TourContent/TourContent';
 import Profile from './pages/Profile/Profile';
 import Discovery from './pages/Discovery/Discovery';
 import CreateContest from './pages/CreateContest/CreateContest';
@@ -41,11 +40,11 @@ function App(): JSX.Element {
                   <Route exact path="/contest/:id" component={Contest} />
                   <Route exact path="/artist" component={AboutArtist} />
                   <Route exact path="/dashboard" component={Discovery} />
+                  <Route exact path="/messages" component={Dashboard} />
                   <Route path="*">
                     <Redirect to="/dashboard" />
                   </Route>
                 </Switch>
-                <TourContent />
               </NotificationProvider>
             </SocketProvider>
           </AuthProvider>

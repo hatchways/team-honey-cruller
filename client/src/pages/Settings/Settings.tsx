@@ -77,7 +77,9 @@ export default function Settings(): JSX.Element {
         >
           <Tab label="Profile" {...tabProps(0)} className={classes.label} />
           <Tab label="Personal Information" {...tabProps(1)} className={classes.label} />
-          <Tab label="Payment Details" {...tabProps(2)} className={classes.label} />
+          <div data-tour="payment">
+            <Tab label="Payment Details" {...tabProps(2)} className={classes.label} />
+          </div>
           <Tab label="Notification" {...tabProps(3)} className={classes.label} />
           <Tab label="Password" {...tabProps(4)} className={classes.label} />
         </Tabs>
