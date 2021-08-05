@@ -1,35 +1,38 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
- grid: {
+  grid: {
     height: '100%',
     width: '100%',
- },
- typography: {
+  },
+  typography: {
     fontSize: '50px',
     fontWeight: 'bold',
     borderBottom: '2px #DCDCDC',
     borderBottomWidth: '2px',
     borderBottomStyle: 'solid',
     textAlign: 'center',
-    color: 'white'
- },
- muiPicker: {
+    color: 'white',
+  },
+  muiPicker: {
     textAlign: 'center',
-    marginTop: '20px'
- },
- paper: {
+    marginTop: '20px',
+  },
+  paper: {
     width: '50%',
- },
- tableHead: {
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
+  tableHead: {
     width: '100%',
- },
- tableRow: {
+  },
+  tableRow: {
     padding: '25px 0px 25px 0px',
     textAlign: 'center',
     minWidth: 50,
- },
- buttonReset: {
+  },
+  buttonReset: {
     fontWeight: 'bold',
     backgroundColor: 'black',
     color: 'white',
@@ -39,8 +42,8 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       color: 'black',
     },
- },
- button: {
+  },
+  button: {
     fontWeight: 'bold',
     backgroundColor: 'black',
     color: 'white',
@@ -50,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       color: 'black',
     },
- },
+  },
 }));
 
 export default useStyles;

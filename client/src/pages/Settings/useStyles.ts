@@ -3,12 +3,13 @@ import { makeStyles, Theme } from '@material-ui/core';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
+    justifyContent: 'center',
     flexGrow: 1,
     overflow: 'hidden',
   },
   tabs: {
     backgroundColor: theme.palette.background.paper,
-    minWidth: 200,
+    maxWidth: '100vw',
     width: '20vw',
     height: 'auto',
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: 20,
     '& .MuiTab-wrapper': {
       flexDirection: 'row',
-      justifyContent: 'flex-start'
+      justifyContent: 'flex-start',
     },
   },
   label: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginLeft: '58px',
   },
   tabPanel: {
-    width: '80%'
+    width: '80%',
   },
 }));
 

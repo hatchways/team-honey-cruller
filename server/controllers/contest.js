@@ -32,12 +32,23 @@ exports.createContest = asyncHandler(async (req, res) => {
       scheduleContestEnd(contest)
       res.status(201).json(contest);
     }
-
-
-  } catch (err) {
+  }catch (err) {
     res.status(500).json(err);
   }
 })
+
+
+exports.getNumContests = asyncHandler(asyncHandler(async (req, res) => {
+  try {
+    const contests = await Contest.find({active: true})
+    if(contests) {
+      res.status(200).json(contests.length)
+    }
+  } catch (err) {
+    res.status(500).send(err)
+  }
+}))
+
 
 exports.updateContest = asyncHandler(async (req, res) => {
   try {
@@ -72,32 +83,39 @@ exports.getSingleContest = asyncHandler(async (req, res) => {
 exports.getAllContests = asyncHandler(async (req, res) => {
   try {
     let {
-      deadlineDate
+      deadlineDate,
+      howMany,
+      page
     } = req.query
 
-    if (deadlineDate === '') {
+    if (deadlineDate) {
       const allContests = await Contest.find({
-        active: true
-      }).select('-submissions')
-      res.status(200).json({
-        contests: allContests
-      })
-    } else {
-      const allContests = await Contest.find({
-          deadlineDate: {
-            $lte: deadlineDate
-          }
-        })
-        .sort({
-          deadlineDate: 'asc'
-        });
-
+        active: true,
+        deadlineDate: {
+          $lte: deadlineDate
+        }
+      }).sort({
+        deadlineDate: 1
+      }).skip(howMany * page).limit(+howMany)
       if (!allContests) {
         return res.status(404).json({
           message: 'Could not retrieve contests'
         })
       }
-
+      res.status(200).json({
+        contests: allContests
+      });
+    } else {
+      const allContests = await Contest.find({
+        active: true
+      }).sort({
+        deadlineDate: 1
+      }).skip(howMany * page).limit(+howMany)
+      if (!allContests) {
+        return res.status(404).json({
+          message: 'Could not retrieve contests'
+        })
+      }
       res.status(200).json({
         contests: allContests
       });

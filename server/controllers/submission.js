@@ -84,3 +84,14 @@ exports.getSubmissionByContest = asyncHandler(async (req, res) => {
     }
   })
 })
+
+
+exports.getSubmissionsByArtist = asyncHandler(async (req, res) => {
+  const artistId = req.body.id;
+  try {
+    const submissions = await Submission.find({ artistId }).populate('contest', {title: true});
+    res.send(submissions)
+  } catch(err) {
+    res.status(500).json(err);
+  }
+})
