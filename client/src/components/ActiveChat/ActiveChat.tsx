@@ -7,18 +7,16 @@ import MessageInput from '../MessageInput/MessageInput';
 import Messages from '../Messages/Messages';
 import { useConvoContext } from '../../context/conversationContext';
 import { useAuth } from '../../context/useAuthContext';
+import { useSocket } from '../../context/useSocketContext';
 import { sendMessage } from '../../helpers/APICalls/conversations';
-import { io } from 'socket.io-client';
 import { OtherUser } from '../../interface/Convo';
-
-const socket = io("http://localhost:3000");
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
-  const { convo, recipient } = useConvoContext();
+  const { convo, recipient, setConvo } = useConvoContext();
   const { loggedInUser } = useAuth();
+  const { socket, message } = useSocket();
   const [otherUser, setOtherUser] = useState<OtherUser>();
-  const [newMessage, setNewMessage] = useState();
   const [messageCount, setMessageCount] = useState(0);
 
   useEffect(() => {
@@ -40,14 +38,21 @@ export default function Dashboard(): JSX.Element {
   }, [convo, loggedInUser, recipient]);
 
   useEffect(() => {
-    socket.emit("add-user", loggedInUser && loggedInUser.id);
-  }, [loggedInUser]);
+    if (message) {
+      const updatedMessage = convo?.length ? [...convo, message] : [message];
+      setConvo(updatedMessage);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [message]);
 
   const displayMessage = (message: string) => {
     if (loggedInUser && otherUser) {
       const con = createMessage(loggedInUser.id, otherUser._id, message);
-      if (con && convo) convo.push(con);
-      socket.emit("send-message", loggedInUser.id, otherUser._id, message);
+      if (con && convo) {
+        const updatedMessage = convo?.length ? [...convo, con] : [con];
+        setConvo(updatedMessage);
+      }
+      socket?.emit("send-message", loggedInUser.id, loggedInUser.profilePic, otherUser._id, otherUser.profilePic, message);
       sendMessage({ to: otherUser._id, message: message });
     }
   };

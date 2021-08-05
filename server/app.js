@@ -71,18 +71,17 @@ io.on("connection", (socket) => {
     socket.on("sendUser", () => {
       io.emit("getUsers", users);
     });
-    console.log('users ', users);
   }
 
-  socket.on("send-message", (senderId, receiverId, message) => {
+  socket.on("send-message", (senderId, senderPic, receiverId, receiverPic, message) => {
     const user = getUser(receiverId);
-    console.log("server", user);
     if (user) {
-      console.log(user);
-      socket.to(user.socketId).emit("receive-message", {
+      io.to(user.socketId).emit("receive-message", {
         senderId: senderId,
-        receiverId: receiverId,
-        message: message,
+        senderPic: senderPic,
+        recipientId: receiverId,
+        recipientPic: receiverPic,
+        text: message,
       });
     }
   });
