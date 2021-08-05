@@ -30,7 +30,6 @@ const NotificationPopUp = (): JSX.Element => {
   const notifications = useContext(NotificationContext).notifications;
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 

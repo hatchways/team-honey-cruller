@@ -36,53 +36,71 @@ const io = socketio(server, {
   },
 });
 
-var users = [];
+io.use((socket, next) => {
+  next();
+});
+
+//users connected in socket
+let users = [];
 
 const addUser = (userId, socketId) => {
-  !users.some((user) => user.userId === userId) &&
-    users.push({ userId, socketId });
+  const existingUser = userId !== null && users.find((user) => user.userId === userId);
+  if(existingUser){
+    removeUser(existingUser.socketId);
+  }
+  users.push({ userId, socketId });
+};
+
+const getUser = (to) => {
+  return users.find((user) => user.userId === to);
 };
 
 const removeUser = (socketId) => {
   users = users.filter((user) => user.socketId !== socketId);
 };
 
-const getUser = (userId) => {
-  return users.find((user) => user.userId === userId);
-};
-
 io.on("connection", (socket) => {
+  const socketId = socket.id;
   const token = cookie.parse(socket.handshake.headers.cookie).token;
   if (token) {
     const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
     socket.tokenId = verifyToken.id;
-    console.log(`connected by ID of ${socket.tokenId}`);
-
-    socket.on("add-user", (userId) => {
-      addUser(userId, socket.id);
+    console.log(`connected by User-ID: ${socket.tokenId} and Socket-ID: ${socketId}`);
+    addUser(socket.tokenId, socketId);
+    //After every connection take userId and socketId from user
+    socket.on("sendUser", () => {
+      io.emit("getUsers", users);
     });
-
-    socket.on("send-message", (senderId, receiverId, message) => {
-      const user = getUser(receiverId);
-      console.log("server", user);
-      if (user) {
-        console.log(user);
-        socket.to(user.socketId).emit("receive-message", {
-          senderId: senderId,
-          receiverId: receiverId,
-          message: message,
-        });
-      }
-    });
-  } else {
-    socket.on("disconnect", () => {
-      console.log("user disconnected");
-      removeUser(socket.id);
-    });
+    console.log('users ', users);
   }
+
+  socket.on("send-message", (senderId, receiverId, message) => {
+    const user = getUser(receiverId);
+    console.log("server", user);
+    if (user) {
+      console.log(user);
+      socket.to(user.socketId).emit("receive-message", {
+        senderId: senderId,
+        receiverId: receiverId,
+        message: message,
+      });
+    }
+  });
 
   socket.on("joinChat", (res) => {
     console.log("inside joinChat");
+  });
+
+  //send and get notifications
+  socket.on("sendNotification", (notification) => {
+    const to = notification.to;
+    getUser(to) !== undefined && io.to(getUser(to).socketId).emit("getNotification", notification);
+  });
+
+  socket.on("disconnect", () => {
+      console.log(`disconnected by User-ID: ${socket.tokenId} and Socket-ID: ${socketId}`);
+      removeUser(socketId);
+      io.emit("getUsers", users);
   });
 });
 

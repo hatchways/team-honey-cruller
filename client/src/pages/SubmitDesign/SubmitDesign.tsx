@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useContext, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -11,13 +11,21 @@ import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import useStyles from './useStyles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { uploadSubmissionPic, createSubmission } from '../../helpers/APICalls/submission';
+import { getContestById } from '../../helpers/APICalls/contest';
+import { createNotification } from '../../helpers/APICalls/notification';
 import { useSnackBar } from '../../context/useSnackbarContext';
+
+import { useSocket } from '../../context/useSocketContext';
+import { useAuth } from '../../context/useAuthContext';
 
 interface Params {
   id: string;
 }
 
 export default function SubmitDesign(): JSX.Element {
+  const { loggedInUser } = useAuth();
+  const { socket } = useSocket();
+
   const [allPics, setAllPics] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const classes = useStyles();
@@ -47,9 +55,19 @@ export default function SubmitDesign(): JSX.Element {
       const submission = await createSubmission(allPics, params.id);
       if (submission) {
         updateSnackBarMessage(`Successfully submitted design${allPics.length > 1 ? 's' : ''}`);
+        //get the contest creator's details
+        const toUser = await getContestById(params.id);
+        //create notification
+        const notificationBody = {
+          to: toUser.userId,
+          notification: `${loggedInUser?.username} submitted in your contest`,
+        };
+        const notification = await createNotification(notificationBody);
+        //send notification using socket
+        socket?.emit('sendNotification', notification);
         history.push(`/contest/${params.id}`);
       }
-    } catch (err: any) { 
+    } catch (err: any) {
       updateSnackBarMessage(err.message);
     }
   };

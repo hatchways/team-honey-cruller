@@ -15,13 +15,13 @@ const Messages = ({ convo }: Props): JSX.Element => {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
   const lastMessage = useRef<HTMLDivElement>(null);
-
+  
   useEffect(() => {
     if (lastMessage.current) {
       lastMessage.current.scrollIntoView();
     }
   }, [convo]);
-
+  
   return (
     <Box className={classes.root}>
       {convo &&

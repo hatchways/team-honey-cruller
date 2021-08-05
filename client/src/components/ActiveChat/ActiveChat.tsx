@@ -48,7 +48,7 @@ export default function Dashboard(): JSX.Element {
       const con = createMessage(loggedInUser.id, otherUser._id, message);
       if (con && convo) convo.push(con);
       socket.emit("send-message", loggedInUser.id, otherUser._id, message);
-      // sendMessage({ to: otherUser._id, message: message });
+      sendMessage({ to: otherUser._id, message: message });
     }
   };
 
