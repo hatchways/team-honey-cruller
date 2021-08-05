@@ -29,13 +29,13 @@ const GlobalCss = withStyles({
     },
     '.MuiToolbar-regular': {
       minHeight: 0,
-    }
+    },
   },
 })(() => null);
 
 //Pass 'artistId' through the react-router Link , when calling this component
-export default function AboutArtist(props: { location : { state: string; }}): JSX.Element {
-  const id = props.location.state
+export default function AboutArtist(props: { location: { state: string } }): JSX.Element {
+  const id = props.location.state;
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [info, setInfo] = useState<PersonalInfo>();
@@ -78,8 +78,6 @@ export default function AboutArtist(props: { location : { state: string; }}): JS
     getInfo();
   }, [id]);
 
-  console.log('submissions are', submission);
-  
   const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, valueChange: number) => {
     setValue(valueChange);
   };
@@ -102,7 +100,7 @@ export default function AboutArtist(props: { location : { state: string; }}): JS
       <AuthHeader linkTo="/create-contest" btnText="create contest" />
       <Grid className={classes.grid} container alignItems="center" direction="column">
         <Avatar alt="Profile Image" src={info?.userId.profilePic} className={classes.avatar}></Avatar>
-        <Typography className={classes.user}>{`${info ? info.firstName: ''} ${info ? info.lastName: ''}`}</Typography>
+        <Typography className={classes.user}>{`${info ? info.firstName : ''} ${info ? info.lastName : ''}`}</Typography>
         <Container className={classes.container}>
           <Toolbar className={classes.toolbar}>
             <ThemeProvider theme={newTheme}>
@@ -120,10 +118,10 @@ export default function AboutArtist(props: { location : { state: string; }}): JS
           </Toolbar>
           <Paper square elevation={2} style={{ marginBottom: '10px' }}>
             <Panel value={value} index={0}>
-                <AboutArtistTab info={info} submission={submission}/>
+              <AboutArtistTab info={info} submission={submission} />
             </Panel>
             <Panel value={value} index={1}>
-               <ReviewTab artistId={id} />
+              <ReviewTab artistId={id} />
             </Panel>
           </Paper>
         </Container>
