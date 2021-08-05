@@ -62,7 +62,7 @@ const Search = ({ search, handleChange }: Props): JSX.Element => {
       onSubmit={(e: SyntheticEvent) => {
         e.preventDefault();
       }}
-      data-tour="messaging"
+      data-tour="search"
     >
       <Autocomplete
         id="asynchronous-search"

@@ -6,7 +6,9 @@ import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
 import useStyles from './useStyles';
+import TourContent from '../../components/TourContent/TourContent';
 import { useAuth } from '../../context/useAuthContext';
+import { useTourContext } from '../../context/tourContext';
 import { useSocket } from '../../context/useSocketContext';
 import { useHistory } from 'react-router-dom';
 import ChatSideBanner from '../../components/ChatSideBanner/ChatSideBanner';
@@ -23,6 +25,40 @@ export default function Dashboard(): JSX.Element {
   const { initSocket } = useSocket();
   const history = useHistory();
   const [convos, setConvos] = useState<Convo[]>([]);
+  const { setOpen } = useTourContext();
+
+  const steps = [
+    {
+      selector: '[data-tour="search"]',
+      content: {
+        words: 'Search for any user on our platform to start a conversation.',
+        theme: 'secondary',
+      },
+      style: {
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
+        backgroundColor: 'black',
+      },
+    },
+    {
+      selector: '[data-tour="search"]',
+      content: {
+        words: 'Search for any user on our platform to start a conversation.',
+        theme: 'secondary',
+      },
+      style: {
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
+        backgroundColor: 'black',
+      },
+      action: () => {
+        setOpen(false);
+        history.push('/discovery');
+      },
+    },
+  ];
 
   useEffect(() => {
     getAllConvos().then((data: Convo[]) => {
@@ -62,6 +98,7 @@ export default function Dashboard(): JSX.Element {
           </Grid>
         </Grid>
       </Container>
+      <TourContent steps={steps} />
     </ConversationProvider>
   );
 }

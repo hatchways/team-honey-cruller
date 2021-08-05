@@ -1,5 +1,6 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { useAuth } from '../../context/useAuthContext';
+import { useHistory } from 'react-router-dom';
 import useStyles from './useStyles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -13,6 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Toolbar from '@material-ui/core/Toolbar';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import TourContent from '../../components/TourContent/TourContent';
 import ContestList from '../../components/ContestList/ContestList';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import { Contest, Winner } from '../../interface/User';
@@ -31,6 +33,37 @@ export default function Profile(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(false);
   const { loggedInUser, updateLoginContext } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
+  const history = useHistory();
+
+  const steps = [
+    {
+      selector: '[data-tour="start-contest"]',
+      content: {
+        words:
+          "This is your profile page, you can view all of your open and completed contests. Don't forget to upload a profile pic.",
+        theme: 'primary',
+      },
+      style: {
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
+      },
+    },
+    {
+      selector: '[data-tour="start-contest"]',
+      content: {
+        words:
+          "This is your profile page, you can view all of your open and completed contests. Don't forget to upload a profile pic.",
+        theme: 'primary',
+      },
+      style: {
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
+      },
+      action: () => history.push('/settings'),
+    },
+  ];
 
   const newTheme = createMuiTheme({
     palette: {
@@ -154,7 +187,6 @@ export default function Profile(): JSX.Element {
           </Button>
         </Box>
         <Container className={classes.container}>
-          <div data-tour="profile"></div>
           <Toolbar className={classes.toolbar}>
             <ThemeProvider theme={newTheme}>
               <Tabs
@@ -164,6 +196,7 @@ export default function Profile(): JSX.Element {
                 textColor="primary"
                 variant="fullWidth"
               >
+                <div data-tour="profile"></div>
                 <Tab label="in progress" className={classes.tab} />
                 <Tab label="choose a winner" className={classes.tab} />
                 <Tab label="past winners" className={classes.tab} />
@@ -183,6 +216,7 @@ export default function Profile(): JSX.Element {
           </Paper>
         </Container>
       </Grid>
+      <TourContent steps={steps} />
     </>
   ) : (
     <CircularProgress />

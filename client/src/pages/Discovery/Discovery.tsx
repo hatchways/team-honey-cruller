@@ -44,7 +44,7 @@ export default function Discovery(): JSX.Element {
         minWidth: '40%',
         maxWidth: '80vw',
       },
-      updateDelay: 2,
+      updateDelay: 25,
       scrollDuration: 1500,
     },
     {
@@ -57,7 +57,18 @@ export default function Discovery(): JSX.Element {
         backgroundColor: 'black',
       },
       scrollDuration: 1500,
-      nextStep: () => history.push('/profile'),
+    },
+    {
+      selector: '[data-tour="contests"]',
+      content: { words: 'Check out our active contests here!', theme: 'secondary' },
+      style: {
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
+        backgroundColor: 'black',
+      },
+      scrollDuration: 1500,
+      action: () => history.push('/profile'),
     },
   ];
 
@@ -124,8 +135,8 @@ export default function Discovery(): JSX.Element {
           <ContestTable allContestsLength={numContests} />
         </div>
         <Divider />
+        <TourContent steps={steps} />
       </Animated>
-      <TourContent steps={steps} />
     </>
   );
 }

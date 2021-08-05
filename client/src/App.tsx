@@ -17,6 +17,7 @@ import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import { NotificationProvider } from './context/notificationContext';
+import { TourProvider } from './context/tourContext';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import './App.css';
 
@@ -28,23 +29,25 @@ function App(): JSX.Element {
           <AuthProvider>
             <SocketProvider>
               <NotificationProvider>
-                <Switch>
-                  <Route exact path="/login" component={Login} />
-                  <Route exact path="/signup" component={Signup} />
-                  <Route exact path="/submit-design/:id" component={SubmitDesign} />
-                  <Route exact path="/profile" component={Profile} />
-                  <Route exact path="/discovery" component={Discovery} />
-                  <Route exact path="/create-contest" component={CreateContest} />
-                  <Route exact path="/settings" component={Settings} />
-                  <Route exact path="/notifications" component={Notifications} />
-                  <Route exact path="/contest/:id" component={Contest} />
-                  <Route exact path="/artist" component={AboutArtist} />
-                  <Route exact path="/dashboard" component={Discovery} />
-                  <Route exact path="/messages" component={Dashboard} />
-                  <Route path="*">
-                    <Redirect to="/dashboard" />
-                  </Route>
-                </Switch>
+                <TourProvider>
+                  <Switch>
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/signup" component={Signup} />
+                    <Route exact path="/submit-design/:id" component={SubmitDesign} />
+                    <Route exact path="/profile" component={Profile} />
+                    <Route exact path="/discovery" component={Discovery} />
+                    <Route exact path="/create-contest" component={CreateContest} />
+                    <Route exact path="/settings" component={Settings} />
+                    <Route exact path="/notifications" component={Notifications} />
+                    <Route exact path="/contest/:id" component={Contest} />
+                    <Route exact path="/artist" component={AboutArtist} />
+                    <Route exact path="/dashboard" component={Discovery} />
+                    <Route exact path="/messages" component={Dashboard} />
+                    <Route path="*">
+                      <Redirect to="/dashboard" />
+                    </Route>
+                  </Switch>
+                </TourProvider>
               </NotificationProvider>
             </SocketProvider>
           </AuthProvider>
