@@ -38,7 +38,7 @@ export default function Notifications({ header }: NotificationProps): JSX.Elemen
     } else {
       updateSnackBarMessage('Error deleting notification, trying again later');
     }
-    history.push('/notifications');
+    header === true ? history.push('/notifications') : history.push('/settings');
   };
 
   const hoursCalculator = (createdAt: string): string => {
