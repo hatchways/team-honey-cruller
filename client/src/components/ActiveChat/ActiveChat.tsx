@@ -39,21 +39,9 @@ export default function Dashboard(): JSX.Element {
   }, [convo, loggedInUser, recipient]);
 
   socket.on("receive-message", (data) => {
-    if (convo) {
-      const newMessage = {
-        _id: newMessages.toString(),
-        senderId: data.senderId,
-        senderName: convo[0].senderName,
-        senderPic: convo[0].senderPic,
-        recipientId: data.receiverId,
-        recipientName: convo[0].recipientName,
-        recipientPic: convo[0].recipientPic,
-        text: data.message,
-        createdAt: new Date().toString(),
-      };
-      convo.push(newMessage);
-      setNewMessages(prev => prev + 1);
-    }
+    const con = createMessage(data.senderId, data.receiverId, data.message);
+    console.log('client');
+    if (convo && con) convo.push(con);
   });
 
   useEffect(() => {
@@ -61,10 +49,30 @@ export default function Dashboard(): JSX.Element {
   }, [loggedInUser]);
 
 
-  const displayMessage = (message: string)=> {
+  const displayMessage = (message: string) => {
     if (loggedInUser && otherUser) {
+      const con = createMessage(loggedInUser.id, otherUser._id, message);
+      if (convo && con) convo.push(con);
       socket.emit("send-message", loggedInUser.id, otherUser._id, message);
-      sendMessage({ to: otherUser._id, message: message });
+      // sendMessage({ to: otherUser._id, message: message });/
+    }
+  };
+
+  const createMessage = (sender: string, receiver: string, message: string) => {
+    if (convo) {
+      const newMessage = {
+        _id: newMessages.toString(),
+        senderId: sender,
+        senderName: convo[0].senderName,
+        senderPic: convo[0].senderPic,
+        recipientId: receiver,
+        recipientName: convo[0].recipientName,
+        recipientPic: convo[0].recipientPic,
+        text: message,
+        createdAt: new Date().toString(),
+      };
+      setNewMessages(prev => prev + 1);
+      return newMessage;
     }
   };
 
