@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import useStyles from './useStyles';
@@ -18,7 +18,8 @@ export default function Dashboard(): JSX.Element {
   const { convo, recipient } = useConvoContext();
   const { loggedInUser } = useAuth();
   const [otherUser, setOtherUser] = useState<OtherUser>();
-  const [newMessages, setNewMessages] = useState(0);
+  const [newMessage, setNewMessage] = useState();
+  const [messageCount, setMessageCount] = useState(0);
 
   useEffect(() => {
     const other =
@@ -38,30 +39,23 @@ export default function Dashboard(): JSX.Element {
     setOtherUser(other);
   }, [convo, loggedInUser, recipient]);
 
-  socket.on("receive-message", (data) => {
-    const con = createMessage(data.senderId, data.receiverId, data.message);
-    console.log('client');
-    if (convo && con) convo.push(con);
-  });
-
   useEffect(() => {
     socket.emit("add-user", loggedInUser && loggedInUser.id);
   }, [loggedInUser]);
 
-
   const displayMessage = (message: string) => {
     if (loggedInUser && otherUser) {
       const con = createMessage(loggedInUser.id, otherUser._id, message);
-      if (convo && con) convo.push(con);
+      if (con && convo) convo.push(con);
       socket.emit("send-message", loggedInUser.id, otherUser._id, message);
-      // sendMessage({ to: otherUser._id, message: message });/
+      // sendMessage({ to: otherUser._id, message: message });
     }
   };
 
   const createMessage = (sender: string, receiver: string, message: string) => {
-    if (convo) {
+    if (convo && convo[0]) {
       const newMessage = {
-        _id: newMessages.toString(),
+        _id: messageCount.toString(),
         senderId: sender,
         senderName: convo[0].senderName,
         senderPic: convo[0].senderPic,
@@ -71,7 +65,7 @@ export default function Dashboard(): JSX.Element {
         text: message,
         createdAt: new Date().toString(),
       };
-      setNewMessages(prev => prev + 1);
+      setMessageCount(prev => prev + 1);
       return newMessage;
     }
   };

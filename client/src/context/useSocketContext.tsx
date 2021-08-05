@@ -1,4 +1,4 @@
-import { useState, useContext, createContext, FunctionComponent, useCallback } from 'react';
+import { useState, useEffect, useContext, createContext, FunctionComponent, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
 
 interface ISocketContext {
@@ -21,6 +21,15 @@ export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => 
         withCredentials: true,
       }),
     );
+  }, []);
+
+  useEffect(() => {
+    socket?.on("receive-message", (data) => {
+      console.log('client', data);
+      // const con = createMessage(data.senderId, data.receiverId, data.message);
+      // if (con && convo) convo.push(con);
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <SocketContext.Provider value={{ socket, initSocket }}>{children}</SocketContext.Provider>;
