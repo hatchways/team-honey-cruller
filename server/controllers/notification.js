@@ -11,6 +11,7 @@ exports.createNotification = asyncHandler(async (req, res) => {
       from: req.user.id,
       notification: body.notification,
       profilePic: user.profilePic,
+      contestId: body.contestId
     });
 
     res.status(201).json(notification);
@@ -48,6 +49,7 @@ exports.updateNotification = asyncHandler(async (req, res) => {
     to: body.to,
     from: body.from,
     notification: body.notification,
+    contestId: body.contestId
   };
 
   try {
