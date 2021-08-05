@@ -31,12 +31,12 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
           flexWrap="wrap"
           className={classes.linkContainer}
         > 
-          {/* delete later */}
           <Link to={{ pathname: '/artist', state:'60f101c8d872991344be3628' }}>
-            <Typography className={classes.navLink} color="secondary" display="inline">
-              Artist
-            </Typography>
-          </Link>
+           <Typography className={classes.navLink} color="secondary" display="inline">
+             Artist
+           </Typography>
+         </Link>
+
           <Link to="/discovery">
             <Typography className={classes.navLink} color="secondary" display="inline">
               Discover
@@ -48,7 +48,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
             </Typography>
           </Link>
           <Typography className={classes.navLink} color="secondary" display="inline">
-              <NotificationPopUp />
+            <NotificationPopUp />
           </Typography>
           <Link to={linkTo}>
             <Button className={classes.createContestBtn} size="large">

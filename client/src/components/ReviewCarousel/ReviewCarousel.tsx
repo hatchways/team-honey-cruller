@@ -8,22 +8,23 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-import { submissionByArtist } from '../../interface/User';
-import moment from 'moment';
+import { Review } from '../../interface/User';
+import Rating from '@material-ui/lab/Rating';
+import Avatar from '@material-ui/core/Avatar';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 import useStyles from './useStyles';
 import { useState } from 'react';
 
 interface Props {
-  submission: submissionByArtist[] | null;
+  reviews: Review[] | null;
 }
 
-const ArtistCarousel = ({ submission }: Props): JSX.Element => {
+const ReviewCarousel = ({ reviews }: Props): JSX.Element => {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = submission !== null && submission.length < 5 ? submission.length : 4;
+  const maxSteps = reviews && reviews.length < 5 ? reviews.length: 4;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -46,30 +47,21 @@ const ArtistCarousel = ({ submission }: Props): JSX.Element => {
           onChangeIndex={handleStepChange}
           enableMouseEvents
         >
-          {submission !== null && submission?.length ? (
-            submission?.map((submission, index) => (
-              <div key={submission._id}>
+          {reviews !== null && reviews?.length ? (
+            reviews?.map((review, index) => (
+              <div key={review._id}>
                 {Math.abs(activeStep - index) <= 2 ? (
                   <Box display="flex" mb={2} justifyContent="center">
                     <Paper elevation={3} className={classes.paper}>
-                      <Box
-                        display="flex"
-                        mb={4}
-                        textAlign="center"
-                        pt={2}
-                        justifyContent="center"
-                        mt={4}
-                        flexDirection="column"
-                      >
-                        <Typography className={classes.username}>Artist submitted in the contest titled</Typography>
-                        <Typography
-                          className={classes.title}
-                          variant="h5"
-                        >{`"${submission.contest.title}"`}</Typography>
-                        <Typography className={classes.date} variant="body1">
-                          {moment(submission.created_at).fromNow()}
-                        </Typography>
+                      <Box display="flex" mb={4} textAlign="center" pt={2} justifyContent="center" mt={4}>
+                        <Avatar
+                          alt="Profile Image"
+                          src={review.reviewerId.profilePic}
+                          className={classes.avatar}
+                        ></Avatar>
+                        <Typography className={classes.username}>@{review.reviewerId.username}</Typography>
                       </Box>
+                      <Rating value={review.rating} size="large" name="read-only" readOnly />
                     </Paper>
                   </Box>
                 ) : null}
@@ -105,4 +97,4 @@ const ArtistCarousel = ({ submission }: Props): JSX.Element => {
   );
 };
 
-export default ArtistCarousel;
+export default ReviewCarousel;
