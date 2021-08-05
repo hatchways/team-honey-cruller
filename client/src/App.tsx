@@ -40,11 +40,9 @@ function App(): JSX.Element {
                   <Route exact path="/notifications" component={Notifications} />
                   <Route exact path="/contest/:id" component={Contest} />
                   <Route exact path="/artist" component={AboutArtist} />
-                  <Route exact path="/dashboard">
-                    <Dashboard />
-                  </Route>
+                  <Route exact path="/dashboard" component={Discovery} />
                   <Route path="*">
-                    <Redirect to="/login" />
+                    <Redirect to="/dashboard" />
                   </Route>
                 </Switch>
                 <TourContent />
