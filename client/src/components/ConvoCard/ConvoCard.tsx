@@ -22,7 +22,7 @@ const ConvoCard = ({ convo, closeDrawer }: Props): JSX.Element => {
   const [otherUser] = convo.recipients.filter((person) => loggedInUser && person._id !== loggedInUser.id);
   const lastMessageDate = new Date(convo.updatedAt);
 
-  return (
+  return otherUser ? (
     <Box
       className={classes.root}
       onClick={() => {
@@ -43,6 +43,8 @@ const ConvoCard = ({ convo, closeDrawer }: Props): JSX.Element => {
         <Typography className={classes.date}>{lastMessageDate.toString().slice(0, 10)}</Typography>
       </Box>
     </Box>
+  ) : (
+    <div></div>
   );
 };
 

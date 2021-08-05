@@ -13,7 +13,7 @@ const PrivateRoute:React.FC<Props> = (props:Props) => {
   return loggedInUser ? (
     <Route exact={props.exact} path={props.path} component={props.component} />
   ) : (
-    <Redirect to="/login" />
+    <Redirect to="/dashboard" />
   );
 };
 

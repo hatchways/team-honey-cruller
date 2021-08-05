@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import EmailIcon from '@material-ui/icons/Email';
 import PhoneIcon from '@material-ui/icons/Phone';
+import ArtistCarousel from '../ArtistCarousel/ArtistCarousel';
 
 interface Props {
   info: PersonalInfo | undefined | null;
@@ -15,38 +16,30 @@ const AboutArtistTab = ({ info }: Props): JSX.Element => {
 
   return (
     <Box textAlign="center">
-      {info !== null && info !== undefined ? (
+      <Typography className={classes.activity} variant='h5'>Recent Activity</Typography>
+      <ArtistCarousel />
         <Grid container direction="column" className={classes.root}>
           <Grid item>
             <Typography variant="h4" className={classes.heading}>
-              {info.firstName} {info.middleInit} {info.lastName}
+              {info?.firstName} {info?.middleInit} {info?.lastName}
             </Typography>
           </Grid>
           <Grid item>
             <Typography variant="body1" className={classes.contentMarginsTop}>
               <EmailIcon />
-              {<em className={classes.contentMarginsLeft}>{info.email}</em>}
+              {<em className={classes.contentMarginsLeft}>{info?.email}</em>}
             </Typography>
           </Grid>
           <Grid item>
             <Typography className={classes.contentMarginsTop}>
               <PhoneIcon />
-              {<em className={classes.contentMarginsLeft}>{info.phone}</em>}
+              {<em className={classes.contentMarginsLeft}>{info?.phone}</em>}
             </Typography>
           </Grid>
           <Grid item>
-            <Typography className={classes.heading}>{info.about}</Typography>
+            <Typography className={classes.heading} style={{marginTop: '50px'}}>{info?.about}</Typography>
           </Grid>
         </Grid>
-      ) : (
-        <Grid container direction="column" className={classes.root}>
-          <Grid item>
-            <Typography variant="h4" className={classes.heading}>
-              Please leave your review
-            </Typography>
-          </Grid>
-        </Grid>
-      )}
     </Box>
   );
 };

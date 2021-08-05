@@ -100,3 +100,7 @@ export interface Notification {
   profilePic: string;
 }
 
+export interface Review {
+  rating: number;
+  text: string;
+}

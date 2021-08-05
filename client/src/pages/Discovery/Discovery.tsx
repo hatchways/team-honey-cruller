@@ -5,10 +5,8 @@ import ContestTable from '../../components/ContestTable/ContestTable';
 import { getSomeWinners } from '../../helpers/APICalls/winner';
 import { getNumContests } from '../../helpers/APICalls/contest';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
-import MyTablePagination from '../../components/TablePagination/TablePagination';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { Animated } from 'react-animated-css';
 import WinnerCard from '../../components/WinnerCard/WinnerCard';
 import Section from '../../components/Section/Section';
@@ -23,7 +21,7 @@ export default function Discovery(): JSX.Element {
   const [winners, setWinners] = useState<Winner[]>([]);
   const [numContests, setNumContests] = useState<number>(0);
   const classes = useStyles();
-
+  const { loggedInUser } = useAuth();
   const winnersData = async () => {
     const getWinners = await getSomeWinners(4);
     if (getWinners) {
@@ -42,7 +40,10 @@ export default function Discovery(): JSX.Element {
 
   return (
     <>
-      <AuthHeader linkTo="/create-contest" btnText="create contest" />
+      <AuthHeader
+        linkTo={loggedInUser ? '/create-contest' : '/login'}
+        btnText={loggedInUser ? 'Create Contest' : 'Log In'}
+      />
       <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
         <Hero />
         <Section>
@@ -67,7 +68,6 @@ export default function Discovery(): JSX.Element {
                     xs={12}
                     sm={6}
                     md={3}
-                    lg={3}
                     key={winner._id}
                     className={classes.winnerWrapper}
                   >
