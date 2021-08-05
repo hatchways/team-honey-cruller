@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Tour from 'reactour';
 import { useAuth } from '../../context/useAuthContext';
@@ -17,23 +18,30 @@ const TourContent = (): JSX.Element => {
       selector: '[data-tour="nav-btn"]',
       content: () => tourContent('Create a contest here!'),
       style: {
-        padding: 50,
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
       },
     },
     {
-      selector: '[data-tour="create-contest-btn"]',
-      content: () => tourContent('this is the first step'),
+      selector: '[data-tour="contests"]',
+      content: () => tourContent('Check out our active contests!'),
       style: {
-        padding: 50,
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
       },
     },
   ];
 
   const tourContent = (words: string) => {
     return (
-      <Card className={classes.wrapper}>
-        <Typography>{words}</Typography>
-      </Card>
+      <Box display="flex" flexDirection="column" padding="10px 20px">
+        <Typography className={classes.tattooArt}>tattoo art</Typography>
+        <Card className={classes.wrapper}>
+          <Typography>{words}</Typography>
+        </Card>
+      </Box>
     );
   };
 
