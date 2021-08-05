@@ -60,10 +60,10 @@ const stripePay = asyncHandler(async (contestOwner, prizeAmount, winnerId) => {
   console.log('findContestUser', findContestUser)
 
   const findWinnerUser = await User.findOne({_id: winnerId})
-  console.log('findWinnerUser', findWinnerUser)
+  
 
       const customerContestOwner = await stripe.customers.retrieve(findContestUser.stripeId);
-      console.log('customer contest owner', customerContestOwner)
+      
 
       const customerWinner = await stripe.customers.retrieve(findWinnerUser.stripeId)
 
