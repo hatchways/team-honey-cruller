@@ -60,15 +60,12 @@ const stripePay = asyncHandler(async (contestOwner, prizeAmount, winnerId) => {
   console.log('findContestUser', findContestUser)
 
   const findWinnerUser = await User.findOne({_id: winnerId})
-  console.log('findWinnerUser', findwinnerUser)
+  console.log('findWinnerUser', findWinnerUser)
 
       const customerContestOwner = await stripe.customers.retrieve(findContestUser.stripeId);
       console.log('customer contest owner', customerContestOwner)
 
       const customerWinner = await stripe.customers.retrieve(findWinnerUser.stripeId)
-
-  console.log('customer winner', customerWinner)
-
 
       const paymentIntent = await stripe.paymentIntents.create({
         amount: prizeAmount,
@@ -76,13 +73,10 @@ const stripePay = asyncHandler(async (contestOwner, prizeAmount, winnerId) => {
         currency: 'usd',
         payment_method: customerContestOwner.invoice_settings.default_payment_method,
         payment_method_types: ['card'],
-        transfer_data: {
-          destination: customerWinner
-        }
-      })
+      });
 
-      console.log('paymentIntent', paymentIntent)
-})
+      return paymentIntent;
+});
 
 exports.winnerChosen = (contestOwner, submissionId, winningPic) => {
     return new Promise (async (resolve, reject) => {
@@ -92,9 +86,8 @@ exports.winnerChosen = (contestOwner, submissionId, winningPic) => {
       if (winningSubmission.contest.active) {
         return reject('Contest is still active.')
       }
-      const payWinner = await stripePay(contestOwner, winningSubmission.contest.prizeAmount, winningSubmission.artistId._id)
-
-      console.log('payWinner', payWinner)
+      const payWinner = await stripePay(contestOwner, winningSubmission.contest.prizeAmount, winningSubmission.artistId._id);
+      console.log("The Contest creator has been charged.", payWinner)
     const imagesToDelete = winningSubmission.images.filter(image => image !== winningPic)
     const mailObj = {
       to: winningSubmission.artistId.email,
