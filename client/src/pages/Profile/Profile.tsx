@@ -23,8 +23,15 @@ import { useSnackBar } from '../../context/useSnackbarContext';
 import loginWithCookies from '../../helpers/APICalls/loginWithCookies';
 import { useHistory } from 'react-router-dom';
 
-export default function Profile(): JSX.Element {
+
+interface ProfileProps {
+  header: boolean;
+}
+
+
+export default function Profile({ header }: ProfileProps): JSX.Element {
   const history = useHistory();
+  header === undefined ? (header = true) : header;
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [contests, setContests] = useState<Contest[]>([]);
@@ -124,11 +131,12 @@ export default function Profile(): JSX.Element {
         updateSnackBarMessage(err.message);
       }
     }
+    header === true ? history.push('/profile') : history.push('/settings');
   };
 
   return loggedInUser ? (
     <>
-      <AuthHeader linkTo="/create-contest" btnText="create contest" />
+      {header ? <AuthHeader linkTo="/create-contest" btnText="create contest" /> : ''}
       <Grid className={classes.grid} container alignItems="center" direction="column">
         {loading ? (
           <CircularProgress />

@@ -5,6 +5,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import Payment from '../../components/Payment/Payment';
 import PersonalInfo from '../../components/PersonalInfo/PersonalInfo';
+import Profile from '../Profile/Profile';
 import Notifications from '../Notifications/Notifications';
 import useStyles from './useStyles';
 
@@ -82,15 +83,19 @@ export default function Settings(): JSX.Element {
           <Tab label="Password" {...tabProps(4)} className={classes.label} />
         </Tabs>
         <TabPanel value={value} index={0}>
-          Profile
+          <Profile header={false} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <PersonalInfo />
+          <Box display='flex' justifyContent='center'>
+            <PersonalInfo />
+          </Box>
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Typography className={classes.paymentDetails}>Payment Details</Typography>
           <Elements stripe={stripeKey}>
+          <Box display='flex' justifyContent='center'>
             <Payment />
+            </Box>
           </Elements>
         </TabPanel>
         <TabPanel value={value} index={3}>
