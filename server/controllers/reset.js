@@ -1,9 +1,9 @@
 const User = require("../models/User");
-const Token = require("../models/Token");
 const asyncHandler = require("express-async-handler");
-const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const sendMail = require('../utils/sendMail');
+const passwordToken = require('../utils/passwordToken');
 
 exports.forgotPassword = asyncHandler(async (req, res) => {
   try {
@@ -16,22 +16,9 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
       throw new Error("Email not found");
     }
 
-    const token = await Token.findOne({
-      userId: user._id
-    });
-    if (token) await token.deleteOne();
+    const token = passwordToken(user._id);
 
-    const resetToken = crypto.randomBytes(32).toString("hex");
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(resetToken, salt);
-
-    await Token.create({
-      userId: user._id,
-      token: hash.replace('/', ''),
-      createdAt: Date.now(),
-    });
-
-    sendMail(user, hash);
+    sendMail(user, token);
     res.status(200).json({
       success: true
     });
@@ -42,23 +29,21 @@ exports.forgotPassword = asyncHandler(async (req, res) => {
 
 exports.resetPassword = asyncHandler(async (req, res) => {
   try {
-    const passwordResetToken = await Token.findOne({ userId: req.params.id });
-    if (!passwordResetToken) {
-      res.status(400);
-      throw new Error("Invalid or expired password reset token");
-    }
-    const isValid = req.body.token === passwordResetToken.token;
-    if (!isValid) {
-      res.status(400);
-      throw new Error("Invalid or expired password reset token");
-    }
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(req.body.password, salt);
-    await User.updateOne(
-      { _id: req.params.id },
-      { $set: { password: hash } },
-      { new: true }
-    );
+    await User.findOne({ _id: req.params.id })
+      .then(async (user) => {
+        const payload = jwt.verify(req.body.token, process.env.JWT_SECRET);
+
+        if (payload.userId === user.id) {
+          const salt = await bcrypt.genSalt(10);
+          const hash = await bcrypt.hash(req.body.password, salt);
+
+          await User.updateOne(
+            { _id: req.params.id },
+            { $set: { password: hash } },
+            { new: true }
+          );
+        }
+      })
     res.status(200).json({
       message: 'Sucessfully updated password'
     });
