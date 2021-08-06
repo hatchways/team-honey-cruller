@@ -20,7 +20,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
   return (
     <Box p={1} className={classes.authHeader}>
       <Typography color="secondary" className={classes.tattooArt}>
-        tattoo art
+        Tattoo Art
       </Typography>
       {loggedInUser ? (
         <Box
@@ -46,7 +46,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
           </Typography>
           <Link to={linkTo} style={{ textDecoration: 'none' }}>
             <Button className={classes.createContestBtn} size="large">
-              {btnText}
+              Create Contest
             </Button>
           </Link>
           <Box display="flex" alignItems="center">
