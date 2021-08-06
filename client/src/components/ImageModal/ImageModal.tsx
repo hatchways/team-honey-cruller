@@ -61,11 +61,13 @@ const ImageModal = ({ artistPic, artistName, image, submissionId, children, arti
                 <Avatar src={artistPic} />
                 <Typography className={classes.artistName}>{artistName}</Typography>
               </Link>
-            ) : (
+            ) : artistPic ? (
               <>
                 <Avatar src={artistPic} />
                 <Typography className={classes.artistName}>{artistName}</Typography>
               </>
+            ) : (
+              <Typography className={classes.artistName}>{artistName}</Typography>
             )}
             {submissionId ? <Button onClick={handleWinnerChoice}>This is a winner!</Button> : null}
           </Box>
