@@ -57,11 +57,6 @@ const AuthMenu = (): JSX.Element => {
         <Link className={classes.link} to="/settings">
           <MenuItem className={classes.menuItem}>Settings</MenuItem>
         </Link>
-
-        {/* take this out */}
-        <Link className={classes.link} to="/messaging">
-          <MenuItem className={classes.menuItem}>Messaging</MenuItem>
-        </Link>
       </Menu>
     </Box>
   );

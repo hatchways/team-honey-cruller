@@ -81,18 +81,17 @@ const SplashReviews = ({ className }: Props): JSX.Element => {
       <SectionHeader title="Customer Reviews" subtitle="Take a look at some of our recent contest creators feedback." />
       <div className={clsx('swiper-container', classes.swiperContainer)}>
         <div className="swiper-wrapper">
-          {reviews ? reviews.map((review: any, index: number) => (
-            console.log(review, index)
-            // <CardReview
-            //   key={index}
-            //   className={'swiper-slide'}
-            //   noBorder
-            //   text={review.feedback}
-            //   reviewerName={review.reviewerName}
-            //   reviewerTitle={review.reviewerContestType}
-            //   reviewerPhoto={review.reviewerPhoto}
-            // />
-          )) : <></>}
+          {reviewsTest.map((review: any, index: number) => (
+            <CardReview
+              key={index}
+              className={'swiper-slide'}
+              noBorder
+              text={review.feedback}
+              reviewerName={review.reviewerName}
+              reviewerTitle={review.reviewerContestType}
+              reviewerPhoto={review.reviewerPhoto}
+            />
+          ))}
           <div className="swiper-pagination" />
         </div>
       </div>
