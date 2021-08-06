@@ -1,8 +1,6 @@
 import { FormEvent, useRef } from 'react';
 import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import { Grid, TextField } from '@material-ui/core';
 import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
 import { useSocket } from '../../context/useSocketContext';
@@ -30,6 +28,7 @@ const MessageInput = ({ otherUserId, otherUsername, displayMessage }: Props): JS
       const notification = await createNotification(notificationBody);
       //send notification to the socket server using emit action of sendnotification
       socket?.emit('sendNotification', notification)
+      inputRef.current.value = '';
     }
   };
 
@@ -37,22 +36,18 @@ const MessageInput = ({ otherUserId, otherUsername, displayMessage }: Props): JS
     <form onSubmit={handleSubmit} autoComplete="off">
       <FormControl fullWidth hiddenLabel>
         <Grid container alignContent="center" className={classes.inputContainer}>
-          <Grid item xs={10}>
-            <Input
+          <Grid item xs={12}>
+            <TextField
               placeholder={`Reply to ${otherUsername}`}
               className={classes.input}
               name="text"
+              margin="normal"
+              variant="outlined"
+              fullWidth
               inputProps={{
                 ref: inputRef,
               }}
-              disableUnderline={true}
-              classes={{ input: classes.placeholder }}
             />
-          </Grid>
-          <Grid item xs={2}>
-            <Button type="submit" className={classes.sendBtn} size="large">
-              Send
-            </Button>
           </Grid>
         </Grid>
       </FormControl>
