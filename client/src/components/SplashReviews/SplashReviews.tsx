@@ -4,10 +4,11 @@ import Swiper from 'swiper';
 import SectionHeader from '../SectionHeader/SectionHeader';
 import useStyles from './useStyles';
 import CardReview from './CardReview/CardReview';
-import Avatar from '@material-ui/core/Avatar';
+import IconAlternate from '../IconAlternate/IconAlternate'
 import ReviewImage from '../../Images/profilePic.png';
 import { Review } from '../../interface/User';
 import { getAllReviews } from '../../helpers/APICalls/review';
+import { colors } from '@material-ui/core';
 import 'swiper/swiper.min.css';
 import 'swiper/components/pagination/pagination.min.css';
 
@@ -62,7 +63,6 @@ const SplashReviews = ({ className }: Props): JSX.Element => {
   useEffect(() => {
     new Swiper('.swiper-container', {
       slidesPerView: 1,
-      spaceBetween: 30,
       pagination: {
         el: '.swiper-container .swiper-pagination',
         type: 'progressbar',
@@ -81,18 +81,26 @@ const SplashReviews = ({ className }: Props): JSX.Element => {
       <SectionHeader title="Customer Reviews" subtitle="Take a look at some of our recent contest creators feedback." />
       <div className={clsx('swiper-container', classes.swiperContainer)}>
         <div className="swiper-wrapper">
-          {reviewsTest.map((review: any, index: number) => (
+          {reviews ? reviews.map((review: any, index: number) => (
+            <>
             <CardReview
-              key={index}
+              key={review.text}
               className={'swiper-slide'}
               noBorder
-              text={review.feedback}
-              reviewerName={review.reviewerName}
+              text={review.text}
+              icon={
+                <IconAlternate
+                  color='black'
+                  fontIconClass="fas fa-quote-right"
+                />
+              }
+              reviewerName={review.reviewerId.username}
               reviewerTitle={review.reviewerContestType}
-              reviewerPhoto={review.reviewerPhoto}
+              reviewerPhoto={review.reviewerId.profilePic}
             />
-          ))}
           <div className="swiper-pagination" />
+            </>
+          )) : <div></div>}
         </div>
       </div>
     </div>

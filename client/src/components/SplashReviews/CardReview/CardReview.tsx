@@ -11,8 +11,9 @@ import useStyles from './useStyles';
 
 interface Props {
     className?: string;
+    icon: JSX.Element;
     text: string;
-    reviewerPhoto: Record<string, unknown>;
+    reviewerPhoto: string;
     reviewerName: string;
     reviewerTitle?: string;
     align?: 'left' | 'right' | 'center';
@@ -21,6 +22,7 @@ interface Props {
 }
 
 const CardReview = ({
+    icon,
     text,
     reviewerPhoto,
     reviewerName,
@@ -43,6 +45,15 @@ const CardReview = ({
             className={clsx('card-review', classes.root, className)}
         >
             <Grid container spacing={2} className="card-review__wrapper">
+                <Grid
+                    item
+                    container
+                    justify={justifyGrid}
+                    xs={12}
+                    className="card-review__icon-wrapper"
+                >
+                    {icon}
+                </Grid>
                 <Grid item xs={12} className="card-review__text-wrapper">
                     <Typography
                         variant={textVariant}
@@ -62,7 +73,7 @@ const CardReview = ({
                             <ListItem className="card-review__list-item">
                                 <ListItemAvatar className="card-review__list-item-avatar">
                                     <Avatar
-                                        {...reviewerPhoto}
+                                        src={reviewerPhoto}
                                         alt={reviewerName}
                                         className="card-review__avatar"
                                     />
