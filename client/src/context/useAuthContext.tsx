@@ -52,7 +52,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
         } else {
           // don't need to provide error feedback as this just means user doesn't have saved cookies or the cookies have not been authenticated on the backend
           setLoggedInUser(null);
-          if (path.includes('/reset-password') || path.includes('/login') || path.includes('/forgot-password') || path.includes('/signup')) {
+          if (path.includes('/reset-password') || path.includes('/login') || path.includes('/forgot-password') || path.includes('/signup') || path.includes('/contest/:id')) {
             return;
           } else {
             history.push('/dashboard');
