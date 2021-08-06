@@ -52,7 +52,13 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
         } else {
           // don't need to provide error feedback as this just means user doesn't have saved cookies or the cookies have not been authenticated on the backend
           setLoggedInUser(null);
-          if (path.includes('/reset-password') || path.includes('/login') || path.includes('/forgot-password') || path.includes('/signup') || path.includes('/contest/:id')) {
+          if (
+            path.includes('/reset-password') ||
+            path.includes('/login') ||
+            path.includes('/forgot-password') ||
+            path.includes('/signup') ||
+            path.includes('/contest/:id')
+          ) {
             return;
           } else {
             history.push('/dashboard');
@@ -61,7 +67,8 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
       });
     };
     checkLoginWithCookies();
-  }, [updateLoginContext, history, path]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateLoginContext]);
 
   return <AuthContext.Provider value={{ loggedInUser, updateLoginContext, logout }}>{children}</AuthContext.Provider>;
 };

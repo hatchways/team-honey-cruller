@@ -1,11 +1,10 @@
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";;
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Badge from '@material-ui/core/Badge';
 import useStyles from './useStyles';
 import { withStyles } from '@material-ui/core/styles';
-
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -36,7 +35,6 @@ const StyledBadge = withStyles((theme) => ({
   },
 }))(Badge);
 
-
 interface Props {
   online: boolean;
   username: string;
@@ -47,9 +45,9 @@ const MessageHeader = ({ online, username, profilePic }: Props): JSX.Element => 
   const classes = useStyles();
   return (
     <Box className={classes.root}>
-			<Box className={classes.content}>
+      <Box className={classes.content}>
         <StyledBadge
-          overlap="circle"
+          overlap="circular"
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'right',
@@ -58,11 +56,11 @@ const MessageHeader = ({ online, username, profilePic }: Props): JSX.Element => 
         >
           <Avatar alt="Profile Image" src={profilePic} />
         </StyledBadge>
-				<Typography className={classes.username}>{username}</Typography>
-			</Box>
-			<MoreHorizIcon classes={{ root: classes.ellipsis }} />
-		</Box>
+        <Typography className={classes.username}>{username}</Typography>
+      </Box>
+      <MoreHorizIcon classes={{ root: classes.ellipsis }} />
+    </Box>
   );
-}
+};
 
 export default MessageHeader;

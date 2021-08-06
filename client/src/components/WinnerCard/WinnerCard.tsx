@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import ImageModal from '../ImageModal/ImageModal';
 
 interface Props {
   winningPic: string;
@@ -29,7 +29,14 @@ const WinnerCard = ({
   return (
     <>
       <Card className={classes.root}>
-        <CardMedia className={classes.media} image={winningPic} title={title} />
+        <ImageModal
+          artistPic={winningArtist.profilePic}
+          artistId={winningArtist._id}
+          artistName={winningArtist.username}
+          image={winningPic}
+        >
+          <CardMedia className={classes.media} image={winningPic} title={title} />
+        </ImageModal>
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h1" className={classes.title}>
             {title}
