@@ -1,9 +1,27 @@
-import { AuthApiData } from '../../interface/AuthApiData';
 import { FetchOptions } from '../../interface/FetchOptions';
 
 import { Notification } from '../../interface/User';
 
 type existingNotification = Notification;
+
+interface newNotification {
+  to: string,
+  notification: string
+}
+
+export const createNotification = async (notification: newNotification): Promise<Notification[]> => {
+  const fetchOptions: FetchOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(notification),
+  };
+  return await fetch(`/notification`, fetchOptions)
+    .then((res) => res.json())
+    .catch((err) => ({
+      error: { message: 'Unable to send notification', err },
+    }));
+};
 
 export const getNotification = async (): Promise<Notification[]> => {
   const fetchOptions: FetchOptions = {
@@ -42,6 +60,6 @@ export const deleteNotification = async (id: string): Promise<number> => {
   };
 
   return await fetch(`/notification/${id}`, fetchOptions)
-    .then((res) => res.status)
-    .catch((err) => err.status);
+  .then(res => res.status)
+  .catch(err => err);
 };

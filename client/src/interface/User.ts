@@ -52,6 +52,7 @@ export interface Convo {
 }
 
 export interface Message {
+  conversationId: string;
   _id: string;
   senderId: string;
   senderName: string;
@@ -91,6 +92,7 @@ export interface Customer {
 }
 
 export interface Notification {
+  contestId: string;
   opened: boolean;
   _id: string;
   to: string;
@@ -101,6 +103,15 @@ export interface Notification {
 }
 
 export interface Review {
+  _id: string;
+  error: string;
   rating: number;
   text: string;
+  reviewerId: { profilePic :string, username :string};
+}
+
+export interface submissionByArtist {
+  _id: string;
+  contest: { title: string};
+  created_at: string;
 }

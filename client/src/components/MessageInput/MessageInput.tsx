@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import useStyles from './useStyles';
 import { sendMessage } from '../../helpers/APICalls/conversations';
 import { useAuth } from '../../context/useAuthContext';
+import { useSocket } from '../../context/useSocketContext';
+import { createNotification } from '../../helpers/APICalls/notification';
 
 interface Props {
   otherUserId: string;
@@ -16,11 +18,16 @@ const MessageInput = ({ otherUserId, otherUsername }: Props): JSX.Element => {
   const classes = useStyles();
   const inputRef = useRef<HTMLInputElement>(null);
   const { loggedInUser } = useAuth();
+  const { socket } = useSocket();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loggedInUser && inputRef.current) {
-      sendMessage({ to: otherUserId, message: inputRef.current.value });
+      const response = await sendMessage({ to: otherUserId, message: inputRef.current.value });
+      const notificationBody = { to: otherUserId, notification: `${loggedInUser?.username} sent you a message`};
+      const notification = await createNotification(notificationBody);
+      //send notification to the socket server using emit action of sendnotification
+      socket?.emit('sendNotification', notification)
     }
   };
 

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     height: '125px',
     width: theme.spacing(17),
     marginBottom: '16px',
-    marginTop: '20px',
+    marginTop: '50px',
   },
   user: {
     fontSize: 24,
