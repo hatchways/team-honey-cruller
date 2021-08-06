@@ -23,7 +23,6 @@ import { getWinnersByUser } from '../../helpers/APICalls/winner';
 import updateProfile from '../../helpers/APICalls/profile';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import loginWithCookies from '../../helpers/APICalls/loginWithCookies';
-import { useHistory } from 'react-router-dom';
 
 export default function Profile(): JSX.Element {
   const history = useHistory();
@@ -35,7 +34,6 @@ export default function Profile(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(false);
   const { loggedInUser, updateLoginContext } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
-  const history = useHistory();
 
   const steps = [
     {
@@ -200,12 +198,12 @@ export default function Profile(): JSX.Element {
                 textColor="primary"
                 variant="fullWidth"
               >
-                <div data-tour="profile"></div>
                 <Tab label="in progress" className={classes.tab} />
                 <Tab label="choose a winner" className={classes.tab} />
                 <Tab label="past winners" className={classes.tab} />
               </Tabs>
             </ThemeProvider>
+            <div data-tour="profile"></div>
           </Toolbar>
           <Paper square elevation={2}>
             <Panel value={value} index={0}>

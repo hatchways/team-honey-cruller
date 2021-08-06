@@ -18,13 +18,13 @@ import SplashReviews from '../../components/SplashReviews/SplashReviews';
 import SectionAlternate from '../../components/SectionAlternate/SectionAlternate';
 import Hero from '../../components/Hero/Hero';
 import useStyles from './useStyles';
+import { useTourContext } from '../../context/tourContext';
 
 export default function Discovery(): JSX.Element {
   const [winners, setWinners] = useState<Winner[]>([]);
   const [numContests, setNumContests] = useState<number>(0);
   const classes = useStyles();
   const history = useHistory();
-
   const { loggedInUser } = useAuth();
   const winnersData = async () => {
     const getWinners = await getSomeWinners(4);
@@ -44,7 +44,7 @@ export default function Discovery(): JSX.Element {
         minWidth: '40%',
         maxWidth: '80vw',
       },
-      updateDelay: 25,
+      updateDelay: 30,
       scrollDuration: 1500,
     },
     {
@@ -140,4 +140,3 @@ export default function Discovery(): JSX.Element {
     </>
   );
 }
-

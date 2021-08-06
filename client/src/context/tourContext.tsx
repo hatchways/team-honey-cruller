@@ -1,5 +1,5 @@
 import { FunctionComponent, createContext, useState, useEffect, useContext } from 'react';
-import { useAuth } from '../context/useAuthContext';
+import { useAuth } from './useAuthContext';
 
 interface Tour {
   open: boolean;
@@ -12,11 +12,11 @@ export const TourContext = createContext<Tour>({
 });
 
 export const TourProvider: FunctionComponent = ({ children }): JSX.Element => {
-  const { loggedInUser } = useAuth();
   const [open, setOpen] = useState<boolean>(false);
+  const { loggedInUser } = useAuth();
 
   useEffect(() => {
-    if (loggedInUser && loggedInUser.username === 'stanleythemanly') {
+    if (loggedInUser?.username === 'stanleythemanly') {
       setOpen(true);
     }
   }, [loggedInUser]);
