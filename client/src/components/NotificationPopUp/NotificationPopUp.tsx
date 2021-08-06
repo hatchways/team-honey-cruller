@@ -23,6 +23,14 @@ const GlobalCss = withStyles({
     '*::-webkit-scrollbar': {
       width: '0px',
     },
+    '.badge.MuiSvgIcon-root': {
+      background:'black'
+    },
+    '.MuiBadge-badge.MuiBadge-anchorOriginTopRightRectangle.MuiBadge-colorSecondary ':{
+      fontWeight:'bold',
+      fontSize: '13px',
+      backgroundColor: '#fff',
+    }
   },
 })(() => null);
 
@@ -81,11 +89,11 @@ const NotificationPopUp = (): JSX.Element => {
     <>
       <GlobalCss />
       <Button aria-describedby={id} variant="contained" color="primary" onClick={handleNotification}>
-        <Badge badgeContent={notifications?.length && filterNotification.length}>
-          <Typography className={classes.authHeaderText} color="secondary">
+      <Typography className={classes.authHeaderText} color="secondary">
             Notifications
           </Typography>
-          <NotificationsNoneIcon color="secondary" />
+        <Badge badgeContent={notifications?.length && filterNotification.length} className={classes.badge} color='secondary'>
+          <NotificationsNoneIcon style={{ color:'#fff'}}/>
         </Badge>
       </Button>
       <Popover
@@ -115,9 +123,14 @@ const NotificationPopUp = (): JSX.Element => {
             </Link>
           </Grid>
         </Grid>
-        {notifications?.length
-          ? notifications?.map((notification) => (
-              <Grid direction="row" container key={notification._id}>
+        {notifications?.length ? (
+          notifications?.map((notification) => (
+            <Link
+              to={notification.contestId ? `/contest/${notification.contestId}` : `/dashboard`}
+              key={notification._id}
+              className={classes.link}
+            >
+              <Grid direction="row" container className={classes.notificationContainer}>
                 <Grid item>
                   <Avatar alt="Profile Image" src={notification.profilePic} className={classes.avatar}></Avatar>
                 </Grid>
@@ -130,8 +143,11 @@ const NotificationPopUp = (): JSX.Element => {
                   </Typography>
                 </Grid>
               </Grid>
-            ))
-          : 'No notification'}
+            </Link>
+          ))
+        ) : (
+          <Typography align="center">{`You do not have any notification`}</Typography>
+        )}
       </Popover>
     </>
   );

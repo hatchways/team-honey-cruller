@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import SubmitDesign from './pages/SubmitDesign/SubmitDesign';
 import Signup from './pages/SignUp/SignUp';
-import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './pages/Profile/Profile';
 import Discovery from './pages/Discovery/Discovery';
 import CreateContest from './pages/CreateContest/CreateContest';
@@ -12,6 +11,8 @@ import AboutArtist from './pages/AboutArtist/AboutArtist';
 import Settings from './pages/Settings/Settings';
 import Contest from './pages/Contest/Contest';
 import Notifications from './pages/Notifications/Notifications';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
+import ResetPassword from './pages/ResetPassword/ResetPassword';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -32,11 +33,13 @@ function App(): JSX.Element {
                   <Route exact path="/signup" component={Signup} />
                   <Route exact path="/submit-design/:id" component={SubmitDesign} />
                   <Route exact path="/profile" component={Profile} />
-                  <Route exact path="/discovery" component={Discovery} />
+                  <Route exact path="/messages" component={Dashboard} />
                   <Route exact path="/create-contest" component={CreateContest} />
                   <Route exact path="/settings" component={Settings} />
                   <Route exact path="/notifications" component={Notifications} />
                   <Route exact path="/contest/:id" component={Contest} />
+                  <Route exact path="/forgot-password" component={ForgotPassword} />
+                  <Route path="/reset-password/:token/:id" component={ResetPassword} />
                   <Route exact path="/artist" component={AboutArtist} />
                   <Route exact path="/dashboard" component={Discovery} />
                   <Route path="*">

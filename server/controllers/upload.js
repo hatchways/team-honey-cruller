@@ -146,3 +146,23 @@ exports.uploadSubmissionPic = asyncHandler(async (req, res, next) => {
     }
   })
 });
+
+exports.uploadContestPic = asyncHandler(async (req, res, next) => {
+  AWSPic(req, res, async (error) => {
+    if (error) {
+      res.json({
+        error: error
+      });
+    } else {
+      if (req.file === undefined) {
+        console.log("Error: No File Selected");
+      } else {
+        try {
+          res.json(req.file.location)
+        } catch (err) {
+          res.status(500).json(err);
+        }
+      }
+    }
+  })
+});

@@ -8,6 +8,7 @@ interface ConvoContext {
   convo?: Message[];
   setFriendId: (id: string) => void;
   recipient: OtherUser;
+  setConvo: (message: Message[]) => void;
 }
 
 export const ConversationContext = createContext<ConvoContext>({
@@ -18,6 +19,7 @@ export const ConversationContext = createContext<ConvoContext>({
     profilePic: '',
     username: '',
   },
+  setConvo: () => undefined,
 });
 
 export const ConversationProvider: FunctionComponent = ({ children }): JSX.Element => {
@@ -53,7 +55,7 @@ export const ConversationProvider: FunctionComponent = ({ children }): JSX.Eleme
   }, [friendId]);
 
   return (
-    <ConversationContext.Provider value={{ convo, setFriendId, recipient }}>{children}</ConversationContext.Provider>
+    <ConversationContext.Provider value={{ convo, setFriendId, recipient, setConvo }}>{children}</ConversationContext.Provider>
   );
 };
 

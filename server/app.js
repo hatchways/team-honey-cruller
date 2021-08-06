@@ -23,6 +23,7 @@ const notificationRouter = require("./routes/notification");
 const personalInfoRouter = require("./routes/personalInfo");
 const reviewsRouter = require("./routes/reviews");
 const winnerRouter = require("./routes/winner");
+const resetRouter = require("./routes/reset");
 
 const { json, urlencoded } = express;
 
@@ -71,8 +72,20 @@ io.on("connection", (socket) => {
     socket.on("sendUser", () => {
       io.emit("getUsers", users);
     });
-    console.log('users ', users);
   }
+
+  socket.on("send-message", (senderId, senderPic, receiverId, receiverPic, message) => {
+    const user = getUser(receiverId);
+    if (user) {
+      io.to(user.socketId).emit("receive-message", {
+        senderId: senderId,
+        senderPic: senderPic,
+        recipientId: receiverId,
+        recipientPic: receiverPic,
+        text: message,
+      });
+    }
+  });
 
   socket.on("joinChat", (res) => {
     console.log("inside joinChat");
@@ -123,6 +136,7 @@ app.use("/notification", notificationRouter);
 app.use("/info", personalInfoRouter);
 app.use("/reviews", reviewsRouter);
 app.use("/winners", winnerRouter);
+app.use("/reset", resetRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
