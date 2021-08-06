@@ -38,6 +38,8 @@ function App(): JSX.Element {
                   <Route exact path="/notifications" component={Notifications} />
                   <Route exact path="/contest/:id" component={Contest} />
                   <Route exact path="/artist" component={AboutArtist} />
+                  {/* take this out */}
+                  <Route exact path="/messaging" component={Dashboard} />
                   <Route exact path="/dashboard" component={Discovery} />
                   <Route path="*">
                     <Redirect to="/dashboard" />

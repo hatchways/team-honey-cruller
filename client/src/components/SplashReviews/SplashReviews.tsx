@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import Swiper from 'swiper';
 import SectionHeader from '../SectionHeader/SectionHeader';
@@ -6,6 +6,8 @@ import useStyles from './useStyles';
 import CardReview from './CardReview/CardReview';
 import Avatar from '@material-ui/core/Avatar';
 import ReviewImage from '../../Images/profilePic.png';
+import { Review } from '../../interface/User';
+import { getAllReviews } from '../../helpers/APICalls/review';
 import 'swiper/swiper.min.css';
 import 'swiper/components/pagination/pagination.min.css';
 
@@ -13,7 +15,7 @@ interface Props {
   className?: string;
 }
 
-const reviews = [
+const reviewsTest = [
   {
     reviewerPhoto: {
       src: ReviewImage,
@@ -44,7 +46,18 @@ const reviews = [
 ];
 
 const SplashReviews = ({ className }: Props): JSX.Element => {
+  const [reviews, setReviews] = useState<Review[]>()
   const classes = useStyles();
+
+  const getReviews = async () => {
+    const getAll = await getAllReviews();
+
+    if (getAll) {
+      setReviews(getAll);
+    } else {
+      new Error('Could Not Get Reviews');
+    }
+  }
 
   useEffect(() => {
     new Swiper('.swiper-container', {
@@ -59,6 +72,8 @@ const SplashReviews = ({ className }: Props): JSX.Element => {
         delay: 2000,
       },
     });
+
+    getReviews();
   }, []);
 
   return (
@@ -66,17 +81,18 @@ const SplashReviews = ({ className }: Props): JSX.Element => {
       <SectionHeader title="Customer Reviews" subtitle="Take a look at some of our recent contest creators feedback." />
       <div className={clsx('swiper-container', classes.swiperContainer)}>
         <div className="swiper-wrapper">
-          {reviews.map((review: any, index: number) => (
-            <CardReview
-              key={index}
-              className={'swiper-slide'}
-              noBorder
-              text={review.feedback}
-              reviewerName={review.reviewerName}
-              reviewerTitle={review.reviewerContestType}
-              reviewerPhoto={review.reviewerPhoto}
-            />
-          ))}
+          {reviews ? reviews.map((review: any, index: number) => (
+            console.log(review, index)
+            // <CardReview
+            //   key={index}
+            //   className={'swiper-slide'}
+            //   noBorder
+            //   text={review.feedback}
+            //   reviewerName={review.reviewerName}
+            //   reviewerTitle={review.reviewerContestType}
+            //   reviewerPhoto={review.reviewerPhoto}
+            // />
+          )) : <></>}
           <div className="swiper-pagination" />
         </div>
       </div>
