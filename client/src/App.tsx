@@ -41,7 +41,7 @@ function App(): JSX.Element {
                   <Route exact path="/forgot-password" component={ForgotPassword} />
                   <Route path="/reset-password/:token/:id" component={ResetPassword} />
                   <Route exact path="/artist" component={AboutArtist} />
-                  <Route exact path="/dashboard" component={Dashboard} />
+                  <Route exact path="/dashboard" component={Discovery} />
                   <Route path="*">
                     <Redirect to="/dashboard" />
                   </Route>
