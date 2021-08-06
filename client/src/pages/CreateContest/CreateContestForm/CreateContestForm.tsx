@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { Button, TextField, Box, Typography, MenuItem, Grid, InputAdornment } from '@material-ui/core';
 import { ImageList, ImageListItem, CircularProgress } from '@material-ui/core';
 import { KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -7,6 +7,7 @@ import AlarmIcon from '@material-ui/icons/Alarm';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { NewContest } from '../../../interface/Contest';
+import { uploadContestPic } from '../../../helpers/APICalls/contest';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import MomentUtils from '@date-io/moment';
@@ -22,26 +23,37 @@ interface Props {
 
 export default function CreateContestForm({ handleSubmit }: Props): JSX.Element {
   const [zone, setZone] = useState<string>('PDT');
-  const [dogImages, setDogImages] = useState<Array<string>>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const [images, setImages] = useState<Array<string>>([]);
   const classes = useStyles();
 
-  useEffect(() => {
-    axios('https://dog.ceo/api/breeds/image/random/20')
-      .then((res) => setDogImages(res.data.message))
-      .catch((err) => console.error(err));
-  }, []);
+  // const handleImages = (event: React.MouseEvent<HTMLElement>) => {
+  //   const elementImage = (event.target as HTMLImageElement).src;
+  //   const element = event.target;
+  //   if (!$(element).hasClass(classes.checked)) {
+  //     $(element).addClass(classes.checked);
+  //     setImages((prev) => [...prev, elementImage]);
+  //   } else {
+  //     $(element).removeClass(classes.checked);
+  //     const newImages = images.filter((image) => image !== elementImage);
+  //     setImages(newImages);
+  //   }
+  // };
 
-  const handleImages = (event: React.MouseEvent<HTMLElement>) => {
-    const elementImage = (event.target as HTMLImageElement).src;
-    const element = event.target;
-    if (!$(element).hasClass(classes.checked)) {
-      $(element).addClass(classes.checked);
-      setImages((prev) => [...prev, elementImage]);
-    } else {
-      $(element).removeClass(classes.checked);
-      const newImages = images.filter((image) => image !== elementImage);
-      setImages(newImages);
+  const submitNewPic = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setLoading(true);
+      try {
+        const formData = new FormData();
+        for (let i = 0; i < e.target.files.length; i++) {
+          formData.append('image', e.target.files[i], e.target.files[i].name);
+        }
+        const newPic = await uploadContestPic(formData);
+        setImages([newPic, ...images]);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -184,18 +196,42 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
             </Grid>
           </Box>
           <Box mt={3} mb={3} className={classes.box}>
-            <Typography className={classes.label}>Which designs do you like?</Typography>
-            <Typography className={classes.sub} component="p">
-              {"Let's start by helping your designers understand which styles your prefer."}
-            </Typography>
+            <Box display="flex" justifyContent="space-between" alignContent="center">
+              <Box>
+                <Typography className={classes.label}>Show us some inspiration for your dream tattoo</Typography>
+                <Typography className={classes.sub} component="p">
+                  Upload your images.
+                </Typography>
+              </Box>
+              <Box maxWidth="50%">
+                <label htmlFor="file" className={classes.fileInputLabel}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="file"
+                    name="image"
+                    multiple={false}
+                    onChange={submitNewPic}
+                    className={classes.fileInput}
+                  />
+                  <div className={classes.uploadBtn}>upload</div>
+                </label>
+              </Box>
+            </Box>
             <Box mt={3} mb={3} className={classes.imageList}>
               <ImageList rowHeight={160} cols={4} className={classes.images}>
-                {dogImages.map((image: string, id: number) => (
-                  <ImageListItem key={image}>
-                    <img id={`${id}`} src={image} className={classes.img} onClick={handleImages} />
-                    {$(`#${`${id}`}`).hasClass(classes.checked) && <CheckCircleOutlineIcon className={classes.icon} />}
-                  </ImageListItem>
-                ))}
+                {loading ? (
+                  <CircularProgress />
+                ) : (
+                  images.map((image: string, id: number) => (
+                    <ImageListItem key={image}>
+                      <img id={`${id}`} src={image} className={classes.img} />
+                      {$(`#${`${id}`}`).hasClass(classes.checked) && (
+                        <CheckCircleOutlineIcon className={classes.icon} />
+                      )}
+                    </ImageListItem>
+                  ))
+                )}
               </ImageList>
             </Box>
           </Box>
