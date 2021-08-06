@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Toolbar from '@material-ui/core/Toolbar';
-import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
@@ -135,11 +134,14 @@ export default function ContestPage(): JSX.Element {
     );
   };
 
-  return loggedInUser ? (
+  return (
     <>
       <CssBaseline />
       <GlobalCss />
-      <AuthHeader linkTo={`/create-contest`} btnText="create contest" />
+      <AuthHeader
+        linkTo={loggedInUser ? `/create-contest` : '/login'}
+        btnText={loggedInUser ? 'create contest' : 'login'}
+      />
       <Container className={classes.container}>
         <Grid className={classes.grid} container style={{ marginBottom: '35px' }}>
           <Grid item>
@@ -162,10 +164,12 @@ export default function ContestPage(): JSX.Element {
             </Typography>
             <Grid direction="row" className={classes.grid} container>
               <Grid item>
-                <Avatar
-                  src={contest && (contest.ownerProfilePic || `https://robohash.org/${contest.ownerName}.png`)}
-                  className={classes.avatar}
-                ></Avatar>
+                <Link to={{ pathname: '/artist', state: `${contest?.userId}` }}>
+                  <Avatar
+                    src={contest && (contest.ownerProfilePic || `https://robohash.org/${contest.ownerName}.png`)}
+                    className={classes.avatar}
+                  ></Avatar>
+                </Link>
               </Grid>
               <Grid item>
                 <Typography className={classes.user}>
@@ -175,7 +179,7 @@ export default function ContestPage(): JSX.Element {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={2} justifyContent="center" alignItems="center">
-            {loggedInUser.id === contest?.userId ? (
+            {loggedInUser?.id === contest?.userId || !loggedInUser ? (
               <Button variant="outlined" size="large" className={classes.button} disabled>
                 submit design
               </Button>
@@ -222,6 +226,7 @@ export default function ContestPage(): JSX.Element {
                         artistPic={submission.artistPic}
                         artistName={submission.artistName}
                         submissionId={submission._id}
+                        artistId={submission.artistId}
                       />
                     ))}
                   </ImageList>
@@ -257,7 +262,5 @@ export default function ContestPage(): JSX.Element {
         </Grid>
       </Container>
     </>
-  ) : (
-    <CircularProgress />
   );
 }

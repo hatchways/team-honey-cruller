@@ -5,6 +5,7 @@ import SectionHeader from '../SectionHeader/SectionHeader';
 import Image from '../Image/Image';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/useAuthContext';
 
 import HeroImg from '../../Images/heroImg.jpg';
 
@@ -14,6 +15,7 @@ interface Props {
 
 const Hero = ({ className }: Props): JSX.Element => {
   const classes = useStyles();
+  const { loggedInUser } = useAuth();
 
   return (
     <div className={className}>
@@ -33,6 +35,22 @@ const Hero = ({ className }: Props): JSX.Element => {
                 <Button key="button" data-tour="start-contest" variant="contained" color="primary" size="large">
                   Start Contest
                 </Button>,
+                loggedInUser ? (
+                  <Button
+                    component={Link}
+                    to="create-contest"
+                    key="button"
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                  >
+                    Start Contest
+                  </Button>
+                ) : (
+                  <Button key="button" variant="contained" color="primary" size="large">
+                    Start Contest
+                  </Button>
+                ),
               ]}
               align="left"
               titleVariant="h3"

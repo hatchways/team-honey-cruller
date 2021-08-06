@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { visitEachChild } from 'typescript';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -36,6 +37,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
     backgroundColor: '#000',
     fontWeight: 'bold',
+  },
+  reset: {
+    textDecoration: 'none',
+    color: 'rgb(6,69,173)',
+    "&:hover": {
+      textDecoration: 'underline',
+    }
   },
 }));
 

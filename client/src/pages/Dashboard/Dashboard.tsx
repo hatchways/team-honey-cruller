@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
 import useStyles from './useStyles';
@@ -22,8 +21,8 @@ import { Convo } from '../../interface/User';
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
-  const { initSocket } = useSocket();
   const history = useHistory();
+  const { initSocket } = useSocket();
   const [convos, setConvos] = useState<Convo[]>([]);
   const { setOpen } = useTourContext();
 

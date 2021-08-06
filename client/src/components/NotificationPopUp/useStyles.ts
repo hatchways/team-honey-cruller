@@ -34,6 +34,19 @@ const useStyles = makeStyles((theme) => ({
     top: '15px !important',
     height: '80%',
   },
+  notificationContainer: {
+    '&:hover':{
+      backgroundColor: 'black',
+      color:'#fff'
+    }
+  },
+  link: {
+    textDecoration: "none", 
+    color:'black'
+  },
+  badge:{
+   
+  }
 }));
 
 export default useStyles;

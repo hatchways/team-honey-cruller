@@ -87,7 +87,7 @@ exports.getSubmissionByContest = asyncHandler(async (req, res) => {
 
 
 exports.getSubmissionsByArtist = asyncHandler(async (req, res) => {
-  const artistId = req.body.id;
+  const artistId = req.params.id;
   try {
     const submissions = await Submission.find({ artistId }).populate('contest', {title: true});
     res.send(submissions)

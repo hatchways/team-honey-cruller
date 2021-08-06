@@ -1,12 +1,7 @@
 import Grid from '@material-ui/core/Grid';
-import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
 import useStyles from './useStyles';
 import { Contest, Winner } from '../../interface/User';
 import ContestListContent from '../ContestListContent/ContestListContent';
@@ -41,6 +36,7 @@ export default function ContestList({ userContests }: Props): JSX.Element {
                     }
                     artistName={'winningArtist' in contest ? contest.winningArtist.username : ''}
                     artistPic={'winningArtist' in contest ? contest.winningArtist.profilePic : ''}
+                    artistId={'winningArtist' in contest ? contest.winningArtist._id : null}
                   >
                     <img
                       className={classes.avatar}

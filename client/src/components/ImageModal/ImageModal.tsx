@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
@@ -8,17 +8,18 @@ import Button from '@material-ui/core/Button';
 import useStyles from './useStyles';
 import { chooseWinner } from '../../helpers/APICalls/contest';
 import { useSnackBar } from '../../context/useSnackbarContext';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 interface Props {
   artistPic?: string;
   artistName?: string;
+  artistId?: string | null;
   image: string;
   submissionId?: string;
   children: JSX.Element;
 }
 
-const ImageModal = ({ artistPic, artistName, image, submissionId, children }: Props): JSX.Element => {
+const ImageModal = ({ artistPic, artistName, image, submissionId, children, artistId }: Props): JSX.Element => {
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { updateSnackBarMessage } = useSnackBar();
@@ -55,8 +56,17 @@ const ImageModal = ({ artistPic, artistName, image, submissionId, children }: Pr
       <Modal open={isOpen} onClose={handleClose} className={classes.modal}>
         <Paper className={classes.body}>
           <Box display="flex" alignItems="center" padding={1}>
-            {artistPic ? <Avatar src={artistPic} /> : null}
-            <Typography className={classes.artistName}>{artistName}</Typography>
+            {artistId ? (
+              <Link to={{ pathname: '/artist', state: artistId }} className={classes.artistLink}>
+                <Avatar src={artistPic} />
+                <Typography className={classes.artistName}>{artistName}</Typography>
+              </Link>
+            ) : (
+              <>
+                <Avatar src={artistPic} />
+                <Typography className={classes.artistName}>{artistName}</Typography>
+              </>
+            )}
             {submissionId ? <Button onClick={handleWinnerChoice}>This is a winner!</Button> : null}
           </Box>
           <img src={image} alt="chosen design" className={classes.image} />

@@ -33,12 +33,12 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
           flexWrap="wrap"
           className={classes.linkContainer}
         >
-          <Link to="/discovery">
+          <Link to="/discovery" style={{ textDecoration: 'none' }}>
             <Typography className={classes.navLink} color="secondary" display="inline">
               Discover
             </Typography>
           </Link>
-          <Link to="/messages">
+          <Link to="/messages" style={{ textDecoration: 'none' }}>
             <Typography className={classes.navLink} color="secondary" display="inline">
               Messages
             </Typography>
@@ -46,8 +46,8 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
           <Typography className={classes.navLink} color="secondary" display="inline">
             <NotificationPopUp />
           </Typography>
-          <Link to={linkTo}>
-            <Button data-tour="nav-btn" className={classes.createContestBtn} size="large">
+          <Link to={linkTo} style={{ textDecoration: 'none' }}>
+            <Button className={classes.createContestBtn} size="large">
               {btnText}
             </Button>
           </Link>
@@ -57,7 +57,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
           </Box>
         </Box>
       ) : (
-        <Link to={linkTo}>
+        <Link to={linkTo} style={{ textDecoration: 'none' }}>
           <Button className={classes.loginButton} size="large">
             {btnText}
           </Button>

@@ -23,8 +23,10 @@ import { getWinnersByUser } from '../../helpers/APICalls/winner';
 import updateProfile from '../../helpers/APICalls/profile';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import loginWithCookies from '../../helpers/APICalls/loginWithCookies';
+import { useHistory } from 'react-router-dom';
 
 export default function Profile(): JSX.Element {
+  const history = useHistory();
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [contests, setContests] = useState<Contest[]>([]);
@@ -137,6 +139,7 @@ export default function Profile(): JSX.Element {
   };
 
   const submitNewPic = async (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     if (e.target.files) {
       setLoading(true);
       try {
@@ -148,6 +151,7 @@ export default function Profile(): JSX.Element {
         const { success } = await loginWithCookies();
         if (success) {
           updateLoginContext(success);
+          history.push('/profile');
         }
       } catch (err: any) {
         updateSnackBarMessage(err.message);

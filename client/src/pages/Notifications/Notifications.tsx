@@ -12,13 +12,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { NotificationContext } from '../../context/notificationContext';
+import { Link, useHistory } from 'react-router-dom';
 
 interface NotificationProps {
-  header: boolean
+  header: boolean;
 }
 
-export default function Notifications({ header } : NotificationProps): JSX.Element {
-  header === undefined ? header = true : header;
+export default function Notifications({ header }: NotificationProps): JSX.Element {
+  const history = useHistory();
+  header === undefined ? (header = true) : header;
   const notifications = useContext(NotificationContext).notifications;
   const setNotifications = useContext(NotificationContext).setNotifications;
   const { loggedInUser } = useAuth();
@@ -26,15 +28,17 @@ export default function Notifications({ header } : NotificationProps): JSX.Eleme
   const { updateSnackBarMessage } = useSnackBar();
 
   const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     const target = event.target as HTMLButtonElement;
     const response = await deleteNotification(target.value);
     if (response === 204) {
       updateSnackBarMessage('Notification deleted successfully');
-      const filteredNotifications = notifications?.filter((item) => item._id !== target.value);
+      const filteredNotifications = notifications && notifications.filter((item) => item._id !== target.value);
       setNotifications(filteredNotifications);
     } else {
       updateSnackBarMessage('Error deleting notification, trying again later');
     }
+    header === true ? history.push('/notifications') : history.push('/settings');
   };
 
   const hoursCalculator = (createdAt: string): string => {
@@ -64,45 +68,50 @@ export default function Notifications({ header } : NotificationProps): JSX.Eleme
   };
 
   return loggedInUser ? (
-     <>
+    <>
       <CssBaseline />
       {header ? <AuthHeader linkTo={`/create-contest`} btnText="CREATE CONTEST" /> : ''}
-      <Box 
-      display='flex'
-      justifyContent='center' 
-      >
-      <Paper className={classes.paper} elevation={2}>
-        <Grid direction="row" container>
-          <Grid item>
-            <Typography variant="h5" className={classes.poptitle}>
-              Notifications
-            </Typography>
+      <Box display="flex" justifyContent="center">
+        <Paper className={classes.paper} elevation={2}>
+          <Grid direction="row" container>
+            <Grid item>
+              <Typography variant="h5" className={classes.poptitle}>
+                Notifications
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
-        {notifications?.length
-          ? notifications?.map((notification) => (
-              <Grid direction="row" container key={notification._id}>
-                <Grid item xs={12} sm={3} md={2}>
-                  <Avatar alt="Profile Image" src={notification.profilePic} className={classes.avatar}></Avatar>
+          {notifications?.length ? (
+            notifications?.map((notification) => (
+              <Link
+                to={notification.contestId ? `/contest/${notification.contestId}` : `/dashboard`}
+                key={notification._id}
+                className={classes.link}
+              >
+                <Grid direction="row" container className={classes.notificationContainer}>
+                  <Grid item xs={12} sm={3} md={2}>
+                    <Avatar alt="Profile Image" src={notification.profilePic} className={classes.avatar}></Avatar>
+                  </Grid>
+                  <Grid item xs={12} sm={7} md={7}>
+                    <Typography className={classes.typography} key={notification._id}>
+                      {notification.notification}
+                    </Typography>
+                    <Typography key={notification.notification} className={classes.time}>
+                      {hoursCalculator(notification.createdAt)}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={1} md={1}>
+                    <button className={classes.delete} onClick={handleDelete} value={notification._id}>
+                      Delete
+                    </button>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} sm={7} md={7}>
-                  <Typography className={classes.typography} key={notification._id}>
-                    {notification.notification}
-                  </Typography>
-                  <Typography key={notification.notification} className={classes.time}>
-                    {hoursCalculator(notification.createdAt)}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={1} md={1}>
-                  <button className={classes.delete} onClick={handleDelete} value={notification._id}>
-                    Delete
-                  </button>
-                </Grid>
-              </Grid>
+              </Link>
             ))
-          : 'No notification'}
-      </Paper>
-    </Box>
+          ) : (
+            <Typography align="center">{`You do not have any notification`}</Typography>
+          )}
+        </Paper>
+      </Box>
     </>
   ) : (
     <CircularProgress />
