@@ -39,20 +39,27 @@ export default function Dashboard(): JSX.Element {
 
   useEffect(() => {
     if (message) {
-      const updatedMessage = convo?.length ? [...convo, message] : [message];
+      const updatedMessage = convo && convo.length ? [...convo, message] : [message];
       setConvo(updatedMessage);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [message]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messageCount]);
 
   const displayMessage = (message: string) => {
     if (loggedInUser && otherUser) {
       const con = createMessage(loggedInUser.id, otherUser._id, message);
-      if (con && convo) {
+      if (con) {
         const updatedMessage = convo?.length ? [...convo, con] : [con];
         setConvo(updatedMessage);
       }
-      socket?.emit("send-message", loggedInUser.id, loggedInUser.profilePic, otherUser._id, otherUser.profilePic, message);
+      socket?.emit(
+        'send-message',
+        loggedInUser.id,
+        loggedInUser.profilePic,
+        otherUser._id,
+        otherUser.profilePic,
+        message,
+      );
       sendMessage({ to: otherUser._id, message: message });
     }
   };
@@ -71,7 +78,7 @@ export default function Dashboard(): JSX.Element {
         text: message,
         createdAt: new Date().toString(),
       };
-      setMessageCount(prev => prev + 1);
+      setMessageCount((prev) => prev + 1);
       return newMessage;
     }
   };
@@ -81,8 +88,7 @@ export default function Dashboard(): JSX.Element {
       <MessageHeader online={false} username={otherUser.username} profilePic={otherUser.profilePic} />
       <Box className={classes.chatContainer}>
         <Messages convo={convo} />
-        <MessageInput otherUserId={otherUser._id} otherUsername={otherUser.username}
-          displayMessage={displayMessage}/>
+        <MessageInput otherUserId={otherUser._id} otherUsername={otherUser.username} displayMessage={displayMessage} />
       </Box>
     </Paper>
   ) : (

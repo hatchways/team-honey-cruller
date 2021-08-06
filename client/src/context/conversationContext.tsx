@@ -1,8 +1,7 @@
 import { FunctionComponent, createContext, useState, useEffect, useContext } from 'react';
 import { getOneConvo } from '../helpers/APICalls/conversations';
-import { Message, User } from '../interface/User';
+import { Message } from '../interface/User';
 import { OtherUser } from '../interface/Convo';
-import { useAuth } from '../context/useAuthContext';
 
 interface ConvoContext {
   convo?: Message[];
@@ -30,7 +29,6 @@ export const ConversationProvider: FunctionComponent = ({ children }): JSX.Eleme
     username: '',
   });
   const [friendId, setFriendId] = useState<string>();
-  const { loggedInUser } = useAuth();
 
   useEffect(() => {
     if (friendId) {
@@ -55,7 +53,9 @@ export const ConversationProvider: FunctionComponent = ({ children }): JSX.Eleme
   }, [friendId]);
 
   return (
-    <ConversationContext.Provider value={{ convo, setFriendId, recipient, setConvo }}>{children}</ConversationContext.Provider>
+    <ConversationContext.Provider value={{ convo, setFriendId, recipient, setConvo }}>
+      {children}
+    </ConversationContext.Provider>
   );
 };
 

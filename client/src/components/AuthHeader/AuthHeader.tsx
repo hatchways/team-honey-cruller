@@ -36,7 +36,7 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
               Discover
             </Typography>
           </Link>
-          <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+          <Link to="/messages" style={{ textDecoration: 'none' }}>
             <Typography className={classes.navLink} color="secondary" display="inline">
               Messages
             </Typography>

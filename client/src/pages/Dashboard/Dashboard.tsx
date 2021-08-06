@@ -17,7 +17,6 @@ import { Convo } from '../../interface/User';
 import { useSocket } from '../../context/useSocketContext';
 
 export default function Dashboard(): JSX.Element {
-
   const classes = useStyles();
   const { loggedInUser } = useAuth();
   const history = useHistory();

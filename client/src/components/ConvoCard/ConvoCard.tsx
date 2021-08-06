@@ -34,7 +34,7 @@ const ConvoCard = ({ convo, closeDrawer }: Props): JSX.Element => {
         classes={{ badge: `${classes.badge} ${online && classes.online}` }}
         variant="dot"
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        overlap="circle"
+        overlap="circular"
       >
         <Avatar alt={otherUser.username} src={otherUser.profilePic} className={classes.profilePic}></Avatar>
       </Badge>

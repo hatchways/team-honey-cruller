@@ -19,7 +19,7 @@ export const SocketContext = createContext<ISocketContext>({
 export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => {
   const [socket, setSocket] = useState<Socket | undefined>(undefined);
   const [socketNotification, setSocketNotification] = useState<Notification>();
-  const [message, setMessage] = useState<Message>()
+  const [message, setMessage] = useState<Message>();
 
   const initSocket = useCallback(() => {
     console.log('trying to connect');
@@ -32,12 +32,12 @@ export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => 
 
   useEffect(() => {
     socket?.on('getNotification', (notification) => {
-        setSocketNotification(notification);
+      setSocketNotification(notification);
     });
   });
 
   useEffect(() => {
-    socket?.on("receive-message", (data) => {
+    socket?.on('receive-message', (data) => {
       setMessage(data);
     });
   });

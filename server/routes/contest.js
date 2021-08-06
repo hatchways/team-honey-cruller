@@ -5,6 +5,6 @@ const { createContest, updateContest, getSingleContest, getAllContests, chooseWi
 
 router.route('/').post(protect,createContest).get(getAllContests)
 router.route('/num').get(getNumContests)
-router.route("/:id").put(protect, updateContest).get(protect, getSingleContest).post(protect, chooseWinner)
+router.route("/:id").put(protect, updateContest).get(getSingleContest).post(protect, chooseWinner)
 
 module.exports = router;
