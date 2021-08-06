@@ -51,3 +51,20 @@ exports.resetPassword = asyncHandler(async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+exports.changePassword = asyncHandler(async (req, res) => {
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(req.body.password, salt);
+
+    const user = await User.updateOne(
+      { _id: req.user.id},
+      { $set: { password: hash } },
+      { new: true }
+    );
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
