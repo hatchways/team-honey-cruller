@@ -54,6 +54,16 @@ const useStyles = makeStyles((theme) => ({
       color: '#fff', 
       backgroundColor:'black',
     }
+  },
+  notificationContainer: {
+    '&:hover':{
+      backgroundColor: '#fafafa',
+      color:'black'
+    }
+  },
+  link: {
+    textDecoration: "none", 
+    color:'black'
   }
 }));
 

@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useContext, useEffect } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -61,6 +61,7 @@ export default function SubmitDesign(): JSX.Element {
         const notificationBody = {
           to: toUser.userId,
           notification: `${loggedInUser?.username} submitted in your contest`,
+          contestId: params.id
         };
         const notification = await createNotification(notificationBody);
         //send notification using socket

@@ -52,6 +52,7 @@ export interface Convo {
 }
 
 export interface Message {
+  conversationId: string;
   _id: string;
   senderId: string;
   senderName: string;
@@ -91,6 +92,7 @@ export interface Customer {
 }
 
 export interface Notification {
+  contestId: string;
   opened: boolean;
   _id: string;
   to: string;

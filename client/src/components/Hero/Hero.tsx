@@ -30,7 +30,10 @@ const Hero = ({ className }: Props): JSX.Element => {
                             }
                             subtitle="Premier tatoo designs created by artists all over the world."
                             ctaGroup={[
-                                <Button key="button" variant="contained" color="primary" size="large">
+                                <Button key="button" variant="contained" 
+                                component={Link}
+                                to={`/create-contest`}
+                                color="primary" size="large">
                                     Start Contest
                                 </Button>
                             ]}

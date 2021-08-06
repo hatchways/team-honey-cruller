@@ -22,6 +22,9 @@ const notificationSchema = new mongoose.Schema(
     },
     profilePic: {
       type: String
+    },
+    contestId:{
+      type: String
     }
   },
   {
