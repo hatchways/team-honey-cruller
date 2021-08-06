@@ -1,4 +1,4 @@
-## Tattoo Art
+# Tattoo Art
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -10,7 +10,7 @@ Tattoo Art is a contest driven website where users will be able to create a cont
 
 **Tech Stack:** MongoDB, Express.js, React.js, Node.js, Typescript
 
-**Contributors**: Brian Ford, Tyler Bolty, Jeewan Bhusal, Minh Tran
+**Contributors: Brian Ford, Tyler Bolty, Jeewan Bhusal, Minh Tran**
 
 
 <!-- PROJECT LOGO -->
