@@ -4,6 +4,19 @@ import { Contest, Winner } from '../../interface/User';
 import { NewContest } from '../../interface/Contest';
 import axios from 'axios';
 
+export const uploadContestPic = async (file: FormData): Promise<string> => {
+  const fetchOptions: FetchOptions = {
+    method: 'POST',
+    credentials: 'include',
+    body: file,
+  };
+  return await fetch(`/upload/contest`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again' },
+    }));
+};
+
 export const getAllContests = async (date?: string, howMany = 10, page = 0): Promise<AuthApiData> => {
   const fetchData: FetchOptions = {
     method: 'GET',
