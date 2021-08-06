@@ -4,6 +4,8 @@ const useStyles = makeStyles(() => ({
   root: {
     maxwidth: '70vw',
     width: '50vw',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   }
 }));
 
