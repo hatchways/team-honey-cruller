@@ -6,8 +6,6 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-Tattoo Art is a contest driven website where users will be able to create a contest 
-
 **Tech Stack:** MongoDB, Express.js, React.js, Node.js, Typescript
 
 **Contributors: Brian Ford, Tyler Bolty, Jeewan Bhusal, Minh Tran**
