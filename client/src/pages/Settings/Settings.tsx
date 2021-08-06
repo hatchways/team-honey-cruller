@@ -7,6 +7,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import TourContent from '../../components/TourContent/TourContent';
 import Payment from '../../components/Payment/Payment';
 import PersonalInfo from '../../components/PersonalInfo/PersonalInfo';
+import Password from '../../components/Password/Password';
 import Profile from '../Profile/Profile';
 import Notifications from '../Notifications/Notifications';
 import useStyles from './useStyles';
@@ -138,7 +139,7 @@ export default function Settings(): JSX.Element {
           <Notifications header={false} />
         </TabPanel>
         <TabPanel value={value} index={4}>
-          Password
+          <Password />
         </TabPanel>
       </Box>
       <TourContent steps={steps} />

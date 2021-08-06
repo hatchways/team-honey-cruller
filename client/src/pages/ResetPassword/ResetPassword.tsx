@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Typography, Paper } from '@material-ui/core';
 import ResetPasswordForm from './ResetPasswordForm/ResetPasswordForm';
 import { useParams, Link } from 'react-router-dom';
-import { resetPassword } from '../../helpers/APICalls/forgotPassword';
+import { resetPassword } from '../../helpers/APICalls/password';
 import useStyles from './useStyles';
 
 export default function Reset(): JSX.Element {
