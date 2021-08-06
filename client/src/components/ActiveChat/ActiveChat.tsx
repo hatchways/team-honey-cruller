@@ -10,6 +10,7 @@ import { useAuth } from '../../context/useAuthContext';
 import { useSocket } from '../../context/useSocketContext';
 import { sendMessage } from '../../helpers/APICalls/conversations';
 import { OtherUser } from '../../interface/Convo';
+import { User } from '../../interface/User';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -47,11 +48,9 @@ export default function Dashboard(): JSX.Element {
 
   const displayMessage = (message: string) => {
     if (loggedInUser && otherUser) {
-      const con = createMessage(loggedInUser.id, otherUser._id, message);
-      if (con) {
-        const updatedMessage = convo?.length ? [...convo, con] : [con];
-        setConvo(updatedMessage);
-      }
+      const con = createMessage(loggedInUser, otherUser, message);
+      const updatedMessage = convo?.length ? [...convo, con] : [con];
+      setConvo(updatedMessage);
       socket?.emit(
         'send-message',
         loggedInUser.id,
@@ -64,23 +63,21 @@ export default function Dashboard(): JSX.Element {
     }
   };
 
-  const createMessage = (sender: string, receiver: string, message: string) => {
-    if (convo && convo[0]) {
+  const createMessage = (user: User, receiver: OtherUser, message: string) => {
       const newMessage = {
         _id: messageCount.toString(),
         conversationId: messageCount.toString(),
-        senderId: sender,
-        senderName: convo[0].senderName,
-        senderPic: convo[0].senderPic,
-        recipientId: receiver,
-        recipientName: convo[0].recipientName,
-        recipientPic: convo[0].recipientPic,
+        senderId: user.id,
+        senderName: user.username,
+        senderPic: user.profilePic,
+        recipientId: receiver._id,
+        recipientName: receiver.username,
+        recipientPic: receiver.profilePic,
         text: message,
         createdAt: new Date().toString(),
       };
       setMessageCount((prev) => prev + 1);
       return newMessage;
-    }
   };
 
   return otherUser && otherUser.username ? (
