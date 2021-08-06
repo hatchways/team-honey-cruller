@@ -178,7 +178,7 @@ Tyler Bolty - [tsbolty](LINKED IN HERE) - tsbolty@gmail.com
 
 Jeewan Bhusal - [JB](LINKED IN HERE) - EMAIL HERE
 
-Minh Tran - [MT](LINKED IN HERE) - EMAIL HERE
+Minh Tran - [minhctran](https://www.linkedin.com/in/minhctran/) - pctran98@gmail.com
 
 
 Project Link: [PROJECT LINK COMING SOON](https://github.com/your_username/repo_name)
