@@ -8,32 +8,14 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   inputContainer: {
-    height: '10vh',
-    borderTop: '1px solid rgba(0,0,0,0.2)',
-    padding: '0 30px',
+    height: '100px',
     [theme.breakpoints.down('md')]: {
       padding: 0,
     },
   },
   input: {
-    backgroundColor: '#F4F6FA',
-    borderRadius: 8,
+    borderRadius: 5,
     width: '100%',
-    padding: '15px 0',
-  },
-  placeholder: {
-    paddingLeft: 20,
-  },
-  sendBtn: {
-    borderRadius: 0,
-    backgroundColor: '#000',
-    border: '1px solid black',
-    color: 'white',
-    width: '100%',
-    height: '100%',
-    '&:hover': {
-      color: 'black',
-    },
   },
 }));
 

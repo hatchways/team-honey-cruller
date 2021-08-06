@@ -100,7 +100,6 @@ exports.chargeCard = asyncHandler(async (req, res) => {
 exports.attachPaymentMethod = asyncHandler(async (req, res) => {
     try {
         const customer = await stripe.customers.retrieve(req.body.stripeId);
-
         const oldPayment = customer.invoice_settings.default_payment_method
 
         if (oldPayment != null) {

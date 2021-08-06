@@ -8,7 +8,6 @@ const {
 
 exports.createContest = asyncHandler(async (req, res) => {
   try {
-
     const findUser = await User.findOne({
       _id: req.user.id
     });

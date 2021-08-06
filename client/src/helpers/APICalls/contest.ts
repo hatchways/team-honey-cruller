@@ -4,6 +4,19 @@ import { Contest, Winner } from '../../interface/User';
 import { NewContest } from '../../interface/Contest';
 import axios from 'axios';
 
+export const uploadContestPic = async (file: FormData): Promise<string> => {
+  const fetchOptions: FetchOptions = {
+    method: 'POST',
+    credentials: 'include',
+    body: file,
+  };
+  return await fetch(`/upload/contest`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again' },
+    }));
+};
+
 export const getAllContests = async (date?: string, howMany = 10, page = 0): Promise<AuthApiData> => {
   const fetchData: FetchOptions = {
     method: 'GET',
@@ -56,7 +69,7 @@ export const addContest = async (contest: NewContest): Promise<AuthApiData> => {
   return await axios
     .post('/contest', contest)
     .then((res) => res.data)
-    .catch(() => ({ error: { message: 'Cannot create contest' } }));
+    .catch(() => ({ error: { message: 'Cannot create contest, Please make sure you have added a credit card to your profile.' } }));
 };
 
 export const chooseWinner = async (winningPic: string, submissionId: string): Promise<Winner> => {
