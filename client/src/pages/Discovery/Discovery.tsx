@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../context/useAuthContext';
 import { Winner } from '../../interface/User';
 import ContestTable from '../../components/ContestTable/ContestTable';
+import TourContent from '../../components/TourContent/TourContent';
 import { getSomeWinners } from '../../helpers/APICalls/winner';
 import { getNumContests } from '../../helpers/APICalls/contest';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
@@ -16,11 +18,13 @@ import SplashReviews from '../../components/SplashReviews/SplashReviews';
 import SectionAlternate from '../../components/SectionAlternate/SectionAlternate';
 import Hero from '../../components/Hero/Hero';
 import useStyles from './useStyles';
+import { useTourContext } from '../../context/tourContext';
 
 export default function Discovery(): JSX.Element {
   const [winners, setWinners] = useState<Winner[]>([]);
   const [numContests, setNumContests] = useState<number>(0);
   const classes = useStyles();
+  const history = useHistory();
   const { loggedInUser } = useAuth();
   const winnersData = async () => {
     const getWinners = await getSomeWinners(4);
@@ -30,6 +34,43 @@ export default function Discovery(): JSX.Element {
       return new Error('Could Not Get Winners');
     }
   };
+
+  const steps = [
+    {
+      selector: '[data-tour="start-contest"]',
+      content: { words: 'You can create a contest here!', theme: 'primary' },
+      style: {
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
+      },
+      updateDelay: 30,
+      scrollDuration: 1500,
+    },
+    {
+      selector: '[data-tour="contests"]',
+      content: { words: 'Check out our active contests here!', theme: 'secondary' },
+      style: {
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
+        backgroundColor: 'black',
+      },
+      scrollDuration: 1500,
+    },
+    {
+      selector: '[data-tour="contests"]',
+      content: { words: 'Check out our active contests here!', theme: 'secondary' },
+      style: {
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
+        backgroundColor: 'black',
+      },
+      scrollDuration: 1500,
+      action: () => history.push('/profile'),
+    },
+  ];
 
   useEffect(() => {
     winnersData();
@@ -90,12 +131,12 @@ export default function Discovery(): JSX.Element {
           <SplashReviews className="reviews" />
         </SectionAlternate>
         <Divider />
-        <div className={classes.table}>
+        <div className={classes.table} data-tour="contests">
           <ContestTable allContestsLength={numContests} />
         </div>
         <Divider />
+        <TourContent steps={steps} />
       </Animated>
     </>
   );
 }
-

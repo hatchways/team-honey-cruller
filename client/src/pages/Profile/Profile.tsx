@@ -1,5 +1,6 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { useAuth } from '../../context/useAuthContext';
+import { useHistory } from 'react-router-dom';
 import useStyles from './useStyles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -13,6 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Toolbar from '@material-ui/core/Toolbar';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import TourContent from '../../components/TourContent/TourContent';
 import ContestList from '../../components/ContestList/ContestList';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import { Contest, Winner } from '../../interface/User';
@@ -21,10 +23,16 @@ import { getWinnersByUser } from '../../helpers/APICalls/winner';
 import updateProfile from '../../helpers/APICalls/profile';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import loginWithCookies from '../../helpers/APICalls/loginWithCookies';
-import { useHistory } from 'react-router-dom';
 
-export default function Profile(): JSX.Element {
+
+interface ProfileProps {
+  header: boolean;
+}
+
+
+export default function Profile({ header }: ProfileProps): JSX.Element {
   const history = useHistory();
+  header === undefined ? (header = true) : header;
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [contests, setContests] = useState<Contest[]>([]);
@@ -33,6 +41,36 @@ export default function Profile(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(false);
   const { loggedInUser, updateLoginContext } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
+
+  const steps = [
+    {
+      selector: '[data-tour="start-contest"]',
+      content: {
+        words:
+          "This is your profile page, you can view all of your open and completed contests. Don't forget to upload a profile pic.",
+        theme: 'primary',
+      },
+      style: {
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
+      },
+    },
+    {
+      selector: '[data-tour="start-contest"]',
+      content: {
+        words:
+          "This is your profile page, you can view all of your open and completed contests. Don't forget to upload a profile pic.",
+        theme: 'primary',
+      },
+      style: {
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
+      },
+      action: () => history.push('/settings'),
+    },
+  ];
 
   const newTheme = createMuiTheme({
     palette: {
@@ -124,11 +162,12 @@ export default function Profile(): JSX.Element {
         updateSnackBarMessage(err.message);
       }
     }
+    header === true ? history.push('/profile') : history.push('/settings');
   };
 
   return loggedInUser ? (
     <>
-      <AuthHeader linkTo="/create-contest" btnText="create contest" />
+      {header ? <AuthHeader linkTo="/create-contest" btnText="create contest" /> : ''}
       <Grid className={classes.grid} container alignItems="center" direction="column">
         {loading ? (
           <CircularProgress />
@@ -172,6 +211,7 @@ export default function Profile(): JSX.Element {
                 <Tab label="past winners" className={classes.tab} />
               </Tabs>
             </ThemeProvider>
+            <div data-tour="profile"></div>
           </Toolbar>
           <Paper square elevation={2}>
             <Panel value={value} index={0}>
@@ -186,6 +226,7 @@ export default function Profile(): JSX.Element {
           </Paper>
         </Container>
       </Grid>
+      <TourContent steps={steps} />
     </>
   ) : (
     <CircularProgress />
