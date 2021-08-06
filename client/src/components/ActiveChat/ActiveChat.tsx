@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import useStyles from './useStyles';
@@ -61,6 +61,7 @@ export default function Dashboard(): JSX.Element {
     if (convo && convo[0]) {
       const newMessage = {
         _id: messageCount.toString(),
+        conversationId: messageCount.toString(),
         senderId: sender,
         senderName: convo[0].senderName,
         senderPic: convo[0].senderPic,
