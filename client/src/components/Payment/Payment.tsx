@@ -65,16 +65,19 @@ export default function Payment(): JSX.Element {
                                     iconStyle: 'solid',
                                     style: {
                                         base: {
-                                            color: 'black',
+                                            color: '#303238',
                                             fontSize: '16px',
-                                            iconColor: '#fff',
+                                            fontFamily: '"Open Sans", sans-serif',
+                                            fontSmoothing: 'antialiased',
+                                            '::placeholder': {
+                                                color: '#CFD7DF',
+                                            },
                                         },
                                         invalid: {
-                                            iconColor: 'red',
-                                            color: 'red',
-                                        },
-                                        complete: {
-                                            iconColor: '#cbf4c9',
+                                            color: '#e5424d',
+                                            ':focus': {
+                                                color: '#303238',
+                                            },
                                         },
                                     }
                                 }}

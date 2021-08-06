@@ -1,6 +1,17 @@
 const Reviews = require('../models/Reviews');
 const asyncHandler = require('express-async-handler');
 
+exports.getReviewsForAll = asyncHandler(asyncHandler(async (req, res) => {
+  try {
+    const review = await Reviews.find({})
+    .populate('reviewerId', { profilePic: true, username: true });
+
+    res.status(200).json(review)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}))
+
 exports.getAllReviews = asyncHandler(async (req, res) => {
   try {
     const review = await Reviews.find({
