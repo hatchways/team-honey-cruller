@@ -42,7 +42,7 @@ export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => 
     });
   });
 
-  return <SocketContext.Provider value={{ socket, initSocket, message }}>{children}</SocketContext.Provider>;
+  return <SocketContext.Provider value={{ socket, initSocket, message, socketNotification }}>{children}</SocketContext.Provider>;
 };
 
 export function useSocket(): ISocketContext {
