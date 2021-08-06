@@ -23,6 +23,7 @@ const notificationRouter = require("./routes/notification");
 const personalInfoRouter = require("./routes/personalInfo");
 const reviewsRouter = require("./routes/reviews");
 const winnerRouter = require("./routes/winner");
+const resetRouter = require("./routes/reset");
 
 const { json, urlencoded } = express;
 
@@ -123,6 +124,7 @@ app.use("/notification", notificationRouter);
 app.use("/info", personalInfoRouter);
 app.use("/reviews", reviewsRouter);
 app.use("/winners", winnerRouter);
+app.use("/reset", resetRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
