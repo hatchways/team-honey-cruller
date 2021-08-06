@@ -60,8 +60,6 @@ const removeUser = (socketId) => {
   users = users.filter((user) => user.socketId !== socketId);
 };
 
-console.log('users', users);
-
 io.on("connection", (socket) => {
   const socketId = socket.id;
   const token = cookie.parse(socket.handshake.headers.cookie).token;
