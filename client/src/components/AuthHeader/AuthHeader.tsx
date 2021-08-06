@@ -19,9 +19,11 @@ const AuthHeader = ({ linkTo, btnText }: Props): JSX.Element => {
 
   return (
     <Box p={1} className={classes.authHeader}>
-      <Typography color="secondary" className={classes.tattooArt}>
-        tattoo art
-      </Typography>
+      <Link to="/dashboard" className={classes.navLink}>
+        <Typography color="secondary" className={classes.tattooArt}>
+          tattoo art
+        </Typography>
+      </Link>
       {loggedInUser ? (
         <Box
           display="flex"

@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
       cursor: 'pointer',
     },
     padding: 5,
+    textDecoration: 'none',
   },
   loginButton: {
     color: 'white',

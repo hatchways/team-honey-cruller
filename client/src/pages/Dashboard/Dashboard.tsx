@@ -5,7 +5,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
 import useStyles from './useStyles';
+import TourContent from '../../components/TourContent/TourContent';
 import { useAuth } from '../../context/useAuthContext';
+import { useTourContext } from '../../context/tourContext';
+import { useSocket } from '../../context/useSocketContext';
 import { useHistory } from 'react-router-dom';
 import ChatSideBanner from '../../components/ChatSideBanner/ChatSideBanner';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
@@ -14,7 +17,6 @@ import ChatDrawer from '../../components/ChatDrawer/ChatDrawer';
 import { getAllConvos } from '../../helpers/APICalls/conversations';
 import { ConversationProvider } from '../../context/conversationContext';
 import { Convo } from '../../interface/User';
-import { useSocket } from '../../context/useSocketContext';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -22,6 +24,40 @@ export default function Dashboard(): JSX.Element {
   const history = useHistory();
   const { initSocket } = useSocket();
   const [convos, setConvos] = useState<Convo[]>([]);
+  const { setOpen } = useTourContext();
+
+  const steps = [
+    {
+      selector: '[data-tour="search"]',
+      content: {
+        words: 'Search for any user on our platform to start a conversation.',
+        theme: 'secondary',
+      },
+      style: {
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
+        backgroundColor: 'black',
+      },
+    },
+    {
+      selector: '[data-tour="search"]',
+      content: {
+        words: 'Search for any user on our platform to start a conversation.',
+        theme: 'secondary',
+      },
+      style: {
+        padding: 20,
+        minWidth: '40%',
+        maxWidth: '80vw',
+        backgroundColor: 'black',
+      },
+      action: () => {
+        setOpen(false);
+        history.push('/discovery');
+      },
+    },
+  ];
 
   useEffect(() => {
     getAllConvos().then((data: Convo[]) => {
@@ -61,6 +97,7 @@ export default function Dashboard(): JSX.Element {
           </Grid>
         </Grid>
       </Container>
+      <TourContent steps={steps} />
     </ConversationProvider>
   );
 }
