@@ -73,6 +73,7 @@ const ReviewCarousel = ({ reviews }: Props): JSX.Element => {
             </Typography>
           )}
         </AutoPlaySwipeableViews>
+        {reviews?.length ? 
         <MobileStepper
           variant="progress"
           steps={maxSteps}
@@ -91,7 +92,7 @@ const ReviewCarousel = ({ reviews }: Props): JSX.Element => {
               Back
             </Button>
           }
-        />
+        /> : ''}
       </div>
     </Box>
   );

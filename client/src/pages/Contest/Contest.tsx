@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Toolbar from '@material-ui/core/Toolbar';
-import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
@@ -222,6 +221,7 @@ export default function ContestPage(): JSX.Element {
                         artistPic={submission.artistPic}
                         artistName={submission.artistName}
                         submissionId={submission._id}
+                        artistId={submission.artistId}
                       />
                     ))}
                   </ImageList>

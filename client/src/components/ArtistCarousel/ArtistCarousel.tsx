@@ -77,10 +77,11 @@ const ArtistCarousel = ({ submission }: Props): JSX.Element => {
             ))
           ) : (
             <Typography style={{ marginTop: '30px', padding: '20px' }} variant="h5">
-              This artist does not have any review
+              This artist does not have any activity
             </Typography>
           )}
         </AutoPlaySwipeableViews>
+        {submission?.length ? 
         <MobileStepper
           variant="progress"
           steps={maxSteps}
@@ -99,7 +100,7 @@ const ArtistCarousel = ({ submission }: Props): JSX.Element => {
               Back
             </Button>
           }
-        />
+        /> : ''}
       </div>
     </Box>
   );

@@ -14,7 +14,6 @@ interface Props {
 
 const AboutArtistTab = ({ info, submission }: Props): JSX.Element => {
   const classes = useStyles();
-
   return (
     <Box textAlign="center" pb={5}>
       <Typography className={classes.activity} variant="h5">
@@ -38,11 +37,7 @@ const AboutArtistTab = ({ info, submission }: Props): JSX.Element => {
             {info?.about}
           </Typography>
         </Box>
-      ) : (
-        <Typography style={{ marginTop: '30px', padding: '20px' }} variant="h5">
-          This artist does not have any personal info
-        </Typography>
-      )}
+      ) :''}
     </Box>
   );
 };

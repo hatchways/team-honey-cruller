@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 
 const AuthMenu = (): JSX.Element => {
+  const { loggedInUser } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { logout } = useAuth();
@@ -56,6 +57,9 @@ const AuthMenu = (): JSX.Element => {
         </Link>
         <Link className={classes.link} to="/settings">
           <MenuItem className={classes.menuItem}>Settings</MenuItem>
+        </Link>
+        <Link className={classes.link} to={{ pathname: '/artist', state: `${loggedInUser?.id}` }}>
+          <MenuItem className={classes.menuItem}>About</MenuItem>
         </Link>
       </Menu>
     </Box>

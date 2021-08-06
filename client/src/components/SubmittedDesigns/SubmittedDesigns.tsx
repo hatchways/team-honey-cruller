@@ -2,15 +2,17 @@ import ImageListItem from '@material-ui/core/ImageListItem';
 import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import useStyles from './useStyles';
 import ImageModal from '../../components/ImageModal/ImageModal';
+import { Link } from 'react-router-dom';
 
 interface Props {
   images: string[];
   artistName: string;
   artistPic: string;
   submissionId: string;
+  artistId: string;
 }
 
-const SubmittedDesigns = ({ images, artistName, artistPic, submissionId }: Props): JSX.Element => {
+const SubmittedDesigns = ({ images, artistName, artistPic, submissionId, artistId }: Props): JSX.Element => {
   const classes = useStyles();
   return (
     <>
@@ -25,7 +27,9 @@ const SubmittedDesigns = ({ images, artistName, artistPic, submissionId }: Props
               style={{ height: '250px', width: '100%' }}
             />
           </ImageModal>
-          <ImageListItemBar title={`By @${artistName}`} classes={{ titleWrap: classes.by, root: classes.titleBar }} />
+          <Link className={classes.link} to={{ pathname: '/artist', state: `${artistId}` }}>
+            <ImageListItemBar title={`By @${artistName}`} classes={{ titleWrap: classes.by, root: classes.titleBar }} />
+          </Link>
         </ImageListItem>
       ))}
     </>
