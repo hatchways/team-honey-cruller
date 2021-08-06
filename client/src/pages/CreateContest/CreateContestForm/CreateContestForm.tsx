@@ -27,19 +27,6 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
   const [images, setImages] = useState<Array<string>>([]);
   const classes = useStyles();
 
-  // const handleImages = (event: React.MouseEvent<HTMLElement>) => {
-  //   const elementImage = (event.target as HTMLImageElement).src;
-  //   const element = event.target;
-  //   if (!$(element).hasClass(classes.checked)) {
-  //     $(element).addClass(classes.checked);
-  //     setImages((prev) => [...prev, elementImage]);
-  //   } else {
-  //     $(element).removeClass(classes.checked);
-  //     const newImages = images.filter((image) => image !== elementImage);
-  //     setImages(newImages);
-  //   }
-  // };
-
   const submitNewPic = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setLoading(true);
@@ -221,7 +208,7 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
             <Box mt={3} mb={3} className={classes.imageList}>
               <ImageList rowHeight={160} cols={4} className={classes.images}>
                 {loading ? (
-                  <CircularProgress />
+                  <CircularProgress style={{ height: '40%', width: '40%' }} />
                 ) : (
                   images.map((image: string, id: number) => (
                     <ImageListItem key={image}>
