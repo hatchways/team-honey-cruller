@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';

@@ -66,7 +66,7 @@ export default function ReviewTab({ artistId }: Props): JSX.Element {
         </Box>
         <Grid container justifyContent="center">
           <Grid item xs={12} md={10}>
-            <ReviewTabForm handleSubmit={handleSubmit} />
+            <ReviewTabForm handleSubmit={handleSubmit} artistId={artistId}/>
           </Grid>
         </Grid>
       </Paper>

@@ -28,7 +28,7 @@ exports.createContest = asyncHandler(async (req, res) => {
         userId: req.user.id,
         images: req.body.images
       });
-      scheduleContestEnd(contest)
+      scheduleContestEnd(contest);
       res.status(201).json(contest);
     }
   }catch (err) {
