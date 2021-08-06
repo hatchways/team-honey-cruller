@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { Box, Typography, Paper } from '@material-ui/core';
-import ForgotPasswordForm from './ForgotPasswordForm/ForgotPasswordForm';
-import { forgotPassword } from '../../helpers/APICalls/password';
+import PasswordForm from './PasswordForm/PasswordForm';
+import { changePassword } from '../../helpers/APICalls/password';
 import useStyles from './useStyles';
 
-export default function Reset(): JSX.Element {
+export default function Password(): JSX.Element {
   const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
   const [error, setError] = useState<string>();
   const classes = useStyles();
 
   const handleSubmit = (
-    { email } : { email: string }
+    { password } : { password: string }
   ) => {
-    forgotPassword(email)
+    changePassword(password)
       .then((res) => {
         if (res.error) {
           setError(res.error.message);
@@ -27,7 +27,7 @@ export default function Reset(): JSX.Element {
     <Box className={classes.container}>
       <Box>
         <Typography align="center" component="h1" variant="h5">
-          Forgot Password
+          Change Password
         </Typography>
       </Box>
       <Box mt={3} mb={3} boxShadow={4} component={Paper} className={classes.form}>
@@ -35,12 +35,12 @@ export default function Reset(): JSX.Element {
           hasSubmitted && !error
           ? <Box>
               <Typography align="center">
-                A reset link has been sent to your email
+                Your password has be updated!
               </Typography>
             </Box>
           : error
           ? <Typography align="center">{error}</Typography>
-          : <ForgotPasswordForm handleSubmit={handleSubmit}/>
+          : <PasswordForm handleSubmit={handleSubmit}/>
         }
       </Box>
     </Box>
