@@ -31,7 +31,7 @@ export const NotificationProvider: FunctionComponent = ({ children }): JSX.Eleme
 
   useEffect(() => {
     if (socketNotification) {
-      const updatedNotification = [...notifications, socketNotification];
+      const updatedNotification = notifications.length ? [...notifications, socketNotification] : [socketNotification];
       setNotifications(updatedNotification);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
