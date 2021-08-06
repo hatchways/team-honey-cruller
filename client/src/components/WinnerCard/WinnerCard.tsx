@@ -41,9 +41,6 @@ const WinnerCard = ({
           <Typography gutterBottom variant="h5" component="h1" className={classes.title}>
             {title}
           </Typography>
-          <Typography gutterBottom variant="h5" component="h1" className={classes.title}>
-            ${prizeAmount}
-          </Typography>
           <Typography variant="body2" color="textSecondary" component="p" className={classes.description}>
             {description}
           </Typography>
