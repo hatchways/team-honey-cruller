@@ -12,3 +12,9 @@ export const resetPassword = async(password: string, token: string, id: string):
     .then((res) => res.data)
     .catch(() => ({error: {message: 'Unable to reset password'}}));
 };
+
+export const changePassword = async(password: string): Promise<AuthApiData> => {
+  return axios.patch('/reset/change-password', { password: password })
+    .then((res) => res.data)
+    .catch(() => ({error: {message: 'Unable to change password'}}));
+};
