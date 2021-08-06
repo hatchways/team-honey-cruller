@@ -33,7 +33,7 @@ function App(): JSX.Element {
                   <Route exact path="/signup" component={Signup} />
                   <Route exact path="/submit-design/:id" component={SubmitDesign} />
                   <Route exact path="/profile" component={Profile} />
-                  <Route exact path="/discovery" component={Discovery} />
+                  <Route exact path="/messages" component={Dashboard} />
                   <Route exact path="/create-contest" component={CreateContest} />
                   <Route exact path="/settings" component={Settings} />
                   <Route exact path="/notifications" component={Notifications} />

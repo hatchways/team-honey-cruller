@@ -72,8 +72,20 @@ io.on("connection", (socket) => {
     socket.on("sendUser", () => {
       io.emit("getUsers", users);
     });
-    console.log('users ', users);
   }
+
+  socket.on("send-message", (senderId, senderPic, receiverId, receiverPic, message) => {
+    const user = getUser(receiverId);
+    if (user) {
+      io.to(user.socketId).emit("receive-message", {
+        senderId: senderId,
+        senderPic: senderPic,
+        recipientId: receiverId,
+        recipientPic: receiverPic,
+        text: message,
+      });
+    }
+  });
 
   socket.on("joinChat", (res) => {
     console.log("inside joinChat");
