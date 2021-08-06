@@ -20,6 +20,19 @@ export const getReviews = async (id: string): Promise<Review[]> => {
     }));
 };
 
+export const getAllReviews = async (): Promise<Review[]> => {
+  const fetchOptions: FetchOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  };
+  return await fetch(`/reviews`, fetchOptions)
+    .then((res) => res.json())
+    .catch((err) => ({
+      error: { message: 'Unable to get reviews', err },
+    }));
+};
+
 export const createReviews = async (review: review): Promise<Review> => {
   const fetchOptions: FetchOptions = {
     method: 'POST',
