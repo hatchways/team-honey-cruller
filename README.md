@@ -176,7 +176,7 @@ Brian Ford - [bf2344](https://www.linkedin.com/in/bf2344) - bf@bford.dev
 
 Tyler Bolty - [tsbolty](https://linkedin.com/in/tyler-bolty) - tsbolty@gmail.com
 
-Jeewan Bhusal - [JB](LINKED IN HERE) - EMAIL HERE
+Jeewan Bhusal - [JB](https://www.linkedin.com/in/jeewanbhusal/) - jeewanbhusal@gmail.com
 
 Minh Tran - [minhctran](https://www.linkedin.com/in/minhctran/) - pctran98@gmail.com
 
