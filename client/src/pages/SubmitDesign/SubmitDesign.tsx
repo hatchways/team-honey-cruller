@@ -77,7 +77,7 @@ export default function SubmitDesign(): JSX.Element {
     <>
       <AuthHeader linkTo="/create-contest" btnText="create contest" />
       <CssBaseline />
-      <Grid container alignItems="center" justify="center">
+      <Grid container alignItems="center" justifyContent="center">
         <Grid container xs={6} className={classes.paperContainer}>
           <Box>
             {loading ? (

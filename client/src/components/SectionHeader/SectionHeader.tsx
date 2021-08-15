@@ -57,7 +57,7 @@ const SectionHeader = ({
                 <Grid
                     item
                     container
-                    justify={justifyGrid}
+                    justifyContent={justifyGrid}
                     xs={12}
                     className="section-header__overline-wrapper"
                 >
@@ -106,7 +106,7 @@ const SectionHeader = ({
                 <Grid item xs={12} className="section-header__cta-wrapper">
                     <Grid
                         container
-                        justify={justifyGrid}
+                        justifyContent={justifyGrid}
                         alignItems="center"
                         wrap="nowrap"
                         className="section-header__cta-container"

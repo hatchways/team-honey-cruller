@@ -11,7 +11,6 @@ interface Props {
   prizeAmount: number;
   winningArtist: any;
   description: string;
-  key: string;
   className?: string;
 }
 
@@ -20,7 +19,6 @@ const WinnerCard = ({
   title,
   prizeAmount,
   description,
-  key,
   winningArtist,
   className,
 }: Props): JSX.Element => {

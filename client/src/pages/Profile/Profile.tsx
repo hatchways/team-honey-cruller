@@ -12,7 +12,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Toolbar from '@material-ui/core/Toolbar';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TourContent from '../../components/TourContent/TourContent';
 import ContestList from '../../components/ContestList/ContestList';
@@ -72,7 +72,7 @@ export default function Profile({ header }: ProfileProps): JSX.Element {
     },
   ];
 
-  const newTheme = createMuiTheme({
+  const newTheme = createTheme({
     palette: {
       primary: {
         main: '#000000',

@@ -107,7 +107,7 @@ const ContestTable = ({ allContestsLength }: Props): JSX.Element => {
 
   return (
     <>
-      <Grid container justify="center" className={classes.grid}>
+      <Grid container justifyContent="center" className={classes.grid}>
         <SectionHeader
           title={
             <Typography component="span" variant="inherit" color="primary">
@@ -117,7 +117,7 @@ const ContestTable = ({ allContestsLength }: Props): JSX.Element => {
           subtitle="Here we have all of our current contests, feel free to use our date picker to find all contests that end by a certain date"
           fadeUp
         />
-        <Grid container justify="center" className={classes.muiPicker}>
+        <Grid container justifyContent="center" className={classes.muiPicker}>
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <Grid item xs={5}>
               <KeyboardDatePicker
@@ -163,21 +163,19 @@ const ContestTable = ({ allContestsLength }: Props): JSX.Element => {
               <TableBody>
                 {contests.map((contest) => {
                   return (
-                    <>
-                      <TableRow hover role="checkbox" className={classes.tableHead} tabIndex={-1} key={contest.title}>
-                        <TableCell className={classes.tableRow}>{contest.title}</TableCell>
-                        <TableCell className={classes.tableRow}>{contest.description}</TableCell>
-                        <TableCell className={classes.tableRow}>${contest.prizeAmount}</TableCell>
-                        <TableCell className={classes.tableRow}>
-                          {moment(contest.deadlineDate).local().format('MM-DD-YYYY')}
-                        </TableCell>
-                        <TableCell className={classes.tableRow}>
-                          <Button className={classes.button} component={Link} to={`/contest/${contest._id}`}>
-                            More Info
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    </>
+                    <TableRow hover role="checkbox" className={classes.tableHead} tabIndex={-1} key={contest.title}>
+                      <TableCell className={classes.tableRow}>{contest.title}</TableCell>
+                      <TableCell className={classes.tableRow}>{contest.description}</TableCell>
+                      <TableCell className={classes.tableRow}>${contest.prizeAmount}</TableCell>
+                      <TableCell className={classes.tableRow}>
+                        {moment(contest.deadlineDate).local().format('MM-DD-YYYY')}
+                      </TableCell>
+                      <TableCell className={classes.tableRow}>
+                        <Button className={classes.button} component={Link} to={`/contest/${contest._id}`}>
+                          More Info
+                        </Button>
+                      </TableCell>
+                    </TableRow>
                   );
                 })}
               </TableBody>

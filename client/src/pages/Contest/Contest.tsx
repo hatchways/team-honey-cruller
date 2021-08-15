@@ -7,13 +7,12 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Toolbar from '@material-ui/core/Toolbar';
 import Avatar from '@material-ui/core/Avatar';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import SubmittedDesigns from '../../components/SubmittedDesigns/SubmittedDesigns';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
@@ -68,7 +67,7 @@ export default function ContestPage(): JSX.Element {
   const [contest, setContest] = useState<Contest>();
   const { loggedInUser } = useAuth();
 
-  const newTheme = createMuiTheme({
+  const newTheme = createTheme({
     palette: {
       primary: {
         main: '#000000',
@@ -162,7 +161,7 @@ export default function ContestPage(): JSX.Element {
                 <Typography className={classes.prize}>${contest ? contest.prizeAmount : '0'}</Typography>
               </Button>
             </Typography>
-            <Grid direction="row" className={classes.grid} container>
+            <Grid direction="row" className={classes.grid} container justifyContent="center" alignItems="center">
               <Grid item>
                 <Link to={{ pathname: '/artist', state: `${contest?.userId}` }}>
                   <Avatar
@@ -178,7 +177,7 @@ export default function ContestPage(): JSX.Element {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={2} justifyContent="center" alignItems="center">
+          <Grid item xs={12} sm={2}>
             {loggedInUser?.id === contest?.userId || !loggedInUser ? (
               <Button variant="outlined" size="large" className={classes.button} disabled>
                 submit design
