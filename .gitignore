@@ -19,7 +19,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
+*.pem
 #TODO add .env to your gitignore
 __snapshots__
 
