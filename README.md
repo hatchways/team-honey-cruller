@@ -183,10 +183,6 @@ Jeewan Bhusal - [JB](https://www.linkedin.com/in/jeewanbhusal/) - jeewanbhusal@g
 Minh Tran - [minhctran](https://www.linkedin.com/in/minhctran/) - pctran98@gmail.com
 
 
-Project Link: [PROJECT LINK COMING SOON](https://github.com/your_username/repo_name)
-
-
-
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 * [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
