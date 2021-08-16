@@ -6,6 +6,8 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
+Project Link: [Tattoo Art](http://52.53.212.9/)
+
 **Tech Stack:** MongoDB, Express.js, React.js, Node.js, Typescript
 
 **Contributors: Brian Ford, Tyler Bolty, Jeewan Bhusal, Minh Tran**
