@@ -28,7 +28,7 @@ Project Link: [Tattoo Art](http://52.53.212.9/)
     <a href="https://github.com/hatchways/team-honey-cruller"><strong>Explore the repo »</strong></a>
     <br />
     <br />
-    <a href="">View Demo (COMING SOON)</a>
+    <a href="http://52.53.212.9/">View Demo</a>
     ·
     <a href="https://github.com/hatchways/team-honey-cruller/issues">Report Bug</a>
     ·
