@@ -6,7 +6,7 @@ const loginWithCookies = async (): Promise<AuthApiData> => {
     method: 'GET',
     credentials: 'include',
   };
-  return await fetch(`/auth/user`, fetchOptions)
+  return await fetch(`/api/auth/user`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
