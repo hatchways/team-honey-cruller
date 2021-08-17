@@ -99,7 +99,8 @@ export default function Discovery(): JSX.Element {
               fadeUp
             />
             <Grid container className={classes.winnerCard} alignItems="center" direction="column">
-              {winners.map((winner) => {
+              <WinnerCard data={winners} />
+              {/* {winners.map((winner) => {
                 return (
                   <Grid
                     item
@@ -119,7 +120,7 @@ export default function Discovery(): JSX.Element {
                     />
                   </Grid>
                 );
-              })}
+              })} */}
             </Grid>
           </Grid>
         </Section>
