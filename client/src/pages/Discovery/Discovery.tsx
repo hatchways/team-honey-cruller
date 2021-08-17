@@ -100,27 +100,6 @@ export default function Discovery(): JSX.Element {
             />
             <Grid container className={classes.winnerCard} alignItems="center" direction="column">
               <WinnerCard data={winners} />
-              {/* {winners.map((winner) => {
-                return (
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    md={3}
-                    key={winner._id}
-                    className={classes.winnerWrapper}
-                  >
-                    <WinnerCard
-                      winningPic={winner.winningPic}
-                      title={winner.title}
-                      prizeAmount={winner.prizeAmount}
-                      winningArtist={winner.winningArtist}
-                      description={winner.description}
-                      key={winner.description}
-                    />
-                  </Grid>
-                );
-              })} */}
             </Grid>
           </Grid>
         </Section>
