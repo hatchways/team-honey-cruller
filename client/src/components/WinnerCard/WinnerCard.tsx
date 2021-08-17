@@ -22,22 +22,21 @@ const WinnerCard = ({ data, className, ...rest }: ViewComponentProps): JSX.Eleme
             <div className={classes.grid}>
                 <div className={classes.leftGrid}>
                     {leftGridData.map((item: any, index: number) => (
-                      <div className={classes.folioItem} key={index} data-aos="fade-up">
-                          {console.log(item)}
+                      <div className={classes.winnerItem} key={index} data-aos="fade-up">
                             <Image
                                 src={item.winningPic}
                                 alt={item.title}
                                 className={clsx('folio__image', classes.image)}
                                 lazy={false}
                             />
-                            <div className={classes.folioInfoWrapper}>
+                            <div className={classes.winnerInfoWrapper}>
                                 <div>
-                                    <Typography variant="h6" className={classes.folioTitle}>
+                                    <Typography variant="h6" className={classes.winnerTitle}>
                                         {item.title}
                                     </Typography>
                                     <Typography
                                         variant="subtitle1"
-                                        className={classes.folioSubtitle}
+                                        className={classes.winnerSubtitle}
                                     >
                                         {item.description}
                                     </Typography>
@@ -48,21 +47,21 @@ const WinnerCard = ({ data, className, ...rest }: ViewComponentProps): JSX.Eleme
                 </div>
                 <div className={classes.rightGrid}>
                     {rightGridData.map((item: any, index: number) => (
-                        <div className={classes.folioItem} key={index} data-aos="fade-up">
+                        <div className={classes.winnerItem} key={index} data-aos="fade-up">
                             <Image
                                 src={item.winningPic}
                                 alt={item.title}
                                 className={clsx('folio__image', classes.image)}
                                 lazy={false}
                             />
-                            <div className={classes.folioInfoWrapper}>
+                            <div className={classes.winnerInfoWrapper}>
                                 <div>
-                                    <Typography variant="h6" className={classes.folioTitle}>
+                                    <Typography variant="h6" className={classes.winnerTitle}>
                                         {item.title}
                                     </Typography>
                                     <Typography
                                         variant="subtitle1"
-                                        className={classes.folioSubtitle}
+                                        className={classes.winnerSubtitle}
                                     >
                                         {item.description}
                                     </Typography>

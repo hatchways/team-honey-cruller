@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(-2),
       },
     },
-    folioItem: {
+    winnerItem: {
       position: 'relative',
       overflow: 'hidden',
       marginBottom: theme.spacing(2),
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
         minHeight: 500,
       },
     },
-    folioInfoWrapper: {
+    winnerInfoWrapper: {
       position: 'absolute',
       left: 0,
       right: 0,
@@ -40,12 +40,12 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(6),
       },
     },
-    folioTitle: {
+    winnerTitle: {
       color: 'white',
       fontWeight: 'bold',
       textTransform: 'uppercase',
     },
-    folioSubtitle: {
+    winnerSubtitle: {
       color: 'white',
       textTransform: 'capitalize',
       margin: theme.spacing(1, 0),
