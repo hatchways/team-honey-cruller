@@ -98,17 +98,10 @@ export default function Discovery(): JSX.Element {
               subtitle="We Guarantee atleast 20 submissions to your contest and you could receive up to 500+."
               fadeUp
             />
-            <Grid container className={classes.winnerCard} alignItems="center" direction="column">
+            <Grid container className={classes.winnerCard} alignItems="center">
               {winners.map((winner) => {
                 return (
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    md={3}
-                    key={winner._id}
-                    className={classes.winnerWrapper}
-                  >
+                  <Grid item xs={12} sm={6} md={3} key={winner._id} className={classes.winnerWrapper}>
                     <WinnerCard
                       winningPic={winner.winningPic}
                       title={winner.title}

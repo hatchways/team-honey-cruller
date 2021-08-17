@@ -6,6 +6,8 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
+Project Link: [Tattoo Art](http://52.53.212.9/)
+
 **Tech Stack:** MongoDB, Express.js, React.js, Node.js, Typescript
 
 **Contributors: Brian Ford, Tyler Bolty, Jeewan Bhusal, Minh Tran**
@@ -21,12 +23,12 @@
   <h2 align="center">Tattoo Art</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    Need a tattoo? You came to the right place!
     <br />
     <a href="https://github.com/hatchways/team-honey-cruller"><strong>Explore the repo »</strong></a>
     <br />
     <br />
-    <a href="">View Demo (COMING SOON)</a>
+    <a href="http://52.53.212.9/">View Demo</a>
     ·
     <a href="https://github.com/hatchways/team-honey-cruller/issues">Report Bug</a>
     ·
@@ -179,10 +181,6 @@ Tyler Bolty - [tsbolty](https://linkedin.com/in/tyler-bolty) - tsbolty@gmail.com
 Jeewan Bhusal - [JB](https://www.linkedin.com/in/jeewanbhusal/) - jeewanbhusal@gmail.com
 
 Minh Tran - [minhctran](https://www.linkedin.com/in/minhctran/) - pctran98@gmail.com
-
-
-Project Link: [PROJECT LINK COMING SOON](https://github.com/your_username/repo_name)
-
 
 
 <!-- ACKNOWLEDGEMENTS -->
