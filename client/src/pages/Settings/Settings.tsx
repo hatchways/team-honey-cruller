@@ -58,31 +58,29 @@ export default function Settings(): JSX.Element {
 
   const steps = [
     {
-      selector: '[data-tour="start-contest"]',
+      selector: '[data-tour="settings"]',
       content: {
         words:
-          "This is your settings page. You can add all of your personal information here as well as change your password. Don't forget to submit your payment information if you want to create a contest. If you want to create a contest with placeholder credit card information enter 4242-4242-4242-4242",
-        theme: 'secondary',
+          "This is your settings page. You can add all of your personal information here as well as change your password. Don't forget to submit your payment information. If you want to create a contest with placeholder credit card information enter 4242-4242-4242-4242",
+        theme: 'primary',
       },
       style: {
         padding: 20,
         minWidth: '40%',
         maxWidth: '80vw',
-        backgroundColor: 'black',
       },
     },
     {
-      selector: '[data-tour="start-contest"]',
+      selector: '[data-tour="settings"]',
       content: {
         words:
-          "This is your settings page. You can add all of your personal information here as well as change your password. Don't forget to submit your payment information if you want to create a contest. If you want to create a contest with placeholder credit card information enter 4242-4242-4242-4242",
-        theme: 'secondary',
+          "This is your settings page. You can add all of your personal information here as well as change your password. Don't forget to submit your payment information. If you want to create a contest with placeholder credit card information enter 4242-4242-4242-4242",
+        theme: 'primary',
       },
       style: {
         padding: 20,
         minWidth: '40%',
         maxWidth: '80vw',
-        backgroundColor: 'black',
       },
       action: () => history.push('/messages'),
     },
@@ -96,47 +94,49 @@ export default function Settings(): JSX.Element {
     <>
       <AuthHeader linkTo="/create-contest" btnText="create contest" />
       <Box className={classes.root}>
-        <Tabs
-          orientation="vertical"
-          indicatorColor="primary"
-          textColor="primary"
-          value={value}
-          TabIndicatorProps={{
-            style: {
-              height: 20,
-              marginTop: 15,
-            },
-          }}
-          classes={{
-            indicator: classes.indicator,
-          }}
-          onChange={handleChange}
-          className={classes.tabs}
-        >
-          <Tab label="Profile" {...tabProps(0)} className={classes.label} />
-          <Tab label="Personal Information" {...tabProps(1)} className={classes.label} />
-          <Tab label="Payment Details" {...tabProps(2)} className={classes.label}></Tab>
-          <Tab label="Notification" {...tabProps(3)} className={classes.label} />
-          <Tab label="Password" {...tabProps(4)} className={classes.label} />
-        </Tabs>
+        <div data-tour="settings">
+          <Tabs
+            orientation="vertical"
+            indicatorColor="primary"
+            textColor="primary"
+            value={value}
+            TabIndicatorProps={{
+              style: {
+                height: 20,
+                marginTop: 15,
+              },
+            }}
+            classes={{
+              indicator: classes.indicator,
+            }}
+            onChange={handleChange}
+            className={classes.tabs}
+          >
+            <Tab label="Personal Information" {...tabProps(1)} className={classes.label} />
+            <Tab label="Notification" {...tabProps(3)} className={classes.label} />
+            <Tab label="Payment Details" {...tabProps(2)} className={classes.label}></Tab>
+            <Tab label="Profile" {...tabProps(0)} className={classes.label} />
+            <Tab label="Password" {...tabProps(4)} className={classes.label} />
+          </Tabs>
+        </div>
         <TabPanel value={value} index={0}>
-          <Profile header={false} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Box display='flex' justifyContent='center'>
+          <Box display="flex" justifyContent="center">
             <PersonalInfo />
           </Box>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Notifications header={false} />
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Typography className={classes.paymentDetails}>Payment Details</Typography>
           <Elements stripe={stripeKey}>
-          <Box display='flex' justifyContent='center'>
-            <Payment />
+            <Box display="flex" justifyContent="center">
+              <Payment />
             </Box>
           </Elements>
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <Notifications header={false} />
+          <Profile header={false} />
         </TabPanel>
         <TabPanel value={value} index={4}>
           <Password />

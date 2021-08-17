@@ -45,7 +45,7 @@ const Hero = ({ className }: Props): JSX.Element => {
                     Start Contest
                   </Button>
                 ) : (
-                  <Button key="button" data-tour="start-contest" variant="contained" color="primary" size="large">
+                  <Button key="button" variant="contained" color="primary" size="large">
                     Start Contest
                   </Button>
                 ),
