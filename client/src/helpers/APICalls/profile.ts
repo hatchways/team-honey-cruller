@@ -6,7 +6,7 @@ const updateProfile = async (file: FormData): Promise<string> => {
     credentials: 'include',
     body: file,
   };
-  return await fetch(`/upload/profile`, fetchOptions)
+  return await fetch(`/api/upload/profile`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },

@@ -8,7 +8,7 @@ const loginGoogle = async (tokenId: string): Promise<string> => {
     body: JSON.stringify({ tokenId }),
     credentials: 'include',
   };
-  return await fetch(`/auth/google-login`, fetchOptions)
+  return await fetch(`/api/auth/google-login`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },

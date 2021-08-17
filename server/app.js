@@ -125,18 +125,18 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/auth", authRouter);
-app.use("/users", userRouter);
-app.use("/contest", contestRouter);
-app.use("/submission", submissionRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
+app.use("/api/contest", contestRouter);
+app.use("/api/submission", submissionRouter);
 app.use("/api/conversation", convoRouter);
-app.use("/upload", uploadRouter);
-app.use("/stripe", stripeRouter);
-app.use("/notification", notificationRouter);
-app.use("/info", personalInfoRouter);
-app.use("/reviews", reviewsRouter);
-app.use("/winners", winnerRouter);
-app.use("/reset", resetRouter);
+app.use("/api/upload", uploadRouter);
+app.use("/api/stripe", stripeRouter);
+app.use("/api/notification", notificationRouter);
+app.use("/api/info", personalInfoRouter);
+app.use("/api/reviews", reviewsRouter);
+app.use("/api/winners", winnerRouter);
+app.use("/api/reset", resetRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));

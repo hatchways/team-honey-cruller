@@ -9,7 +9,7 @@ export const createStripeUser = async (email: string, name: string): Promise<Aut
         body: JSON.stringify({ email, name }),
         credentials: 'include',
     };
-    return await fetch(`/stripe/`, fetchOptions)
+    return await fetch(`/api/stripe/`, fetchOptions)
         .then((res) => res.json())
         .catch(() => ({
             error: { message: 'Unable to connect to server. Please try again' },
@@ -22,7 +22,7 @@ export const retrieveStripeUser = async (id: string): Promise<AuthApiCustomerDat
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
     };
-    return await fetch(`/stripe/${id}`, fetchOptions)
+    return await fetch(`/api/stripe/${id}`, fetchOptions)
         .then((res) => res.json())
         .catch(() => ({
         error: { message: 'Unable to connect to server. Please try again' },
@@ -36,7 +36,7 @@ export const setUpIntents = async (id: string): Promise<AuthApiCustomerData> => 
         body: JSON.stringify({ id }),
         credentials: 'include',
     };
-    return await fetch(`/stripe/setup`, fetchOptions)
+    return await fetch(`/api/stripe/setup`, fetchOptions)
         .then((res) => res.json())
         .catch(() => ({
         error: { message: 'Unable to connect to server. Please try again' },
@@ -50,7 +50,7 @@ export const createPaymentMethod = async (type: string, card: Record<string, unk
         body: JSON.stringify({ type, card }),
         credentials: 'include',
     };
-    return await fetch(`/stripe/payment`, fetchOptions)
+    return await fetch(`/api/stripe/payment`, fetchOptions)
         .then((res) => res.json())
         .catch(() => ({
             error: { message: 'Unable to connect to server. Please try again' },
@@ -64,7 +64,7 @@ export const createPaymentSession = async (priceId: string): Promise<AuthApiCust
         body: JSON.stringify({ priceId}),
         credentials: 'include',
     };
-    return await fetch(`/stripe/session`, fetchOptions)
+    return await fetch(`/api/stripe/session`, fetchOptions)
         .then((res) => res.json())
         .catch(() => ({
             error: { message: 'Unable to connect to server. Please try again' },
@@ -78,7 +78,7 @@ export const createCharge = async (customerId: string): Promise<AuthApiCustomerD
         body: JSON.stringify({ customerId }),
         credentials: 'include',
     };
-    return await fetch(`/stripe/charge`, fetchOptions)
+    return await fetch(`/api/stripe/charge`, fetchOptions)
         .then((res) => res.json())
         .catch(() => ({
             error: { message: 'Unable to connect to server. Please try again' },
@@ -92,7 +92,7 @@ export const addCardToCustomer = async (cardId: string,  stripeId: string): Prom
         body: JSON.stringify({cardId, stripeId}),
         credentials: 'include',
     };
-    return await fetch(`/stripe/stripeToken`, fetchOptions)
+    return await fetch(`/api/stripe/stripeToken`, fetchOptions)
         .then((res) => res.json())
         .catch(() => ({
             error: { message: 'Unable to connect to Stripe. Please try again' },

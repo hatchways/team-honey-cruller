@@ -10,7 +10,7 @@ export const uploadContestPic = async (file: FormData): Promise<string> => {
     credentials: 'include',
     body: file,
   };
-  return await fetch(`/upload/contest`, fetchOptions)
+  return await fetch(`/api/upload/contest`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
@@ -24,7 +24,7 @@ export const getAllContests = async (date?: string, howMany = 10, page = 0): Pro
     credentials: 'include',
   };
 
-  return await fetch(`/contest/?deadlineDate=${date}&howMany=${howMany}&page=${page}`, fetchData)
+  return await fetch(`/api/contest/?deadlineDate=${date}&howMany=${howMany}&page=${page}`, fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Cannot connect to server' } }));
 };
@@ -36,7 +36,7 @@ export const getNumContests = async (): Promise<number> => {
     credentials: 'include',
   };
 
-  return await fetch(`/contest/num`, fetchData)
+  return await fetch(`/api/contest/num`, fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Cannot connect to server' } }));
 };
@@ -48,7 +48,7 @@ export const getContestByUser = async (): Promise<AuthApiData> => {
     credentials: 'include',
   };
 
-  return await fetch('/users/contests', fetchData)
+  return await fetch('/api/users/contests', fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Could not find User Contests' } }));
 };
@@ -60,7 +60,7 @@ export const getContestById = async (id: string): Promise<Contest> => {
     credentials: 'include',
   };
 
-  return await fetch(`/contest/${id}`, fetchData)
+  return await fetch(`/api/contest/${id}`, fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Could not find Contest.' } }));
 };
@@ -80,7 +80,7 @@ export const chooseWinner = async (winningPic: string, submissionId: string): Pr
     body: JSON.stringify({ winningPic }),
   };
 
-  return await fetch(`/contest/${submissionId}`, fetchData)
+  return await fetch(`/api/contest/${submissionId}`, fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Could not complete Contest.' } }));
 };

@@ -13,7 +13,7 @@ export const getReviews = async (id: string): Promise<Review[]> => {
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
   };
-  return await fetch(`/reviews/${id}`, fetchOptions)
+  return await fetch(`/api/reviews/${id}`, fetchOptions)
     .then((res) => res.json())
     .catch((err) => ({
       error: { message: 'Unable to get reviews', err },
@@ -26,7 +26,7 @@ export const getAllReviews = async (): Promise<Review[]> => {
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
   };
-  return await fetch(`/reviews`, fetchOptions)
+  return await fetch(`/api/reviews`, fetchOptions)
     .then((res) => res.json())
     .catch((err) => ({
       error: { message: 'Unable to get reviews', err },
@@ -40,7 +40,7 @@ export const createReviews = async (review: review): Promise<Review> => {
     credentials: 'include',
     body: JSON.stringify(review),
   };
-  return await fetch(`/reviews`, fetchOptions)
+  return await fetch(`/api/reviews`, fetchOptions)
     .then((res) => res.json())
     .catch((err) => ({
       error: { message: 'Unable to create review', err },
@@ -54,7 +54,7 @@ export const deleteReview = async (id: string): Promise<number> => {
     credentials: 'include',
   };
 
-  return await fetch(`/reviews/${id}`, fetchOptions)
+  return await fetch(`/api/reviews/${id}`, fetchOptions)
     .then((res) => res.status)
     .catch((err) => err.status);
 };

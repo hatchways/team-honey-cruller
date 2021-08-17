@@ -8,7 +8,7 @@ export const uploadSubmissionPic = async (file: FormData): Promise<string> => {
     credentials: 'include',
     body: file,
   };
-  return await fetch(`/upload/submission`, fetchOptions)
+  return await fetch(`/api/upload/submission`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
@@ -22,7 +22,7 @@ export const createSubmission = async (images: string[], contestId: string): Pro
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(images),
   };
-  return await fetch(`/submission/${contestId}`, fetchOptions)
+  return await fetch(`/api/submission/${contestId}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Unable to connect to server. Please try again' },
@@ -36,7 +36,7 @@ export const getContestSubmissions = async (contestId: string): Promise<Submissi
     credentials: 'include',
   };
 
-  return await fetch(`/submission/${contestId}`, fetchData)
+  return await fetch(`/api/submission/${contestId}`, fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Could not find Contest.' } }));
 };
@@ -48,7 +48,7 @@ export const getUserSubmissions = async (): Promise<Submission[]> => {
     credentials: 'include',
   };
 
-  return await fetch(`/submission`, fetchData)
+  return await fetch(`/api/submission`, fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Could not find Contest.' } }));
 };
@@ -60,7 +60,7 @@ export const getartistSubmission = async (artistId: string): Promise<submissionB
     credentials: 'include',
   };
 
-  return await fetch(`/submission/artist/${artistId}`, fetchData)
+  return await fetch(`/api/submission/artist/${artistId}`, fetchData)
     .then((data) => data.json())
     .catch((err) => ({ error: { message: 'Could not get submission.' } }));
 };

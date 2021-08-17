@@ -37,7 +37,7 @@ export default function CreateContest(): JSX.Element {
             Create New Contest
           </Typography>
         </Box>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Grid item xs={12} md={10} elevation={6} component={Paper} className={classes.paper}>
             <CreateContestForm handleSubmit={handleSubmit} />
           </Grid>

@@ -8,7 +8,7 @@ import IconAlternate from '../IconAlternate/IconAlternate'
 import ReviewImage from '../../Images/profilePic.png';
 import { Review } from '../../interface/User';
 import { getAllReviews } from '../../helpers/APICalls/review';
-import { colors } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import 'swiper/swiper.min.css';
 import 'swiper/components/pagination/pagination.min.css';
 
@@ -82,9 +82,8 @@ const SplashReviews = ({ className }: Props): JSX.Element => {
       <div className={clsx('swiper-container', classes.swiperContainer)}>
         <div className="swiper-wrapper">
           {reviews ? reviews.map((review: any, index: number) => (
-            <>
+            <Box key={review.text}>
             <CardReview
-              key={review.text}
               className={'swiper-slide'}
               noBorder
               text={review.text}
@@ -98,8 +97,8 @@ const SplashReviews = ({ className }: Props): JSX.Element => {
               reviewerTitle={review.reviewerContestType}
               reviewerPhoto={review.reviewerId.profilePic}
             />
-          <div className="swiper-pagination" />
-            </>
+            <div className="swiper-pagination" />
+            </Box>
           )) : <div></div>}
         </div>
       </div>
