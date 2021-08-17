@@ -23,7 +23,7 @@ Project Link: [Tattoo Art](http://52.53.212.9/)
   <h2 align="center">Tattoo Art</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    Need a tattoo? You came to the right place!
     <br />
     <a href="https://github.com/hatchways/team-honey-cruller"><strong>Explore the repo »</strong></a>
     <br />
