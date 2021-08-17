@@ -14,11 +14,11 @@ exports.createContest = asyncHandler(async (req, res) => {
 
     const findStripe = await stripe.customers.retrieve(findUser.stripeId);
 
-    if (findStripe.invoice_settings.default_payment_method === null) {
-      res.status(404).json({
-        message: "You must have a credit card on file in order to start a contest."
-      });
-    } else {
+    // if (findStripe.invoice_settings.default_payment_method === null) {
+    //   res.status(404).json({
+    //     message: "You must have a credit card on file in order to start a contest."
+    //   });
+    // } else {
 
       const contest = await Contest.create({
         title: req.body.title,
@@ -30,7 +30,7 @@ exports.createContest = asyncHandler(async (req, res) => {
       });
       scheduleContestEnd(contest);
       res.status(201).json(contest);
-    }
+    // }
   }catch (err) {
     res.status(500).json(err);
   }
