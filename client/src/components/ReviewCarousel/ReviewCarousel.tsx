@@ -18,13 +18,14 @@ import { useState } from 'react';
 
 interface Props {
   reviews: Review[] | null;
+  text?: boolean;
 }
 
-const ReviewCarousel = ({ reviews }: Props): JSX.Element => {
+const ReviewCarousel = ({ reviews, text }: Props): JSX.Element => {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = reviews && reviews.length < 5 ? reviews.length: 4;
+  const maxSteps = reviews && reviews.length < 5 ? reviews.length : 4;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -62,6 +63,7 @@ const ReviewCarousel = ({ reviews }: Props): JSX.Element => {
                         <Typography className={classes.username}>@{review.reviewerId.username}</Typography>
                       </Box>
                       <Rating value={review.rating} size="large" name="read-only" readOnly />
+                      {text ? <Typography>{review.text}</Typography> : null}
                     </Paper>
                   </Box>
                 ) : null}
@@ -73,26 +75,29 @@ const ReviewCarousel = ({ reviews }: Props): JSX.Element => {
             </Typography>
           )}
         </AutoPlaySwipeableViews>
-        {reviews?.length ? 
-        <MobileStepper
-          variant="progress"
-          steps={maxSteps}
-          position="static"
-          activeStep={activeStep}
-          className={classes.root}
-          nextButton={
-            <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-              Next
-              {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-            </Button>
-          }
-          backButton={
-            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-              {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-              Back
-            </Button>
-          }
-        /> : ''}
+        {reviews?.length ? (
+          <MobileStepper
+            variant="progress"
+            steps={maxSteps}
+            position="static"
+            activeStep={activeStep}
+            className={classes.root}
+            nextButton={
+              <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+                Next
+                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+              </Button>
+            }
+            backButton={
+              <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                Back
+              </Button>
+            }
+          />
+        ) : (
+          ''
+        )}
       </div>
     </Box>
   );
