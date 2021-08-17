@@ -1,51 +1,78 @@
-import useStyles from './useStyles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import ImageModal from '../ImageModal/ImageModal';
+import clsx from 'clsx';
+import { Typography } from '@material-ui/core';
+import Image from '../Image/Image';
+import useStyles from './useStyles'
 
-interface Props {
-  winningPic: string;
-  title: string;
-  prizeAmount: number;
-  winningArtist: any;
-  description: string;
+
+interface ViewComponentProps {
   className?: string;
+  data?: any;
 }
 
-const WinnerCard = ({
-  winningPic,
-  title,
-  prizeAmount,
-  description,
-  winningArtist,
-  className,
-}: Props): JSX.Element => {
-  const classes = useStyles();
+const WinnerCard = ({ data, className, ...rest }: ViewComponentProps): JSX.Element => {
+    const classes = useStyles();
 
-  return (
-    <>
-      <Card className={classes.root}>
-        <ImageModal
-          artistPic={winningArtist.profilePic}
-          artistId={winningArtist._id}
-          artistName={winningArtist.username}
-          image={winningPic}
-        >
-          <CardMedia className={classes.media} image={winningPic} title={title} />
-        </ImageModal>
-        <CardContent className={classes.cardContent}>
-          <Typography gutterBottom variant="h5" component="h1" className={classes.title}>
-            {title}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p" className={classes.description}>
-            {description}
-          </Typography>
-        </CardContent>
-      </Card>
-    </>
-  );
+    const half = Math.ceil(data.length / 2);
+
+    const leftGridData = data.slice(0, half);
+    const rightGridData = data.slice(-half);
+
+    return (
+        <div className={clsx(classes.root, className)} {...rest}>
+            <div className={classes.grid}>
+                <div className={classes.leftGrid}>
+                    {leftGridData.map((item: any, index: number) => (
+                      <div className={classes.winnerItem} key={index} data-aos="fade-up">
+                            <Image
+                                src={item.winningPic}
+                                alt={item.title}
+                                className={clsx('folio__image', classes.image)}
+                                lazy={false}
+                            />
+                            <div className={classes.winnerInfoWrapper}>
+                                <div>
+                                    <Typography variant="h6" className={classes.winnerTitle}>
+                                        {item.title}
+                                    </Typography>
+                                    <Typography
+                                        variant="subtitle1"
+                                        className={classes.winnerSubtitle}
+                                    >
+                                        {item.description}
+                                    </Typography>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <div className={classes.rightGrid}>
+                    {rightGridData.map((item: any, index: number) => (
+                        <div className={classes.winnerItem} key={index} data-aos="fade-up">
+                            <Image
+                                src={item.winningPic}
+                                alt={item.title}
+                                className={clsx('folio__image', classes.image)}
+                                lazy={false}
+                            />
+                            <div className={classes.winnerInfoWrapper}>
+                                <div>
+                                    <Typography variant="h6" className={classes.winnerTitle}>
+                                        {item.title}
+                                    </Typography>
+                                    <Typography
+                                        variant="subtitle1"
+                                        className={classes.winnerSubtitle}
+                                    >
+                                        {item.description}
+                                    </Typography>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default WinnerCard;
