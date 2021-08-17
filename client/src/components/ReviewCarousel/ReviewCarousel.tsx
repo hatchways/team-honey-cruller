@@ -62,8 +62,14 @@ const ReviewCarousel = ({ reviews, text }: Props): JSX.Element => {
                         ></Avatar>
                         <Typography className={classes.username}>@{review.reviewerId.username}</Typography>
                       </Box>
-                      <Rating value={review.rating} size="large" name="read-only" readOnly />
-                      {text ? <Typography>{review.text}</Typography> : null}
+                      <Rating
+                        classes={{ root: classes.rating }}
+                        value={review.rating}
+                        size="large"
+                        name="read-only"
+                        readOnly
+                      />
+                      {text ? <Typography className={classes.reviewText}>{review.text}</Typography> : null}
                     </Paper>
                   </Box>
                 ) : null}

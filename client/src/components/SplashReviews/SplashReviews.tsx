@@ -13,9 +13,8 @@ interface Props {
   className?: string;
 }
 
-
 const SplashReviews = ({ className }: Props): JSX.Element => {
-  const [reviews, setReviews] = useState<Review[]>([])
+  const [reviews, setReviews] = useState<Review[]>([]);
   const classes = useStyles();
 
   const getReviews = async () => {
@@ -26,10 +25,9 @@ const SplashReviews = ({ className }: Props): JSX.Element => {
     } else {
       new Error('Could Not Get Reviews');
     }
-  }
+  };
 
   useEffect(() => {
-
     getReviews();
   }, []);
 
@@ -38,7 +36,7 @@ const SplashReviews = ({ className }: Props): JSX.Element => {
       <SectionHeader title="Customer Reviews" subtitle="Take a look at some of our recent contest creators feedback." />
       <div className={clsx('swiper-container', classes.swiperContainer)}>
         <div className="swiper-wrapper">
-    <ReviewCarousel reviews={reviews} />
+          <ReviewCarousel reviews={reviews} text={true} />
         </div>
       </div>
     </div>
