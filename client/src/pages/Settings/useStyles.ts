@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.paper,
     maxWidth: '100vw',
     width: '20vw',
+    [theme.breakpoints.down('sm')]: {
+      width: '35vw',
+    },
     height: '100%',
     borderRight: `1px solid ${theme.palette.divider}`,
     boxShadow: '3px 0 5px -2px #DDDDDD',
@@ -22,12 +25,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   label: {
     fontSize: '14px',
-    left: '20%',
+    // left: '20%',
   },
-  indicator: {
-    left: '10%',
-    transform: 'rotate(90deg)',
-  },
+  // indicator: {
+  //   left: '10%',
+  //   transform: 'rotate(90deg)',
+  // },
   paymentDetails: {
     fontSize: '35px',
     fontWeight: 'bold',

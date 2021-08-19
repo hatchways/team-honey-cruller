@@ -2,9 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 500,
     flexGrow: 1,
     height: 'auto',
+    maxWidth: '100%',
   },
   paper: {
     margin: theme.spacing(1),

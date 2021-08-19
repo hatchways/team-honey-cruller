@@ -27,31 +27,22 @@ interface Props {
       password: string;
     }>,
   ) => void;
-  handleDemoSubmit: (
-    {
-      email,
-      password,
-    }: {
-      email: string;
-      password: string;
-    },
-  ) => void;
+  handleDemoSubmit: ({ email, password }: { email: string; password: string }) => void;
 }
 
 export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.Element {
   const classes = useStyles();
 
-
   const responseSuccessGoogle = (response: any) => {
-    loginGoogle(response.tokenObj.id_token)
-    location.reload()
-  }
+    loginGoogle(response.tokenObj.id_token);
+    location.reload();
+  };
 
   const responseErrorGoogle = (response: any) => {
-    if(!response) {
-      throw new Error("Could not connect to server, please try again")
+    if (!response) {
+      throw new Error('Could not connect to server, please try again');
     }
-  }
+  };
 
   return (
     <Formik
@@ -110,13 +101,21 @@ export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.El
             />
           </Box>
           <Box>
-            <Link className={classes.reset} to="/forgot-password">Forgot Password?</Link>
+            <Link className={classes.reset} to="/forgot-password">
+              Forgot Password?
+            </Link>
           </Box>
           <Box textAlign="center">
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'SIGN IN'}
             </Button>
-            <Button onClick={() => handleDemoSubmit({ email: "stanley@gmail.com", password: "123456" })} size="large" variant="contained" color="primary" className={classes.submit}>
+            <Button
+              onClick={() => handleDemoSubmit({ email: 'stanley@gmail.com', password: '123456' })}
+              size="large"
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'DEMO'}
             </Button>
             <GoogleLogin
@@ -127,7 +126,6 @@ export default function Login({ handleSubmit, handleDemoSubmit }: Props): JSX.El
               cookiePolicy={'single_host_origin'}
             />
           </Box>
-          <div style={{ height: 95 }} />
         </form>
       )}
     </Formik>

@@ -30,7 +30,7 @@ const Hero = ({ className }: Props): JSX.Element => {
                   </Typography>
                 </span>
               }
-              subtitle="Premier tatoo designs created by artists all over the world."
+              subtitle="Premier tattoo designs created by artists all over the world."
               ctaGroup={[
                 loggedInUser ? (
                   <Button
@@ -52,6 +52,7 @@ const Hero = ({ className }: Props): JSX.Element => {
               ]}
               align="left"
               titleVariant="h3"
+              className={classes.sectionHeader}
             />
           </div>
         }

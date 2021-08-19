@@ -38,9 +38,7 @@ export default function Register(): JSX.Element {
     });
   };
 
-  const handleDemoSubmit = (
-    { email, password }: { email: string; password: string },
-  ) => {
+  const handleDemoSubmit = ({ email, password }: { email: string; password: string }) => {
     login(email, password).then((data) => {
       if (data.error) {
         updateSnackBarMessage(data.error.message);
@@ -52,17 +50,17 @@ export default function Register(): JSX.Element {
         updateSnackBarMessage('An unexpected error occurred. Please try again');
       }
     });
-  }; 
+  };
 
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={12}>
-          <AuthHeader linkTo="/login" btnText="SIGN IN" />
-          </Grid>
+        <AuthHeader linkTo="/login" btnText="SIGN IN" />
+      </Grid>
       <Grid item xs={12} sm={7} elevation={6} component={Paper} square className={classes.loginContainer}>
         <Box className={classes.authWrapper}>
-          <Box width="100%" maxWidth={450} p={3} alignSelf="center" >
+          <Box width="100%" maxWidth={450} p={3} alignSelf="center">
             <Grid container>
               <Grid item xs>
                 <Typography align="center" className={classes.welcome} component="h1" variant="h5">
@@ -70,9 +68,8 @@ export default function Register(): JSX.Element {
                 </Typography>
               </Grid>
             </Grid>
-            <SignUpForm handleSubmit={handleSubmit} handleDemoSubmit={handleDemoSubmit}/>
+            <SignUpForm handleSubmit={handleSubmit} handleDemoSubmit={handleDemoSubmit} />
           </Box>
-          <Box p={1} alignSelf="center" />
         </Box>
       </Grid>
     </Grid>

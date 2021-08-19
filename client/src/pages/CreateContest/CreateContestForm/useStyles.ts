@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     padding: 10,
     width: 200,
-    borderRadius: 5,
+    borderRadius: 0,
     height: 60,
     fontSize: 14,
   },

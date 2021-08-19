@@ -40,7 +40,7 @@ const ReviewCarousel = ({ reviews, text }: Props): JSX.Element => {
   };
 
   return (
-    <Box display="flex" justifyContent="center">
+    <Box display="flex" justifyContent="center" maxWidth="100%">
       <div className={classes.root}>
         <AutoPlaySwipeableViews
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}

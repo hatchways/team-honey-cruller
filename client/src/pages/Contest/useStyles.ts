@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: 'black',
       color: 'white',
     },
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '5vh',
+    },
   },
   container: {
     marginTop: '32px',

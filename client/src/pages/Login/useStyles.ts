@@ -16,15 +16,14 @@ const useStyles = makeStyles(() => ({
     color: 'white',
   },
   loginContainer: {
-    maxHeight: '75vh',
-    marginTop: '5vh',
+    margin: '5vh 0',
   },
   authWrapper: {
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     flexDirection: 'column',
-    minHeight: '100vh',
+    // minHeight: '100vh',
     paddingTop: 23,
   },
   welcome: {

@@ -32,6 +32,9 @@ export default function CreateContestForm({ handleSubmit }: Props): JSX.Element 
       setLoading(true);
       try {
         const formData = new FormData();
+        if (!formData) {
+          setLoading(false);
+        }
         for (let i = 0; i < e.target.files.length; i++) {
           formData.append('image', e.target.files[i], e.target.files[i].name);
         }

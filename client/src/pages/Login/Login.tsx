@@ -35,9 +35,7 @@ export default function Login(): JSX.Element {
     });
   };
 
-  const handleDemoSubmit = (
-    { email, password }: { email: string; password: string },
-  ) => {
+  const handleDemoSubmit = ({ email, password }: { email: string; password: string }) => {
     login(email, password).then((data) => {
       if (data.error) {
         updateSnackBarMessage(data.error.message);
@@ -55,9 +53,9 @@ export default function Login(): JSX.Element {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={12}>
-          <AuthHeader linkTo="/signup" btnText="sign up" />
+        <AuthHeader linkTo="/signup" btnText="sign up" />
       </Grid>
-      <Grid item xs={12} sm={8} md={7} elevation={6} component={Paper} square className={classes.loginContainer} >
+      <Grid item xs={12} sm={8} md={7} elevation={6} component={Paper} square className={classes.loginContainer}>
         <Box className={classes.authWrapper}>
           <Box width="100%" maxWidth={450} p={3} alignSelf="center">
             <Grid container>
@@ -69,7 +67,6 @@ export default function Login(): JSX.Element {
             </Grid>
             <LoginForm handleSubmit={handleSubmit} handleDemoSubmit={handleDemoSubmit} />
           </Box>
-          <Box p={1} alignSelf="center" />
         </Box>
       </Grid>
     </Grid>

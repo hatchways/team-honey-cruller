@@ -67,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: 'white',
       color: 'black',
     },
+    [theme.breakpoints.down('md')]: {
+      marginRight: 15,
+    },
   },
 }));
 
