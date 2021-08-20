@@ -25,12 +25,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   label: {
     fontSize: '14px',
-    // left: '20%',
   },
-  // indicator: {
-  //   left: '10%',
-  //   transform: 'rotate(90deg)',
-  // },
+  profileWrapper: {
+    [theme.breakpoints.down('sm')]: {
+      width: '55vw',
+    },
+  },
   paymentDetails: {
     fontSize: '35px',
     fontWeight: 'bold',

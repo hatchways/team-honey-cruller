@@ -127,13 +127,15 @@ export default function Settings(): JSX.Element {
         <TabPanel value={value} index={2}>
           <Typography className={classes.paymentDetails}>Payment Details</Typography>
           <Elements stripe={stripeKey}>
-            <Box width="70vw" display="flex" justifyContent="center">
+            <Box width="55vw" display="flex" justifyContent="center">
               <Payment />
             </Box>
           </Elements>
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <Profile header={false} />
+          <div className={classes.profileWrapper} style={{ width: '55vw' }}>
+            <Profile header={false} />
+          </div>
         </TabPanel>
         <TabPanel value={value} index={4}>
           <Password />

@@ -38,8 +38,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     backgroundColor: 'black',
     color: 'white',
+    border: '1px solid #000000',
     padding: '8px 16px',
+    borderRadius: 0,
     marginLeft: '-20px',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: 'black',
+    },
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
     },

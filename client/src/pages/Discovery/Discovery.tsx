@@ -44,7 +44,7 @@ export default function Discovery(): JSX.Element {
         minWidth: '40%',
         maxWidth: '80vw',
       },
-      updateDelay: 8000,
+      updateDelay: 12000,
       scrollDuration: 1500,
     },
     {

@@ -9,10 +9,21 @@ const useStyles = makeStyles((theme) => ({
     '&::-webkit-scrollbar': {
       display: 'none',
     },
-    maxHeight: '90%',
+    maxHeight: '80%',
     width: '70%',
     [theme.breakpoints.down('sm')]: { width: '85%' },
     padding: 15,
+    borderRadius: 0,
+  },
+  close: {
+    fontSize: '2em',
+    opacity: 0.5,
+    fontWeight: 700,
+    padding: '10px 10px 0 0',
+    margin: 'auto 0',
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
   artistLink: { display: 'flex', alignItems: 'center', padding: 10, textDecoration: 'none', color: 'black' },
   artistName: {

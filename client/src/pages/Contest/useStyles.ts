@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
       color: 'white',
     },
     [theme.breakpoints.down('sm')]: {
-      marginTop: '5vh',
+      marginTop: '15vh',
     },
   },
   container: {

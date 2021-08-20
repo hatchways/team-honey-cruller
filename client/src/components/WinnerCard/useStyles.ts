@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
   winnerItem: {
     position: 'relative',
     overflow: 'hidden',
-    marginBottom: theme.spacing(2),
     '&:last-child': {
       marginBottom: 0,
     },
@@ -23,9 +22,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     transitionDuration: '.7s',
     transform: 'scale(1.0)',
-    height: '100%',
-    width: '100%',
-    minHeight: 300,
+    height: 300,
     objectFit: 'cover',
     [theme.breakpoints.up('md')]: {
       minHeight: 500,
@@ -59,22 +56,22 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'row',
     },
   },
-  leftGrid: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: theme.spacing(2),
-    [theme.breakpoints.up('md')]: {
-      marginRight: theme.spacing(1),
-      marginBottom: 0,
-    },
-  },
-  rightGrid: {
-    display: 'flex',
-    flexDirection: 'column',
-    [theme.breakpoints.up('md')]: {
-      marginLeft: theme.spacing(1),
-    },
-  },
+  // leftGrid: {
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   marginBottom: theme.spacing(2),
+  //   [theme.breakpoints.up('md')]: {
+  //     marginRight: theme.spacing(1),
+  //     marginBottom: 0,
+  //   },
+  // },
+  // rightGrid: {
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   [theme.breakpoints.up('md')]: {
+  //     marginLeft: theme.spacing(1),
+  //   },
+  // },
 }));
 
 export default useStyles;
