@@ -161,7 +161,7 @@ export default function ContestPage(): JSX.Element {
                 <Typography className={classes.prize}>${contest ? contest.prizeAmount : '0'}</Typography>
               </Button>
             </Typography>
-            <Grid direction="row" className={classes.grid} container justifyContent="center" alignItems="center">
+            <Grid direction="row" className={classes.grid} container alignItems="center">
               <Grid item>
                 <Link to={{ pathname: '/artist', state: `${contest?.userId}` }}>
                   <Avatar

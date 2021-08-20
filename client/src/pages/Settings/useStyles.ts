@@ -11,7 +11,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.paper,
     maxWidth: '100vw',
     width: '20vw',
-    height: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '35vw',
+    },
+    height: '100%',
     borderRight: `1px solid ${theme.palette.divider}`,
     boxShadow: '3px 0 5px -2px #DDDDDD',
     paddingTop: 20,
@@ -22,11 +25,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   label: {
     fontSize: '14px',
-    left: '20%',
   },
-  indicator: {
-    left: '10%',
-    transform: 'rotate(90deg)',
+  profileWrapper: {
+    [theme.breakpoints.down('sm')]: {
+      width: '55vw',
+    },
   },
   paymentDetails: {
     fontSize: '35px',

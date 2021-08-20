@@ -67,9 +67,9 @@ export const getContestById = async (id: string): Promise<Contest> => {
 
 export const addContest = async (contest: NewContest): Promise<AuthApiData> => {
   return await axios
-    .post('/contest', contest)
+    .post('/api/contest', contest)
     .then((res) => res.data)
-    .catch(() => ({ error: { message: 'Cannot create contest, Please make sure you have added a credit card to your profile.' } }));
+    .catch(() => ({ error: { message: 'Cannot create contest.' } }));
 };
 
 export const chooseWinner = async (winningPic: string, submissionId: string): Promise<Winner> => {

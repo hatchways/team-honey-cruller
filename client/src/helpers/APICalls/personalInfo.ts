@@ -3,10 +3,11 @@ import { PersonalInfoProps, PersonalInfo } from '../../interface/PersonalInfo';
 import axios from 'axios';
 import { FetchOptions } from '../../interface/FetchOptions';
 
-export const postPersonalInfo = async(info: PersonalInfoProps): Promise<AuthApiData> => {
-  return await axios.post('/api/info', info)
+export const postPersonalInfo = async (info: PersonalInfoProps): Promise<AuthApiData> => {
+  return await axios
+    .post('/api/info', info)
     .then((res) => res.data)
-    .catch(() => ({ error: { message: 'Failed to save personal information'}}));
+    .catch(() => ({ error: { message: 'Failed to save personal information' } }));
 };
 
 export const getPersonalInfo = async (id: string): Promise<PersonalInfo> => {

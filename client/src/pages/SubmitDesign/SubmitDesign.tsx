@@ -38,6 +38,9 @@ export default function SubmitDesign(): JSX.Element {
       setLoading(true);
       try {
         const formData = new FormData();
+        if (!formData) {
+          setLoading(false);
+        }
         for (let i = 0; i < e.target.files.length; i++) {
           formData.append('image', e.target.files[i], e.target.files[i].name);
         }
@@ -61,7 +64,7 @@ export default function SubmitDesign(): JSX.Element {
         const notificationBody = {
           to: toUser.userId,
           notification: `${loggedInUser?.username} submitted in your contest`,
-          contestId: params.id
+          contestId: params.id,
         };
         const notification = await createNotification(notificationBody);
         //send notification using socket

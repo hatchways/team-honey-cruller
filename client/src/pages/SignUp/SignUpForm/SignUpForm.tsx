@@ -8,7 +8,6 @@ import useStyles from './useStyles';
 import { CircularProgress } from '@material-ui/core';
 import { GoogleLogin } from 'react-google-login';
 
-
 interface Props {
   handleSubmit: (
     {
@@ -30,20 +29,10 @@ interface Props {
     }>,
   ) => void;
 
-  handleDemoSubmit: (
-    {
-      username,
-      email,
-      password,
-    }: {
-      email: string;
-      password: string;
-      username: string;
-    },
-  ) => void;
+  handleDemoSubmit: ({ username, email, password }: { email: string; password: string; username: string }) => void;
 }
 
-  const SignUpForm = ({ handleSubmit, handleDemoSubmit }: Props): JSX.Element => {
+const SignUpForm = ({ handleSubmit, handleDemoSubmit }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -125,9 +114,17 @@ interface Props {
           </Box>
           <Box textAlign="center">
             <Button type="submit" size="large" variant="contained" color="primary" className={classes.submit}>
-              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'SIGN IN'}
+              {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'SIGN UP'}
             </Button>
-            <Button onClick={() => handleDemoSubmit({email: "stanley@gmail.com", username: "stanleythemanly", password: "123456"})} size="large" variant="contained" color="primary" className={classes.submit}>
+            <Button
+              onClick={() =>
+                handleDemoSubmit({ email: 'stanley@gmail.com', username: 'stanleythemanly', password: '123456' })
+              }
+              size="large"
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
               {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'DEMO'}
             </Button>
           </Box>

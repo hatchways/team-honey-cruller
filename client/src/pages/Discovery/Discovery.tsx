@@ -44,7 +44,7 @@ export default function Discovery(): JSX.Element {
         minWidth: '40%',
         maxWidth: '80vw',
       },
-      updateDelay: 30,
+      updateDelay: 12000,
       scrollDuration: 1500,
     },
     {
@@ -95,7 +95,7 @@ export default function Discovery(): JSX.Element {
                   Check out some of our recent Contest winners.
                 </Typography>
               }
-              subtitle="We Guarantee atleast 20 submissions to your contest and you could receive up to 500+."
+              subtitle="We Guarantee at least 20 submissions to your contest and you could receive up to 500+."
               fadeUp
             />
             <Grid container className={classes.winnerCard} alignItems="center" direction="column">

@@ -9,9 +9,8 @@ const useStyles = makeStyles((theme) => ({
   },
   poptitle: {
     margin: 20,
-    fontWeight: 'bold',
     fontSize: 25,
-    '-webkit-text-stroke': 'medium'
+    '-webkit-text-stroke': 'medium',
   },
   time: {
     marginLeft: 15,
@@ -26,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   seeAll: {
     marginLeft: 70,
     marginTop: 50,
-    fontSize: 15
+    fontSize: 15,
   },
   paper: {
     marginTop: '5%',
@@ -41,30 +40,30 @@ const useStyles = makeStyles((theme) => ({
       width: '40%',
       marginLeft: '2%',
       marginRight: '5%',
-    }
+    },
   },
   delete: {
     padding: 9,
     border: 'none',
     fontSize: 12,
-    marginTop: '17px', 
-    color: '#fff', 
-    backgroundColor:'black',
-    '&:hover' : {
-      color: '#fff', 
-      backgroundColor:'black',
-    }
+    marginTop: '17px',
+    color: '#fff',
+    backgroundColor: 'black',
+    '&:hover': {
+      color: '#fff',
+      backgroundColor: 'black',
+    },
   },
   notificationContainer: {
-    '&:hover':{
+    '&:hover': {
       backgroundColor: '#fafafa',
-      color:'black'
-    }
+      color: 'black',
+    },
   },
   link: {
-    textDecoration: "none", 
-    color:'black'
-  }
+    textDecoration: 'none',
+    color: 'black',
+  },
 }));
 
 export default useStyles;

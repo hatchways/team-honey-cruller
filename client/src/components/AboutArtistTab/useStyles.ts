@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   activity: {
     margin: 0,
-    WebkitTextStroke: 'medium',
+    fontWeight: 900,
     paddingTop: 70,
   },
   heading: {

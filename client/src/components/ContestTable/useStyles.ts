@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   grid: {
     height: '100%',
-    width: '100%',
+    width: '95%',
+    margin: '0 auto',
   },
   typography: {
     fontSize: '50px',
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   tableRow: {
-    padding: '25px 0px 25px 0px',
+    padding: '25px 0px',
     textAlign: 'center',
     minWidth: 50,
   },

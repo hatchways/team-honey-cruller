@@ -106,16 +106,13 @@ export default function Settings(): JSX.Element {
                 marginTop: 15,
               },
             }}
-            classes={{
-              indicator: classes.indicator,
-            }}
             onChange={handleChange}
             className={classes.tabs}
           >
-            <Tab label="Personal Information" {...tabProps(1)} className={classes.label} />
-            <Tab label="Notification" {...tabProps(3)} className={classes.label} />
-            <Tab label="Payment Details" {...tabProps(2)} className={classes.label}></Tab>
-            <Tab label="Profile" {...tabProps(0)} className={classes.label} />
+            <Tab label="Personal Info" {...tabProps(0)} className={classes.label} />
+            <Tab label="Notification" {...tabProps(1)} className={classes.label} />
+            <Tab label="Payment Info" {...tabProps(2)} className={classes.label}></Tab>
+            <Tab label="Profile" {...tabProps(3)} className={classes.label} />
             <Tab label="Password" {...tabProps(4)} className={classes.label} />
           </Tabs>
         </div>
@@ -130,13 +127,15 @@ export default function Settings(): JSX.Element {
         <TabPanel value={value} index={2}>
           <Typography className={classes.paymentDetails}>Payment Details</Typography>
           <Elements stripe={stripeKey}>
-            <Box display="flex" justifyContent="center">
+            <Box width="55vw" display="flex" justifyContent="center">
               <Payment />
             </Box>
           </Elements>
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <Profile header={false} />
+          <div className={classes.profileWrapper} style={{ width: '55vw' }}>
+            <Profile header={false} />
+          </div>
         </TabPanel>
         <TabPanel value={value} index={4}>
           <Password />

@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-  activity:{
-    margin:0,
-    WebkitTextStroke: 'medium',
-    paddingTop:70
+  activity: {
+    margin: 0,
+    fontWeight: 900,
+    paddingTop: 70,
   },
   avatar: {
     height: theme.spacing(6),
@@ -16,20 +16,20 @@ const useStyles = makeStyles((theme) => ({
     background: '#fafafa',
     marginTop: 15,
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   formPaper: {
-    marginTop: '120px', 
-    backgroundColor: '#fafafa'
+    marginTop: '120px',
+    backgroundColor: '#fafafa',
   },
   readAll: {
-    marginTop: '100px'
+    marginTop: '100px',
   },
   username: {
-    marginTop: '10px', 
-    marginLeft: '5px', 
-    fontWeight: 'bold'
-  }
+    marginTop: '10px',
+    marginLeft: '5px',
+    fontWeight: 'bold',
+  },
 }));
 
 export default useStyles;

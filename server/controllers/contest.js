@@ -1,6 +1,6 @@
 const Contest = require("../models/Contest");
 const asyncHandler = require("express-async-handler");
-const stripe = require("stripe")(process.env.STRIPE_SECRET);
+// const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const {
   scheduleContestEnd,
   winnerChosen
@@ -8,11 +8,11 @@ const {
 
 exports.createContest = asyncHandler(async (req, res) => {
   try {
-    const findUser = await User.findOne({
-      _id: req.user.id
-    });
+    // const findUser = await User.findOne({
+    //   _id: req.user.id
+    // });
 
-    const findStripe = await stripe.customers.retrieve(findUser.stripeId);
+    // const findStripe = await stripe.customers.retrieve(findUser.stripeId);
 
     // if (findStripe.invoice_settings.default_payment_method === null) {
     //   res.status(404).json({

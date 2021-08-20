@@ -55,21 +55,28 @@ const ImageModal = ({ artistPic, artistName, image, submissionId, children, arti
       <div onClick={handleOpen}>{children}</div>
       <Modal open={isOpen} onClose={handleClose} className={classes.modal}>
         <Paper className={classes.body}>
-          <Box display="flex" alignItems="center" padding={1}>
-            {artistId ? (
-              <Link to={{ pathname: '/artist', state: artistId }} className={classes.artistLink}>
-                <Avatar src={artistPic} />
+          <Box display="flex" justifyContent="space-between" alignContent="center">
+            <Box display="flex" alignItems="center" padding={1}>
+              {artistId ? (
+                <Link to={{ pathname: '/artist', state: artistId }} className={classes.artistLink}>
+                  <Avatar src={artistPic} />
+                  <Typography className={classes.artistName}>{artistName}</Typography>
+                </Link>
+              ) : artistPic ? (
+                <>
+                  <Avatar src={artistPic} />
+                  <Typography className={classes.artistName}>{artistName}</Typography>
+                </>
+              ) : (
                 <Typography className={classes.artistName}>{artistName}</Typography>
-              </Link>
-            ) : artistPic ? (
-              <>
-                <Avatar src={artistPic} />
-                <Typography className={classes.artistName}>{artistName}</Typography>
-              </>
-            ) : (
-              <Typography className={classes.artistName}>{artistName}</Typography>
-            )}
-            {submissionId ? <Button onClick={handleWinnerChoice}>This is a winner!</Button> : null}
+              )}
+              {submissionId ? <Button onClick={handleWinnerChoice}>This is a winner!</Button> : null}
+            </Box>
+            <Box>
+              <Typography className={classes.close} onClick={handleClose}>
+                X
+              </Typography>
+            </Box>
           </Box>
           <img src={image} alt="chosen design" className={classes.image} />
         </Paper>

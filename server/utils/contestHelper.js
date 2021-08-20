@@ -60,31 +60,31 @@ exports.scheduleContestEnd = asyncHandler(async (contest) => {
   }
 })
 
-const stripePay = asyncHandler(async (contestOwner, prizeAmount, winnerId) => {
-  const findContestUser = await User.findOne({
-    _id: contestOwner
-  });
+// const stripePay = asyncHandler(async (contestOwner, prizeAmount, winnerId) => {
+//   const findContestUser = await User.findOne({
+//     _id: contestOwner
+//   });
 
-  const findWinnerUser = await User.findOne({
-    _id: winnerId
-  });
-
-
-  const customerContestOwner = await stripe.customers.retrieve(findContestUser.stripeId);
+//   const findWinnerUser = await User.findOne({
+//     _id: winnerId
+//   });
 
 
-  const customerWinner = await stripe.customers.retrieve(findWinnerUser.stripeId)
+//   const customerContestOwner = await stripe.customers.retrieve(findContestUser.stripeId);
 
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: prizeAmount,
-    customer: findContestUser.stripeId,
-    currency: 'usd',
-    payment_method: customerContestOwner.invoice_settings.default_payment_method,
-    payment_method_types: ['card'],
-  });
 
-  return paymentIntent;
-});
+//   const customerWinner = await stripe.customers.retrieve(findWinnerUser.stripeId)
+
+//   const paymentIntent = await stripe.paymentIntents.create({
+//     amount: prizeAmount,
+//     customer: findContestUser.stripeId,
+//     currency: 'usd',
+//     payment_method: customerContestOwner.invoice_settings.default_payment_method,
+//     payment_method_types: ['card'],
+//   });
+
+//   return paymentIntent;
+// });
 
 exports.winnerChosen = (contestOwner, submissionId, winningPic) => {
   return new Promise(async (resolve, reject) => {
@@ -94,8 +94,6 @@ exports.winnerChosen = (contestOwner, submissionId, winningPic) => {
     if (winningSubmission.contest.active) {
       return reject('Contest is still active.')
     }
-    const payWinner = await stripePay(contestOwner, winningSubmission.contest.prizeAmount, winningSubmission.artistId._id);
-    console.log("The Contest creator has been charged.", payWinner)
     const imagesToDelete = winningSubmission.images.filter(image => image !== winningPic)
     const mailObj = {
       to: winningSubmission.artistId.email,
@@ -104,7 +102,7 @@ exports.winnerChosen = (contestOwner, submissionId, winningPic) => {
       text: winningSubmission.contest.title,
       html: `<h2>Congratulations on winning the contest!</h2>`,
     }
-
+    
     const contestWinner = new Winner({
       contestOwner,
       winningArtist: winningSubmission.artistId._id,
@@ -115,6 +113,7 @@ exports.winnerChosen = (contestOwner, submissionId, winningPic) => {
     })
     try {
       await contestWinner.save();
+      // await stripePay(contestOwner, winningSubmission.contest.prizeAmount, winningSubmission.artistId._id);
       await Submission.deleteMany({
         _id: {
           $in: winningSubmission.contest.submissions
