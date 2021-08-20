@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
-import { Box, Typography, Tabs, Tab } from '@material-ui/core';
+import { Box, Typography, Tabs, Tab, Button, Hidden, Drawer } from '@material-ui/core';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import TourContent from '../../components/TourContent/TourContent';
@@ -53,6 +53,7 @@ function tabProps(index: number) {
 
 export default function Settings(): JSX.Element {
   const [value, setValue] = useState<number>(0);
+  const [expanded, setExpanded] = useState<boolean>(false);
   const classes = useStyles();
   const history = useHistory();
 
@@ -88,34 +89,87 @@ export default function Settings(): JSX.Element {
 
   const handleChange = (event: React.ChangeEvent<Record<string, unknown>>, val: number) => {
     setValue(val);
+    setExpanded(false);
   };
 
   return (
     <>
       <AuthHeader linkTo="/create-contest" btnText="create contest" />
       <Box className={classes.root}>
-        <div data-tour="settings">
-          <Tabs
-            orientation="vertical"
-            indicatorColor="primary"
-            textColor="primary"
-            value={value}
-            TabIndicatorProps={{
-              style: {
-                height: 20,
-                marginTop: 15,
-              },
-            }}
-            onChange={handleChange}
-            className={classes.tabs}
-          >
-            <Tab label="Personal Info" {...tabProps(0)} className={classes.label} />
-            <Tab label="Notification" {...tabProps(1)} className={classes.label} />
-            <Tab label="Payment Info" {...tabProps(2)} className={classes.label}></Tab>
-            <Tab label="Profile" {...tabProps(3)} className={classes.label} />
-            <Tab label="Password" {...tabProps(4)} className={classes.label} />
-          </Tabs>
-        </div>
+        <Hidden smUp={true}>
+          <Fragment>
+            <Box display="flex" justifyContent="center" width="100%">
+              <Button
+                onClick={(): void => setExpanded(!expanded)}
+                color="primary"
+                size="large"
+                variant="contained"
+                className={classes.expandBtn}
+              >
+                Show Settings Tab
+              </Button>
+            </Box>
+            <Drawer
+              className={classes.drawer}
+              anchor={'left'}
+              open={expanded}
+              onClose={(): void => setExpanded(!expanded)}
+            >
+              <div data-tour="settings">
+                <Tabs
+                  orientation="vertical"
+                  indicatorColor="primary"
+                  textColor="primary"
+                  value={value}
+                  TabIndicatorProps={{
+                    style: {
+                      height: 20,
+                      marginTop: 15,
+                    },
+                  }}
+                  onChange={handleChange}
+                  classes={{
+                    indicator: classes.indicator,
+                  }}
+                  className={classes.tabs}
+                >
+                  <Tab label="Personal Info" {...tabProps(0)} className={classes.label} />
+                  <Tab label="Notification" {...tabProps(1)} className={classes.label} />
+                  <Tab label="Payment Info" {...tabProps(2)} className={classes.label} />
+                  <Tab label="Profile" {...tabProps(3)} className={classes.label} />
+                  <Tab label="Password" {...tabProps(4)} className={classes.label} />
+                </Tabs>
+              </div>
+            </Drawer>
+          </Fragment>
+        </Hidden>
+        <Hidden xsDown={true}>
+          <div data-tour="settings">
+            <Tabs
+              orientation="vertical"
+              indicatorColor="primary"
+              textColor="primary"
+              value={value}
+              TabIndicatorProps={{
+                style: {
+                  height: 20,
+                  marginTop: 15,
+                },
+              }}
+              onChange={handleChange}
+              className={classes.tabs}
+              classes={{
+                indicator: classes.indicator,
+              }}
+            >
+              <Tab label="Personal Info" {...tabProps(0)} className={classes.label} />
+              <Tab label="Notification" {...tabProps(1)} className={classes.label} />
+              <Tab label="Payment Info" {...tabProps(2)} className={classes.label}></Tab>
+              <Tab label="Profile" {...tabProps(3)} className={classes.label} />
+              <Tab label="Password" {...tabProps(4)} className={classes.label} />
+            </Tabs>
+          </div>
+        </Hidden>
         <TabPanel value={value} index={0}>
           <Box display="flex" justifyContent="center">
             <PersonalInfo />
@@ -127,15 +181,13 @@ export default function Settings(): JSX.Element {
         <TabPanel value={value} index={2}>
           <Typography className={classes.paymentDetails}>Payment Details</Typography>
           <Elements stripe={stripeKey}>
-            <Box width="55vw" display="flex" justifyContent="center">
+            <Box display="flex" justifyContent="center">
               <Payment />
             </Box>
           </Elements>
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <div className={classes.profileWrapper} style={{ width: '55vw' }}>
-            <Profile header={false} />
-          </div>
+          <Profile header={false} />
         </TabPanel>
         <TabPanel value={value} index={4}>
           <Password />
